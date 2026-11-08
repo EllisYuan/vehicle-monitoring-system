@@ -1,0 +1,25 @@
+# Java
+target/
+*.class
+
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+web/playwright-report/
+web/test-results/
+
+# 本地环境与凭证
+.env
+.env.local
+*.log
+
+# 验证证据中的日志需要随 ticket 保留，但必须先按凭证扫描确认无敏感信息
+!.scratch/vehicle-monitoring/evidence/*.log
+
+# IDE 与系统文件
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

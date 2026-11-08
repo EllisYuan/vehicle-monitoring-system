@@ -1,0 +1,15 @@
+### 2026-11-08T11:02:49+08:00 audit_log 与库表核对（MySQL 8.4 容器 vms-server-db）
+Tables_in_vms
+audit_log
+flyway_schema_history
+sys_user
+category	action	result	actor_name	source_ip	detail
+BOOTSTRAP	INITIAL_ADMIN_CREATED	SUCCESS	ops-admin	NULL	?? ADMIN
+LOGIN	LOGIN	FAILURE	ops-admin	127.0.0.1	BAD_CREDENTIALS
+LOGIN	LOGIN	FAILURE	ghost	127.0.0.1	UNKNOWN_ACCOUNT
+LOGIN	LOGIN	SUCCESS	ops-admin	127.0.0.1	NULL
+LOGOUT	LOGOUT	SUCCESS	ops-admin	127.0.0.1	NULL
+version	description	success
+1	identity and audit	1
+users
+1

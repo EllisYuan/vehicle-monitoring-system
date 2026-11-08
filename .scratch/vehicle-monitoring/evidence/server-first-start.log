@@ -1,0 +1,42 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-08T11:01:11.193+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : Starting VehicleMonitoringApplication v0.1.0-SNAPSHOT using Java 21.0.9 with PID 36120 (C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server\target\server-0.1.0-SNAPSHOT.jar started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system)
+2026-11-08T11:01:11.199+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-11-08T11:01:12.065+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-08T11:01:12.067+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-08T11:01:12.092+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2026-11-08T11:01:12.812+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-11-08T11:01:12.830+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-08T11:01:12.830+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-08T11:01:12.873+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1608 ms
+2026-11-08T11:01:13.327+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-08T11:01:13.624+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6b09ce57
+2026-11-08T11:01:13.630+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-08T11:01:13.692+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://127.0.0.1:3308/vms?connectionTimeZone=Asia/Shanghai&forceConnectionTimeZoneToSession=true&allowPublicKeyRetrieval=true&useSSL=false (MySQL 8.4)
+2026-11-08T11:01:14.103+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-08T11:01:14.107+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.021s)
+2026-11-08T11:01:14.132+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-08T11:01:14.210+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-08T11:01:14.228+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-08T11:01:14.319+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema `vms`, now at version v1 (execution time 00:00.052s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-08T11:01:16.165+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@5bc9ba1d
+2026-11-08T11:01:16.528+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-11-08T11:01:16.540+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : Started VehicleMonitoringApplication in 5.839 seconds (process running for 6.401)
+2026-11-08T11:01:16.808+08:00  INFO 36120 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：ops-admin
+2026-11-08T11:02:34.391+08:00  INFO 36120 --- [vehicle-monitoring-system] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-08T11:02:34.391+08:00  INFO 36120 --- [vehicle-monitoring-system] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-08T11:02:34.392+08:00  INFO 36120 --- [vehicle-monitoring-system] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-08T11:02:34.908+08:00  WARN 36120 --- [vehicle-monitoring-system] [nio-8080-exec-2] com.vms.identity.auth.AuthService        : 登录失败：账号 ops-admin，原因 BAD_CREDENTIALS
+2026-11-08T11:02:35.181+08:00  WARN 36120 --- [vehicle-monitoring-system] [nio-8080-exec-7] com.vms.identity.auth.AuthService        : 登录失败：账号 ghost，原因 UNKNOWN_ACCOUNT

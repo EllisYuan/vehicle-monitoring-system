@@ -1,0 +1,12 @@
+### 日志凭证扫描 2026-11-08T11:10:07+08:00
+server-first-start.log：匹配行数 0
+server-second-start.log：匹配行数 0
+web-dev.log：匹配行数 0
+--- 首次启动中的关键行
+  INFO 36120 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://127.0.0.1:3308/vms?connectionTimeZone=Asia/Shanghai&forceConnectionTimeZoneToSession=true&allowPublicKeyRetrieval=true&useSSL=false (MySQL 8.4)
+  INFO 36120 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+  INFO 36120 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : Started VehicleMonitoringApplication in 5.839 seconds (process running for 6.401)
+  INFO 36120 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：ops-admin
+--- 二次启动中的关键行
+  INFO 39492 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : Started VehicleMonitoringApplication in 6.008 seconds (process running for 6.591)
+  INFO 39492 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 账号已存在，跳过初始管理员建立
