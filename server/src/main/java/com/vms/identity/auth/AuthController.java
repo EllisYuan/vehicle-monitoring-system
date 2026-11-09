@@ -2,6 +2,7 @@ package com.vms.identity.auth;
 
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.stp.StpUtil;
+import com.vms.identity.account.UserAccount;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -19,19 +20,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final LoginRateLimiter loginRateLimiter;
     private final SaTokenConfig saTokenConfig;
 
-    public AuthController(AuthService authService, SaTokenConfig saTokenConfig) {
+    public AuthController(AuthService authService, LoginRateLimiter loginRateLimiter,
+                          SaTokenConfig saTokenConfig) {
         this.authService = authService;
+        this.loginRateLimiter = loginRateLimiter;
         this.saTokenConfig = saTokenConfig;
     }
 
     @PostMapping("/login")
     public LoginResponse login(@Valid @RequestBody LoginRequest request, HttpServletRequest httpRequest) {
         String sourceIp = httpRequest.getRemoteAddr();
-        var user = authService.authenticate(request.username(), request.password(), sourceIp);
+        UserAccount user;
+        try (var permit = loginRateLimiter.acquire(sourceIp)) {
+            try {
+                user = authService.authenticate(request.username(), request.password(), sourceIp);
+            } catch (InvalidCredentialsException e) {
+                permit.failed();
+                throw e;
+            }
+        }
 
-        StpUtil.login(user.getId());
+        authService.openSession(user);
         String token = StpUtil.getTokenValue();
         try {
             authService.auditLoginSuccess(user, sourceIp);
@@ -51,6 +63,13 @@ public class AuthController {
         authService.auditLogout(user, httpRequest.getRemoteAddr());
     }
 
+    @PostMapping("/password")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void changePassword(@Valid @RequestBody ChangePasswordRequest request) {
+        authService.changeOwnPassword(authService.currentUser(), request.oldPassword(), request.newPassword());
+        StpUtil.logout();
+    }
+
     @GetMapping("/me")
     public MeResponse me() {
         var user = authService.currentUser();
@@ -60,6 +79,11 @@ public class AuthController {
     public record LoginRequest(
             @NotBlank @Size(max = 64) String username,
             @NotBlank @Size(max = 200) String password) {
+    }
+
+    public record ChangePasswordRequest(
+            @NotBlank @Size(max = 200) String oldPassword,
+            @NotBlank @Size(min = 8, max = 200) String newPassword) {
     }
 
     public record LoginResponse(String token, String username, String roleCode, long expiresIn) {

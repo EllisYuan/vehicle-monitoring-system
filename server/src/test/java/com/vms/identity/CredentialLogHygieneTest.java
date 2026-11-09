@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @SpringBootTest(properties = {
         "vms.bootstrap-admin.username=bootstrap-admin",
         "vms.bootstrap-admin.password=Bootstrap-Pass-2026",
+        "vms.login.rate-limit-max-attempts=1000",
 })
 @Import(IntegrationContainers.class)
 @AutoConfigureMockMvc

@@ -15,6 +15,8 @@ public class UserAccount {
     private String roleCode;
     private String status;
     private Integer authVersion;
+    private Integer failedAttempts;
+    private LocalDateTime lockedUntil;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -64,6 +66,22 @@ public class UserAccount {
 
     public void setAuthVersion(Integer authVersion) {
         this.authVersion = authVersion;
+    }
+
+    public Integer getFailedAttempts() {
+        return failedAttempts;
+    }
+
+    public void setFailedAttempts(Integer failedAttempts) {
+        this.failedAttempts = failedAttempts;
+    }
+
+    public LocalDateTime getLockedUntil() {
+        return lockedUntil;
+    }
+
+    public void setLockedUntil(LocalDateTime lockedUntil) {
+        this.lockedUntil = lockedUntil;
     }
 
     public LocalDateTime getCreatedAt() {

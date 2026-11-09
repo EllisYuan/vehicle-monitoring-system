@@ -1,20 +1,30 @@
 import { defineStore } from 'pinia'
-import { http, setTokenProvider } from '../../../shared/http'
+import { http, isUnauthorized, setTokenProvider } from '../../../shared/http'
+
+export type RoleCode = 'ADMIN' | 'MONITOR' | 'FLEET_LEADER'
+
+export type RestoreResult = 'authenticated' | 'unauthenticated' | 'unavailable'
 
 export interface CurrentUser {
   id: number
   username: string
-  roleCode: string
+  roleCode: RoleCode
 }
 
 interface LoginResponse {
   token: string
   username: string
-  roleCode: string
+  roleCode: RoleCode
   expiresIn: number
 }
 
 const TOKEN_KEY = 'vms.session.token'
+
+export const ROLE_LABELS: Record<RoleCode, string> = {
+  ADMIN: '管理员',
+  MONITOR: '监控员',
+  FLEET_LEADER: '车队长',
+}
 
 function readStoredToken(): string | null {
   try {
@@ -43,6 +53,10 @@ export const useSessionStore = defineStore('session', {
   }),
   getters: {
     isAuthenticated: (state) => state.token !== null && state.user !== null,
+    role: (state): RoleCode | null => state.user?.roleCode ?? null,
+    isAdmin: (state): boolean => state.user?.roleCode === 'ADMIN',
+    canDisposeOrCommand: (state): boolean =>
+      state.user?.roleCode === 'ADMIN' || state.user?.roleCode === 'MONITOR',
   },
   actions: {
     async login(username: string, password: string) {
@@ -52,31 +66,43 @@ export const useSessionStore = defineStore('session', {
       return this.fetchMe()
     },
 
-    async fetchMe(): Promise<CurrentUser> {
-      const { data } = await http.get<CurrentUser>('/auth/me')
+    async fetchMe(options: { suppressUnauthorized?: boolean } = {}): Promise<CurrentUser> {
+      const { data } = await http.get<CurrentUser>('/auth/me', options)
       this.user = data
       return data
     },
 
-    async restore(): Promise<boolean> {
+    async restore(): Promise<RestoreResult> {
       if (!this.token) {
-        return false
+        return 'unauthenticated'
       }
       try {
-        await this.fetchMe()
-        return true
-      } catch {
-        this.clear()
-        return false
+        // 401 由守卫统一处理，避免全局处理器与守卫同时导航、丢失深链 redirect
+        await this.fetchMe({ suppressUnauthorized: true })
+        return 'authenticated'
+      } catch (e) {
+        if (isUnauthorized(e)) {
+          this.clear()
+          return 'unauthenticated'
+        }
+        // 后端短暂不可用或网络错误：保留 token，由登录页提示稍后重试，不当作会话失效
+        return 'unavailable'
       }
     },
 
     async logout() {
       try {
         await http.post('/auth/logout')
-      } finally {
-        this.clear()
+      } catch {
+        // 网络失败也要完成本地退出；服务端会话到期后自然失效
       }
+      this.clear()
+    },
+
+    async changePassword(oldPassword: string, newPassword: string) {
+      await http.post('/auth/password', { oldPassword, newPassword })
+      // 服务端已撤销该账号全部会话
+      this.clear()
     },
 
     clear() {

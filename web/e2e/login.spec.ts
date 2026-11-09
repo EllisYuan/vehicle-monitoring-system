@@ -33,7 +33,10 @@ test.describe('登录与退出', () => {
 
     const token = await page.evaluate(() => sessionStorage.getItem('vms.session.token'))
     expect(token).toBeTruthy()
-    await expect(page).not.toHaveURL(new RegExp(token as string))
+    if (!token) {
+      throw new Error('登录后未保存会话 token')
+    }
+    await expect(page).not.toHaveURL(new RegExp(token))
 
     await page.getByTestId('logout').click()
     await expect(page).toHaveURL(/\/login/)
@@ -46,5 +49,46 @@ test.describe('登录与退出', () => {
 
     await page.goto('/')
     await expect(page).toHaveURL(/\/login/)
+  })
+
+  test('过期 token 深链登录后保留内部 redirect', async ({ page }) => {
+    await page.goto('/login')
+    await page.evaluate(() => sessionStorage.setItem('vms.session.token', 'expired-token'))
+    await page.goto('/admin/fleets')
+
+    await expect(page.getByTestId('login-form')).toBeVisible()
+    const url = new URL(page.url())
+    expect(url.pathname).toBe('/login')
+    expect(url.searchParams.get('redirect')).toBe('/admin/fleets')
+  })
+
+  test('会话恢复遇到 503 保留 token 并提示稍后重试', async ({ page }) => {
+    await page.route('**/api/v1/auth/me', (route) =>
+      route.fulfill({
+        status: 503,
+        contentType: 'application/json',
+        body: JSON.stringify({ code: 'SERVICE_UNAVAILABLE', detail: '服务暂时不可用' }),
+      }),
+    )
+    await page.goto('/login')
+    await page.evaluate(() => sessionStorage.setItem('vms.session.token', 'kept-token'))
+    await page.goto('/')
+
+    await expect(page.getByTestId('login-reason')).toHaveText('登录服务暂时不可用，请稍后重试')
+    expect(await page.evaluate(() => sessionStorage.getItem('vms.session.token'))).toBe('kept-token')
+  })
+
+  test('退出请求中断仍完成本地退出', async ({ page }) => {
+    await page.goto('/login')
+    await page.getByLabel('用户名').fill(USERNAME)
+    await page.getByLabel('密码').fill(PASSWORD)
+    await page.getByTestId('login-submit').click()
+    await expect(page.getByTestId('current-user')).toContainText(USERNAME)
+
+    await page.route('**/api/v1/auth/logout', (route) => route.abort())
+    await page.getByTestId('logout').click()
+
+    await expect(page).toHaveURL(/\/login/)
+    expect(await page.evaluate(() => sessionStorage.getItem('vms.session.token'))).toBeNull()
   })
 })

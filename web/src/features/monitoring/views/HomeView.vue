@@ -1,53 +1,28 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import { useSessionStore } from '../../identity/store/session'
+import AppShell from '../../../app/layouts/AppShell.vue'
 
 const session = useSessionStore()
-const router = useRouter()
-
-async function logout() {
-  await session.logout()
-  await router.replace({ name: 'login' })
-}
 </script>
 
 <template>
-  <main class="home">
-    <header>
-      <span data-testid="current-user">{{ session.user?.username }}（{{ session.user?.roleCode }}）</span>
-      <button
-        type="button"
-        data-testid="logout"
-        @click="logout"
-      >
-        退出登录
-      </button>
-    </header>
-    <section>
+  <AppShell area="monitoring">
+    <section class="page">
       <h1>实时监控</h1>
-      <p>监控、轨迹与报警页面将在后续任务交付；当前仅验证登录会话与退出。</p>
+      <p>地图、车辆列表与实时状态将在后续任务交付；当前已接入登录、角色导航与车队数据范围。</p>
+      <p
+        v-if="session.role === 'FLEET_LEADER'"
+        class="scope-note"
+        data-testid="leader-scope-note"
+      >
+        当前账号为车队长：仅能查看被授权车队的车辆、轨迹、报警和统计，且不可处置报警或下发指令。
+      </p>
     </section>
-  </main>
+  </AppShell>
 </template>
 
 <style scoped>
-.home {
-  min-height: 100vh;
-  background: #f4f6f8;
-}
-
-header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 1.5rem;
-  background: #fff;
-  border-bottom: 1px solid #e2e8ee;
-  font-size: 0.9rem;
-}
-
-section {
+.page {
   padding: 1.5rem;
 }
 
@@ -57,15 +32,14 @@ h1 {
 }
 
 p {
-  margin: 0;
+  margin: 0 0 0.5rem;
   color: #5b6b7c;
 }
 
-button {
-  padding: 0.4rem 0.8rem;
-  border: 1px solid #c7d0d9;
-  border-radius: 6px;
-  background: #fff;
-  cursor: pointer;
+.scope-note {
+  padding: 0.6rem 0.8rem;
+  border-left: 3px solid #d69e2e;
+  background: #fffaf0;
+  color: #744210;
 }
 </style>

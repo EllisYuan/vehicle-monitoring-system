@@ -18,11 +18,13 @@ spring:
 
 sa-token:
   token-name: satoken
-  # 8 小时绝对到期，不随活跃续期（到期语义由 02 验收）
+  # 8 小时绝对到期，不随活跃续期
   timeout: 28800
   active-timeout: -1
   auto-renew: false
   is-share: false
+  # 单账号单有效会话：后登录挤掉旧会话（旧会话收到 SESSION_REPLACED）
+  is-concurrent: false
   # 会话凭证只通过请求头传递，不写入 Cookie、请求体或 URL
   is-read-cookie: false
   is-read-body: false
@@ -39,3 +41,10 @@ vms:
   bootstrap-admin:
     username: ${VMS_BOOTSTRAP_ADMIN_USERNAME:}
     password: ${VMS_BOOTSTRAP_ADMIN_PASSWORD:}
+  login:
+    # 连续失败 5 次锁定 10 分钟；登录成功重置计数
+    max-failures: 5
+    lock-minutes: 10
+    # 来源速率限制（工程补充，避免凭证猜测与锁定滥用）
+    rate-limit-max-attempts: 20
+    rate-limit-window-seconds: 60

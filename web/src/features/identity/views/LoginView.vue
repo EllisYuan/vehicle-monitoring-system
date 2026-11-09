@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
+import axios from 'axios'
 import { useRoute, useRouter } from 'vue-router'
-import { isUnauthorized } from '../../../shared/http'
 import { useSessionStore } from '../store/session'
 
 const route = useRoute()
@@ -12,6 +12,42 @@ const form = reactive({ username: '', password: '' })
 const submitting = ref(false)
 const errorMessage = ref('')
 
+const reasonMessages: Record<string, string> = {
+  SESSION_REPLACED: '账号已在其他位置登录，当前会话已失效，请重新登录',
+  SESSION_EXPIRED: '登录已过期，请重新登录',
+  SESSION_REVOKED: '账号状态或车队授权已变更，请重新登录',
+  ACCOUNT_DISABLED: '账号已停用，请联系管理员',
+  'password-changed': '密码已修改，请使用新密码重新登录',
+  'service-unavailable': '登录服务暂时不可用，请稍后重试',
+}
+
+const reasonMessage = computed(() => {
+  const reason = typeof route.query.reason === 'string' ? route.query.reason : ''
+  return reasonMessages[reason] ?? ''
+})
+
+function describeError(error: unknown): string {
+  if (axios.isAxiosError(error) && error.response) {
+    const status = error.response.status
+    if (status === 401) {
+      // 锁定期间的响应与凭证错误一致，不额外提示，避免暴露账号是否被锁定
+      return '用户名或密码错误'
+    }
+    if (status === 429) {
+      return '登录尝试过于频繁，请稍后再试'
+    }
+  }
+  return '登录服务暂时不可用，请稍后重试'
+}
+
+function resolveRedirect(): string {
+  const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/'
+  // 只接受站内路径，拒绝 //host 与 /\host 形式的外部跳转
+  return redirect.startsWith('/') && !redirect.startsWith('//') && !redirect.startsWith('/\\')
+    ? redirect
+    : '/'
+}
+
 async function submit() {
   if (submitting.value) {
     return
@@ -20,10 +56,9 @@ async function submit() {
   errorMessage.value = ''
   try {
     await session.login(form.username, form.password)
-    const redirect = typeof route.query.redirect === 'string' ? route.query.redirect : '/'
-    await router.replace(redirect)
+    await router.replace(resolveRedirect())
   } catch (error) {
-    errorMessage.value = isUnauthorized(error) ? '用户名或密码错误' : '登录服务暂时不可用，请稍后重试'
+    errorMessage.value = describeError(error)
   } finally {
     submitting.value = false
   }
@@ -39,7 +74,16 @@ async function submit() {
     >
       <h1>车辆监控系统</h1>
       <p class="subtitle">
-        请使用分配的管理员账号登录
+        请使用分配的账号登录
+      </p>
+
+      <p
+        v-if="reasonMessage"
+        class="info"
+        role="status"
+        data-testid="login-reason"
+      >
+        {{ reasonMessage }}
       </p>
 
       <label for="username">用户名</label>
@@ -133,6 +177,15 @@ input:focus {
   margin: 0;
   color: #b42318;
   font-size: 0.875rem;
+}
+
+.info {
+  margin: 0 0 0.25rem;
+  padding: 0.5rem 0.65rem;
+  border-left: 3px solid #2f6fb3;
+  background: #eef5fc;
+  color: #1f4f7d;
+  font-size: 0.85rem;
 }
 
 button {

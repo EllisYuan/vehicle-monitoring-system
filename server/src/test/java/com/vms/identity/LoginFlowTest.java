@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.MvcResult;
 @SpringBootTest(properties = {
         "vms.bootstrap-admin.username=bootstrap-admin",
         "vms.bootstrap-admin.password=Bootstrap-Pass-2026",
+        "vms.login.rate-limit-max-attempts=1000",
 })
 @Import(IntegrationContainers.class)
 @AutoConfigureMockMvc
@@ -45,7 +46,12 @@ class LoginFlowTest {
 
     @BeforeEach
     void setUp() {
+        jdbc.update("DELETE FROM sys_user_fleet");
+        jdbc.update("DELETE FROM sys_user WHERE username <> 'bootstrap-admin'");
+        jdbc.update("DELETE FROM fleet");
         jdbc.update("DELETE FROM audit_log WHERE category <> 'BOOTSTRAP'");
+        // 锁定与失败计数属于 02 的独立验收，这里只保证 01 的登录骨架不受累计失败影响
+        jdbc.update("UPDATE sys_user SET failed_attempts = 0, locked_until = NULL");
         token = null;
     }
 

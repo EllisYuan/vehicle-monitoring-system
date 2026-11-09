@@ -6,6 +6,8 @@ export default defineConfig({
   testDir: './e2e',
   timeout: 60_000,
   fullyParallel: false,
+  // 账号单有效会话：并行 worker 互相挤掉登录态，按文件串行执行
+  workers: 1,
   retries: 0,
   reporter: [['list']],
   use: {
