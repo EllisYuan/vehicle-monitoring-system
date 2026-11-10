@@ -11,12 +11,7 @@
 
 ## 阶段 0：收尾基线（不写代码）
 
-02、03 已验证完成但未进 main（main 停在 01）。
-
-1. 推送 `feat/ticket-03-archives`。
-2. 依次合并 02、03 到 main。
-3. 合并后跑一次全量 `mvnw.cmd -B "-Dvms.browser-tests=true" test` 确认基线。
-4. 之后每票从 main 最新 tip 切 `feat/ticket-NN-<slug>`，不从旧分支切。
+已完成（2026-11-10）：02、03 已合入 `main`（快进至 `1e2b567`）；合并后全量 `mvnw.cmd -B "-Dvms.browser-tests=true" test` 得 `Tests run: 58, Failures: 0, Errors: 0, Skipped: 0`、BUILD SUCCESS，见 `evidence/baseline-main-test.log`。之后每票从 `main` 最新 tip 切 `feat/ticket-NN-<slug>`，不从旧分支切。
 
 ## 执行序列
 

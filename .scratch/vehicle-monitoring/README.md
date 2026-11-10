@@ -4,7 +4,11 @@
 
 所有任务初始为 `Status: open`、`Labels: ready-for-agent`。标签表示任务定义可领取，不表示依赖已完成；领取前检查全部 `Blocked by` 指向任务均为 `resolved`。执行时按仓库规则改为 `claimed`，记录实际结果后再 `resolved`；外部条件未满足时标 `blocked` 并说明原因。
 
-当前进度：01、02、03 已实现并验收，状态 `resolved`；02全量Maven 45项、Chromium 12项及审阅后复验通过，详见 [02验证记录](evidence/02-verification.md)；03 的真实MySQL集成、前端检查与浏览器场景见 [03验证记录](evidence/03-verification.md)。05 依赖已就绪，尚未领取。
+当前进度：01、02、03 已实现并验收，状态 `resolved`，且 02、03 已合入 `main`（`main` tip `1e2b567`）。02全量Maven 45项、Chromium 12项及审阅后复验通过，详见 [02验证记录](evidence/02-verification.md)；03 的真实MySQL集成、前端检查与浏览器场景见 [03验证记录](evidence/03-verification.md)。
+
+`main` 基线回归已执行：`mvnw.cmd -B "-Dvms.browser-tests=true" test` 得 `Tests run: 58, Failures: 0, Errors: 0, Skipped: 0`、BUILD SUCCESS，BrowserFlowTest 内 14 个 Chromium 场景全部通过，结束后无 Testcontainers/Ryuk 残留（[日志](evidence/baseline-main-test.log)）。环境前置：Docker Desktop 需运行、Playwright Chromium 需为 1.58.1 对应的 1208 构建。
+
+下一步：05 依赖已就绪，但缺 JT/T 808-2019 权威标准文本，fixture 无法标注标准条目出处，暂不领取；04 依赖（03）已满足，可先行推进。
 
 ## 任务索引
 
