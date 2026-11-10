@@ -48,7 +48,7 @@ export async function createDriver(
 
 export async function updateDriver(
   id: number,
-  patch: { name?: string; phone?: string; status?: EnabledStatus },
+  patch: { driverNo?: string; name?: string; phone?: string; status?: EnabledStatus },
 ): Promise<Driver> {
   return (await http.put<Driver>(`/drivers/${id}`, patch)).data
 }
@@ -61,6 +61,7 @@ export async function currentDriver(vehicleId: number): Promise<CurrentAssociati
   return (await http.get<CurrentAssociation>(`/vehicles/${vehicleId}/driver`)).data
 }
 
-export async function driverHistory(vehicleId: number): Promise<Association[]> {
-  return (await http.get<Association[]>(`/vehicles/${vehicleId}/driver-bindings`)).data
+/** 司机视角的关联历史：该司机关联过的车辆区间。 */
+export async function driverHistory(driverId: number): Promise<Association[]> {
+  return (await http.get<Association[]>(`/drivers/${driverId}/vehicle-bindings`)).data
 }

@@ -1,4 +1,4 @@
-package com.vms.driver;
+package com.vms.fleet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -246,6 +246,112 @@ class DriverFlowTest {
                 .isInstanceOf(org.springframework.dao.DuplicateKeyException.class);
         org.assertj.core.api.Assertions.assertThatThrownBy(() -> jdbc.update("DELETE FROM driver WHERE id = ?", firstDriver))
                 .isInstanceOf(org.springframework.dao.DataIntegrityViolationException.class);
+    }
+
+    @Test
+    void movingDriverToAnotherVehicleEndsPreviousIntervalAtomically() throws Exception {
+        String token = login(ADMIN, ADMIN_PASS);
+        long fleet = createFleet(token);
+        long firstVehicle = createVehicle(token, fleet, "A");
+        long secondVehicle = createVehicle(token, fleet, "B");
+        long driver = createDriver(token, fleet, "D1");
+        change(token, "/vehicles/" + firstVehicle + "/driver", Map.of("driverId", driver));
+
+        clock.advance(java.time.Duration.ofSeconds(1));
+        // 一次请求完成换车：旧车辆当前关联结束，新车辆建立当前关联，不留已解绑的中间态
+        change(token, "/vehicles/" + secondVehicle + "/driver", Map.of("driverId", driver));
+
+        assertThat(read(token, "/vehicles/" + firstVehicle + "/driver").path("driverId").isNull()).isTrue();
+        assertThat(read(token, "/vehicles/" + secondVehicle + "/driver").path("driverId").asLong()).isEqualTo(driver);
+        JsonNode firstHistory = read(token, "/vehicles/" + firstVehicle + "/driver-bindings");
+        JsonNode secondHistory = read(token, "/vehicles/" + secondVehicle + "/driver-bindings");
+        assertThat(firstHistory.size()).isEqualTo(1);
+        assertThat(firstHistory.get(0).path("effectiveTo").isNull()).isFalse();
+        assertThat(secondHistory.size()).isEqualTo(1);
+        assertThat(firstHistory.get(0).path("effectiveTo").asText())
+                .isEqualTo(secondHistory.get(0).path("effectiveFrom").asText());
+        assertThat(jdbc.queryForObject(
+                "SELECT count(*) FROM vehicle_driver_binding WHERE current_driver_id = ?", Long.class, driver))
+                .isEqualTo(1);
+    }
+
+    @Test
+    void driverAndVehicleMustBelongToSameFleet() throws Exception {
+        String token = login(ADMIN, ADMIN_PASS);
+        String suffix = suffix();
+        long first = createFleet(token, "A" + suffix);
+        long second = createFleet(token, "B" + suffix);
+        long vehicleInFirst = createVehicle(token, first, "A");
+        long driverInSecond = createDriver(token, second, "D1");
+
+        assertThat(rejectedChange(token, "/vehicles/" + vehicleInFirst + "/driver",
+                Map.of("driverId", driverInSecond))).isEqualTo("DRIVER_FLEET_MISMATCH");
+        assertThat(read(token, "/vehicles/" + vehicleInFirst + "/driver").path("driverId").isNull()).isTrue();
+    }
+
+    @Test
+    void leaderSeesOnlyOwnFleetDriversAndNeverCrossFleetCarPlates() throws Exception {
+        String admin = login(ADMIN, ADMIN_PASS);
+        String suffix = suffix();
+        long first = createFleet(admin, "A" + suffix);
+        long second = createFleet(admin, "B" + suffix);
+        long vehicleInSecond = createVehicle(admin, second, "B" + suffix);
+        long driverInFirst = createDriver(admin, first, "D1");
+        change(admin, "/vehicles/" + vehicleInSecond + "/driver", Map.of("driverId", createDriver(admin, second, "D2")));
+        create(admin, "/users", Map.of("username", "leader-" + suffix, "password", "Leader-Pass-2026",
+                "roleCode", "FLEET_LEADER", "fleetIds", List.of(first)));
+        String leader = login("leader-" + suffix, "Leader-Pass-2026");
+
+        JsonNode drivers = read(leader, "/drivers");
+        assertThat(drivers).allSatisfy(node -> assertThat(node.path("fleetId").asLong()).isEqualTo(first));
+        assertThat(read(leader, "/drivers/" + driverInFirst).path("plateNo").isNull()).isTrue();
+        // 车辆文档只按授权范围可见，司机关联同理
+        mvc.perform(get("/api/v1/vehicles/" + vehicleInSecond + "/driver").header("satoken", leader))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void driverHistoryIsDriverCentricNotVehicleCentric() throws Exception {
+        String token = login(ADMIN, ADMIN_PASS);
+        long fleet = createFleet(token);
+        long firstVehicle = createVehicle(token, fleet, "A");
+        long secondVehicle = createVehicle(token, fleet, "B");
+        long firstDriver = createDriver(token, fleet, "D1");
+        long secondDriver = createDriver(token, fleet, "D2");
+        change(token, "/vehicles/" + firstVehicle + "/driver", Map.of("driverId", firstDriver));
+        clock.advance(java.time.Duration.ofSeconds(1));
+        // 同一车辆换司机后，第一位司机的历史仍应只在司机视角可见
+        change(token, "/vehicles/" + firstVehicle + "/driver", Map.of("driverId", secondDriver));
+        clock.advance(java.time.Duration.ofSeconds(1));
+        change(token, "/vehicles/" + secondVehicle + "/driver", Map.of("driverId", firstDriver));
+
+        JsonNode firstHistory = read(token, "/drivers/" + firstDriver + "/vehicle-bindings");
+        assertThat(firstHistory.size()).isEqualTo(2);
+        assertThat(firstHistory.get(0).path("driverId").asLong()).isEqualTo(firstDriver);
+        assertThat(firstHistory.get(1).path("driverId").asLong()).isEqualTo(firstDriver);
+        assertThat(firstHistory.get(0).path("plateNo").asText()).isNotEqualTo(firstHistory.get(1).path("plateNo").asText());
+
+        // 第二位司机只关联过第一辆车，不应读到第一位司机的区间
+        JsonNode secondHistory = read(token, "/drivers/" + secondDriver + "/vehicle-bindings");
+        assertThat(secondHistory.size()).isEqualTo(1);
+        assertThat(secondHistory.get(0).path("driverId").asLong()).isEqualTo(secondDriver);
+    }
+
+    @Test
+    void driverNoCanBeCorrectedAndDuplicateIsRejected() throws Exception {
+        String token = login(ADMIN, ADMIN_PASS);
+        long fleet = createFleet(token);
+        String original = "D-" + suffix();
+        String corrected = "D2-" + suffix();
+        long driver = create(token, "/drivers", Map.of("driverNo", original, "name", "模拟司机",
+                "phone", "13812345678", "fleetId", fleet));
+
+        assertThat(change(token, "/drivers/" + driver, Map.of("driverNo", corrected))
+                .path("driverNo").asText()).isEqualTo(corrected);
+
+        long other = createDriver(token, fleet, "D3");
+        assertThat(rejectedChange(token, "/drivers/" + other, Map.of("driverNo", corrected)))
+                .isEqualTo("DRIVER_NO_EXISTS");
     }
 
     private int associate(CountDownLatch start, String token, long vehicle, long driver) throws Exception {

@@ -1,4 +1,4 @@
-package com.vms.driver;
+package com.vms.fleet;
 
 import com.vms.identity.auth.AuthService;
 import com.vms.identity.security.Permission;

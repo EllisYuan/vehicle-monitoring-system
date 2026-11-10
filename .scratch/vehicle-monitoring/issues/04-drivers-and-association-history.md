@@ -1,6 +1,6 @@
 # 04: 司机档案与关联历史
 
-Status: open
+Status: resolved
 Labels: ready-for-agent
 Type: task
 Blocked by: 03
@@ -17,13 +17,13 @@ Blocked by: 03
 
 ## Acceptance criteria
 
-- [ ] 司机档案仅含 driver_no、name、phone、fleet_id、status 五项业务字段
-- [ ] 每车至多一条当前关联，真实 MySQL 并发维护不重叠
-- [ ] 关联变更保留生效区间历史，不倒填
-- [ ] 车队长响应中 phone 中间四位掩码，管理员/监控员完整
-- [ ] 车队长只能查看授权车队司机，跨队请求被拒
-- [ ] 停用司机保留历史引用，可解释既有记录
-- [ ] 无法确定关联时显示未关联，不猜测身份或归属
+- [x] 司机档案仅含 driver_no、name、phone、fleet_id、status 五项业务字段
+- [x] 每车至多一条当前关联，真实 MySQL 并发维护不重叠
+- [x] 关联变更保留生效区间历史，不倒填
+- [x] 车队长响应中 phone 中间四位掩码，管理员/监控员完整
+- [x] 车队长只能查看授权车队司机，跨队请求被拒
+- [x] 停用司机保留历史引用，可解释既有记录
+- [x] 无法确定关联时显示未关联，不猜测身份或归属
 
 ## Scope boundaries
 
@@ -43,4 +43,16 @@ Blocked by: 03
 
 ## Answer
 
-尚未实施；验证未执行。
+已实现并验收，验证记录见 [04-verification.md](../evidence/04-verification.md)。
+
+交付：`V5__driver_and_association_history.sql`（`driver`、`vehicle_driver_binding`）、`com.vms.fleet` 下的 `DriverService`/`DriverController`/`DriverBindingController`、前端 `features/drivers/` 与 `/monitor/drivers`、`/admin/drivers` 路由。
+
+结果：`DriverFlowTest` 13 项、`drivers.spec.ts` 2 项浏览器场景、全量 `Tests run: 66` 与 Playwright 16 项均通过。
+
+两处实现取舍记录：
+1. **司机模块归入 `com.vms.fleet`**：设计 §3 的 server 包表已将「车队、车辆、司机及关联历史」划给 `fleet`，故不新建 `driver` 包。
+2. **在同一车队内换车为一次原子操作**：`PUT /vehicles/{id}/driver` 会在本事务内结束该司机原有区间，避免前端两步补偿留下已解绑的中间态；绑定要求司机与车辆属于同一车队（`DRIVER_FLEET_MISMATCH`），否则车队长可经车辆详情读到其他车队司机的姓名与电话。
+
+历史读取分两个视角：`GET /drivers/{id}/vehicle-bindings` 为司机视角（该司机关联过的车辆区间），`GET /vehicles/{id}/driver-bindings` 为车辆视角（该车历任司机）；两者都按授权范围过滤，越范围的行不返回而不是猜测归属。
+
+未覆盖：报警生成时的司机快照由 12/13 复验；司机转队无对应需求，`driver.fleet_id` 为档案归属而非生效区间历史。

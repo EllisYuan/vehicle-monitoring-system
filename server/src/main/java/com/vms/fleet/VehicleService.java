@@ -181,6 +181,13 @@ public class VehicleService {
         }
     }
 
+    /**
+     * 档案创建时间用于判定生效区间不得早于建档，与车辆行锁配合，不对外暴露为视图字段。
+     */
+    public LocalDateTime createdAt(long id) {
+        return jdbc.queryForObject("SELECT created_at FROM vehicle WHERE id = ?", LocalDateTime.class, id);
+    }
+
     public void requireEnabledFleet(long id) {
         List<String> statuses = jdbc.queryForList("SELECT status FROM fleet WHERE id = ? FOR UPDATE", String.class, id);
         if (statuses.isEmpty()) {

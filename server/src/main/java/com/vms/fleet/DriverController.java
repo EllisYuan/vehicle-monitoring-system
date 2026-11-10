@@ -1,4 +1,4 @@
-package com.vms.driver;
+package com.vms.fleet;
 
 import com.vms.identity.auth.AuthService;
 import com.vms.identity.security.Permission;
@@ -56,7 +56,14 @@ public class DriverController {
     @PutMapping("/{id}")
     @RequiresPermission(Permission.DRIVER_MANAGE)
     public DriverService.DriverView update(@PathVariable long id, @Valid @RequestBody UpdateRequest request) {
-        return drivers.update(auth.currentUser(), id, request.name(), request.phone(), request.status());
+        return drivers.update(auth.currentUser(), id, request.driverNo(), request.name(), request.phone(),
+                request.status());
+    }
+
+    @GetMapping("/{id}/vehicle-bindings")
+    @RequiresPermission(Permission.FLEET_VIEW)
+    public List<DriverService.AssociationView> vehicleBindings(@PathVariable long id) {
+        return drivers.driverHistory(auth.currentUser(), id);
     }
 
     public record CreateRequest(@NotBlank @Size(max = 32) String driverNo,
@@ -64,7 +71,8 @@ public class DriverController {
                                 @NotBlank @Pattern(regexp = "[0-9]{11}") String phone,
                                 @NotNull @Positive Long fleetId) { }
 
-    public record UpdateRequest(@Size(max = 50) @Pattern(regexp = "(?s).*\\S.*") String name,
+    public record UpdateRequest(@Size(max = 32) @Pattern(regexp = "(?s).*\\S.*") String driverNo,
+                                @Size(max = 50) @Pattern(regexp = "(?s).*\\S.*") String name,
                                 @Pattern(regexp = "[0-9]{11}") String phone,
                                 @Pattern(regexp = "ENABLED|DISABLED") String status) { }
 }

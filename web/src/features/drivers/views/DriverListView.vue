@@ -15,7 +15,6 @@ const session = useSessionStore()
 const route = useRoute()
 const area = computed(() => route.meta.area === 'admin' ? 'admin' : 'monitoring')
 const canManage = computed(() => session.isAdmin)
-const canReadHistory = computed(() => session.role !== 'FLEET_LEADER')
 const drivers = ref<Driver[]>([])
 const fleets = ref<Fleet[]>([])
 const vehicles = ref<Vehicle[]>([])
@@ -27,7 +26,7 @@ const notice = ref('')
 const filter = ref<number | ''>('')
 const form = reactive({ driverNo: '', name: '', phone: '', fleetId: '' as number | '' })
 const editor = ref<number | null>(null)
-const edit = reactive({ name: '', phone: '', vehicleId: '' as number | '' })
+const edit = reactive({ driverNo: '', name: '', phone: '', vehicleId: '' as number | '' })
 const historyTarget = ref<Driver | null>(null)
 const associations = ref<Association[]>([])
 
@@ -68,28 +67,27 @@ async function refresh() {
 
 function openEditor(driver: Driver) {
   editor.value = driver.id
+  edit.driverNo = driver.driverNo
   edit.name = driver.name
   edit.phone = driver.phone
   edit.vehicleId = driver.vehicleId ?? ''
   historyTarget.value = null
 }
 
-// 司机同一时刻至多关联一辆车；换车时先结束旧区间再建立新关联，历史区间由服务端保留
+// 司机同一时刻至多关联一辆车；换车由服务端在一次请求内结束旧区间，页面不做两步补偿
 async function associate(driver: Driver, selected: number | '') {
   const target = selected === '' ? null : Number(selected)
   if (driver.vehicleId === target) return
   await perform(async () => {
-    if (driver.vehicleId) await bindDriver(driver.vehicleId, null)
     if (target) await bindDriver(target, driver.id)
+    else if (driver.vehicleId) await bindDriver(driver.vehicleId, null)
   }, target ? '司机关联已更新，历史区间已保留' : '已解除司机关联')
 }
 
 async function showHistory(driver: Driver) {
   historyTarget.value = null
   await perform(async () => {
-    associations.value = canReadHistory.value && driver.vehicleId
-      ? await driverHistory(driver.vehicleId)
-      : []
+    associations.value = await driverHistory(driver.id)
     historyTarget.value = driver
   }, '')
 }
@@ -264,7 +262,13 @@ onMounted(refresh)
                     class="editor"
                     data-testid="driver-editor"
                   >
-                    <form @submit.prevent="perform(() => updateDriver(driver.id, { name: edit.name.trim(), phone: edit.phone }), '司机档案已更新')">
+                    <form @submit.prevent="perform(() => updateDriver(driver.id, { driverNo: edit.driverNo.trim(), name: edit.name.trim(), phone: edit.phone }), '司机档案已更新')">
+                      <label>司机编号<input
+                        v-model="edit.driverNo"
+                        required
+                        maxlength="32"
+                        data-testid="driver-edit-no"
+                      ></label>
                       <label>姓名<input
                         v-model="edit.name"
                         required
@@ -339,7 +343,7 @@ onMounted(refresh)
         <p class="hint">
           生效时间为 Asia/Shanghai；区间包含开始时刻，不包含结束时刻。
         </p>
-        <template v-if="canReadHistory">
+        <template v-if="associations.length">
           <ul>
             <li
               v-for="item in associations"
@@ -347,15 +351,10 @@ onMounted(refresh)
             >
               <span class="number">{{ item.plateNo }}</span> {{ time(item.effectiveFrom) }} — {{ item.effectiveTo ? time(item.effectiveTo) : '至今' }}
             </li>
-          </ul><p v-if="!associations.length">
-            尚无关联记录
-          </p>
+          </ul>
         </template>
-        <p
-          v-else
-          class="hint"
-        >
-          关联历史仅管理员与监控员可读。
+        <p v-else>
+          尚无关联记录
         </p>
       </section>
     </section>
