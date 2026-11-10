@@ -1,12 +1,11 @@
 import { http } from '../../shared/http'
-
-export type AccountStatus = 'ENABLED' | 'DISABLED'
+import type { EnabledStatus } from '../../shared/status'
 
 export interface Fleet {
   id: number
   fleetCode: string
   fleetName: string
-  status: AccountStatus
+  status: EnabledStatus
 }
 
 export async function listFleets(fleetId?: number): Promise<Fleet[]> {
@@ -19,7 +18,7 @@ export async function createFleet(fleetCode: string, fleetName: string): Promise
   return data
 }
 
-export async function updateFleet(id: number, patch: { fleetName?: string; status?: AccountStatus }): Promise<Fleet> {
+export async function updateFleet(id: number, patch: { fleetName?: string; status?: EnabledStatus }): Promise<Fleet> {
   const { data } = await http.put<Fleet>(`/fleets/${id}`, patch)
   return data
 }

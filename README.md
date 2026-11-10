@@ -1,12 +1,12 @@
 # 车辆监控系统
 
-面向单家道路货运企业、多车队的本科毕业设计。业务工程自任务 01 起建立：当前已有最小工程骨架、`sys_user`/`audit_log` migration、初始管理员建立、登录/退出；任务 02 增加了账号角色、车队授权与数据范围、登录锁定与单会话、监控/管理两种页面布局。其余业务功能尚未实现。
+面向单家道路货运企业、多车队的本科毕业设计。业务工程自任务 01 起建立：当前已有最小工程骨架、`sys_user`/`audit_log` migration、初始管理员建立、登录/退出；任务 02 增加了账号角色、车队授权与数据范围、登录锁定与单会话、监控/管理两种页面布局；任务 03 增加了车辆与终端档案、历史绑定、转队及档案页面。其余业务功能尚未实现。
 
 ## 阅读入口
 
-- [开发任务索引](.scratch/vehicle-monitoring/README.md)：用户已批准的 27 个独立 tickets、直接依赖和验收分工；01、02 已实现，03 与 05 可领取。
+- [开发任务索引](.scratch/vehicle-monitoring/README.md)：用户已批准的 27 个独立 tickets、直接依赖和验收分工；01、02、03 已验收，05 可领取。
 - [车辆监控系统 Spec](.scratch/vehicle-monitoring/spec.md)：用户故事、实现决策与验收场景。
-- [任务 01 验证记录](.scratch/vehicle-monitoring/evidence/01-verification.md)、[任务 02 验证记录](.scratch/vehicle-monitoring/evidence/02-verification.md)：已执行、未执行与已知偏差。
+- [任务 01 验证记录](.scratch/vehicle-monitoring/evidence/01-verification.md)、[任务 02 验证记录](.scratch/vehicle-monitoring/evidence/02-verification.md)、[任务 03 验证记录](.scratch/vehicle-monitoring/evidence/03-verification.md)：已执行、未执行与已知偏差。
 
 - [系统设计方案](docs/design/系统设计方案.md)：技术栈、模块化单体、项目结构、业务规则、数据模型、实施与验收。
 - [方案对齐记录](docs/design/方案对齐.md)：逐轮决策追溯。

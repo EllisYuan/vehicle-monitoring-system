@@ -5,6 +5,7 @@ import com.vms.identity.auth.InvalidCredentialsException;
 import com.vms.identity.auth.LoginRateLimitedException;
 import com.vms.identity.auth.SessionRevokedException;
 import com.vms.identity.security.ForbiddenException;
+import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -69,6 +70,12 @@ public class ApiExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
     public ProblemDetail badRequest(BadRequestException e) {
         return problem(HttpStatus.BAD_REQUEST, e.code(), e.getMessage());
+    }
+
+    @ExceptionHandler(ConcurrencyFailureException.class)
+    public ProblemDetail concurrentChange() {
+        // 死锁与锁等待超时等并发冲突统一为可重试的 409，不暴露内部 SQL 细节
+        return problem(HttpStatus.CONFLICT, "CONCURRENT_CHANGE", "操作与并发修改冲突，请刷新后重试");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

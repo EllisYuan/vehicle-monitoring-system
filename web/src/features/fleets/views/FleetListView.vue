@@ -13,8 +13,24 @@ const fleets = ref<Fleet[]>([])
 const loading = ref(false)
 const error = ref('')
 const notice = ref('')
-const creating = ref(false)
+const busy = ref(false)
 const form = reactive({ fleetCode: '', fleetName: '' })
+const editing = ref<number | null>(null)
+const editedName = ref('')
+
+async function saveName(fleet: Fleet) {
+  if (busy.value || !editedName.value.trim()) return
+  busy.value = true
+  error.value = ''
+  try {
+    await updateFleet(fleet.id, { fleetName: editedName.value.trim() })
+    editing.value = null
+    notice.value = '车队名称已更新'
+    await load()
+  } catch (e) {
+    error.value = errorMessage(e, '车队名称更新失败')
+  } finally { busy.value = false }
+}
 
 const canManage = session.isAdmin
 
@@ -31,10 +47,10 @@ async function load() {
 }
 
 async function submit() {
-  if (creating.value) {
+  if (busy.value) {
     return
   }
-  creating.value = true
+  busy.value = true
   error.value = ''
   notice.value = ''
   try {
@@ -46,11 +62,13 @@ async function submit() {
   } catch (e) {
     error.value = errorMessage(e, '车队创建失败')
   } finally {
-    creating.value = false
+    busy.value = false
   }
 }
 
 async function toggle(fleet: Fleet) {
+  if (busy.value) return
+  busy.value = true
   error.value = ''
   notice.value = ''
   try {
@@ -58,6 +76,8 @@ async function toggle(fleet: Fleet) {
     await load()
   } catch (e) {
     error.value = errorMessage(e, '车队状态更新失败')
+  } finally {
+    busy.value = false
   }
 }
 
@@ -101,9 +121,9 @@ onMounted(load)
         <button
           type="submit"
           data-testid="fleet-create-submit"
-          :disabled="creating"
+          :disabled="busy"
         >
-          {{ creating ? '创建中…' : '新增车队' }}
+          {{ busy ? '创建中…' : '新增车队' }}
         </button>
       </form>
 
@@ -144,13 +164,49 @@ onMounted(load)
             :data-testid="`fleet-row-${fleet.fleetCode}`"
           >
             <td>{{ fleet.fleetCode }}</td>
-            <td>{{ fleet.fleetName }}</td>
+            <td>
+              <form
+                v-if="canManage && editing === fleet.id"
+                @submit.prevent="saveName(fleet)"
+              >
+                <input
+                  v-model="editedName"
+                  aria-label="车队名称"
+                  required
+                  maxlength="128"
+                  data-testid="fleet-edit-name"
+                >
+                <button
+                  :disabled="busy"
+                  data-testid="fleet-edit-save"
+                >
+                  保存名称
+                </button>
+                <button
+                  type="button"
+                  @click="editing = null"
+                >
+                  取消
+                </button>
+              </form>
+              <span v-else>{{ fleet.fleetName }}</span>
+            </td>
             <td>{{ fleet.status === 'ENABLED' ? '启用' : '停用' }}</td>
             <td v-if="canManage">
               <button
                 type="button"
                 class="link-button"
+                :data-testid="`fleet-edit-${fleet.fleetCode}`"
+                :disabled="busy"
+                @click="editing = fleet.id; editedName = fleet.fleetName"
+              >
+                编辑名称
+              </button>
+              <button
+                type="button"
+                class="link-button"
                 :data-testid="`fleet-toggle-${fleet.fleetCode}`"
+                :disabled="busy"
                 @click="toggle(fleet)"
               >
                 {{ fleet.status === 'ENABLED' ? '停用' : '启用' }}

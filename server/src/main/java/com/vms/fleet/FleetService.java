@@ -82,7 +82,7 @@ public class FleetService {
 
     @Transactional
     public Fleet update(UserAccount actor, long fleetId, String fleetName, String status) {
-        Fleet fleet = fleets.selectById(fleetId);
+        Fleet fleet = fleets.selectOne(new LambdaQueryWrapper<Fleet>().eq(Fleet::getId, fleetId).last("FOR UPDATE"));
         if (fleet == null) {
             throw new NotFoundException("FLEET_NOT_FOUND", "车队不存在");
         }

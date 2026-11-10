@@ -1,0 +1,60 @@
+### 2026-11-10 任务03 验证执行记录（Windows 11 / JDK 21.0.9 Alibaba Dragonwell / Maven 3.9.12 / MySQL 8.4 + Redis 8.4 Testcontainers）
+
+环境变量：JAVA_HOME=C:/Users/YuanS/.jdks/dragonwell-ex-21.0.9；Maven Central TLS 中断，使用仓库外临时 settings 指向阿里云镜像（与 01 相同的已知环境限制，项目 POM 未固化镜像）。
+
+$ ./mvnw -s <临时仓库外 settings> -q -DskipTests test-compile
+（无输出，退出码 0）
+
+$ ./mvnw -s <临时仓库外 settings> -B -Dtest=ArchiveFlowTest test
+Migrating schema `vms` to version "1 - identity and audit"
+Migrating schema `vms` to version "2 - fleet and user authorization"
+Migrating schema `vms` to version "3 - login lockout fields"
+Migrating schema `vms` to version "4 - vehicle terminal history"
+Successfully applied 4 migrations to schema `vms`, now at version v4
+初始管理员已建立：archive-admin
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 29.25 s -- in com.vms.fleet.ArchiveFlowTest
+BUILD SUCCESS
+
+$ ./mvnw -s <临时仓库外 settings> -B test
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0 -- in com.vms.fleet.ArchiveFlowTest
+Tests run: 9,  Failures: 0, Errors: 0, Skipped: 0 -- in com.vms.identity.AccountSessionTest
+Tests run: 3,  Failures: 0, Errors: 0, Skipped: 0 -- in com.vms.identity.BootstrapAdminTest
+Tests run: 1,  Failures: 0, Errors: 0, Skipped: 1 -- in com.vms.identity.BrowserFlowTest（按配置跳过，需 -Dvms.browser-tests=true）
+Tests run: 1,  Failures: 0, Errors: 0, Skipped: 0 -- in com.vms.identity.CredentialLogHygieneTest
+Tests run: 9,  Failures: 0, Errors: 0, Skipped: 0 -- in com.vms.identity.FleetAccessTest
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0 -- in com.vms.identity.LoginFlowTest
+Tests run: 5,  Failures: 0, Errors: 0, Skipped: 0 -- in com.vms.identity.LoginLockoutTest
+Tests run: 4,  Failures: 0, Errors: 0, Skipped: 0 -- in com.vms.identity.LoginRateLimitTest
+Tests run: 1,  Failures: 0, Errors: 0, Skipped: 0 -- in com.vms.identity.SchemaUpgradeTest
+Tests run: 1,  Failures: 0, Errors: 0, Skipped: 0 -- in com.vms.identity.SessionExpiryTest
+Tests run: 55, Failures: 0, Errors: 0, Skipped: 1
+BUILD SUCCESS
+
+$ pnpm typecheck   （web/，无输出，退出码 0）
+$ pnpm lint        （web/，0 errors 0 warnings）
+$ pnpm build       （web/，✓ built in 235ms）
+
+第一次浏览器尝试（未指定浏览器路径）失败：Playwright 期望 chromium_headless_shell-1208，本机仅安装 chromium-1234。
+Error: browserType.launch: Executable doesn't exist at ...\ms-playwright\chromium_headless_shell-1208\chrome-headless-shell-win64\chrome-headless-shell.exe
+该失败属于本机浏览器二进制版本不匹配，不是页面断言失败；本轮未执行任何 e2e 断言。
+
+$ VMS_E2E_CHROMIUM=C:/Users/YuanS/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe \
+  ./mvnw -s <临时仓库外 settings> -B -Dtest=BrowserFlowTest -Dvms.browser-tests=true test
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 66.72 s -- in com.vms.identity.BrowserFlowTest
+BUILD SUCCESS
+
+Playwright（真实后端 + Vite dev + Chromium 1234）14 passed (45.0s)：
+  ✓ archives.spec.ts › 管理员通过页面登记、启停、换绑、解绑、转队并保留历史 (17.1s)
+  ✓ archives.spec.ts › 监控员与车队长通过页面只读且按车队限定档案 (5.8s)
+  ✓ layouts.spec.ts › 管理员可切换管理端并维护车队与账号页面
+  ✓ layouts.spec.ts › 管理员改密沿用管理布局，且不能停用自己
+  ✓ layouts.spec.ts › 监控员只有监控导航，不能进入管理端
+  ✓ layouts.spec.ts › 监控员携带 area=admin 进入改密页仍使用监控布局
+  ✓ layouts.spec.ts › 车队长导航不含处置类功能，直接改 URL 也被拒绝
+  ✓ layouts.spec.ts › 后登录替换旧会话并在旧页面给出明确提示
+  ✓ login.spec.ts ×6（未登录重定向、错误凭证、登录退出、过期 token 深链、503 保留 token、退出中断）
+
+截图：web/test-results/archive-history.png（98575 字节同级另有 admin-account-page.png）。已目视检查：区间展示为左闭右开（09:27:32.503–33.304、33:30.304–34.748），车队归属区间保留历史并显示“至今”，终端与车辆操作按钮按管理员权限渲染。
+
+$ docker ps -a --format '{{.Names}}\t{{.Image}}\t{{.Status}}'
+本轮 Testcontainers 容器已全部回收（无 testcontainers/ryuk 残留）；仅剩与本轮无关的既有容器（plp-evidence-mysql、plp-mysql-dev、vms-redis、vms-mysql84、redis-mall），均为先前退出或非本轮启动。

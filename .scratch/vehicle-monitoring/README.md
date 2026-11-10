@@ -4,7 +4,7 @@
 
 所有任务初始为 `Status: open`、`Labels: ready-for-agent`。标签表示任务定义可领取，不表示依赖已完成；领取前检查全部 `Blocked by` 指向任务均为 `resolved`。执行时按仓库规则改为 `claimed`，记录实际结果后再 `resolved`；外部条件未满足时标 `blocked` 并说明原因。
 
-当前进度：01、02 已实现并验收，状态 `resolved`；02全量Maven 45项、Chromium 12项及审阅后复验通过，详见 [02验证记录](evidence/02-verification.md)。03与05依赖已就绪，尚未领取。
+当前进度：01、02、03 已实现并验收，状态 `resolved`；02全量Maven 45项、Chromium 12项及审阅后复验通过，详见 [02验证记录](evidence/02-verification.md)；03 的真实MySQL集成、前端检查与浏览器场景见 [03验证记录](evidence/03-verification.md)。05 依赖已就绪，尚未领取。
 
 ## 任务索引
 

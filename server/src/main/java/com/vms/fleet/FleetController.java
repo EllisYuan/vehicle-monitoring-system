@@ -65,7 +65,7 @@ public class FleetController {
     }
 
     public record UpdateFleetRequest(
-            @Size(max = 128) String fleetName,
+            @Size(max = 128) @Pattern(regexp = "(?s).*\\S.*") String fleetName,
             @Pattern(regexp = "ENABLED|DISABLED") String status) {
     }
 

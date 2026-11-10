@@ -1,12 +1,12 @@
 import { http } from '../../shared/http'
-import type { AccountStatus } from '../fleets/api'
+import type { EnabledStatus } from '../../shared/status'
 import type { RoleCode } from '../identity/store/session'
 
 export interface Account {
   id: number
   username: string
   roleCode: RoleCode
-  status: AccountStatus
+  status: EnabledStatus
   fleetIds: number[]
 }
 
@@ -25,7 +25,7 @@ export async function createAccount(payload: {
   return data
 }
 
-export async function updateAccountStatus(id: number, status: AccountStatus): Promise<Account> {
+export async function updateAccountStatus(id: number, status: EnabledStatus): Promise<Account> {
   const { data } = await http.put<Account>(`/users/${id}/status`, { status })
   return data
 }

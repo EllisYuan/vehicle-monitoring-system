@@ -19,6 +19,7 @@ interface NavItem {
 const monitoringNav: NavItem[] = [
   { label: '实时监控', to: '/', testId: 'nav-monitor-home' },
   { label: '车队', to: '/monitor/fleets', testId: 'nav-fleets' },
+  { label: '车辆与终端', to: '/monitor/archives', testId: 'nav-archives' },
   { label: '轨迹回放', to: '/monitor/tracks', testId: 'nav-tracks' },
   { label: '报警管理', to: '/monitor/alarms', testId: 'nav-alarms' },
   { label: '电子围栏', to: '/monitor/geofences', testId: 'nav-geofences', roles: ['ADMIN', 'MONITOR'] },

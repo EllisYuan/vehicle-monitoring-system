@@ -25,6 +25,12 @@ export const router = createRouter({
       meta: { area: 'monitoring' },
     },
     {
+      path: '/monitor/archives',
+      name: 'monitor-archives',
+      component: () => import('../features/archives/views/ArchiveListView.vue'),
+      meta: { area: 'monitoring' },
+    },
+    {
       path: '/monitor/tracks',
       name: 'tracks',
       component: PlaceholderView,
@@ -101,14 +107,8 @@ export const router = createRouter({
     {
       path: '/admin/archives',
       name: 'admin-archives',
-      component: PlaceholderView,
-      meta: {
-        title: '车辆与终端档案',
-        description: '车辆、终端、司机档案与历史绑定在档案任务中交付。',
-        area: 'admin',
-        roles: ['ADMIN'] satisfies RoleCode[],
-        ticket: '03 车辆、终端档案与历史绑定；04 司机档案',
-      },
+      component: () => import('../features/archives/views/ArchiveListView.vue'),
+      meta: { area: 'admin', roles: ['ADMIN'] satisfies RoleCode[] },
     },
     {
       path: '/admin/alarm-rules',
