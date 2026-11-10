@@ -1,0 +1,1092 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] vehicle-monitoring-server                                          [jar]
+[INFO] vehicle-monitoring-system                                          [pom]
+[INFO] 
+[INFO] ---------------------------< com.vms:server >---------------------------
+[INFO] Building vehicle-monitoring-server 0.1.0-SNAPSHOT                  [1/2]
+[INFO]   from server\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-toolchain) @ server ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ server ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 5 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ server ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ server ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ server ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ server ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.vms.driver.DriverFlowTest
+16:47:39.747 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.driver.DriverFlowTest
+16:47:39.843 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.driver.DriverFlowTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-10T16:47:40.313+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] com.vms.driver.DriverFlowTest            : Starting DriverFlowTest using Java 21.0.9 with PID 17324 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server)
+2026-11-10T16:47:40.315+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] com.vms.driver.DriverFlowTest            : No active profile set, falling back to 1 default profile: "default"
+2026-11-10T16:47:41.477+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-10T16:47:41.482+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-10T16:47:41.529+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 0 Redis repository interfaces.
+2026-11-10T16:47:42.588+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-10T16:47:42.594+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-10T16:47:42.752+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-10T16:47:43.258+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-10T16:47:44.130+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-10T16:47:44.132+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-10T16:47:44.160+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-10T16:47:44.587+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-10T16:47:44.701+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2026-11-10T16:47:44.933+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 6e0849db24d63abe626ad6c5a02e08eb697f1e0c865dcce07c4d642e44853b29
+2026-11-10T16:47:45.711+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT1.1233817S
+2026-11-10T16:47:45.723+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-10T16:47:45.724+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-10T16:47:45.725+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-10T16:47:45.728+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-10T16:47:45.949+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: 4f6cb681337ecb715b700b2fa44234a46e9e46cdb0a62e6593f25367107c17c9
+2026-11-10T16:47:46.467+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:45169/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-10T16:48:00.718+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT14.99015S
+2026-11-10T16:48:00.719+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:45169/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-10T16:48:00.720+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-10T16:48:00.860+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: ae9305cab7705133a078b9fb5b5a86d88a854b947c0500a34869628bd17cfb60
+2026-11-10T16:48:01.477+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.7565404S
+2026-11-10T16:48:02.210+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45169/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:48:02.817+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-10T16:48:02.824+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.038s)
+2026-11-10T16:48:02.863+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-10T16:48:02.975+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-10T16:48:02.998+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-10T16:48:03.119+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-10T16:48:03.223+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-10T16:48:03.318+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-10T16:48:03.498+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-10T16:48:03.602+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms`, now at version v5 (execution time 00:00.383s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-10T16:48:05.899+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@7c8d5312
+2026-11-10T16:48:06.251+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-10T16:48:06.252+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-10T16:48:06.256+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-11-10T16:48:06.317+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] com.vms.driver.DriverFlowTest            : Started DriverFlowTest in 26.406 seconds (process running for 28.329)
+2026-11-10T16:48:06.330+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-10T16:48:06.379+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@81f9b01
+2026-11-10T16:48:06.381+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-10T16:48:06.709+08:00  INFO 17324 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：driver-admin
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 36.35 s -- in com.vms.driver.DriverFlowTest
+[INFO] Running com.vms.fleet.ArchiveFlowTest
+16:48:18.340 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.fleet.ArchiveFlowTest
+16:48:18.428 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.fleet.ArchiveFlowTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-10T16:48:18.834+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] com.vms.fleet.ArchiveFlowTest            : Starting ArchiveFlowTest using Java 21.0.9 with PID 39492 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server)
+2026-11-10T16:48:18.835+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] com.vms.fleet.ArchiveFlowTest            : No active profile set, falling back to 1 default profile: "default"
+2026-11-10T16:48:19.817+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-10T16:48:19.821+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-10T16:48:19.861+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 0 Redis repository interfaces.
+2026-11-10T16:48:20.773+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-10T16:48:20.782+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-10T16:48:20.924+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-10T16:48:21.502+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-10T16:48:22.021+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-10T16:48:22.023+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-10T16:48:22.042+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-10T16:48:22.360+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-10T16:48:22.452+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2026-11-10T16:48:22.689+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 2da710d2db29302a13761c422935d14b2c2189b2287b450caf18bb4844bcb734
+2026-11-10T16:48:23.704+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT1.3439357S
+2026-11-10T16:48:23.712+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-10T16:48:23.713+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-10T16:48:23.713+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-10T16:48:23.715+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-10T16:48:24.080+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: be88d45997224a76f12088473210cdd29b1ebebdb5b6093f069ccb23ba6d7a35
+2026-11-10T16:48:24.807+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:46531/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-10T16:48:39.810+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT16.0947989S
+2026-11-10T16:48:39.811+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:46531/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-10T16:48:39.812+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-10T16:48:39.887+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: e6784b62f38e936984fba0e9ea0d116b23c0b3b60fa3d8b36bd2d95ee4612331
+2026-11-10T16:48:40.479+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.6675169S
+2026-11-10T16:48:41.060+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:46531/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:48:41.517+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-10T16:48:41.523+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.028s)
+2026-11-10T16:48:41.555+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-10T16:48:41.658+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-10T16:48:41.676+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-10T16:48:41.782+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-10T16:48:41.874+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-10T16:48:41.961+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-10T16:48:42.113+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-10T16:48:42.220+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms`, now at version v5 (execution time 00:00.348s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-10T16:48:44.429+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@1729ec00
+2026-11-10T16:48:44.848+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-10T16:48:44.848+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-10T16:48:44.853+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-11-10T16:48:44.929+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] com.vms.fleet.ArchiveFlowTest            : Started ArchiveFlowTest in 26.442 seconds (process running for 28.027)
+2026-11-10T16:48:44.940+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-10T16:48:44.991+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@796687de
+2026-11-10T16:48:44.994+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-10T16:48:45.322+08:00  INFO 39492 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：archive-admin
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 36.84 s -- in com.vms.fleet.ArchiveFlowTest
+[INFO] Running com.vms.identity.AccountSessionTest
+16:48:57.129 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.AccountSessionTest
+16:48:57.227 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.AccountSessionTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-10T16:48:57.663+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] com.vms.identity.AccountSessionTest      : Starting AccountSessionTest using Java 21.0.9 with PID 15140 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server)
+2026-11-10T16:48:57.670+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] com.vms.identity.AccountSessionTest      : No active profile set, falling back to 1 default profile: "default"
+2026-11-10T16:48:58.621+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-10T16:48:58.633+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-10T16:48:58.667+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
+2026-11-10T16:48:59.419+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-10T16:48:59.429+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-10T16:48:59.559+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-10T16:49:00.045+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-10T16:49:00.636+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-10T16:49:00.637+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-10T16:49:00.661+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-10T16:49:01.015+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-10T16:49:01.121+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2026-11-10T16:49:01.297+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 8332b6d46ef99592fa99a5702b22474769b4d06e0e0c8203d78f3fbc8f81e4c4
+2026-11-10T16:49:01.902+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT0.8868103S
+2026-11-10T16:49:01.909+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-10T16:49:01.910+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-10T16:49:01.911+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-10T16:49:01.913+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-10T16:49:02.017+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: ff6453980eeb9d5a6a86e0245fadeb0b2f5b4bfce986cf36f83c75cda9670c48
+2026-11-10T16:49:02.491+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:45119/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-10T16:49:15.039+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT13.1261107S
+2026-11-10T16:49:15.039+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:45119/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-10T16:49:15.040+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-10T16:49:15.130+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: 4d82e44ef54e922e53c981402230b21e805800a41bd9bc569775a08d4d389dc8
+2026-11-10T16:49:15.759+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.7188121S
+2026-11-10T16:49:16.395+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45119/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:49:16.897+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-10T16:49:16.904+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.037s)
+2026-11-10T16:49:16.935+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-10T16:49:17.022+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-10T16:49:17.041+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-10T16:49:17.143+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-10T16:49:17.234+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-10T16:49:17.325+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-10T16:49:17.485+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-10T16:49:17.591+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms`, now at version v5 (execution time 00:00.353s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-10T16:49:19.862+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@5412bfea
+2026-11-10T16:49:20.390+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-10T16:49:20.390+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-10T16:49:20.396+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-11-10T16:49:20.482+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] com.vms.identity.AccountSessionTest      : Started AccountSessionTest in 23.182 seconds (process running for 24.421)
+2026-11-10T16:49:20.497+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-10T16:49:20.567+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@67887bf2
+2026-11-10T16:49:20.570+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-10T16:49:20.915+08:00  INFO 15140 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：bootstrap-admin
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-11-10T16:49:25.838+08:00  WARN 15140 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 subject-1，原因 BAD_CREDENTIALS
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 43.43 s -- in com.vms.identity.AccountSessionTest
+[INFO] Running com.vms.identity.BootstrapAdminTest
+16:49:42.978 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.BootstrapAdminTest]: BootstrapAdminTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:49:43.154 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.BootstrapAdminTest
+16:49:43.254 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.BootstrapAdminTest]: BootstrapAdminTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:49:43.263 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.BootstrapAdminTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-10T16:49:43.717+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] com.vms.identity.BootstrapAdminTest      : Starting BootstrapAdminTest using Java 21.0.9 with PID 32340 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server)
+2026-11-10T16:49:43.718+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] com.vms.identity.BootstrapAdminTest      : No active profile set, falling back to 1 default profile: "default"
+2026-11-10T16:49:44.938+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-10T16:49:44.944+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-10T16:49:45.008+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 33 ms. Found 0 Redis repository interfaces.
+2026-11-10T16:49:45.984+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-10T16:49:45.989+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-10T16:49:46.090+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-10T16:49:46.527+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-10T16:49:47.335+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-10T16:49:47.339+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-10T16:49:47.373+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-10T16:49:47.823+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-10T16:49:47.969+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2026-11-10T16:49:48.153+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 5e264ba85b82e6bde5b06a3e94eee36a1d54a60ef6ed65b04077c623c563e37e
+2026-11-10T16:49:48.828+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT1.004982S
+2026-11-10T16:49:48.842+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-10T16:49:48.843+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-10T16:49:48.845+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-10T16:49:48.849+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-10T16:49:49.006+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: 13501c1bc59b57257e80326ff1a05ce2677edc023868f28997fd028e348e5dfa
+2026-11-10T16:49:49.547+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:45645/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-10T16:50:00.738+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT11.8885818S
+2026-11-10T16:50:00.738+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:45645/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-10T16:50:00.739+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-10T16:50:00.810+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: 3c1d9eab75659fe44c545224b34ca54f2e0204677be76e3353ac45228383e712
+2026-11-10T16:50:01.433+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.693898S
+2026-11-10T16:50:02.102+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45645/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:50:02.768+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-10T16:50:02.775+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.040s)
+2026-11-10T16:50:02.811+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-10T16:50:02.916+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-10T16:50:02.940+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-10T16:50:03.067+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-10T16:50:03.167+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-10T16:50:03.263+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-10T16:50:03.451+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-10T16:50:03.557+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms`, now at version v5 (execution time 00:00.423s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-10T16:50:06.144+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@383864d5
+2026-11-10T16:50:06.565+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] com.vms.identity.BootstrapAdminTest      : Started BootstrapAdminTest in 23.234 seconds (process running for 24.634)
+2026-11-10T16:50:06.578+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-10T16:50:06.635+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@59fa5a39
+2026-11-10T16:50:06.638+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-10T16:50:06.978+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：bootstrap-admin
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-11-10T16:50:07.929+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45645/vms_bootstrap_c802a118cd7b4a22b3c6472bf6dc3927?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:50:08.030+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms_bootstrap_c802a118cd7b4a22b3c6472bf6dc3927`.`flyway_schema_history` does not exist yet
+2026-11-10T16:50:08.034+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.016s)
+2026-11-10T16:50:08.063+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms_bootstrap_c802a118cd7b4a22b3c6472bf6dc3927`.`flyway_schema_history` ...
+2026-11-10T16:50:08.143+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms_bootstrap_c802a118cd7b4a22b3c6472bf6dc3927`: << Empty Schema >>
+2026-11-10T16:50:08.153+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_bootstrap_c802a118cd7b4a22b3c6472bf6dc3927` to version "1 - identity and audit"
+2026-11-10T16:50:08.283+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_bootstrap_c802a118cd7b4a22b3c6472bf6dc3927` to version "2 - fleet and user authorization"
+2026-11-10T16:50:08.384+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_bootstrap_c802a118cd7b4a22b3c6472bf6dc3927` to version "3 - login lockout fields"
+2026-11-10T16:50:08.474+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_bootstrap_c802a118cd7b4a22b3c6472bf6dc3927` to version "4 - vehicle terminal history"
+2026-11-10T16:50:08.664+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_bootstrap_c802a118cd7b4a22b3c6472bf6dc3927` to version "5 - driver and association history"
+2026-11-10T16:50:08.775+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms_bootstrap_c802a118cd7b4a22b3c6472bf6dc3927`, now at version v5 (execution time 00:00.446s)
+2026-11-10T16:50:09.235+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：bootstrap-admin
+2026-11-10T16:50:09.257+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 账号已存在，跳过初始管理员建立
+2026-11-10T16:50:09.309+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 账号已存在，跳过初始管理员建立
+2026-11-10T16:50:09.919+08:00  INFO 32340 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 账号已存在，跳过初始管理员建立
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 27.20 s -- in com.vms.identity.BootstrapAdminTest
+[INFO] Running com.vms.identity.BrowserFlowTest
+16:50:12.904 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.BrowserFlowTest]: BrowserFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:50:13.135 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.BrowserFlowTest
+16:50:13.271 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.BrowserFlowTest]: BrowserFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:50:13.284 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.BrowserFlowTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-10T16:50:13.855+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] com.vms.identity.BrowserFlowTest         : Starting BrowserFlowTest using Java 21.0.9 with PID 38840 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server)
+2026-11-10T16:50:13.857+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] com.vms.identity.BrowserFlowTest         : No active profile set, falling back to 1 default profile: "default"
+2026-11-10T16:50:14.823+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-10T16:50:14.826+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-10T16:50:14.868+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 Redis repository interfaces.
+2026-11-10T16:50:16.006+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-11-10T16:50:16.037+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-10T16:50:16.038+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-10T16:50:16.151+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2255 ms
+2026-11-10T16:50:16.347+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-10T16:50:16.351+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-10T16:50:16.398+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-10T16:50:16.801+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-10T16:50:17.456+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-10T16:50:17.458+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-10T16:50:17.483+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-10T16:50:17.849+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-10T16:50:17.959+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2026-11-10T16:50:18.145+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: dd5434548903e3c04d138fe16fdb739271bef0a925eee261f3df19df6db794b8
+2026-11-10T16:50:18.877+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT1.0274003S
+2026-11-10T16:50:18.888+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-10T16:50:18.889+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-10T16:50:18.889+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-10T16:50:18.892+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-10T16:50:19.047+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: bc53ee3ce2b44407d73a53738554adf4e01445a0879080a7c786f930f73f79d7
+2026-11-10T16:50:19.586+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:46501/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-10T16:50:30.485+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT11.5934467S
+2026-11-10T16:50:30.486+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:46501/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-10T16:50:30.486+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-10T16:50:30.569+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: 3aeee655024e48e952616d3904e48615459b699df89475feaa3937e518e47799
+2026-11-10T16:50:31.285+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.798341S
+2026-11-10T16:50:32.005+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:46501/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:50:32.681+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-10T16:50:32.688+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.042s)
+2026-11-10T16:50:32.720+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-10T16:50:32.833+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-10T16:50:32.856+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-10T16:50:32.981+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-10T16:50:33.108+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-10T16:50:33.238+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-10T16:50:33.465+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-10T16:50:33.615+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms`, now at version v5 (execution time 00:00.495s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-10T16:50:36.007+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@7ca8d498
+2026-11-10T16:50:36.372+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 1868 (http) with context path '/'
+2026-11-10T16:50:36.390+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] com.vms.identity.BrowserFlowTest         : Started BrowserFlowTest in 22.953 seconds (process running for 24.742)
+2026-11-10T16:50:36.407+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-10T16:50:36.500+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@156b31d
+2026-11-10T16:50:36.503+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-10T16:50:36.936+08:00  INFO 38840 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：browser-admin
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-11-10T16:50:44.842+08:00  INFO 38840 --- [vehicle-monitoring-system] [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-10T16:50:44.842+08:00  INFO 38840 --- [vehicle-monitoring-system] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-10T16:50:44.844+08:00  INFO 38840 --- [vehicle-monitoring-system] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-11-10T16:51:40.308+08:00  WARN 38840 --- [vehicle-monitoring-system] [o-auto-1-exec-7] com.vms.identity.auth.AuthService        : 登录失败：账号 browser-admin，原因 BAD_CREDENTIALS
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 93.56 s -- in com.vms.identity.BrowserFlowTest
+[INFO] Running com.vms.identity.CredentialLogHygieneTest
+16:51:49.236 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.CredentialLogHygieneTest]: CredentialLogHygieneTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:51:49.548 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.CredentialLogHygieneTest
+16:51:49.681 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.CredentialLogHygieneTest]: CredentialLogHygieneTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:51:49.694 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.CredentialLogHygieneTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-10T16:51:50.320+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] c.vms.identity.CredentialLogHygieneTest  : Starting CredentialLogHygieneTest using Java 21.0.9 with PID 33596 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server)
+2026-11-10T16:51:50.326+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] c.vms.identity.CredentialLogHygieneTest  : No active profile set, falling back to 1 default profile: "default"
+2026-11-10T16:51:51.761+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-10T16:51:51.765+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-10T16:51:51.832+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 26 ms. Found 0 Redis repository interfaces.
+2026-11-10T16:51:53.063+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-10T16:51:53.074+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-10T16:51:53.266+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-10T16:51:53.985+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-10T16:51:54.833+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-10T16:51:54.836+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-10T16:51:54.867+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-10T16:51:55.253+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-10T16:51:55.403+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2026-11-10T16:51:55.622+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 2c77f5839e9110cbf4bbba6ffb711ad7af8406c3d27af8fdcb6aa0ba4d4f9c03
+2026-11-10T16:51:56.428+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT1.1743543S
+2026-11-10T16:51:56.440+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-10T16:51:56.441+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-10T16:51:56.442+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-10T16:51:56.444+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-10T16:51:56.625+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: acc51a5cfcb5588b021c7b98c886956a5df53b0f07930f7c2063f80cd6d96039
+2026-11-10T16:51:57.190+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:44625/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-10T16:52:08.796+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT12.3526267S
+2026-11-10T16:52:08.797+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:44625/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-10T16:52:08.797+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-10T16:52:08.873+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: 12965667c6b2920753b029e9b31d1aaa97d8beab600896f7c141e15bb9d14710
+2026-11-10T16:52:09.568+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.7707523S
+2026-11-10T16:52:10.565+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:44625/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:52:11.307+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-10T16:52:11.315+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.044s)
+2026-11-10T16:52:11.349+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-10T16:52:11.473+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-10T16:52:11.498+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-10T16:52:11.612+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-10T16:52:11.703+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-10T16:52:11.786+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-10T16:52:11.942+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-10T16:52:12.078+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms`, now at version v5 (execution time 00:00.372s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-10T16:52:14.890+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@692e028d
+2026-11-10T16:52:15.386+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-10T16:52:15.387+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-10T16:52:15.392+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-11-10T16:52:15.490+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] c.vms.identity.CredentialLogHygieneTest  : Started CredentialLogHygieneTest in 25.685 seconds (process running for 27.507)
+2026-11-10T16:52:15.508+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-10T16:52:15.574+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@219c10c2
+2026-11-10T16:52:15.578+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-10T16:52:15.978+08:00  INFO 33596 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：bootstrap-admin
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-11-10T16:52:17.636+08:00  WARN 33596 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 bootstrap-admin，原因 BAD_CREDENTIALS
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 29.84 s -- in com.vms.identity.CredentialLogHygieneTest
+[INFO] Running com.vms.identity.FleetAccessTest
+16:52:21.386 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.FleetAccessTest]: FleetAccessTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:52:21.562 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.FleetAccessTest
+16:52:21.648 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.FleetAccessTest]: FleetAccessTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:52:21.657 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.FleetAccessTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-10T16:52:22.162+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] com.vms.identity.FleetAccessTest         : Starting FleetAccessTest using Java 21.0.9 with PID 40976 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server)
+2026-11-10T16:52:22.167+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] com.vms.identity.FleetAccessTest         : No active profile set, falling back to 1 default profile: "default"
+2026-11-10T16:52:23.291+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-10T16:52:23.294+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-10T16:52:23.346+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 26 ms. Found 0 Redis repository interfaces.
+2026-11-10T16:52:24.372+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-10T16:52:24.385+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-10T16:52:24.565+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-10T16:52:25.077+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-10T16:52:25.684+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-10T16:52:25.686+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-10T16:52:25.709+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-10T16:52:26.067+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-10T16:52:26.171+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2026-11-10T16:52:26.343+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: f14db43d26fe93f42b53096398f49c3c31b9ae551c8de5f74ae5d300d70878b1
+2026-11-10T16:52:27.021+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT0.9542007S
+2026-11-10T16:52:27.032+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-10T16:52:27.033+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-10T16:52:27.034+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-10T16:52:27.036+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-10T16:52:27.188+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: 3aadcb7f9580421e56cfb93316f1a7eb8bedd7babf26d428070f3d41d8345bd4
+2026-11-10T16:52:27.670+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:45267/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-10T16:52:37.703+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT10.6665499S
+2026-11-10T16:52:37.704+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:45267/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-10T16:52:37.705+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-10T16:52:37.781+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: 99e76af6bef378a67e9a88775d0a75797815489ee9caf9a10d7ed7287d1f36a4
+2026-11-10T16:52:38.450+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.7446372S
+2026-11-10T16:52:39.219+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45267/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:52:39.987+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-10T16:52:39.996+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.054s)
+2026-11-10T16:52:40.034+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-10T16:52:40.159+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-10T16:52:40.181+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-10T16:52:40.309+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-10T16:52:40.417+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-10T16:52:40.520+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-10T16:52:40.698+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-10T16:52:40.824+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms`, now at version v5 (execution time 00:00.428s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-10T16:52:43.208+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@44a6a68e
+2026-11-10T16:52:43.624+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-10T16:52:43.624+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-10T16:52:43.628+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-11-10T16:52:43.693+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] com.vms.identity.FleetAccessTest         : Started FleetAccessTest in 21.949 seconds (process running for 23.307)
+2026-11-10T16:52:43.717+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-10T16:52:43.764+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@46cb9794
+2026-11-10T16:52:43.767+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-10T16:52:44.092+08:00  INFO 40976 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：bootstrap-admin
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 38.96 s -- in com.vms.identity.FleetAccessTest
+[INFO] Running com.vms.identity.LoginFlowTest
+16:53:02.958 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.LoginFlowTest]: LoginFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:53:03.161 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.LoginFlowTest
+16:53:03.262 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.LoginFlowTest]: LoginFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:53:03.274 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.LoginFlowTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-10T16:53:03.817+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] com.vms.identity.LoginFlowTest           : Starting LoginFlowTest using Java 21.0.9 with PID 41284 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server)
+2026-11-10T16:53:03.818+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] com.vms.identity.LoginFlowTest           : No active profile set, falling back to 1 default profile: "default"
+2026-11-10T16:53:04.988+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-10T16:53:04.992+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-10T16:53:05.056+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 0 Redis repository interfaces.
+2026-11-10T16:53:06.184+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-10T16:53:06.194+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-10T16:53:06.342+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-10T16:53:06.852+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-10T16:53:07.455+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-10T16:53:07.457+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-10T16:53:07.486+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-10T16:53:07.854+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-10T16:53:07.969+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2026-11-10T16:53:08.172+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 262b56eb9b63938dc274f9ecad5f0f711680c935f1cf12f29cb3f06ca4b9cd39
+2026-11-10T16:53:08.925+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT1.0704595S
+2026-11-10T16:53:08.938+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-10T16:53:08.938+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-10T16:53:08.939+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-10T16:53:08.943+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-10T16:53:09.112+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: 56a12fe60e47ef4b13bad1f999acc6170d8e173be7b99e4951bd27b0624a9708
+2026-11-10T16:53:09.659+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:45465/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-10T16:53:22.507+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT13.5637972S
+2026-11-10T16:53:22.507+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:45465/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-10T16:53:22.508+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-10T16:53:22.750+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: 712314fbbe21bf06f0021cc959020ac8de8a9b8b682d3f7e907bb67be14ab7e7
+2026-11-10T16:53:23.430+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.922479S
+2026-11-10T16:53:24.279+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45465/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:53:25.039+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-10T16:53:25.047+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.044s)
+2026-11-10T16:53:25.087+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-10T16:53:25.215+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-10T16:53:25.242+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-10T16:53:25.473+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-10T16:53:25.629+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-10T16:53:25.798+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-10T16:53:26.040+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-10T16:53:26.216+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms`, now at version v5 (execution time 00:00.742s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-10T16:53:28.805+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@615e3f51
+2026-11-10T16:53:29.338+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-10T16:53:29.338+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-10T16:53:29.343+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-11-10T16:53:29.439+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] com.vms.identity.LoginFlowTest           : Started LoginFlowTest in 26.078 seconds (process running for 27.622)
+2026-11-10T16:53:29.460+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-10T16:53:29.531+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@44252e9b
+2026-11-10T16:53:29.533+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-10T16:53:29.888+08:00  INFO 41284 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：bootstrap-admin
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-11-10T16:53:31.764+08:00  WARN 41284 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 admin，原因 UNKNOWN_ACCOUNT
+2026-11-10T16:53:32.194+08:00  WARN 41284 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 admin，原因 UNKNOWN_ACCOUNT
+2026-11-10T16:53:32.568+08:00  WARN 41284 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 admin，原因 UNKNOWN_ACCOUNT
+2026-11-10T16:53:32.951+08:00  WARN 41284 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 admin，原因 UNKNOWN_ACCOUNT
+2026-11-10T16:53:35.181+08:00  WARN 41284 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 bootstrap-admin，原因 BAD_CREDENTIALS
+2026-11-10T16:53:35.548+08:00  WARN 41284 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 no-such-account，原因 UNKNOWN_ACCOUNT
+2026-11-10T16:53:35.913+08:00  WARN 41284 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 bootstrap-admin，原因 BAD_CREDENTIALS
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 34.11 s -- in com.vms.identity.LoginFlowTest
+[INFO] Running com.vms.identity.LoginLockoutTest
+16:53:39.861 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.LoginLockoutTest
+16:53:39.974 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.LoginLockoutTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-10T16:53:40.494+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.LoginLockoutTest        : Starting LoginLockoutTest using Java 21.0.9 with PID 40004 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server)
+2026-11-10T16:53:40.496+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.LoginLockoutTest        : No active profile set, falling back to 1 default profile: "default"
+2026-11-10T16:53:41.817+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-10T16:53:41.821+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-10T16:53:41.890+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 0 Redis repository interfaces.
+2026-11-10T16:53:42.921+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-10T16:53:42.929+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-10T16:53:43.084+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-10T16:53:43.759+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-10T16:53:44.449+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-10T16:53:44.451+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-10T16:53:44.489+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-10T16:53:44.836+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-10T16:53:44.956+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2026-11-10T16:53:45.133+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: d6fcd623456bd0de71ab229959233a28418f73131f566fe9de3b8446a6a4b7fd
+2026-11-10T16:53:45.879+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT1.0429577S
+2026-11-10T16:53:45.892+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-10T16:53:45.893+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-10T16:53:45.894+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-10T16:53:45.898+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-10T16:53:46.039+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: 47b275aa70015061f7ba97b008cba4fdb72d88efe7ebcc6816e73fbeed790659
+2026-11-10T16:53:46.639+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:44751/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-10T16:53:59.351+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT13.4537314S
+2026-11-10T16:53:59.352+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:44751/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-10T16:53:59.353+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-10T16:53:59.417+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: 278381ebff1b8b60c9e834ea55290ab99c02560164ff2346817d56392777e21e
+2026-11-10T16:54:00.010+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.6571291S
+2026-11-10T16:54:00.620+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:44751/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:54:01.221+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-10T16:54:01.230+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.042s)
+2026-11-10T16:54:01.276+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-10T16:54:01.443+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-10T16:54:01.461+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-10T16:54:01.568+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-10T16:54:01.659+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-10T16:54:01.768+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-10T16:54:01.961+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-10T16:54:02.078+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms`, now at version v5 (execution time 00:00.407s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-10T16:54:04.221+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@6438a7fe
+2026-11-10T16:54:04.645+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-10T16:54:04.646+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-10T16:54:04.652+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-11-10T16:54:04.737+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.LoginLockoutTest        : Started LoginLockoutTest in 24.671 seconds (process running for 26.211)
+2026-11-10T16:54:04.763+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-10T16:54:04.817+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@45ed58b
+2026-11-10T16:54:04.821+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-10T16:54:05.175+08:00  INFO 40004 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：bootstrap-admin
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-11-10T16:54:08.164+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:08.485+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:08.768+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:09.074+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:09.380+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS_LOCKED
+2026-11-10T16:54:10.374+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:10.728+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:11.122+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:11.503+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:11.868+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS_LOCKED
+2026-11-10T16:54:12.184+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:12.531+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:12.849+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:13.219+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:14.546+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:14.818+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:15.088+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:15.374+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:15.916+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:16.205+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:16.551+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:16.896+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:17.584+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:17.913+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:18.254+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:18.559+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:18.854+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS_LOCKED
+2026-11-10T16:54:18.870+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 LOCKED
+2026-11-10T16:54:18.882+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 LOCKED
+2026-11-10T16:54:20.279+08:00  WARN 40004 --- [vehicle-monitoring-system] [pool-4-thread-3] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:20.283+08:00  WARN 40004 --- [vehicle-monitoring-system] [pool-4-thread-9] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:20.284+08:00  WARN 40004 --- [vehicle-monitoring-system] [pool-4-thread-7] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:20.290+08:00  WARN 40004 --- [vehicle-monitoring-system] [pool-4-thread-1] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:20.296+08:00  WARN 40004 --- [vehicle-monitoring-system] [pool-4-thread-2] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS_LOCKED
+2026-11-10T16:54:20.297+08:00  WARN 40004 --- [vehicle-monitoring-system] [pool-4-thread-5] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS_LOCKED
+2026-11-10T16:54:20.297+08:00  WARN 40004 --- [vehicle-monitoring-system] [pool-4-thread-4] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS_LOCKED
+2026-11-10T16:54:20.298+08:00  WARN 40004 --- [vehicle-monitoring-system] [ool-4-thread-10] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS_LOCKED
+2026-11-10T16:54:20.298+08:00  WARN 40004 --- [vehicle-monitoring-system] [pool-4-thread-6] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS_LOCKED
+2026-11-10T16:54:20.298+08:00  WARN 40004 --- [vehicle-monitoring-system] [pool-4-thread-8] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS_LOCKED
+2026-11-10T16:54:20.324+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 LOCKED
+2026-11-10T16:54:21.594+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:21.862+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:22.127+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:22.390+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS
+2026-11-10T16:54:22.661+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 BAD_CREDENTIALS_LOCKED
+2026-11-10T16:54:22.676+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 LOCKED
+2026-11-10T16:54:22.687+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 lockme，原因 LOCKED
+2026-11-10T16:54:22.955+08:00  WARN 40004 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 no-such-account，原因 UNKNOWN_ACCOUNT
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 43.64 s -- in com.vms.identity.LoginLockoutTest
+[INFO] Running com.vms.identity.LoginRateLimitTest
+16:54:25.496 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.LoginRateLimitTest]: LoginRateLimitTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:54:25.666 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.LoginRateLimitTest
+16:54:25.749 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.LoginRateLimitTest]: LoginRateLimitTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:54:25.757 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.LoginRateLimitTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-10T16:54:26.205+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] com.vms.identity.LoginRateLimitTest      : Starting LoginRateLimitTest using Java 21.0.9 with PID 21228 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server)
+2026-11-10T16:54:26.207+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] com.vms.identity.LoginRateLimitTest      : No active profile set, falling back to 1 default profile: "default"
+2026-11-10T16:54:27.283+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-10T16:54:27.286+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-10T16:54:27.327+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 0 Redis repository interfaces.
+2026-11-10T16:54:28.151+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-10T16:54:28.166+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-10T16:54:28.348+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-10T16:54:28.923+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-10T16:54:29.617+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-10T16:54:29.619+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-10T16:54:29.648+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-10T16:54:29.985+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-10T16:54:30.071+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2026-11-10T16:54:30.216+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 2f16cb125410b4d5836dd63cc976b09fc130d20ab775ce8a3603a0c20944a7ac
+2026-11-10T16:54:30.960+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT0.9755021S
+2026-11-10T16:54:30.970+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-10T16:54:30.971+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-10T16:54:30.972+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-10T16:54:30.974+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-10T16:54:31.118+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: 07a5edabe262d8707dfede86a30670d5c25ba4e96bad4b79ecc840fa0d79eadf
+2026-11-10T16:54:31.605+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:45383/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-10T16:54:45.685+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT14.7113011S
+2026-11-10T16:54:45.686+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:45383/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-10T16:54:45.687+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-10T16:54:45.892+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: dd17cd830ae0ec2175edcf72a40cc4c91ef2cb233f6d9bdd206d12000d4a9d14
+2026-11-10T16:54:46.628+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.9405606S
+2026-11-10T16:54:47.381+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45383/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:54:47.915+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-10T16:54:47.920+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.028s)
+2026-11-10T16:54:47.949+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-10T16:54:48.130+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-10T16:54:48.146+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-10T16:54:48.305+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-10T16:54:48.402+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-10T16:54:48.580+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-10T16:54:48.861+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-10T16:54:49.100+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms`, now at version v5 (execution time 00:00.676s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-10T16:54:52.064+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@5c8e67b9
+2026-11-10T16:54:52.643+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-10T16:54:52.644+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-10T16:54:52.652+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 5 ms
+2026-11-10T16:54:52.752+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] com.vms.identity.LoginRateLimitTest      : Started LoginRateLimitTest in 26.923 seconds (process running for 28.179)
+2026-11-10T16:54:52.770+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-10T16:54:52.841+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3c2188b0
+2026-11-10T16:54:52.845+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-10T16:54:53.246+08:00  INFO 21228 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：bootstrap-admin
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-11-10T16:54:55.495+08:00  WARN 21228 --- [vehicle-monitoring-system] [pool-4-thread-7] com.vms.identity.auth.AuthService        : 登录失败：账号 unknown-6，原因 UNKNOWN_ACCOUNT
+2026-11-10T16:54:55.496+08:00  WARN 21228 --- [vehicle-monitoring-system] [pool-4-thread-4] com.vms.identity.auth.AuthService        : 登录失败：账号 unknown-3，原因 UNKNOWN_ACCOUNT
+2026-11-10T16:54:55.497+08:00  WARN 21228 --- [vehicle-monitoring-system] [pool-4-thread-2] com.vms.identity.auth.AuthService        : 登录失败：账号 unknown-1，原因 UNKNOWN_ACCOUNT
+2026-11-10T16:54:55.833+08:00  WARN 21228 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 nobody，原因 UNKNOWN_ACCOUNT
+2026-11-10T16:54:56.188+08:00  WARN 21228 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 nobody，原因 UNKNOWN_ACCOUNT
+2026-11-10T16:54:56.525+08:00  WARN 21228 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 nobody，原因 UNKNOWN_ACCOUNT
+2026-11-10T16:54:58.865+08:00  WARN 21228 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 bootstrap-admin，原因 BAD_CREDENTIALS
+2026-11-10T16:54:59.237+08:00  WARN 21228 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 bootstrap-admin，原因 BAD_CREDENTIALS
+2026-11-10T16:54:59.591+08:00  WARN 21228 --- [vehicle-monitoring-system] [           main] com.vms.identity.auth.AuthService        : 登录失败：账号 bootstrap-admin，原因 BAD_CREDENTIALS
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 34.42 s -- in com.vms.identity.LoginRateLimitTest
+[INFO] Running com.vms.identity.SchemaUpgradeTest
+16:55:02.438 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.SchemaUpgradeTest]: SchemaUpgradeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:55:02.646 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.SchemaUpgradeTest
+16:55:02.757 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.SchemaUpgradeTest]: SchemaUpgradeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:55:02.766 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.SchemaUpgradeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-10T16:55:03.348+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] com.vms.identity.SchemaUpgradeTest       : Starting SchemaUpgradeTest using Java 21.0.9 with PID 38728 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server)
+2026-11-10T16:55:03.351+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] com.vms.identity.SchemaUpgradeTest       : No active profile set, falling back to 1 default profile: "default"
+2026-11-10T16:55:04.431+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-10T16:55:04.435+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-10T16:55:04.483+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 0 Redis repository interfaces.
+2026-11-10T16:55:05.678+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-10T16:55:05.684+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-10T16:55:05.811+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-10T16:55:06.265+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-10T16:55:06.980+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-10T16:55:06.982+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-10T16:55:07.007+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-10T16:55:07.383+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-10T16:55:07.522+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2026-11-10T16:55:07.721+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 35a159b6737165f850f600ee44363ead90038e4507e4f98c8d7cc5c1027f574e
+2026-11-10T16:55:08.427+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT1.0436118S
+2026-11-10T16:55:08.439+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-10T16:55:08.439+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-10T16:55:08.440+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-10T16:55:08.444+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-10T16:55:08.628+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: d413fb75dddcc63bd42279df581de716a5a35267aa1a45297ffe50978431a225
+2026-11-10T16:55:09.172+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:45051/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-10T16:55:20.822+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT12.3778514S
+2026-11-10T16:55:20.823+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:45051/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-10T16:55:20.824+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-10T16:55:20.896+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: ed3786cc272b7ae4f9a1eef1216c7ba83489f6bbfb4af71e1b5dca1cd4c32958
+2026-11-10T16:55:21.500+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.6760734S
+2026-11-10T16:55:22.118+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45051/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:55:22.638+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-10T16:55:22.643+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.033s)
+2026-11-10T16:55:22.670+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-10T16:55:22.800+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-10T16:55:22.817+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-10T16:55:22.914+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-10T16:55:23.002+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-10T16:55:23.084+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-10T16:55:23.246+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-10T16:55:23.345+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms`, now at version v5 (execution time 00:00.382s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-10T16:55:25.525+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@6c6366cf
+2026-11-10T16:55:25.899+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] com.vms.identity.SchemaUpgradeTest       : Started SchemaUpgradeTest in 23.041 seconds (process running for 24.506)
+2026-11-10T16:55:25.917+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-10T16:55:25.964+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@78c34153
+2026-11-10T16:55:25.968+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-10T16:55:26.305+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：bootstrap-admin
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-11-10T16:55:27.278+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45051/vms_upgrade_0e7101177e5345f8b9e4fd4d8f381a49?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:55:27.332+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms_upgrade_0e7101177e5345f8b9e4fd4d8f381a49`.`flyway_schema_history` does not exist yet
+2026-11-10T16:55:27.335+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.013s)
+2026-11-10T16:55:27.354+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms_upgrade_0e7101177e5345f8b9e4fd4d8f381a49`.`flyway_schema_history` ...
+2026-11-10T16:55:27.417+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms_upgrade_0e7101177e5345f8b9e4fd4d8f381a49`: << Empty Schema >>
+2026-11-10T16:55:27.426+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_0e7101177e5345f8b9e4fd4d8f381a49` to version "1 - identity and audit"
+2026-11-10T16:55:27.539+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_0e7101177e5345f8b9e4fd4d8f381a49` to version "2 - fleet and user authorization"
+2026-11-10T16:55:27.631+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_0e7101177e5345f8b9e4fd4d8f381a49` to version "3 - login lockout fields"
+2026-11-10T16:55:27.718+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_0e7101177e5345f8b9e4fd4d8f381a49` to version "4 - vehicle terminal history"
+2026-11-10T16:55:27.889+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_0e7101177e5345f8b9e4fd4d8f381a49` to version "5 - driver and association history"
+2026-11-10T16:55:28.004+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms_upgrade_0e7101177e5345f8b9e4fd4d8f381a49`, now at version v5 (execution time 00:00.410s)
+2026-11-10T16:55:28.091+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45051/vms_upgrade_0e7101177e5345f8b9e4fd4d8f381a49?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:55:28.143+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.016s)
+2026-11-10T16:55:28.158+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms_upgrade_0e7101177e5345f8b9e4fd4d8f381a49`: 5
+2026-11-10T16:55:28.160+08:00  INFO 38728 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Schema `vms_upgrade_0e7101177e5345f8b9e4fd4d8f381a49` is up to date. No migration necessary.
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 26.14 s -- in com.vms.identity.SchemaUpgradeTest
+[INFO] Running com.vms.identity.SessionExpiryTest
+16:55:30.936 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.SessionExpiryTest]: SessionExpiryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:55:31.115 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.SessionExpiryTest
+16:55:31.208 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.SessionExpiryTest]: SessionExpiryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:55:31.218 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.SessionExpiryTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-10T16:55:31.681+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] com.vms.identity.SessionExpiryTest       : Starting SessionExpiryTest using Java 21.0.9 with PID 29068 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\server)
+2026-11-10T16:55:31.683+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] com.vms.identity.SessionExpiryTest       : No active profile set, falling back to 1 default profile: "default"
+2026-11-10T16:55:32.730+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-10T16:55:32.733+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-10T16:55:32.767+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
+2026-11-10T16:55:33.555+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-10T16:55:33.560+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-10T16:55:33.648+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-10T16:55:34.038+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-10T16:55:34.666+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-10T16:55:34.668+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-10T16:55:34.692+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-10T16:55:35.047+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-10T16:55:35.177+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2026-11-10T16:55:35.351+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 9bc675e057d3c917a1a474736cbaf25fb248401980a61bcacce0c3074fcf406d
+2026-11-10T16:55:35.971+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT0.923339S
+2026-11-10T16:55:35.980+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-10T16:55:35.981+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-10T16:55:35.982+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-10T16:55:35.984+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-10T16:55:36.092+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: f622bd3131f0c6925bf19882032302cfe79bcc12f4142eb44047570a08540590
+2026-11-10T16:55:36.593+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:46395/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-10T16:55:46.712+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT10.7275839S
+2026-11-10T16:55:46.712+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:46395/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-10T16:55:46.713+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-10T16:55:46.788+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: f8ba8dac0249fad0ab790221ffbd8794c7b12dfa946a3e9780551cefcca244fa
+2026-11-10T16:55:47.419+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.7060276S
+2026-11-10T16:55:48.225+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:46395/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-10T16:55:48.966+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-10T16:55:48.975+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.054s)
+2026-11-10T16:55:49.015+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-10T16:55:49.140+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-10T16:55:49.168+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-10T16:55:49.312+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-10T16:55:49.430+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-10T16:55:49.577+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-10T16:55:49.816+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-10T16:55:49.941+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 5 migrations to schema `vms`, now at version v5 (execution time 00:00.507s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-10T16:55:52.156+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@1cec219f
+2026-11-10T16:55:52.476+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-10T16:55:52.477+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-10T16:55:52.481+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-11-10T16:55:52.562+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] com.vms.identity.SessionExpiryTest       : Started SessionExpiryTest in 21.265 seconds (process running for 22.615)
+2026-11-10T16:55:52.576+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-10T16:55:52.631+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4177d427
+2026-11-10T16:55:52.635+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-10T16:55:52.978+08:00  INFO 29068 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：bootstrap-admin
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 29.94 s -- in com.vms.identity.SessionExpiryTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 66, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] -----------------< com.vms:vehicle-monitoring-system >------------------
+[INFO] Building vehicle-monitoring-system 0.1.0-SNAPSHOT                  [2/2]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for vehicle-monitoring-system 0.1.0-SNAPSHOT:
+[INFO] 
+[INFO] vehicle-monitoring-server .......................... SUCCESS [08:27 min]
+[INFO] vehicle-monitoring-system .......................... SUCCESS [  0.017 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  08:27 min
+[INFO] Finished at: 2026-11-10T16:56:02+08:00
+[INFO] ------------------------------------------------------------------------

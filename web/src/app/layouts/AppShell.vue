@@ -20,6 +20,7 @@ const monitoringNav: NavItem[] = [
   { label: '实时监控', to: '/', testId: 'nav-monitor-home' },
   { label: '车队', to: '/monitor/fleets', testId: 'nav-fleets' },
   { label: '车辆与终端', to: '/monitor/archives', testId: 'nav-archives' },
+  { label: '司机', to: '/monitor/drivers', testId: 'nav-drivers' },
   { label: '轨迹回放', to: '/monitor/tracks', testId: 'nav-tracks' },
   { label: '报警管理', to: '/monitor/alarms', testId: 'nav-alarms' },
   { label: '电子围栏', to: '/monitor/geofences', testId: 'nav-geofences', roles: ['ADMIN', 'MONITOR'] },
@@ -30,6 +31,7 @@ const monitoringNav: NavItem[] = [
 const adminNav: NavItem[] = [
   { label: '车队管理', to: '/admin/fleets', testId: 'nav-admin-fleets' },
   { label: '车辆档案', to: '/admin/archives', testId: 'nav-admin-archives' },
+  { label: '司机档案', to: '/admin/drivers', testId: 'nav-admin-drivers' },
   { label: '报警规则', to: '/admin/alarm-rules', testId: 'nav-admin-alarm-rules' },
   { label: '统计报表', to: '/admin/reports', testId: 'nav-admin-reports' },
   { label: '账号管理', to: '/admin/users', testId: 'nav-admin-users' },

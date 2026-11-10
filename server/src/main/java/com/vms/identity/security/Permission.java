@@ -9,6 +9,8 @@ public enum Permission {
     FLEET_VIEW(RoleCode.ADMIN, RoleCode.MONITOR, RoleCode.FLEET_LEADER),
     /** 维护车队档案；仅管理员。 */
     FLEET_MANAGE(RoleCode.ADMIN),
+    /** 维护司机档案与车辆司机关联；仅管理员。 */
+    DRIVER_MANAGE(RoleCode.ADMIN),
     /** 账号、角色与车队授权维护；仅管理员。 */
     ACCOUNT_MANAGE(RoleCode.ADMIN);
 

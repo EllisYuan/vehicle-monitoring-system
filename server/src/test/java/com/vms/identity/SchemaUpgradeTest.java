@@ -39,7 +39,7 @@ class SchemaUpgradeTest {
 
         Flyway flyway = Flyway.configure().dataSource(url, mysql.getUsername(), mysql.getPassword())
                 .locations("classpath:db/migration").load();
-        assertThat(flyway.migrate().migrationsExecuted).isEqualTo(4);
+        assertThat(flyway.migrate().migrationsExecuted).isEqualTo(5);
         assertThat(flyway.migrate().migrationsExecuted).isZero();
 
         JdbcTemplate jdbc = new JdbcTemplate(new org.springframework.jdbc.datasource.DriverManagerDataSource(
@@ -47,14 +47,15 @@ class SchemaUpgradeTest {
         List<String> tables = jdbc.queryForList(
                 "SELECT table_name FROM information_schema.tables WHERE table_schema = ? ORDER BY table_name",
                 String.class, schema);
-        assertThat(tables).containsExactly("audit_log", "fleet", "flyway_schema_history", "sys_user", "sys_user_fleet",
-                "terminal", "terminal_vehicle_binding", "vehicle", "vehicle_fleet_history");
+        assertThat(tables).containsExactly("audit_log", "driver", "fleet", "flyway_schema_history", "sys_user",
+                "sys_user_fleet", "terminal", "terminal_vehicle_binding", "vehicle", "vehicle_driver_binding",
+                "vehicle_fleet_history");
 
         Map<String, Object> history = jdbc.queryForMap(
                 "SELECT count(*) AS applied, count(DISTINCT version) AS versions, min(success) AS all_ok "
                         + "FROM " + schema + ".flyway_schema_history");
-        assertThat(((Number) history.get("applied")).longValue()).isEqualTo(4L);
-        assertThat(((Number) history.get("versions")).longValue()).isEqualTo(4L);
+        assertThat(((Number) history.get("applied")).longValue()).isEqualTo(5L);
+        assertThat(((Number) history.get("versions")).longValue()).isEqualTo(5L);
         assertThat(((Number) history.get("all_ok")).intValue()).isEqualTo(1);
 
         assertThat(jdbc.queryForObject("SELECT count(*) FROM " + schema + ".sys_user", Long.class)).isZero();

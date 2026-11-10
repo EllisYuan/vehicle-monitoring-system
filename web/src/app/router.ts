@@ -31,6 +31,12 @@ export const router = createRouter({
       meta: { area: 'monitoring' },
     },
     {
+      path: '/monitor/drivers',
+      name: 'monitor-drivers',
+      component: () => import('../features/drivers/views/DriverListView.vue'),
+      meta: { area: 'monitoring' },
+    },
+    {
       path: '/monitor/tracks',
       name: 'tracks',
       component: PlaceholderView,
@@ -108,6 +114,12 @@ export const router = createRouter({
       path: '/admin/archives',
       name: 'admin-archives',
       component: () => import('../features/archives/views/ArchiveListView.vue'),
+      meta: { area: 'admin', roles: ['ADMIN'] satisfies RoleCode[] },
+    },
+    {
+      path: '/admin/drivers',
+      name: 'admin-drivers',
+      component: () => import('../features/drivers/views/DriverListView.vue'),
       meta: { area: 'admin', roles: ['ADMIN'] satisfies RoleCode[] },
     },
     {

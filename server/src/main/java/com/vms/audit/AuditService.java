@@ -19,6 +19,7 @@ public class AuditService {
     public static final String CATEGORY_FLEET = "FLEET";
     public static final String CATEGORY_VEHICLE = "VEHICLE";
     public static final String CATEGORY_TERMINAL = "TERMINAL";
+    public static final String CATEGORY_DRIVER = "DRIVER";
     public static final String RESULT_SUCCESS = "SUCCESS";
     public static final String RESULT_FAILURE = "FAILURE";
 
