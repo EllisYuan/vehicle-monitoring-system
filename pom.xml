@@ -11,6 +11,7 @@
     <name>vehicle-monitoring-system</name>
 
     <modules>
+        <module>protocol</module>
         <module>server</module>
     </modules>
 </project>

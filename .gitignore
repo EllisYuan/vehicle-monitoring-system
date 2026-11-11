@@ -17,6 +17,10 @@ web/test-results/
 # 验证证据中的日志需要随 ticket 保留，但必须先按凭证扫描确认无敏感信息
 !.scratch/vehicle-monitoring/evidence/*.log
 
+# JT/T 808 标准正文与本地页预览不入 Git
+/JT-T 808-2019.pdf
+/.scratch/vehicle-monitoring/evidence/jt808-preview/
+
 # IDE 与系统文件
 .idea/
 .vscode/
