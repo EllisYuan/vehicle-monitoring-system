@@ -23,8 +23,8 @@ public record MessageHeader(
         if (terminalPhone == null || terminalPhone.length() != 20) {
             throw new IllegalArgumentException("终端手机号必须是 20 位十进制 BCD，实际：" + terminalPhone);
         }
-        if (protocolVersion < 0 || protocolVersion > 255) {
-            throw new IllegalArgumentException("协议版本号超出 BYTE 范围：" + protocolVersion);
+        if (protocolVersion != 1) {
+            throw new IllegalArgumentException("本子集只支持 JT/T 808-2019 协议版本 1，实际：" + protocolVersion);
         }
         if (serialNumber < 0 || serialNumber > 0xFFFF) {
             throw new IllegalArgumentException("消息流水号超出 WORD 范围：" + serialNumber);
@@ -60,6 +60,9 @@ public record MessageHeader(
         int messageId = Bytes.unsignedShort(data, offset);
         BodyProperties properties = BodyProperties.of(Bytes.unsignedShort(data, offset + 2));
         int version = data[offset + 4] & 0xFF;
+        if (version != 1) {
+            throw new UnsupportedMessageException("VERSION_2011", "本子集只支持带版本标识的 2019 消息头");
+        }
         String phone = Bcd.decode(Arrays.copyOfRange(data, offset + 5, offset + 15));
         int serial = Bytes.unsignedShort(data, offset + 15);
         return new MessageHeader(messageId, properties, version, phone, serial);

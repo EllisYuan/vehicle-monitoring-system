@@ -8,8 +8,13 @@ public record TerminalGeneralResponse(int responseSerial, int responseId, int re
 
     public static TerminalGeneralResponse parse(byte[] body) {
         BodyReader reader = new BodyReader(body);
-        TerminalGeneralResponse value = new TerminalGeneralResponse(
-                reader.readUnsignedShort(), reader.readUnsignedShort(), reader.readUnsignedByte());
+        int serial = reader.readUnsignedShort();
+        int responseId = reader.readUnsignedShort();
+        int result = reader.readUnsignedByte();
+        if (result > 4) {
+            throw new MalformedFrameException("终端通用应答结果未知：" + result);
+        }
+        TerminalGeneralResponse value = new TerminalGeneralResponse(serial, responseId, result);
         reader.requireExhausted();
         return value;
     }

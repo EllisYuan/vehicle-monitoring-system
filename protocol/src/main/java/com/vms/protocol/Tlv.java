@@ -26,6 +26,23 @@ public record Tlv(int id, byte[] value) {
         return value.clone();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof Tlv tlv
+                && id == tlv.id
+                && java.util.Arrays.equals(value, tlv.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * Integer.hashCode(id) + java.util.Arrays.hashCode(value);
+    }
+
+    @Override
+    public String toString() {
+        return "Tlv[id=" + id + ", value=" + java.util.Arrays.toString(value) + "]";
+    }
+
     public static List<Tlv> readAll(BodyReader reader) {
         List<Tlv> items = new ArrayList<>();
         while (reader.remaining() > 0) {

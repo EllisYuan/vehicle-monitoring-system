@@ -28,6 +28,23 @@ public record Frame(MessageHeader header, byte[] body) {
         return body.clone();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof Frame frame
+                && header.equals(frame.header)
+                && java.util.Arrays.equals(body, frame.body);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * header.hashCode() + java.util.Arrays.hashCode(body);
+    }
+
+    @Override
+    public String toString() {
+        return "Frame[header=" + header + ", body=" + java.util.Arrays.toString(body) + "]";
+    }
+
     public MessageType type() {
         return header.type();
     }

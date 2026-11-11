@@ -16,7 +16,11 @@ public record TextIssue(int flag, int textType, String text) {
         BodyReader reader = new BodyReader(body);
         int flag = reader.readUnsignedByte();
         int type = reader.readUnsignedByte();
-        requireType(type);
+        try {
+            requireType(type);
+        } catch (IllegalArgumentException e) {
+            throw new MalformedFrameException("文本类型不支持：" + type);
+        }
         if (reader.remaining() > MAX_TEXT_BYTES) {
             throw new MalformedFrameException("文本信息超过本子集单包限制");
         }
@@ -39,7 +43,7 @@ public record TextIssue(int flag, int textType, String text) {
 
     private static void requireType(int type) {
         if (type != TYPE_NOTICE && type != TYPE_SERVICE) {
-            throw new MalformedFrameException("文本类型不支持：" + type);
+            throw new IllegalArgumentException("文本类型不支持：" + type);
         }
     }
 }

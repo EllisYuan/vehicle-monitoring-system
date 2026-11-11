@@ -2,7 +2,7 @@ package com.vms.protocol;
 
 /**
  * 终端注册（JT/T 808-2019 表 8，消息 ID 0x0100）。
- * 省域 ID WORD、市县域 ID WORD、制造商 ID BYTE[5]、终端型号 BYTE[30]、
+ * 省域 ID WORD、市县域 ID WORD、制造商 ID BYTE[11]、终端型号 BYTE[30]、
  * 终端 ID BYTE[30]、车牌颜色 BYTE、车牌 STRING。
  */
 public record TerminalRegister(
@@ -24,7 +24,10 @@ public record TerminalRegister(
         int province = reader.readUnsignedShort();
         int city = reader.readUnsignedShort();
         String manufacturer = trimNul(reader.readString(MANUFACTURER_LENGTH));
-        String model = trimNul(reader.readString(MODEL_LENGTH));
+        String model = trimLeadingNul(reader.readString(MODEL_LENGTH));
+        if (model.indexOf('\u0000') >= 0) {
+            throw new MalformedFrameException("终端型号前补位后含非法 0x00");
+        }
         String terminalId = trimNul(reader.readString(TERMINAL_ID_LENGTH));
         int plateColor = reader.readUnsignedByte();
         String plateNo = reader.readString(reader.remaining());
@@ -33,7 +36,7 @@ public record TerminalRegister(
 
     public byte[] encode() {
         byte[] manufacturerBytes = fixed(manufacturer, MANUFACTURER_LENGTH);
-        byte[] modelBytes = fixed(model, MODEL_LENGTH);
+        byte[] modelBytes = fixedModel(model);
         byte[] terminalIdBytes = fixed(terminalId, TERMINAL_ID_LENGTH);
         byte[] plateBytes = Gbk.encode(plateNo);
         byte[] out = new byte[4 + MANUFACTURER_LENGTH + MODEL_LENGTH + TERMINAL_ID_LENGTH + 1
@@ -50,13 +53,33 @@ public record TerminalRegister(
         return out;
     }
 
-    /** 表 8：定长字段不足时后补 0x00；解析时去掉补位。 */
     private static String trimNul(String text) {
         int end = text.indexOf('\u0000');
         return end < 0 ? text : text.substring(0, end);
     }
 
-    /** 表 8：定长字段不足时后补 0x00。 */
+    private static String trimLeadingNul(String text) {
+        int start = 0;
+        while (start < text.length() && text.charAt(start) == '\u0000') {
+            start++;
+        }
+        return text.substring(start);
+    }
+
+    private static byte[] fixedModel(String text) {
+        byte[] bytes = Gbk.encode(text);
+        if (text.indexOf('\u0000') >= 0) {
+            throw new IllegalArgumentException("终端型号不能包含 0x00");
+        }
+        if (bytes.length > MODEL_LENGTH) {
+            throw new IllegalArgumentException("终端型号超过 " + MODEL_LENGTH + " 字节");
+        }
+        byte[] out = new byte[MODEL_LENGTH];
+        System.arraycopy(bytes, 0, out, MODEL_LENGTH - bytes.length, bytes.length);
+        return out;
+    }
+
+    /** 表 8：制造商与终端 ID 不足时后补 0x00。 */
     private static byte[] fixed(String text, int length) {
         byte[] bytes = Gbk.encode(text);
         if (bytes.length > length) {

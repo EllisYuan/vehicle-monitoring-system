@@ -22,10 +22,10 @@ public record PositionBatch(int dataType, List<PositionReport> items) {
 
     public PositionBatch {
         if (items == null || items.isEmpty()) {
-            throw new MalformedFrameException("0x0704 数据项不能为空");
+            throw new IllegalArgumentException("0x0704 数据项不能为空");
         }
         if (items.size() > MAX_ITEMS) {
-            throw new MalformedFrameException("0x0704 每包最多 " + MAX_ITEMS + " 项");
+            throw new IllegalArgumentException("0x0704 每包最多 " + MAX_ITEMS + " 项");
         }
         if (dataType != TYPE_NORMAL && dataType != TYPE_BLIND_AREA) {
             throw new MalformedFrameException("0x0704 位置数据类型未知：" + dataType);

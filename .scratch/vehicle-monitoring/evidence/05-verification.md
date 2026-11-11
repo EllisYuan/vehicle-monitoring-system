@@ -81,7 +81,8 @@ mvnw.cmd -B -pl protocol test
 CodecUnitsTest          Tests run: 6,  Failures: 0, Errors: 0, Skipped: 0
 FrameCodecRejectionTest Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
 FrameCodecTest          Tests run: 23, Failures: 0, Errors: 0, Skipped: 0
-Tests run: 49, Failures: 0, Errors: 0, Skipped: 0
+MessageBodyValidationTest Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 54, Failures: 0, Errors: 0, Skipped: 0
 BUILD SUCCESS
 ```
 
@@ -99,8 +100,9 @@ BUILD SUCCESS
 
 ## 明确限制
 
-1. **表 10 内部不一致**：IMEI 为 `BYTE[15]` 且起始字节标为 `n+1`，软件版本号起始字节标为 `n+9`；按字段长度自洽应为 `n+16`。实现按 `n+16` 读取，并保留该标准原文矛盾，后续若取得勘误/修改单需复核。
-2. **2021 年第 1 号修改单**：本次未取得，不声称兼容或覆盖修改单；用户已选择按 2019 正文关闭本票。
+1. **表 10 内部不一致**：IMEI 为 `BYTE[15]` 且起始字节标为 `n+1`，软件版本号起始字节表格写为 `n+9`；按字段长度自洽应为 `n+16`。实现按 `n+16` 读取，并保留该标准原文矛盾，后续若取得勘误/修改单需复核。
+2. **表 23 起始字节标注不一致**：纬度从 8、经度从 12、高程从 16、速度从 18、方向从 20，方向为 WORD 后时间字段按长度应从 22 开始，但表格写为 21；实现按前述字段长度从 22 读取，并在 fixture/evidence 中披露。
+3. **2021 年第 1 号修改单**：本次未取得，不声称兼容或覆盖修改单；用户已选择按 2019 正文关闭本票。
 3. **0x0704 专用应答**：本票只实现批量数据体结构与校验，不做 TCP 应答业务；通用应答映射留给 06。
 4. **协议子集边界**：不支持分包、加密、旧版 2011 头、TCP listener、会话、数据库、JT/T 809、JT/T 1078 和真实终端互通。
 5. **标准引用的外部字段**：车牌颜色等引用其他标准的业务枚举不在本票扩展，只保留原始 BYTE。

@@ -2,6 +2,9 @@ package com.vms.protocol;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.ResolverStyle;
+import java.time.temporal.ChronoField;
 import java.util.List;
 
 /**
@@ -25,9 +28,27 @@ public record PositionReport(
     /** 表 23：基本位置信息定长 28 字节。 */
     public static final int BASIC_LENGTH = 28;
 
-    private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("yyMMddHHmmss");
+    private static final DateTimeFormatter TIME_FORMAT = new DateTimeFormatterBuilder()
+            .appendValueReduced(ChronoField.YEAR, 2, 2, 2000)
+            .appendPattern("MMddHHmmss")
+            .toFormatter()
+            .withResolverStyle(ResolverStyle.STRICT);
 
     public PositionReport {
+        if (attachments == null || time == null || !Double.isFinite(latitude)
+                || !Double.isFinite(longitude) || Math.abs(latitude) > 90
+                || Math.abs(longitude) > 180 || alarmFlag < 0 || alarmFlag > 0xFFFF_FFFFL
+                || status < 0 || status > 0xFFFF_FFFFL || altitude < 0 || altitude > 0xFFFF
+                || speed < 0 || speed > 0xFFFF || direction < 0 || direction > 359) {
+            throw new IllegalArgumentException("位置信息字段超出协议范围");
+        }
+        if ((latitude != 0 && (latitude < 0) != ((status & 0x04) != 0))
+                || (longitude != 0 && (longitude < 0) != ((status & 0x08) != 0))) {
+            throw new IllegalArgumentException("经纬度符号与状态位不一致");
+        }
+        if (time.getYear() < 2000 || time.getYear() > 2099) {
+            throw new IllegalArgumentException("位置时间超出 YY 范围");
+        }
         attachments = List.copyOf(attachments);
     }
 
@@ -35,16 +56,30 @@ public record PositionReport(
         BodyReader reader = new BodyReader(body);
         long alarm = reader.readUnsignedInt();
         long status = reader.readUnsignedInt();
-        // 百万分之一度：以有符号 32 位解释，南纬与西经为负
-        double latitude = (int) reader.readUnsignedInt() / 1_000_000.0;
-        double longitude = (int) reader.readUnsignedInt() / 1_000_000.0;
+        double latitude = reader.readUnsignedInt() / 1_000_000.0;
+        double longitude = reader.readUnsignedInt() / 1_000_000.0;
+        if ((status & 0x04) != 0) {
+            latitude = -latitude;
+        }
+        if ((status & 0x08) != 0) {
+            longitude = -longitude;
+        }
         int altitude = reader.readUnsignedShort();
         int speed = reader.readUnsignedShort();
         int direction = reader.readUnsignedShort();
-        LocalDateTime time = LocalDateTime.parse(reader.readBcd(6), TIME_FORMAT);
+        LocalDateTime time;
+        try {
+            time = LocalDateTime.parse(reader.readBcd(6), TIME_FORMAT);
+        } catch (java.time.DateTimeException e) {
+            throw new MalformedFrameException("位置时间非法：" + e.getMessage());
+        }
         List<Tlv> attachments = Tlv.readAll(reader);
-        return new PositionReport(alarm, status, latitude, longitude, altitude, speed, direction, time,
-                attachments);
+        try {
+            return new PositionReport(alarm, status, latitude, longitude, altitude, speed, direction, time,
+                    attachments);
+        } catch (IllegalArgumentException e) {
+            throw new MalformedFrameException("位置信息非法：" + e.getMessage());
+        }
     }
 
     public byte[] encode() {
@@ -52,8 +87,8 @@ public record PositionReport(
         byte[] head = new byte[BASIC_LENGTH];
         Bytes.putUnsignedInt(head, 0, alarmFlag);
         Bytes.putUnsignedInt(head, 4, status);
-        Bytes.putUnsignedInt(head, 8, Math.round(latitude * 1_000_000));
-        Bytes.putUnsignedInt(head, 12, Math.round(longitude * 1_000_000));
+        Bytes.putUnsignedInt(head, 8, Math.round(Math.abs(latitude) * 1_000_000));
+        Bytes.putUnsignedInt(head, 12, Math.round(Math.abs(longitude) * 1_000_000));
         Bytes.putUnsignedShort(head, 16, altitude);
         Bytes.putUnsignedShort(head, 18, speed);
         Bytes.putUnsignedShort(head, 20, direction);
