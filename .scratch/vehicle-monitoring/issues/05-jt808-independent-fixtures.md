@@ -53,6 +53,6 @@ Blocked by: 01
 
 交付：根 `pom.xml` 新增 `protocol` module；`protocol/pom.xml` 为无 Spring/数据库/server 运行时依赖的独立 jar；`com.vms.protocol` 提供 BCD、GBK、消息头/属性、帧转义与 XOR、TLV、注册/鉴权/通用应答/位置/批量/文本/临时跟踪消息体解析；独立 fixture 位于 `protocol/src/test/resources/fixtures/jt808-2019.txt`。
 
-结果：`CodecUnitsTest` 6 项、`FrameCodecRejectionTest` 20 项、`FrameCodecTest` 23 项、`MessageBodyValidationTest` 5 项，共 **54 项通过**；命令为 `mvnw.cmd -B -pl protocol test`，未启动 Testcontainers。
+结果：`CodecUnitsTest` 6 项、`FrameCodecRejectionTest` 25 项、`FrameCodecTest` 23 项、`MessageBodyValidationTest` 7 项、`TemporaryTrackingTest` 3 项，共 **64 项通过**；命令为 `mvnw.cmd -B -pl protocol test`，未启动 Testcontainers。新增回归覆盖未知 message ID encode 拒绝、非法 BCD 坏帧跳过、共享标识位重同步、`0x01` 固定 TLV 长度及 `0x8202` 工程参数边界。
 
 限制：只声明 2019 正文子集；不支持分包、加密、旧版 2011 头、TCP listener、会话和真实终端互通；2021 修改单未取得，表 10 的正文内部偏差已披露。

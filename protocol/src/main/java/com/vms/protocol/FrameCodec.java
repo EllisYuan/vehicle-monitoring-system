@@ -24,17 +24,17 @@ public final class FrameCodec {
 
     public static byte[] encode(Frame frame) {
         MessageHeader header = frame.header();
-        if (!header.properties().versionFlag()) {
-            throw new UnsupportedMessageException("VERSION_2011", "本子集只支持带版本标识的 2019 消息头");
-        }
-        if (header.properties().packaged()) {
-            throw new UnsupportedMessageException("PACKAGED", "本子集不支持分包消息");
-        }
-        if (header.properties().encrypted()) {
-            throw new UnsupportedMessageException("ENCRYPTED", "本子集不支持加密消息");
+        validateSupportedProperties(header);
+        if (header.type() == null) {
+            throw new UnsupportedMessageException("UNKNOWN_MESSAGE",
+                    "未知消息 ID：0x" + Integer.toHexString(header.messageId()));
         }
         byte[] head = header.encode();
         byte[] body = frame.body();
+        if (body.length != header.bodyLength()) {
+            throw new IllegalArgumentException(
+                    "消息体属性声明 " + header.bodyLength() + " 字节，实际 " + body.length + " 字节");
+        }
         byte[] raw = new byte[head.length + body.length + 1];
         System.arraycopy(head, 0, raw, 0, head.length);
         System.arraycopy(body, 0, raw, head.length, body.length);
@@ -88,15 +88,7 @@ public final class FrameCodec {
         if (expected != actual) {
             throw new MalformedFrameException("校验码不匹配");
         }
-        if (!header.properties().versionFlag()) {
-            throw new UnsupportedMessageException("VERSION_2011", "本子集只支持带版本标识的 2019 消息头");
-        }
-        if (header.properties().packaged()) {
-            throw new UnsupportedMessageException("PACKAGED", "本子集不支持分包消息");
-        }
-        if (header.properties().encrypted()) {
-            throw new UnsupportedMessageException("ENCRYPTED", "本子集不支持加密消息");
-        }
+        validateSupportedProperties(header);
         if (header.type() == null) {
             throw new UnsupportedMessageException("UNKNOWN_MESSAGE",
                     "未知消息 ID：0x" + Integer.toHexString(header.messageId()));
@@ -114,6 +106,9 @@ public final class FrameCodec {
      * 标记一帧的首尾。逐对尝试解码，失败的右边界右移一位继续找，避免坏帧吞掉后续好帧。
      */
     public static List<byte[]> splitFrames(byte[] stream) {
+        if (stream == null) {
+            throw new MalformedFrameException("字节流不能为 null");
+        }
         List<Integer> flags = new ArrayList<>();
         for (int i = 0; i < stream.length; i++) {
             if ((stream[i] & 0xFF) == 0x7E) {
@@ -133,14 +128,26 @@ public final class FrameCodec {
             try {
                 decode(candidate);
                 frames.add(candidate);
-                // 成帧后该对标识位已消费；相邻帧共用标识位时下一帧从前一帧的结束位开始
-                index += 2;
+                // 保留结束标识位作为下一帧的起始候选，兼容共享标识位与双标识位分隔
+                index++;
             } catch (MalformedFrameException | UnsupportedMessageException ignored) {
                 // 这一对不构成合法帧，右边界后移一位继续找
                 index++;
             }
         }
         return frames;
+    }
+
+    private static void validateSupportedProperties(MessageHeader header) {
+        if (!header.properties().versionFlag()) {
+            throw new UnsupportedMessageException("VERSION_2011", "本子集只支持带版本标识的 2019 消息头");
+        }
+        if (header.properties().packaged()) {
+            throw new UnsupportedMessageException("PACKAGED", "本子集不支持分包消息");
+        }
+        if (header.properties().encrypted()) {
+            throw new UnsupportedMessageException("ENCRYPTED", "本子集不支持加密消息");
+        }
     }
 
     private static byte[] unescape(byte[] data, int from, int to) {

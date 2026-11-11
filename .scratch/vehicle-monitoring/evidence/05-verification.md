@@ -79,10 +79,11 @@ mvnw.cmd -B -pl protocol test
 
 ```text
 CodecUnitsTest          Tests run: 6,  Failures: 0, Errors: 0, Skipped: 0
-FrameCodecRejectionTest Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
+FrameCodecRejectionTest Tests run: 25, Failures: 0, Errors: 0, Skipped: 0
 FrameCodecTest          Tests run: 23, Failures: 0, Errors: 0, Skipped: 0
-MessageBodyValidationTest Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
-Tests run: 54, Failures: 0, Errors: 0, Skipped: 0
+MessageBodyValidationTest Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
+TemporaryTrackingTest   Tests run: 3,  Failures: 0, Errors: 0, Skipped: 0
+Tests run: 64, Failures: 0, Errors: 0, Skipped: 0
 BUILD SUCCESS
 ```
 

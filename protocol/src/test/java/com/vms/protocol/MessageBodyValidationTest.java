@@ -62,6 +62,24 @@ class MessageBodyValidationTest {
     }
 
     @Test
+    void rejectsFixedLengthAttachmentWithWrongLength() {
+        byte[] body = Fixtures.hex(POSITION_HEX);
+        body[29] = 0x01;
+        body[30] = 0x03;
+        assertThatThrownBy(() -> PositionReport.parse(body))
+                .isInstanceOf(MalformedFrameException.class)
+                .hasMessageContaining("0x01");
+    }
+
+    @Test
+    void preservesVariableLengthVendorAttachment() {
+        byte[] body = Fixtures.hex(POSITION_HEX);
+        PositionReport report = PositionReport.parse(body);
+        assertThat(report.attachments().get(1).id()).isEqualTo(0xFE);
+        assertThat(report.attachments().get(1).value()).containsExactly((byte) 0x12, (byte) 0x34);
+    }
+
+    @Test
     void batchRejectsEncodedBodyBeyondSingleFrame() {
         PositionReport item = PositionReport.parse(Fixtures.hex(POSITION_HEX));
         byte[] large = new byte[250];

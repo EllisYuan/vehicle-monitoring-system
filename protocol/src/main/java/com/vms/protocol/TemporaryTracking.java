@@ -6,6 +6,21 @@ package com.vms.protocol;
  */
 public record TemporaryTracking(int intervalSeconds, long validSeconds) {
 
+    public TemporaryTracking {
+        if (intervalSeconds == 0) {
+            if (validSeconds != 0) {
+                throw new IllegalArgumentException("停止跟踪时有效期必须为 0");
+            }
+        } else {
+            if (intervalSeconds < 1 || intervalSeconds > 60) {
+                throw new IllegalArgumentException("跟踪间隔必须在 1-60 秒之间");
+            }
+            if (validSeconds < 0 || validSeconds > 3600) {
+                throw new IllegalArgumentException("跟踪有效期必须在 0-3600 秒之间");
+            }
+        }
+    }
+
     public static TemporaryTracking parse(byte[] body) {
         BodyReader reader = new BodyReader(body);
         int interval = reader.readUnsignedShort();
@@ -16,7 +31,11 @@ public record TemporaryTracking(int intervalSeconds, long validSeconds) {
         }
         long valid = reader.readUnsignedInt();
         reader.requireExhausted();
-        return new TemporaryTracking(interval, valid);
+        try {
+            return new TemporaryTracking(interval, valid);
+        } catch (IllegalArgumentException e) {
+            throw new MalformedFrameException("临时跟踪参数非法：" + e.getMessage());
+        }
     }
 
     public byte[] encode() {

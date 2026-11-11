@@ -66,6 +66,25 @@ class FrameCodecRejectionTest {
     }
 
     @Test
+    void rejectsEncodingUnknownMessageId() {
+        MessageHeader header = new MessageHeader(0x8500, BodyProperties.plain(0), 1,
+                "00000000013800138000", 1);
+        assertThatThrownBy(() -> FrameCodec.encode(new Frame(header, new byte[0])))
+                .isInstanceOf(UnsupportedMessageException.class)
+                .satisfies(error -> assertThat(((UnsupportedMessageException) error).code())
+                        .isEqualTo("UNKNOWN_MESSAGE"));
+    }
+
+    @Test
+    void rejectsFrameBodyLengthAtConstruction() {
+        MessageHeader header = new MessageHeader(0x0002, BodyProperties.plain(1), 1,
+                "00000000013800138000", 1);
+        assertThatThrownBy(() -> new Frame(header, new byte[0]))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("消息体属性声明");
+    }
+
+    @Test
     void rejectsBodyLengthDisagreeingWithProperty() throws Exception {
         byte[] frame = original("heartbeat");
         // 把消息体属性长度改成 5，但帧内没有多余字节
@@ -183,11 +202,37 @@ class FrameCodecRejectionTest {
     }
 
     @Test
+    void splitFramesRejectsNullStream() {
+        assertThatThrownBy(() -> FrameCodec.splitFrames(null))
+                .isInstanceOf(MalformedFrameException.class)
+                .hasMessageContaining("字节流");
+    }
+
+    @Test
+    void splitsAdjacentFramesWithSharedOrRepeatedFlag() throws Exception {
+        byte[] first = original("heartbeat");
+        byte[] second = original("heartbeat");
+        byte[] shared = concat(first, java.util.Arrays.copyOfRange(second, 1, second.length));
+        assertThat(FrameCodec.splitFrames(shared)).hasSize(2);
+        assertThat(FrameCodec.splitFrames(concat(first, second))).hasSize(2);
+    }
+
+    @Test
+    void skipsInvalidBcdFrameAndKeepsFollowingGoodFrame() throws Exception {
+        byte[] bad = original("heartbeat");
+        bad[6] = (byte) 0xAB;
+        byte[] good = original("heartbeat");
+        assertThatThrownBy(() -> FrameCodec.decode(bad))
+                .isInstanceOf(MalformedFrameException.class);
+        assertThat(FrameCodec.splitFrames(concat(bad, good))).hasSize(1);
+    }
+
+    @Test
     void bcdRejectsNonDecimalAndOddLength() {
         assertThatThrownBy(() -> Bcd.encode("12A4")).isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> Bcd.encode("123")).isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> Bcd.decode(new byte[] { (byte) 0xAB }))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(MalformedFrameException.class);
     }
 
     @Test

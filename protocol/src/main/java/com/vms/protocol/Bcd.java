@@ -32,12 +32,16 @@ public final class Bcd {
      * 解码为十进制数字串；非 8421 半字节视为坏数据。
      */
     public static String decode(byte[] bytes) {
+        if (bytes == null) {
+            throw new MalformedFrameException("BCD 内容不能为 null");
+        }
         StringBuilder sb = new StringBuilder(bytes.length * 2);
         for (byte value : bytes) {
             int high = (value >> 4) & 0x0F;
             int low = value & 0x0F;
             if (high > 9 || low > 9) {
-                throw new IllegalArgumentException("非法 BCD 半字节：" + Integer.toHexString(value & 0xFF));
+                throw new MalformedFrameException(
+                        "非法 BCD 半字节：" + Integer.toHexString(value & 0xFF));
             }
             sb.append((char) ('0' + high)).append((char) ('0' + low));
         }

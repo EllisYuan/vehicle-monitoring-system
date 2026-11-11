@@ -18,6 +18,11 @@ public record Tlv(int id, byte[] value) {
         if (value == null || value.length > MAX_VALUE_LENGTH) {
             throw new IllegalArgumentException("附加信息长度必须在 0-" + MAX_VALUE_LENGTH + " 之间");
         }
+        int expectedLength = fixedLength(id);
+        if (expectedLength >= 0 && value.length != expectedLength) {
+            throw new IllegalArgumentException("附加信息 0x" + String.format("%02X", id)
+                    + " 长度应为 " + expectedLength + "，实际 " + value.length);
+        }
         value = value.clone();
     }
 
@@ -49,12 +54,22 @@ public record Tlv(int id, byte[] value) {
             int id = reader.readUnsignedByte();
             int length = reader.readUnsignedByte();
             try {
-                items.add(new Tlv(id, reader.readBytes(length)));
+                byte[] value = reader.readBytes(length);
+                int expectedLength = fixedLength(id);
+                if (expectedLength >= 0 && length != expectedLength) {
+                    throw new MalformedFrameException("附加信息 0x" + String.format("%02X", id)
+                            + " 长度应为 " + expectedLength + "，实际 " + length);
+                }
+                items.add(new Tlv(id, value));
             } catch (IllegalArgumentException e) {
                 throw new MalformedFrameException("附加信息项非法：" + e.getMessage());
             }
         }
         return items;
+    }
+
+    private static int fixedLength(int id) {
+        return id == 0x01 ? 4 : -1;
     }
 
     public static void writeAll(List<Tlv> items, java.io.ByteArrayOutputStream out) {
