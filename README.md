@@ -17,8 +17,9 @@
 ## 当前工程
 
 ```text
-pom.xml                 聚合 POM（protocol、server）
+pom.xml                 聚合 POM（protocol、server、simulator）
 protocol/               独立 JT/T 808-2019 codec 与 fixture 单测
+simulator/              最小真实 TCP JT/T 808 模拟终端 CLI
 server/                 Spring Boot 4.1.2 / JDK 21 / Sa-Token 1.46.0 / MyBatis-Plus 3.5.18 / Flyway
 web/                    Vue 3.5 + TypeScript + Vite 8，登录页、两种布局、车队与账号页面、路由守卫
 ```

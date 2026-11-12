@@ -89,6 +89,8 @@ BUILD SUCCESS
 
 本轮 protocol 测试未启动 Spring、MySQL、Redis 或 Testcontainers。
 
+2026-11-12 在任务 06 分支创建前已核对最新 `main`（`4d58a23`）已包含任务 05 提交；在该基线执行同一命令再次回归，结果仍为 64 tests、0 failures、0 errors、0 skipped、`BUILD SUCCESS`。
+
 ## 验收项
 
 - [x] 独立 hex fixture 覆盖 2019 消息头、转义与 XOR

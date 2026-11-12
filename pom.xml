@@ -13,5 +13,6 @@
     <modules>
         <module>protocol</module>
         <module>server</module>
+        <module>simulator</module>
     </modules>
 </project>

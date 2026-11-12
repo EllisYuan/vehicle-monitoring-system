@@ -386,7 +386,7 @@ onMounted(refresh)
         <table data-testid="terminal-table">
           <thead>
             <tr>
-              <th>终端编号</th><th>状态</th><th>当前车辆</th><th v-if="canManage">
+              <th>终端编号</th><th>档案状态</th><th>通信状态</th><th>最后通信</th><th>当前车辆</th><th v-if="canManage">
                 操作
               </th>
             </tr>
@@ -398,7 +398,7 @@ onMounted(refresh)
             >
               <td class="number">
                 {{ terminal.terminalNo }}
-              </td><td>{{ terminal.status === 'ENABLED' ? '启用' : '停用' }}</td><td>{{ terminal.plateNo ?? '未绑定' }}</td><td v-if="canManage">
+              </td><td>{{ terminal.status === 'ENABLED' ? '启用' : '停用' }}</td><td>{{ terminal.communicationStatus === 'ONLINE' ? '在线' : terminal.communicationStatus === 'OFFLINE' ? '离线' : '未接入' }}</td><td>{{ terminal.lastSeenAt ? time(terminal.lastSeenAt) : '—' }}<small v-if="terminal.everAuthenticated">曾鉴权</small></td><td>{{ terminal.plateNo ?? '未绑定' }}</td><td v-if="canManage">
                 <button
                   type="button"
                   :disabled="busy"
@@ -411,7 +411,7 @@ onMounted(refresh)
             </tr>
             <tr v-if="!loading && !terminals.length">
               <td
-                :colspan="canManage ? 4 : 3"
+                :colspan="canManage ? 6 : 5"
                 class="empty"
               >
                 暂无可见终端

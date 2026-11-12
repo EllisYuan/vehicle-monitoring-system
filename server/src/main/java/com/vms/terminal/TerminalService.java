@@ -1,5 +1,6 @@
 package com.vms.terminal;
 
+import com.vms.access.TerminalAccessPort;
 import com.vms.audit.AuditService;
 import com.vms.fleet.VehicleService;
 import com.vms.identity.access.FleetScope;
@@ -30,7 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class TerminalService {
 
     private static final String SELECT = """
-            SELECT t.id, t.terminal_no, t.status, v.id AS vehicle_id, v.plate_no, v.fleet_id
+            SELECT t.id, t.terminal_no, t.status, t.last_seen_at, t.ever_authenticated,
+                   v.id AS vehicle_id, v.plate_no, v.fleet_id, v.status AS vehicle_status
             FROM terminal t LEFT JOIN terminal_vehicle_binding b ON b.current_terminal_id = t.id
             LEFT JOIN vehicle v ON v.id = b.vehicle_id
             """;
@@ -40,14 +42,16 @@ public class TerminalService {
     private final FleetScopeResolver scopes;
     private final AuditService audit;
     private final Clock clock;
+    private final TerminalAccessPort terminalAccess;
 
     public TerminalService(JdbcTemplate jdbc, VehicleService vehicles, FleetScopeResolver scopes,
-                           AuditService audit, Clock clock) {
+                           AuditService audit, Clock clock, TerminalAccessPort access) {
         this.jdbc = jdbc;
         this.vehicles = vehicles;
         this.scopes = scopes;
         this.audit = audit;
         this.clock = clock;
+        this.terminalAccess = access;
     }
 
     public List<TerminalView> list(UserAccount actor) {
@@ -55,7 +59,7 @@ public class TerminalService {
         List<Object> args = new ArrayList<>();
         String where = FleetScopeSql.where("v.fleet_id", scope, args);
         return jdbc.query(SELECT + " WHERE " + where + " ORDER BY t.terminal_no",
-                TerminalService::view, args.toArray());
+                this::view, args.toArray());
     }
 
     public TerminalView get(UserAccount actor, long id) {
@@ -64,7 +68,7 @@ public class TerminalService {
         String where = FleetScopeSql.where("v.fleet_id", scope, args);
         args.add(id);
         List<TerminalView> rows = jdbc.query(SELECT + " WHERE " + where + " AND t.id = ?",
-                TerminalService::view, args.toArray());
+                this::view, args.toArray());
         if (rows.isEmpty()) {
             if (!scope.all()) {
                 throw new ForbiddenException();
@@ -101,6 +105,9 @@ public class TerminalService {
     public TerminalView update(UserAccount actor, long id, String status) {
         lockTerminal(id);
         jdbc.update("UPDATE terminal SET status = ?, updated_at = ? WHERE id = ?", status, now(), id);
+        if ("DISABLED".equals(status)) {
+            terminalAccess.revoke(id);
+        }
         record(actor, "UPDATE_STATUS", "terminal:" + id, "status=" + status);
         return get(actor, id);
     }
@@ -168,6 +175,9 @@ public class TerminalService {
         } catch (DuplicateKeyException e) {
             throw new ConflictException("BINDING_CONFLICT", "车辆或终端已被绑定，请刷新后重试");
         }
+        if (current != null && !Objects.equals(current, terminalId)) {
+            terminalAccess.revoke(current);
+        }
         record(actor, terminalId == null ? "UNBIND" : "BIND", "vehicle:" + vehicleId,
                 "fromTerminalId=" + current + ", toTerminalId=" + terminalId + ", effectiveFrom=" + now);
         return vehicles.get(actor, vehicleId);
@@ -220,13 +230,30 @@ public class TerminalService {
                 actor.getId(), actor.getUsername(), null, detail);
     }
 
-    private static TerminalView view(ResultSet rs, int row) throws SQLException {
-        return new TerminalView(rs.getLong("id"), rs.getString("terminal_no"), rs.getString("status"),
+    private TerminalView view(ResultSet rs, int row) throws SQLException {
+        boolean everAuthenticated = rs.getBoolean("ever_authenticated");
+        String terminalNo = rs.getString("terminal_no");
+        boolean admissible = "ENABLED".equals(rs.getString("status"))
+                && "ENABLED".equals(rs.getString("vehicle_status"))
+                && rs.getObject("vehicle_id", Long.class) != null;
+        LocalDateTime lastSeenAt = rs.getObject("last_seen_at", LocalDateTime.class);
+        LocalDateTime now = now();
+        boolean recentlySeen = lastSeenAt != null
+                && !lastSeenAt.isBefore(now.minusSeconds(180))
+                && !lastSeenAt.isAfter(now);
+        String communicationStatus = !everAuthenticated
+                ? "NOT_CONNECTED"
+                : admissible && recentlySeen && terminalAccess.current(terminalNo)
+                        .filter(TerminalAccessPort.SessionView::writable).isPresent()
+                ? "ONLINE" : "OFFLINE";
+        return new TerminalView(rs.getLong("id"), terminalNo, rs.getString("status"),
                 rs.getObject("vehicle_id", Long.class), rs.getString("plate_no"),
-                rs.getObject("fleet_id", Long.class));
+                rs.getObject("fleet_id", Long.class),
+                rs.getObject("last_seen_at", LocalDateTime.class), everAuthenticated,
+                communicationStatus);
     }
 
-    public record TerminalView(long id, String terminalNo, String status, Long vehicleId, String plateNo, Long fleetId) { }
+    public record TerminalView(long id, String terminalNo, String status, Long vehicleId, String plateNo, Long fleetId, LocalDateTime lastSeenAt, boolean everAuthenticated, String communicationStatus) { }
     private record TerminalSnapshot(String status, LocalDateTime createdAt) { }
     public record BindingView(long id, long terminalId, String terminalNo, long vehicleId,
                               LocalDateTime effectiveFrom, LocalDateTime effectiveTo) { }

@@ -11,6 +11,8 @@ export interface Vehicle {
   terminalNo: string | null
 }
 
+export type TerminalCommunicationStatus = 'ONLINE' | 'OFFLINE' | 'NOT_CONNECTED'
+
 export interface Terminal {
   id: number
   terminalNo: string
@@ -18,6 +20,9 @@ export interface Terminal {
   vehicleId: number | null
   plateNo: string | null
   fleetId: number | null
+  lastSeenAt: string | null
+  everAuthenticated: boolean
+  communicationStatus: TerminalCommunicationStatus
 }
 
 export interface Binding {
