@@ -8,6 +8,10 @@ spring:
     url: ${VMS_DB_URL:jdbc:mysql://127.0.0.1:3307/vms?useUnicode=true&characterEncoding=utf8&connectionTimeZone=Asia/Shanghai&forceConnectionTimeZoneToSession=true&allowPublicKeyRetrieval=true&useSSL=false}
     username: ${VMS_DB_USERNAME:vms}
     password: ${VMS_DB_PASSWORD:}
+  task:
+    scheduling:
+      pool:
+        size: 2
   flyway:
     enabled: true
     locations: classpath:db/migration
@@ -15,6 +19,8 @@ spring:
     redis:
       host: ${VMS_REDIS_HOST:127.0.0.1}
       port: ${VMS_REDIS_PORT:6380}
+      connect-timeout: 1s
+      timeout: 1s
 
 sa-token:
   token-name: satoken

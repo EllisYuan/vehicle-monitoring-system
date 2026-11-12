@@ -15,7 +15,7 @@ import io.netty.util.AttributeKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-final class TerminalFrameHandler extends SimpleChannelInboundHandler<Frame> {
+final class TerminalFrameHandler extends SimpleChannelInboundHandler<TerminalFrameDecoder.ReceivedFrame> {
 
     private static final Logger log = LoggerFactory.getLogger(TerminalFrameHandler.class);
     private static final AttributeKey<TerminalAccessService.Registration> REGISTRATION =
@@ -24,13 +24,16 @@ final class TerminalFrameHandler extends SimpleChannelInboundHandler<Frame> {
             AttributeKey.valueOf("vms.terminal.session");
 
     private final TerminalAccessService access;
+    private final com.vms.telemetry.PositionIngestService positions;
 
-    TerminalFrameHandler(TerminalAccessService access) {
+    TerminalFrameHandler(TerminalAccessService access, com.vms.telemetry.PositionIngestService positions) {
         this.access = access;
+        this.positions = positions;
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext context, Frame frame) {
+    protected void channelRead0(ChannelHandlerContext context, TerminalFrameDecoder.ReceivedFrame received) {
+        Frame frame = received.frame();
         int messageId = frame.header().messageId();
         switch (messageId) {
             case 0x0100 -> register(context, frame);
@@ -38,6 +41,7 @@ final class TerminalFrameHandler extends SimpleChannelInboundHandler<Frame> {
             case 0x0001 -> terminalResponse(context, frame);
             case 0x0002 -> heartbeat(context, frame);
             case 0x0003 -> logout(context, frame);
+            case 0x0200 -> position(context, frame, received.receivedAt());
             default -> context.close();
         }
     }
@@ -115,6 +119,18 @@ final class TerminalFrameHandler extends SimpleChannelInboundHandler<Frame> {
         }
         send(context, frame, 0x8001,
                 new PlatformGeneralResponse(frame.header().serialNumber(), 0x0002, 0).encode());
+    }
+
+    private void position(ChannelHandlerContext context, Frame frame, java.time.LocalDateTime receivedAt) {
+        TerminalConnectionRegistry.Session session = currentSession(context, frame.header().terminalPhone());
+        if (session == null) {
+            context.close();
+            return;
+        }
+        positions.accept(session, com.vms.protocol.PositionReport.parse(frame.body()), receivedAt);
+        // accept 经 Spring transaction proxy 返回时已提交；Redis/WS 仅由 outbox worker 执行。
+        send(context, frame, 0x8001,
+                new PlatformGeneralResponse(frame.header().serialNumber(), 0x0200, 0).encode());
     }
 
     private void logout(ChannelHandlerContext context, Frame frame) {

@@ -1,6 +1,6 @@
 # 07: 可靠位置上报到实时地图
 
-Status: open
+Status: resolved
 Labels: ready-for-agent
 Type: task
 Blocked by: 06
@@ -44,4 +44,22 @@ Blocked by: 06
 
 ## Answer
 
-尚未实施；验证未执行。
+已完成：
+
+- 新增 Flyway V6：`track_point` 日分区（当前日期前 29 天、今天及未来 7 天）、`vehicle_last_position`、`vehicle_monitor_state`、`notification_outbox`；建立 `(terminal_id, gps_time)` 唯一键和 `(vehicle_id, gps_time)` 查询索引。
+- 接入真实 `0x0200`：EventLoop 只分帧并记录 `received_at`，有界业务执行器调用 Spring `@Transactional` 服务；同一事务写位置、单调快照、判定状态、outbox 和终端通信时间，事务完成后才回 `0x8001` 成功 ACK。
+- 新增 `/api/v1/monitor/snapshot` 和一次性短期 `/api/v1/auth/ws-ticket`；REST、首次 WS 握手和每次 WS 输出均复用当前角色/车队范围，车队长不能读取未授权车队。
+- 新增 `/ws/monitor` 位置推送；worker 按每车最新版本合并，`DONE/RETRY` 更新带 `event_id + version` 条件，避免旧 worker 清除新版本；Redis 缓存可从 MySQL 快照重建，Redis/WS 故障不影响已提交位置和 TCP ACK。
+- 新增监控首页：车辆筛选、通信/定位新鲜度、速度/方向/ACC/定位状态、WGS84 位置点、OpenLayers WMTS 配置与底图失败降级；新增真实 TCP simulator `--positions` 等位置场景参数。
+
+验证证据：
+
+- `mvnw.cmd -B -pl server -am '-Dtest=TerminalTcpIntegrationTest,TelemetryFlowTest,SchemaUpgradeTest' '-Dsurefire.failIfNoSpecifiedTests=false' test`：24 tests，0 failures，0 errors，0 skipped，BUILD SUCCESS；review 修复后覆盖任务 06 TCP 回归、任务 07 事务/授权/缓存场景。
+- review 后修复：outbox 第 10 次失败转 `DEAD`；TCP 业务改为按 `terminal_no` 串行且有界的 dispatcher，跨连接仍保持终端级顺序。
+- `mvnw.cmd -B -pl server -am '-Dvms.browser-tests=true' '-Dtest=BrowserFlowTest' '-Dsurefire.failIfNoSpecifiedTests=false' test`：17 项 Chromium 全部通过（原有 16 项 + 监控场景），review 修复后的真实 TCP/WS/browser 回归；截图 `web/test-results/07-live-monitor-wmts-fixture-failure.png` 验证 WMTS 失败仍保留列表。
+- `pnpm --dir web typecheck`：通过。
+- `pnpm --dir web lint`：通过。
+- `pnpm --dir web build`：通过（Vite 299 modules）。
+- `./mvnw.cmd -B -pl server -am -DskipTests compile`：通过。
+- 模拟器独立 JDK 21 `javac` 编译及 fixture 验证：通过；未把 fixture 结果伪称为真实后端验收。
+- 真实天地图 key、网络、条款和 CRS 对齐未执行，按任务 26 保留；幂等冲突、补传归属、撤权深化和通知故障深化留给 08/09/17/18。

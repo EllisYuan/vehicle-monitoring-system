@@ -125,6 +125,7 @@ function isActive(item: NavItem): boolean {
   min-height: 100vh;
   background: #f4f6f8;
   color: #1f2d3d;
+  font-family: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", sans-serif;
 }
 
 .topbar {
@@ -209,5 +210,19 @@ button {
 
 button:hover {
   background: rgb(255 255 255 / 10%);
+}
+
+@media (max-width: 1500px) {
+  .topbar { flex-wrap: wrap; gap: 0.6rem 1.25rem; }
+  .nav { order: 3; flex-basis: 100%; min-width: 0; }
+  .account { margin-left: auto; }
+}
+
+@media (max-width: 700px) {
+  .topbar { padding: 0.7rem 1rem; }
+  .account { flex-wrap: wrap; gap: 0.5rem; font-size: 0.75rem; }
+  .brand-title { font-size: 0.85rem; }
+  .brand { flex-wrap: wrap; }
+  .nav-link { padding: 0.4rem 0.5rem; font-size: 0.8rem; }
 }
 </style>

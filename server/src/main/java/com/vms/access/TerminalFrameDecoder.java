@@ -9,6 +9,11 @@ import java.util.List;
 
 /** 将 TCP 粘包、拆包还原为完整 JT/T 808 frame。 */
 final class TerminalFrameDecoder extends ByteToMessageDecoder {
+    private final java.time.Clock clock;
+
+    TerminalFrameDecoder(java.time.Clock clock) { this.clock = clock; }
+
+    record ReceivedFrame(Frame frame, java.time.LocalDateTime receivedAt) { }
 
     @Override
     protected void decode(ChannelHandlerContext context, ByteBuf input, List<Object> output) {
@@ -30,7 +35,7 @@ final class TerminalFrameDecoder extends ByteToMessageDecoder {
             input.getBytes(start, encoded);
             input.skipBytes(length);
             Frame frame = FrameCodec.decode(encoded);
-            output.add(frame);
+            output.add(new ReceivedFrame(frame, com.vms.infrastructure.EffectiveTime.now(clock)));
         }
     }
 

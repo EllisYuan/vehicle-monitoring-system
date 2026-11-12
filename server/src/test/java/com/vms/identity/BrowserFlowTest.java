@@ -2,6 +2,7 @@ package com.vms.identity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.vms.access.TerminalAccessPort;
 import com.vms.support.IntegrationContainers;
 import java.net.ServerSocket;
 import java.net.URI;
@@ -15,13 +16,15 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        properties = {"vms.access.tcp-port=0"})
 @Import(IntegrationContainers.class)
 @EnabledIfSystemProperty(named = "vms.browser-tests", matches = "true")
 class BrowserFlowTest {
@@ -37,6 +40,9 @@ class BrowserFlowTest {
 
     @Value("${local.server.port}")
     int serverPort;
+
+    @Autowired
+    TerminalAccessPort terminalAccess;
 
     @Test
     void realBrowserExercisesLoginLayoutsAndSessionRecovery() throws Exception {
@@ -54,6 +60,9 @@ class BrowserFlowTest {
         try {
             ProcessBuilder frontendBuilder = pnpm(web, "dev --host 127.0.0.1 --strictPort --port " + webPort);
             frontendBuilder.environment().put("VMS_API_TARGET", "http://127.0.0.1:" + serverPort);
+            frontendBuilder.environment().put("VITE_WMTS_ROAD_URL", "/__wmts-fixture/road");
+            frontendBuilder.environment().put("VITE_WMTS_LABEL_URL", "/__wmts-fixture/label");
+            frontendBuilder.environment().put("VITE_WMTS_ATTRIBUTION", "WMTS failure fixture · 非真实天地图服务");
             frontendBuilder.redirectErrorStream(true).redirectOutput(logs.resolve("02-browser-vite.log").toFile());
             frontend = frontendBuilder.start();
             awaitFrontend(frontend, webPort);
@@ -62,6 +71,13 @@ class BrowserFlowTest {
             browserBuilder.environment().put("VMS_E2E_USERNAME", ADMIN_NAME);
             browserBuilder.environment().put("VMS_E2E_PASSWORD", ADMIN_PASSWORD);
             browserBuilder.environment().put("VMS_E2E_WEB_PORT", String.valueOf(webPort));
+            browserBuilder.environment().put("VMS_E2E_TCP_PORT", String.valueOf(terminalAccess.port()));
+            boolean windows = System.getProperty("os.name").toLowerCase().contains("win");
+            browserBuilder.environment().put("VMS_E2E_JAVA", Path.of(System.getProperty("java.home"), "bin",
+                    windows ? "java.exe" : "java").toString());
+            browserBuilder.environment().put("VMS_E2E_SIMULATOR_CP", String.join(java.io.File.pathSeparator,
+                    web.resolve("../protocol/target/classes").normalize().toString(),
+                    web.resolve("../simulator/target/classes").normalize().toString()));
             browserBuilder.redirectErrorStream(true).redirectOutput(logs.resolve("02-playwright.log").toFile());
             browser = browserBuilder.start();
             assertThat(browser.waitFor(240, TimeUnit.SECONDS))

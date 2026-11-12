@@ -3,7 +3,6 @@ package com.vms.access;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.DefaultEventLoopGroup;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -22,12 +21,20 @@ public class TerminalTcpServer implements TerminalAccessPort, SmartLifecycle {
     private volatile Channel serverChannel;
     private volatile EventLoopGroup bossGroup;
     private volatile EventLoopGroup workerGroup;
-    private volatile EventLoopGroup businessGroup;
     private volatile int boundPort;
+    private final com.vms.telemetry.PositionIngestService positions;
+    private final TerminalSerialDispatcher dispatcher;
 
-    public TerminalTcpServer(TerminalAccessProperties properties, TerminalAccessService access) {
+    private final java.time.Clock clock;
+
+    public TerminalTcpServer(TerminalAccessProperties properties, TerminalAccessService access,
+                             com.vms.telemetry.PositionIngestService positions,
+                             TerminalSerialDispatcher dispatcher, java.time.Clock clock) {
         this.properties = properties;
         this.access = access;
+        this.positions = positions;
+        this.dispatcher = dispatcher;
+        this.clock = clock;
     }
 
     @Override
@@ -37,7 +44,6 @@ public class TerminalTcpServer implements TerminalAccessPort, SmartLifecycle {
         }
         bossGroup = new NioEventLoopGroup(1);
         workerGroup = new NioEventLoopGroup();
-        businessGroup = new DefaultEventLoopGroup();
         try {
             serverChannel = new ServerBootstrap()
                     .group(bossGroup, workerGroup)
@@ -45,8 +51,9 @@ public class TerminalTcpServer implements TerminalAccessPort, SmartLifecycle {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel channel) {
-                            channel.pipeline().addLast(new TerminalFrameDecoder());
-                            channel.pipeline().addLast(businessGroup, "terminalAccess", new TerminalFrameHandler(access));
+                            channel.pipeline().addLast(new TerminalFrameDecoder(clock));
+                            channel.pipeline().addLast("terminalDispatch", new TerminalDispatchHandler(dispatcher));
+                            channel.pipeline().addLast("terminalAccess", new TerminalFrameHandler(access, positions));
                         }
                     })
                     .bind(new InetSocketAddress("127.0.0.1", properties.getTcpPort()))
@@ -83,10 +90,6 @@ public class TerminalTcpServer implements TerminalAccessPort, SmartLifecycle {
     }
 
     private void stopGroups() {
-        if (businessGroup != null) {
-            businessGroup.shutdownGracefully();
-            businessGroup = null;
-        }
         if (workerGroup != null) {
             workerGroup.shutdownGracefully();
             workerGroup = null;

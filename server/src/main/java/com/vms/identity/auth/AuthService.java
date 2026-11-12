@@ -100,6 +100,20 @@ public class AuthService {
         return user;
     }
 
+    /** WS 和后台输出校验具体 token；不依赖 HTTP ThreadLocal，也不创建新的 session。 */
+    public UserAccount requireToken(String token) {
+        Object loginId = StpUtil.getLoginIdByToken(token);
+        if (loginId == null) throw new SessionRevokedException("SESSION_EXPIRED");
+        UserAccount user = users.selectById(Long.valueOf(loginId.toString()));
+        if (user == null || !user.isEnabled()) throw new SessionRevokedException("ACCOUNT_DISABLED");
+        var session = StpUtil.getStpLogic().getTokenSessionByToken(token, false);
+        Object version = session == null ? null : session.get(SESSION_AUTH_VERSION);
+        if (version == null || !String.valueOf(user.getAuthVersion()).equals(String.valueOf(version))) {
+            throw new SessionRevokedException("SESSION_REVOKED");
+        }
+        return user;
+    }
+
     public UserAccount currentUser() {
         return requireSession();
     }
