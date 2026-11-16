@@ -105,6 +105,7 @@
 - 复跑命令（锁内）：`mvnw.cmd -B -pl server -am -Dtest=OutboxRetentionTest,OutboxRetryAndCacheRecoveryTest,SchemaUpgradeTest,TelemetryFlowTest,PositionQualityFlowTest,OverspeedAlarmFlowTest,AlarmHandlingFlowTest,GeofenceJudgementFlowTest,AuditViewerTest,OfflineAndPositionAlarmFlowTest -Dsurefire.failIfNoSpecifiedTests=false test`
 - 实际：`Tests run: 71, Failures: 0, Errors: 0`，BUILD SUCCESS；本票 12 个用例全通过，合并引入的任务14 `OfflineAndPositionAlarmFlowTest` 8 个用例同批通过（`18-postmerge-1.log`）。
 - 调度池：任务14 合并后 `spring.task.scheduling.pool.size` 为 4，本票清理任务与既有任务共用，语义不变。
+- 最终提交状态：证据与注释修正提交后，锁内 `mvnw.cmd -B -pl server -am -DskipTests compile` 为 BUILD SUCCESS（`18-final-compile.log`）；该提交未改业务代码。
 
 ## 5. 未执行与说明
 
