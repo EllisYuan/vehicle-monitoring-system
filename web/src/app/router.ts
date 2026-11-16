@@ -123,13 +123,11 @@ export const router = createRouter({
     {
       path: '/admin/alarm-rules',
       name: 'admin-alarm-rules',
-      component: PlaceholderView,
+      component: () => import('../features/alarm-rules/views/AlarmRuleView.vue'),
       meta: {
         title: '报警规则',
-        description: '全局默认与车队覆盖两级报警规则在报警任务中交付，仅管理员可维护。',
         area: 'admin',
         roles: ['ADMIN'] satisfies RoleCode[],
-        ticket: '12 可配置超速报警与持续事件',
       },
     },
     {
