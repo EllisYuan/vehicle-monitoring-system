@@ -56,6 +56,7 @@ Blocked by: 13
 - TDD 三切片红→绿：车辆导出 404→1/1；报警与处置导出 404→2/2；上限/转义/越权/审计 200→400 等 4/4；另有数据库失败无残缺文件补强用例。
 - `ReportExportFlowTest` 完整 8 项全通过（BUILD SUCCESS，211.7 s）：三类文件与页面顺序及 MySQL `count(*)` 一致、10000 行成功与 10001 行 400 无部分文件、公式样例按文本读回、车队长仅授权车队且越权 403、审计含条件/行数/结果且无正文、删除 `alarm_handle_log` 后导出 500 且无附件、失败审计 `reason=QUERY_FAILED`。
 - 回归 `SchemaUpgradeTest`、`AlarmHandlingFlowTest`、`TrackQueryFlowTest`、`CredentialLogHygieneTest` 共 17 项全通过；Flyway 仍为 12 个迁移至 v14。
+- 合并 `integration/tickets-08-27`（tip `6cf3998`，含任务14）后复跑受影响测试 25/25 通过（合并后迁移数 13，仍为 v14），见 evidence 第七节。
 - 容器已回收，C: 可用约 28.0 GB；未执行 `docker volume prune`/`system prune`。
 
 偏差与边界：未新增前端导出入口；数据库失败用例为实现完成后补强，首次运行仅修正测试对 Spring 500 默认 `Content-Disposition` 的过严断言，产品代码未改。

@@ -124,3 +124,21 @@
 - 前端未改动：本票 AC 以 HTTP 下载文件与页面数据一致性判定，导出以 API 交付；`/admin/reports` 占位与统计页面属任务19 范围，未在本票新增页面入口。
 - 数据库失败用例为 AC6 覆盖补强，在实现完成后新增；首次运行因对 Spring 500 默认 `Content-Disposition` 的断言过严而失败，修正测试断言后 1/1、随后完整类 8/8 通过，未修改产品代码。
 - 未新增导出类型、异步导出中心、原始轨迹批量导出、地图截图或对外推送；未改变监控页与轨迹的坐标展示与授权规则。
+
+## 七、合并集成分支后复验（2026-11-16）
+
+- 按任务要求合并 `integration/tickets-08-27`（tip `6cf3998`，含任务14 离线与终端报警）到 `feat/ticket-20-redacted-exports`，合并提交 `d89e864`，无冲突。
+- 合并后迁移数为 13（新增 `V12__offline_and_terminal_alarms.sql`）；`SchemaUpgradeTest` 的期望值（13 迁移、二次 6、latest 7、37 分区）由集成分支提供，本分支无需调整。本节之前的记录描述合并前的 12 迁移状态。
+- 锁内复跑受影响测试：
+
+```
+.\mvnw.cmd -B -Dsurefire.failIfNoSpecifiedTests=false -Dtest=ReportExportFlowTest,SchemaUpgradeTest,AlarmHandlingFlowTest,TrackQueryFlowTest,CredentialLogHygieneTest test
+```
+
+- 结果：`Tests run: 25, Failures: 0, Errors: 0, Skipped: 0`，BUILD SUCCESS；日志 `evidence/logs/20-postmerge.log`（`[lock] command exit code: 0`）。
+  - `ReportExportFlowTest` 8/8（342.2 s）
+  - `SchemaUpgradeTest` 2/2（70.87 s）
+  - `AlarmHandlingFlowTest` 6/6（68.72 s）
+  - `TrackQueryFlowTest` 8/8（126.0 s）
+  - `CredentialLogHygieneTest` 1/1（68.31 s）
+- Flyway 启动日志：`Successfully applied 13 migrations to schema vms, now at version v14`。
