@@ -50,5 +50,6 @@ Blocked by: 03
 - 汇总见 `evidence/21-verification.md`。
 
 合并后复验（合并提交 `e3a28fa`，父 `064383b` 与 `integration/tickets-08-27` 的 `2e9fbe2`，无冲突）：`AuditViewerTest` 再次 9/9；`BrowserFlowTest` 第三次运行 Playwright 30/30（`audit.spec.ts` 3/3，`evidence/21-browser-post-merge-final.log`）。前两次运行仅首个既有用例 `archives.spec.ts` 的 `current-user` 5s 登录断言超时（登录 POST 实际 200、耗时 3389ms，失败快照已登录），trace 定位与本票改动无关；详见 `evidence/21-verification.md` 的“合并后复验”。
+第二次合并（合并提交 `e5f7936`，父 `5b3de0c` 与 `integration/tickets-08-27` 的 `6987d1b`，含任务16指令票）：唯一冲突 `Permission.java`，保留 `AUDIT_VIEW` 与 `COMMAND_DISPATCH`。任务16新增 `AuditService.CATEGORY_COMMAND` 并实际写入审计；本票审计页分类筛选补齐 `COMMAND` 并在 `audit.spec.ts` 增加断言。复验：`AuditViewerTest` 9/9；`BrowserFlowTest` 首跑 Playwright 31/31（`audit.spec.ts` 3/3、`commands.spec.ts` 1/1）；`pnpm typecheck` / `lint` exit 0。证据：`evidence/21-audit-tests-post-merge-16.log`、`evidence/21-browser-post-merge-16.log`、`evidence/21-web-checks-post-merge-16.log`，详见 `evidence/21-verification.md`。
 
-缺口：分区维护失败告警依赖 11 号票的维护功能，尚未交付，本票如实提示且未编造占位数据，按约定在 11/18/27 补充复验；outbox DEAD 已实现并验证。审计导出与自动清理在 Scope 外。
+缺口：分区维护失败告警依赖 11 号票的维护功能，尚未交付，本票如实提示且未编造占位数据，按约定在 11/18/27 补充复验；outbox DEAD 已实现并验证。审计导出与自动清理在 Scope 外。另，任务16合入的 `V14__command_log.sql` 使 `SchemaUpgradeTest` 的迁移数与表清单断言失配（迁移 6→7，新增 `command_log`、`terminal_command_sequence`），属任务16/集成基线待修，本票未改动该测试。

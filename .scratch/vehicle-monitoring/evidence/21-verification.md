@@ -1,6 +1,6 @@
 # 任务 21 验证记录
 
-状态：2026-11-16 验证完成（合并前基线 907c234，合并 `integration/tickets-08-27` 后复验于 e3a28fa）。合并前：后端审计查询测试 9/9、统一浏览器入口 Playwright 20/20（含本票 3 项）、真实 HTTP 三角色 + 独立 MySQL 8.4 容器直查、前端 typecheck/lint/build 均通过。合并后：`AuditViewerTest` 再次 9/9；`BrowserFlowTest` 第三次运行 Playwright 30/30（含本票 3 项），前两次为首个既有用例 5s 登录断言超时，定位见“合并后复验”。本票无迁移，未改动 `SchemaUpgradeTest`。
+状态：2026-11-16 验证完成（合并前基线 907c234；第一次合并后复验于 e3a28fa；第二次合并含任务16后复验于 e5f7936，并叠加分类筛选补齐提交）。合并前：后端审计查询测试 9/9、统一浏览器入口 Playwright 20/20（含本票 3 项）、真实 HTTP 三角色 + 独立 MySQL 8.4 容器直查、前端 typecheck/lint/build 均通过。合并后：`AuditViewerTest` 再次 9/9；`BrowserFlowTest` 第三次运行 Playwright 30/30（含本票 3 项），前两次为首个既有用例 5s 登录断言超时，定位见“合并后复验”。第二次合并含任务16：`AuditViewerTest` 9/9、`BrowserFlowTest` 首跑 Playwright 31/31（含本票 3 项与任务16指令 1 项）；任务16的 V14 使 `SchemaUpgradeTest` 既有断言失配，属集成基线待修，见文末。本票无迁移，未改动 `SchemaUpgradeTest`。
 
 ## 环境与资源边界
 
@@ -80,6 +80,7 @@
 - 审计导出与自动清理：明确在 Scope 外，未实现、未验证。
 - 浏览器覆盖沿用项目基线 Chromium 单浏览器；未扩展其他浏览器。
 - 合并后的受影响验证见“合并后复验”：`AuditViewerTest` 9/9、`BrowserFlowTest` 第三次 30/30 通过；前两次失败为首个既有用例的 5s 登录断言超时，与本票功能无关。
+- 集成基线缺口（本票未改动）：任务16合入的 `V14__command_log.sql` 使迁移数与表清单超出 `SchemaUpgradeTest` 的既有断言，详见“合并后复验（e5f7936，含任务16指令票）”。
 
 ## 合并后复验（e3a28fa）
 
@@ -89,3 +90,14 @@
 - 失败定位（Playwright trace）：POST `/api/v1/auth/login` 实际返回 200，但耗时 3389ms；随后 `/api/v1/auth/me` 67ms、首页模块加载完成，失败快照已显示 `browser-admin（管理员）` 登录态。服务端登录使用 BCrypt strength=12，首个页面登录叠加 Vite 首次页面模块加载，超过 Playwright 默认 5s 的 expect 超时；审计页与审计接口不在该用例路径上。该失败与本票功能无关，属于既有浏览器用例的时序敏感问题，未修改共享测试配置。
 - 第三次运行通过：`Tests run: 1, Failures: 0`，Playwright `30 passed (1.4m)`（含 `audit.spec.ts` 3/3），BUILD SUCCESS，lock exit 0（`evidence/21-browser-post-merge-final.log`）；截图重新生成 `web/test-results/admin-audit-page.png`。
 - 复验结束后本轮 Testcontainers 容器已由 Ryuk 回收；检查时仍在运行的 `testcontainers-ryuk-*`（创建于 11:09:01）属于其他 ticket 的新一轮测试，未清理。未删除其他项目或开发容器。
+
+## 合并后复验（e5f7936，含任务16指令票）
+
+- 第二次合并提交 `e5f7936`（父 `5b3de0c` 与 `integration/tickets-08-27` 的 `6987d1b`，后者含任务16）。唯一冲突 `server/src/main/java/com/vms/identity/security/Permission.java`：同时保留 `AUDIT_VIEW(RoleCode.ADMIN)` 与 `COMMAND_DISPATCH(RoleCode.ADMIN, RoleCode.MONITOR)`；`web/src/app/router.ts` 自动合并后 `/monitor/commands` 与 `/admin/audit` 并存。
+- 任务16在 `AuditService` 新增 `CATEGORY_COMMAND` 并由指令流程实际写入；本票审计页分类筛选补齐 `COMMAND`，`audit.spec.ts` 增加“分类筛选可选 COMMAND”断言（`web/src/features/audit/views/AuditListView.vue`、`web/e2e/audit.spec.ts`）。后端查询、脱敏与只读行为未改变。
+- `pnpm typecheck` / `pnpm lint` 均 exit 0（`evidence/21-web-checks-post-merge-16.log`）。
+- `AuditViewerTest`：`Tests run: 9, Failures: 0, Errors: 0, Skipped: 0`，BUILD SUCCESS，lock exit 0（`evidence/21-audit-tests-post-merge-16.log`）。
+- 浏览器验证前先执行 `mvnw.cmd -B -pl simulator -am -DskipTests package`（任务16修改了 simulator）：BUILD SUCCESS，lock exit 0（`evidence/21-simulator-build-post-merge-16.log`）。
+- `BrowserFlowTest` 本次首跑通过：`Tests run: 1, Failures: 0`，Playwright `31 passed (1.9m)`，其中 `audit.spec.ts` 3/3、`commands.spec.ts` 1/1；BUILD SUCCESS，lock exit 0（`evidence/21-browser-post-merge-16.log`、`evidence/logs/02-playwright.log`）；截图 `web/test-results/admin-audit-page.png` 重新生成（63499 bytes）。
+- 复验结束后本轮 Testcontainers 容器已由 Ryuk 回收；检查时 11:38:45 起新建的 `mysql:8.4` 与 `testcontainers-ryuk-*` 属于其他 ticket 的新一轮测试，未清理，也未删除其他项目或开发容器。
+- 集成基线缺口（不属本票改动，未修改、未运行）：任务16合入的 `V14__command_log.sql` 使 Flyway 迁移由 6 个增至 7 个，并新增 `command_log`、`terminal_command_sequence` 两张表；`SchemaUpgradeTest` 仍断言 `migrationsExecuted == 6` 且 `containsExactly` 表清单不含这两张表，在当前合并基线上会失败，需由任务16或集成基线后续同步。
