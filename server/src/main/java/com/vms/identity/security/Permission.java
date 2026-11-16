@@ -26,7 +26,9 @@ public enum Permission {
     /** 围栏创建/编辑/停用与车辆绑定；管理员与监控员。 */
     GEOFENCE_MANAGE(RoleCode.ADMIN, RoleCode.MONITOR),
     /** DEAD 通知的审计重投；仅管理员。 */
-    OUTBOX_REDELIVER(RoleCode.ADMIN);
+    OUTBOX_REDELIVER(RoleCode.ADMIN),
+    /** 车辆、报警与处置记录 Excel 导出；车队长仅限授权车队。 */
+    EXPORT_DATA(RoleCode.ADMIN, RoleCode.MONITOR, RoleCode.FLEET_LEADER);
 
     private final RoleCode[] roles;
 
