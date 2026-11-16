@@ -36,6 +36,7 @@ const adminNav: NavItem[] = [
   { label: '统计报表', to: '/admin/reports', testId: 'nav-admin-reports' },
   { label: '账号管理', to: '/admin/users', testId: 'nav-admin-users' },
   { label: '系统审计', to: '/admin/audit', testId: 'nav-admin-audit' },
+  { label: '轨迹保留', to: '/admin/track-retention', testId: 'nav-admin-track-retention' },
 ]
 
 const role = computed(() => session.role)

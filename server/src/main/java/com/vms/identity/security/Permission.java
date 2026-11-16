@@ -16,7 +16,9 @@ public enum Permission {
     /** 查询登录、关键写操作与运行记录审计；仅管理员。 */
     AUDIT_VIEW(RoleCode.ADMIN),
     /** 文本与临时跟踪指令下发；管理员与监控员。 */
-    COMMAND_DISPATCH(RoleCode.ADMIN, RoleCode.MONITOR);
+    COMMAND_DISPATCH(RoleCode.ADMIN, RoleCode.MONITOR),
+    /** 轨迹保留期调整与分区维护告警查看；仅管理员。 */
+    TRACK_RETENTION_MANAGE(RoleCode.ADMIN);
 
     private final RoleCode[] roles;
 
