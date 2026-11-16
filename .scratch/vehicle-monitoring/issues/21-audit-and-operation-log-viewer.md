@@ -1,6 +1,6 @@
 # 21: 管理员审计与运行记录查询
 
-Status: open
+Status: resolved
 Labels: ready-for-agent
 Type: task
 Blocked by: 03
@@ -15,14 +15,14 @@ Blocked by: 03
 
 ## Acceptance criteria
 
-- [ ] 登录成功/失败与关键写操作审计可查询，数据由前序票实际写入
-- [ ] 按时间、操作者、动作、结果筛选与分页有效
-- [ ] 详情不含 password、鉴权码、token、WS ticket 明文
-- [ ] MONITOR 与 FLEET_LEADER 访问被服务端拒绝
-- [ ] 审计记录只读，页面无删除或修改入口
-- [ ] 已实现的运行记录与源事实一致；尚未提供的 outbox DEAD、分区维护等记录在 11/18/27 补充复验，不阻塞本票关闭
-- [ ] 审计撤权后旧会话访问及时失效
-- [ ] 查询有界，不影响业务写入
+- [x] 登录成功/失败与关键写操作审计可查询，数据由前序票实际写入
+- [x] 按时间、操作者、动作、结果筛选与分页有效
+- [x] 详情不含 password、鉴权码、token、WS ticket 明文
+- [x] MONITOR 与 FLEET_LEADER 访问被服务端拒绝
+- [x] 审计记录只读，页面无删除或修改入口
+- [x] 已实现的运行记录与源事实一致；尚未提供的 outbox DEAD、分区维护等记录在 11/18/27 补充复验，不阻塞本票关闭
+- [x] 审计撤权后旧会话访问及时失效
+- [x] 查询有界，不影响业务写入
 
 ## Scope boundaries
 
@@ -38,4 +38,20 @@ Blocked by: 03
 
 ## Answer
 
-尚未实施；AC02 中审计权限部分未执行。
+已实现并通过验证（2026-11-16，分支 feat/ticket-21-audit-viewer）。
+
+实现：新增 `Permission.AUDIT_VIEW`（仅 ADMIN）；`AuditController` 提供只读 `GET /api/v1/audit/logs` 与 `GET /api/v1/audit/operation-records`，无任何写方法；`AuditQueryService` 按 `audit_log` 实际字段查询，支持 actor/category/action/result 与时间窗、分页，默认窗口 7 天、最大 31 天，size 1–100（默认 20），offset 上限 10000，detail 对 password/鉴权码/token/WS ticket 脱敏；运行记录读取 `notification_outbox` 各状态计数与 DEAD 明细；前端 `/admin/audit` 替换占位页，提供筛选、分页、只读表格与运行记录区，无删除或修改入口。无数据库迁移，未改动 `SchemaUpgradeTest`，未重定义前票审计格式。
+
+验证命令与结果：
+- `mvnw.cmd -B -pl server -am '-Dtest=AuditViewerTest' '-Dsurefire.failIfNoSpecifiedTests=false' test`：Tests run: 9, Failures: 0, Errors: 0, Skipped: 0，BUILD SUCCESS（`evidence/21-audit-tests.log`）。
+- 统一浏览器入口 `BrowserFlowTest`：Tests run: 1, Failures: 0；Playwright 20 passed，其中 `audit.spec.ts` 3/3；截图 `web/test-results/admin-audit-page.png`（`evidence/logs/02-playwright.log`）。
+- 真实 HTTP（独立 MySQL 8.4 容器、端口 18081）：ADMIN 查询 200，MONITOR/FLEET_LEADER 403 FORBIDDEN，越界参数 400，写方法 405，撤权后旧 token 401 ACCOUNT_DISABLED，脱敏样例与 MySQL 直查一致（`evidence/21-http-verification.log`、`evidence/21-package.log`）。
+- `pnpm typecheck` / `pnpm lint` / `pnpm build` 均 exit 0（`evidence/21-web-checks.log`）。
+- 汇总见 `evidence/21-verification.md`。
+
+合并后复验（合并提交 `e3a28fa`，父 `064383b` 与 `integration/tickets-08-27` 的 `2e9fbe2`，无冲突）：`AuditViewerTest` 再次 9/9；`BrowserFlowTest` 第三次运行 Playwright 30/30（`audit.spec.ts` 3/3，`evidence/21-browser-post-merge-final.log`）。前两次运行仅首个既有用例 `archives.spec.ts` 的 `current-user` 5s 登录断言超时（登录 POST 实际 200、耗时 3389ms，失败快照已登录），trace 定位与本票改动无关；详见 `evidence/21-verification.md` 的“合并后复验”。
+第二次合并（合并提交 `e5f7936`，父 `5b3de0c` 与 `integration/tickets-08-27` 的 `6987d1b`，含任务16指令票）：唯一冲突 `Permission.java`，保留 `AUDIT_VIEW` 与 `COMMAND_DISPATCH`。任务16新增 `AuditService.CATEGORY_COMMAND` 并实际写入审计；本票审计页分类筛选补齐 `COMMAND` 并在 `audit.spec.ts` 增加断言。复验：`AuditViewerTest` 9/9；`BrowserFlowTest` 首跑 Playwright 31/31（`audit.spec.ts` 3/3、`commands.spec.ts` 1/1）；`pnpm typecheck` / `lint` exit 0。证据：`evidence/21-audit-tests-post-merge-16.log`、`evidence/21-browser-post-merge-16.log`、`evidence/21-web-checks-post-merge-16.log`，详见 `evidence/21-verification.md`。
+第三次合并（合并提交 `38bd3a1`，父 `88af4ec` 与集成分支 `899daf1`）：集成分支修复 `SchemaUpgradeTest` 的 V14 迁移数与表断言，无冲突。复验：`AuditViewerTest` 9/9、`SchemaUpgradeTest` 1/1（合计 10/10）、`BrowserFlowTest` Playwright 31/31（`audit.spec.ts` 3/3、`commands.spec.ts` 1/1）；证据 `evidence/21-backend-post-merge-899daf1.log`、`evidence/21-browser-post-merge-899daf1.log`。
+第四次合并（合并提交 `64644ed`，父 `7d28c17` 与集成分支 `eecda2c`，含任务17订阅撤权）：无冲突。复验：`AuditViewerTest` 9/9、`BrowserFlowTest` Playwright 34/34（`audit.spec.ts` 3/3、`commands.spec.ts` 1/1，任务17新增 3 项亦通过）；证据 `evidence/21-audit-tests-post-merge-64644ed.log`、`evidence/21-browser-post-merge-64644ed.log`。
+
+缺口：分区维护失败告警依赖 11 号票的维护功能，尚未交付，本票如实提示且未编造占位数据，按约定在 11/18/27 补充复验；outbox DEAD 已实现并验证。审计导出与自动清理在 Scope 外。另，任务16合入的 `V14__command_log.sql` 使 `SchemaUpgradeTest` 的迁移数与表清单断言失配（迁移 6→7，新增 `command_log`、`terminal_command_sequence`），集成分支 `899daf1` 已对齐断言；本票第三次合并（`38bd3a1`）后 `SchemaUpgradeTest` 1/1 通过，本票未改动该测试。
