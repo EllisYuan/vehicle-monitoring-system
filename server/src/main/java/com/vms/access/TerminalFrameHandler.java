@@ -166,7 +166,7 @@ final class TerminalFrameHandler extends SimpleChannelInboundHandler<TerminalFra
         }
         Frame response = response(frame, 0x8001,
                 new PlatformGeneralResponse(frame.header().serialNumber(), 0x0003, 0).encode());
-        access.logout(session);
+        access.lawfulLogout(session);
         if (commandListener != null) {
             try {
                 commandListener.onLawfulLogout(session.terminalId(), session.terminalNo(), session.epoch());

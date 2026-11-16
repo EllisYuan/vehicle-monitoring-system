@@ -66,6 +66,7 @@ CREATE TABLE geofence_vehicle_state (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 围栏进出为瞬时事件，沿用 12 的 alarm 结构与 ALARM_EVENT outbox；扩展允许的事件类型。
+-- V13 晚于 V12 执行，约束须同时保留 14 的 OFFLINE/POSITION_INVALID，否则离线报警写入会失败。
 ALTER TABLE alarm DROP CHECK ck_alarm_type;
 ALTER TABLE alarm ADD CONSTRAINT ck_alarm_type CHECK
-    (alarm_type IN ('OVERSPEED','GEOFENCE_ENTER','GEOFENCE_LEAVE'));
+    (alarm_type IN ('OVERSPEED','OFFLINE','POSITION_INVALID','GEOFENCE_ENTER','GEOFENCE_LEAVE'));

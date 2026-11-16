@@ -1,5 +1,6 @@
 package com.vms.fleet;
 
+import com.vms.alarm.OfflineAlarmService;
 import com.vms.audit.AuditService;
 import com.vms.identity.access.FleetScope;
 import com.vms.identity.access.FleetScopeResolver;
@@ -36,12 +37,15 @@ public class VehicleService {
     private final JdbcTemplate jdbc;
     private final FleetScopeResolver scopes;
     private final AuditService audit;
+    private final OfflineAlarmService offlineAlarms;
     private final Clock clock;
 
-    public VehicleService(JdbcTemplate jdbc, FleetScopeResolver scopes, AuditService audit, Clock clock) {
+    public VehicleService(JdbcTemplate jdbc, FleetScopeResolver scopes, AuditService audit,
+                          OfflineAlarmService offlineAlarms, Clock clock) {
         this.jdbc = jdbc;
         this.scopes = scopes;
         this.audit = audit;
+        this.offlineAlarms = offlineAlarms;
         this.clock = clock;
     }
 
@@ -116,6 +120,10 @@ public class VehicleService {
             }
             if (status != null) {
                 jdbc.update("UPDATE vehicle SET status = ?, updated_at = ? WHERE id = ?", status, now(), id);
+                if ("DISABLED".equals(status)) {
+                    // 停用车辆不新造离线报警；既有 ACTIVE 保留并标注监控范围变化
+                    offlineAlarms.markScopeChangedByVehicle(id, now());
+                }
             }
         } catch (DuplicateKeyException e) {
             throw new ConflictException("PLATE_NO_EXISTS", "车牌已存在");
