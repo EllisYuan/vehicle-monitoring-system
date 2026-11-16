@@ -24,6 +24,7 @@ const target = ref<HTMLDivElement>()
 const error = ref('')
 const hover = ref<MonitorVehicle | null>(null)
 const basemapLoading = ref(false)
+const markerCount = ref(0)
 const basemap = resolveBasemap({
   roadUrl: import.meta.env.VITE_WMTS_ROAD_URL,
   labelUrl: import.meta.env.VITE_WMTS_LABEL_URL,
@@ -92,6 +93,7 @@ function updateVehicles() {
     }))
     source.addFeature(feature)
   }
+  markerCount.value = source.getFeatures().length
   if (!centered && source.getFeatures().length) { fitVehicles(); centered = true }
 }
 
@@ -159,6 +161,7 @@ onUnmounted(() => {
   <div
     class="map-workspace"
     data-testid="monitor-map"
+    :data-feature-count="markerCount"
   >
     <div
       ref="target"

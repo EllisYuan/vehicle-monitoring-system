@@ -83,6 +83,36 @@ test.describe('实时监控 public TCP / REST / WS / browser', () => {
     await page.screenshot({ path: 'test-results/07-live-monitor-wmts-fixture-failure.png', fullPage: true })
   })
 
+  test('定位无效点不进入地图且列表仍显示暂无有效定位', async ({ page, request }) => {
+    const suffix = `inv${Date.now().toString(36)}`
+    await page.route('**/__wmts-fixture/**', route => route.abort('failed'))
+    await signIn(page)
+    const { vehicleId, headers } = await createVehicle(request, page, suffix)
+    const terminalNo = `${Date.now()}0000008`
+    const terminal = await request.post('/api/v1/terminals', { headers, data: { terminalNo } })
+    expect(terminal.status()).toBe(201)
+    const terminalId = ((await terminal.json()) as { id: number }).id
+    expect((await request.put(`/api/v1/vehicles/${vehicleId}/terminal`, {
+      headers, data: { terminalId },
+    })).ok()).toBeTruthy()
+
+    await page.reload()
+    await expect(page.getByTestId('monitor-stream-status')).toContainText('实时连接已建立')
+    const row = page.getByTestId(`monitor-vehicle-${vehicleId}`)
+    await expect(row).toContainText('暂无有效定位')
+    const map = page.getByTestId('monitor-map')
+    const markersBefore = (await map.getAttribute('data-feature-count')) ?? '0'
+    await run(java, ['-cp', simulatorClasspath, 'com.vms.simulator.TerminalSimulator',
+      '--host', '127.0.0.1', '--port', tcpPort, '--terminal', terminalNo,
+      '--positions', '2', '--interval-ms', '1100', '--linger-ms', '1000',
+      '--longitude', '121.5', '--latitude', '31.24', '--speed', '10', '--direction', '45',
+      '--fix-valid', 'false'],
+    { timeout: 20_000, windowsHide: true })
+    await expect(row).toContainText('暂无有效定位')
+    await expect(map).toHaveAttribute('data-feature-count', markersBefore)
+    await page.screenshot({ path: 'test-results/08-invalid-fix-not-on-map.png', fullPage: true })
+  })
+
   test('底图 key 只进入瓦片请求，不进入页面正文、错误提示或控制台', async ({ page }) => {
     test.skip(!fixtureKey, '需要 BrowserFlowTest 提供 fixture key（非真实 key）')
     const tileRequests: string[] = []
