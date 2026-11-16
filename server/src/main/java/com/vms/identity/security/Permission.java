@@ -20,7 +20,9 @@ public enum Permission {
     /** 轨迹保留期调整与分区维护告警查看；仅管理员。 */
     TRACK_RETENTION_MANAGE(RoleCode.ADMIN),
     /** 全局默认与车队覆盖报警规则维护；仅管理员。 */
-    ALARM_RULE_MANAGE(RoleCode.ADMIN);
+    ALARM_RULE_MANAGE(RoleCode.ADMIN),
+    /** 围栏创建/编辑/停用与车辆绑定；管理员与监控员。 */
+    GEOFENCE_MANAGE(RoleCode.ADMIN, RoleCode.MONITOR);
 
     private final RoleCode[] roles;
 

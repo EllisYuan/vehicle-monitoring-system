@@ -61,7 +61,7 @@ export const router = createRouter({
     {
       path: '/monitor/geofences',
       name: 'geofences',
-      component: PlaceholderView,
+      component: () => import('../features/geofences/views/GeofenceView.vue'),
       meta: {
         title: '电子围栏',
         description: '围栏绘制、车辆绑定与进出事件在围栏任务中交付，仅管理员和监控员可操作。',
