@@ -1,0 +1,247 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] vehicle-monitoring-system                                          [pom]
+[INFO] protocol                                                           [jar]
+[INFO] vehicle-monitoring-server                                          [jar]
+[INFO] vehicle-monitoring-simulator                                       [jar]
+[INFO] 
+[INFO] -----------------< com.vms:vehicle-monitoring-system >------------------
+[INFO] Building vehicle-monitoring-system 0.1.0-SNAPSHOT                  [1/4]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --------------------------< com.vms:protocol >--------------------------
+[INFO] Building protocol 0.1.0-SNAPSHOT                                   [2/4]
+[INFO]   from protocol\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ protocol ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-af272b0b89e8b0169\protocol\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ protocol ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ protocol ---
+[INFO] 
+[INFO] ---------------------------< com.vms:server >---------------------------
+[INFO] Building vehicle-monitoring-server 0.1.0-SNAPSHOT                  [3/4]
+[INFO]   from server\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-toolchain) @ server ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ server ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 10 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ server ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ server ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-af272b0b89e8b0169\server\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ server ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ server ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.vms.identity.BrowserFlowTest
+15:30:23.946 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.BrowserFlowTest]: BrowserFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:30:24.169 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.BrowserFlowTest
+15:30:24.259 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.BrowserFlowTest]: BrowserFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:30:24.266 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.BrowserFlowTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-16T15:30:24.786+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] com.vms.identity.BrowserFlowTest         : Starting BrowserFlowTest using Java 21.0.9 with PID 34156 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-af272b0b89e8b0169\server)
+2026-11-16T15:30:24.787+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] com.vms.identity.BrowserFlowTest         : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T15:30:26.163+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-16T15:30:26.170+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-16T15:30:26.243+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 43 ms. Found 0 Redis repository interfaces.
+2026-11-16T15:30:27.922+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-11-16T15:30:27.967+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-16T15:30:27.968+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-16T15:30:28.112+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 3295 ms
+2026-11-16T15:30:28.353+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-16T15:30:28.358+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-16T15:30:28.422+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-16T15:30:28.845+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-16T15:30:29.486+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-16T15:30:29.487+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-16T15:30:29.515+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-16T15:30:29.883+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-16T15:30:30.210+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 26990f07b1d136cef49507fc6ce20e06e0e100a16ba897bd747034b749e38f00
+2026-11-16T15:30:31.028+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT1.1447465S
+2026-11-16T15:30:31.041+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-16T15:30:31.041+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-16T15:30:31.042+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-16T15:30:31.045+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-16T15:30:31.178+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: e3362944aecf8de190d0a76b464ab7f9d5c71592d5fd20ae39dee2c0becac091
+2026-11-16T15:30:31.743+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:45267/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-16T15:30:42.768+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT11.7234073S
+2026-11-16T15:30:42.769+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:45267/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-16T15:30:42.770+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-16T15:30:42.869+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: ded4942ce3c003e83115d09da0dcd630406bbabbe3e2806aba6058dda5b6fac9
+2026-11-16T15:30:43.657+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.8869753S
+2026-11-16T15:30:44.389+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45267/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-16T15:30:45.003+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-16T15:30:45.011+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 11 migrations (execution time 00:00.036s)
+2026-11-16T15:30:45.045+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-16T15:30:45.214+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-16T15:30:45.235+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-16T15:30:45.372+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-16T15:30:45.527+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-16T15:30:45.634+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-16T15:30:45.868+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-16T15:30:46.037+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "6 - durable position"
+2026-11-16T15:30:47.196+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "7 - telemetry anomaly"
+2026-11-16T15:30:47.282+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "8 - overspeed alarm"
+2026-11-16T15:30:47.372+08:00  WARN 34156 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T15:30:47.517+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "9 - alarm handle"
+2026-11-16T15:30:47.662+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "11 - track retention and partitions"
+2026-11-16T15:30:47.987+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "14 - command log"
+2026-11-16T15:30:48.070+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 11 migrations to schema `vms`, now at version v14 (execution time 00:02.354s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-16T15:30:50.540+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@4c18621b
+2026-11-16T15:30:50.832+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 3824 (http) with context path '/'
+2026-11-16T15:30:51.040+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] com.vms.identity.BrowserFlowTest         : Started BrowserFlowTest in 26.67 seconds (process running for 28.137)
+2026-11-16T15:30:51.053+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-16T15:30:51.102+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7e7e34ef
+2026-11-16T15:30:51.104+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-16T15:30:51.485+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：browser-admin
+2026-11-16T15:30:51.617+08:00  INFO 34156 --- [vehicle-monitoring-system] [           main] c.vms.track.TrackPartitionMaintenance    : 轨迹分区维护完成 trigger=STARTUP retentionDays=30 created=[] dropped=[]
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-11-16T15:30:58.724+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-16T15:30:58.725+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-16T15:30:58.727+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-16T15:31:29.794+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-1] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=51b9dfb2-0cf4-4197-906f-754696ee5bb6, user=browser-admin
+2026-11-16T15:31:32.718+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-3] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=ab00f987-6883-48f1-b8b8-e9cf3b582d60, user=arc-MONITOR-mwiy2p3n
+2026-11-16T15:31:34.741+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-8] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=55be625f-7c49-4126-a31b-b3e82b30a663, user=arc-FLEET_LEADER-mwiy2p3n
+2026-11-16T15:31:36.410+08:00  WARN 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-2] com.vms.identity.auth.AuthService        : 登录失败：账号 e2e-audit-ghost-mwiy39d6，原因 UNKNOWN_ACCOUNT
+2026-11-16T15:31:44.162+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-6] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=faa93532-6ea4-471c-8e62-a54ec0fa08c3, user=e2e-audit-monitor-mwiy39d6
+2026-11-16T15:31:46.028+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-6] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=4c677ba1-d8e8-4759-845b-0a46bef0f2fc, user=browser-admin
+2026-11-16T15:32:10.062+08:00  WARN 34156 --- [vehicle-monitoring-system] [ntLoopGroup-7-1] com.vms.access.TerminalFrameHandler      : 终端 TCP 连接处理失败
+
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:401) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:434) ~[na:na]
+	at io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf.setBytes(AdaptivePoolingAllocator.java:2554) ~[netty-buffer-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1139) ~[netty-buffer-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:350) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:161) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:448) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:388) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:596) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:571) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:512) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:484) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:274) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:210) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1214) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-11-16T15:32:11.519+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-7] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=76933134-8c6e-41e1-9caf-2331d1fdfd48, user=browser-admin
+2026-11-16T15:32:19.692+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-7] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=e6a68392-e459-4095-a953-7442e53e5de0, user=browser-admin
+2026-11-16T15:32:22.797+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-3] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=0fb581b7-3484-499c-b041-0ee58f41a174, user=drv-MONITOR-mwiy40ds
+2026-11-16T15:32:29.389+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-5] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=79175b91-052e-40b0-9a8f-257e89256379, user=browser-admin
+2026-11-16T15:32:31.514+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-5] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=96a6bafd-f5de-4f12-943b-858f8f8850bf, user=e2e-admin-mwiy4bqt
+2026-11-16T15:32:35.676+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-1] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=d80c8e30-db46-4f21-b185-5393f92705a0, user=e2e-monitor-mwiy4bqt
+2026-11-16T15:32:40.334+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-7] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=16aa383a-74ed-4709-b7f6-1debbdc84a7a, user=e2e-leader-mwiy4bqt
+2026-11-16T15:32:43.491+08:00  INFO 34156 --- [vehicle-monitoring-system] [-auto-1-exec-10] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=43af4517-e283-4db1-b7ba-4ffb71ef8681, user=browser-admin
+2026-11-16T15:32:46.719+08:00  WARN 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-2] com.vms.identity.auth.AuthService        : 登录失败：账号 browser-admin，原因 BAD_CREDENTIALS
+2026-11-16T15:32:48.411+08:00  INFO 34156 --- [vehicle-monitoring-system] [-auto-1-exec-10] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=af8152fd-5704-486d-84c7-7efdc2154f99, user=browser-admin
+2026-11-16T15:32:51.939+08:00  INFO 34156 --- [vehicle-monitoring-system] [-auto-1-exec-10] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=c7dba276-f353-472e-9aa9-5e57bb2d12a9, user=browser-admin
+2026-11-16T15:33:06.705+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-7] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=1182eda4-fdc2-4448-a7d1-b519d9eafba4, user=browser-admin
+2026-11-16T15:33:08.704+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-7] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=8a7f6811-2e06-4e0c-965c-bd9f88c6b96f, user=browser-admin
+2026-11-16T15:33:13.727+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-5] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=d4eb1a3a-960e-41e0-9d12-f3d868c6eb86, user=browser-admin
+2026-11-16T15:33:15.792+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-5] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=69c34ced-d3ca-431b-81a4-68f1b5ea0748, user=browser-admin
+2026-11-16T15:33:20.905+08:00  INFO 34156 --- [vehicle-monitoring-system] [-auto-1-exec-10] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=d08059ee-e48f-4cad-8290-30f8bccaf39a, user=browser-admin
+2026-11-16T15:33:22.613+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-3] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=f0f31353-8d8a-40e4-9689-e1b273ab8c05, user=browser-admin
+2026-11-16T15:33:23.853+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-7] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=438755d8-de3f-45ed-ad1d-2704670653a2, user=browser-admin
+2026-11-16T15:33:25.655+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-6] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=c65cb288-ca19-48ec-964e-ba6b1ab8f128, user=browser-admin
+2026-11-16T15:33:27.882+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-6] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=dec474d3-e6e6-408f-bfab-7e6ab2165746, user=browser-admin
+2026-11-16T15:33:34.927+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-9] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=9f7bfaa3-0cd8-4d75-a409-0ad8276e3d10, user=browser-admin
+2026-11-16T15:33:36.835+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-7] c.vms.track.TrackPartitionMaintenance    : 轨迹分区维护完成 trigger=CONFIRM retentionDays=7 created=[] dropped=[p20261018, p20261019, p20261020, p20261021, p20261022, p20261023, p20261024, p20261025, p20261026, p20261027, p20261028, p20261029, p20261030, p20261031, p20261101, p20261102, p20261103, p20261104, p20261105, p20261106, p20261107, p20261108, p20261109]
+2026-11-16T15:33:39.247+08:00  INFO 34156 --- [vehicle-monitoring-system] [o-auto-1-exec-8] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=8a5739a2-e655-4e0b-abbe-93fafad11a75, user=browser-admin
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 245.1 s <<< FAILURE! -- in com.vms.identity.BrowserFlowTest
+[ERROR] com.vms.identity.BrowserFlowTest.realBrowserExercisesLoginLayoutsAndSessionRecovery -- Time elapsed: 217.1 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+[Playwright exit code; see 02-playwright.log] 
+expected: 0
+ but was: 1
+	at com.vms.identity.BrowserFlowTest.realBrowserExercisesLoginLayoutsAndSessionRecovery(BrowserFlowTest.java:87)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   BrowserFlowTest.realBrowserExercisesLoginLayoutsAndSessionRecovery:87 [Playwright exit code; see 02-playwright.log] 
+expected: 0
+ but was: 1
+[INFO] 
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for vehicle-monitoring-system 0.1.0-SNAPSHOT:
+[INFO] 
+[INFO] vehicle-monitoring-system .......................... SUCCESS [  0.003 s]
+[INFO] protocol ........................................... SUCCESS [  0.755 s]
+[INFO] vehicle-monitoring-server .......................... FAILURE [04:13 min]
+[INFO] vehicle-monitoring-simulator ....................... SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  04:14 min
+[INFO] Finished at: 2026-11-16T15:34:33+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project server: There are test failures.
+[ERROR] 
+[ERROR] See C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-af272b0b89e8b0169\server\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :server
