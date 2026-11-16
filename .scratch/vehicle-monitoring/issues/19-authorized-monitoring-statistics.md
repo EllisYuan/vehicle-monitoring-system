@@ -43,5 +43,6 @@ Blocked by: 13
 - 后端新增 `/api/v1/statistics` 四视图（GET `overview`/`trend`/`types`/`fleets`），权限 `FLEET_VIEW`，数据范围一律经 `FleetScopeSql` 过滤，显式越权 `fleetId` 返回 403 `FORBIDDEN`；区间非法（起始晚于结束、晚于今日、超过 90 天）返回 400 `INVALID_DATE_RANGE`。
 - 口径：`overview` 固定 Asia/Shanghai 当日 `[00:00, now]`（注入 `Clock`，测试用 `MutableClock`）；趋势、类型、车队三视图与总览共用同一 `start_time` 报警批次和同一车辆状态分类；车辆按当前 `fleet_id`、历史报警按 `fleet_id_at_event`；处理率分子为同批 HANDLED+IGNORED、分母为同批创建总数，零分母 `percent=null`（页面显示“—”），标注“含误报”；在线/离线/未接入/停用/主动断开/启动待确认/未绑定分列，离线仅依据已提交 `last_seen_at` 与 180 秒阈值；启动待确认宽限由 `vms.statistics.startup-grace-seconds`（默认 180）控制。
 - 前端 `/monitor/stats` 统计页（`web/src/features/statistics/`），含区间查询、趋势/类型/车队表与零分母“—”；`pnpm typecheck`/`lint`/`build` 均 exit 0，本票文件 eslint 0 problems。
-- 验证：统计切片 8 项测试全绿（`19-green-statistics.log`），回归 `AlarmHandlingFlowTest`/`SchemaUpgradeTest`/`TelemetryFlowTest` 共 18 项全绿（`19-regression-alarm-schema-telemetry.log`），浏览器 e2e 44 项全绿并含新增 `statistics.spec.ts`（`19-playwright.log`）；未新增表/迁移。
+- 合并后复验（ae0ae1，已合入任务14代码）：统计切片 + 三项回归共 26 项测试全绿（19-postmerge-tests.log）；13 个 Flyway 迁移（12 SQL + Java 版 V6）校验与应用通过。
+- 验证：统计切片 8 项测试全绿（19-green-statistics.log），回归 `AlarmHandlingFlowTest`/`SchemaUpgradeTest`/`TelemetryFlowTest` 共 18 项全绿（`19-regression-alarm-schema-telemetry.log`），浏览器 e2e 44 项全绿并含新增 `statistics.spec.ts`（`19-playwright.log`）；未新增表/迁移。
 - 证据：`.scratch/vehicle-monitoring/evidence/19-verification.md` 与 `evidence/19-*.log`。

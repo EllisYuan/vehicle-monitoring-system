@@ -96,3 +96,13 @@ warning 数与基线 131 的差异全部来自合入的既有视图（本票作�
 - 按 ticket 允许，离线边界使用 `MutableClock`/fixture 验证（179/181 秒与 181 秒推进），未执行真实等待 180 秒的用例；生产阈值仍为 180 秒。
 - 未新增表、未新增 migration、未扩角色；未改告警判定、轨迹保留或导出实现。
 - 本票全部 8 条 AC 均有上述执行证据，无仅静态检查即判通过项；前端三项为构建/类型/规范检查，页面运行行为由浏览器 e2e 补充验证。
+
+## 9. 合并 integration/tickets-08-27 后复验
+
+- 合并提交：`bae0ae1`（`Merge branch 'integration/tickets-08-27' into feat/ticket-19-monitoring-statistics`，无冲突自动合并）。`git diff --stat d0f7fe2..HEAD` 对本票统计相关路径（后端 main/test、前端 features/statistics、e2e spec）无任何差异；合并带入的任务14代码未改变本票实现。
+- 迁移口径核实：仓库共 13 个 Flyway 迁移 = 12 个 SQL（V1–V5、V7–V9、V11–V14）+ Java 版 `server/src/main/java/db/migration/V6__durable_position.java`。测试执行日志显示 `Successfully validated 13 migrations`、`Successfully applied 13 migrations ... now at version v14`，与 `SchemaUpgradeTest` 的 13 项断言一致。
+- 命令（锁内）：`mvnw.cmd -B -pl server -am -Dtest=StatisticsFlowTest,StatisticsStartupGraceTest,AlarmHandlingFlowTest,SchemaUpgradeTest,TelemetryFlowTest -Dsurefire.failIfNoSpecifiedTests=false test`
+- 结果：`Tests run: 26, Failures: 0, Errors: 0, Skipped: 0`，BUILD SUCCESS，4:48 min，exit code 0；证据 `19-postmerge-tests.log`。
+- 逐类：`AlarmHandlingFlowTest` 6（70.60 s）、`SchemaUpgradeTest` 2（37.47 s）、`StatisticsFlowTest` 7（44.89 s）、`StatisticsStartupGraceTest` 1（43.07 s）、`TelemetryFlowTest` 10（60.62 s），均 0 失败 0 错误。
+- 日志中的 `injected_position_failure`、`ck_fail_outbox_13_9` 约束异常为既有测试故意注入的失败场景，相关测试类均通过。
+- 本轮 Testcontainers MySQL/Redis 与 Ryuk 随各测试类 JVM 退出回收，未执行任何 prune；详见交付报告。
