@@ -124,3 +124,8 @@ surefire 摘要见 `15-backend-regression-surefire.log`；围栏两类用例清�
 2. 多边形绘制增加“完成绘制”按钮（`data-testid="finish-draw"`），用于确定性闭合与 e2e 操作；OpenLayers 默认的顶点回点/双击闭合仍可用（绘制期间显式关闭 `DoubleClickZoom` 以免误缩放）。
 3. 按范围边界未实现：围栏限速、停留、启用时存量检查、终端围栏下发；底图真实 key 仍属任务26，本票只复用 `basemap.ts` 的 `resolveBasemap/wmtsResolutions/WMTS_MATRIX_IDS`，未改写该文件。
 4. 容器核对：浏览器运行结束后（16:13 本地时间）`docker ps -a` 中无本轮 Testcontainers 创建的容器；当时在运行的 mysql:8.4 与 Ryuk 创建时间为 15:45:46 与 16:13:18（本地），分属并发其他 ticket 的会话（Testcontainers sessionId 不同），未清理他人容器。本轮 Ryuk 自动回收正常。
+
+## 六、合并 integration/tickets-08-27
+
+- 合并提交 `c2f9e9c`（Merge branch 'integration/tickets-08-27' into feat/ticket-15-geofence），无冲突。
+- 合并仅带入 `09-verification.md` 与 `09-batch-backfill-and-history-ownership.md` 两处文档修正；`git diff --stat 0705d3e..c2f9e9c` 显示无源码、测试、迁移或前端文件变化，因此前述验证结果对最终 HEAD 仍成立，无需复跑 Maven 与前端检查。
