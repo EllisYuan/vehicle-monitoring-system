@@ -55,10 +55,12 @@ Blocked by: 12
 
 - TDD 红→绿：迁移、列表/详情、状态机、恢复条件日志、全流程五个切片均有红阶段失败记录（迁移缺失、接口 404 等目标断言失败）与绿阶段通过记录，未预填通过。
 - `AlarmHandlingFlowTest` 6 项（真实 MySQL/Redis + 真实 HTTP/WS/TCP）：双状态与司机快照/掩码/401/403/404；状态机逐步日志与非法迁移 409（DB 不变 + 审计）；恢复条件日志分离与新周期新事件；并发处置 200 vs 409 且仅一条日志/outbox；提交后 WS 推送与 outbox `DONE`；outbox 写失败同事务回滚、修复后重试成功。
-- 回归锁内 `-Dtest=OverspeedAlarmFlowTest,TelemetryFlowTest,SchemaUpgradeTest,PositionQualityFlowTest`：`Tests run: 30, Failures: 0, Errors: 0, Skipped: 0`，BUILD SUCCESS；`SchemaUpgradeTest` 期望 11 个迁移且表清单含 `alarm_handle_log`。
+- 回归锁内 `-Dtest=OverspeedAlarmFlowTest,TelemetryFlowTest,SchemaUpgradeTest,PositionQualityFlowTest`：`Tests run: 30, Failures: 0, Errors: 0, Skipped: 0`，BUILD SUCCESS；`SchemaUpgradeTest` 期望 11 个迁移且表清单含 `alarm_handle_log`（合并集成分支后按 12 个迁移更正，见下）。
 - 前端 `pnpm --dir web typecheck/lint/build` 均 exit 0（lint 0 error、137 warning，其中本票新增 6 条 `vue/singleline-html-element-content-newline` 风格提示），构建产物含 `AlarmListView-Du2wYoTt.js`。
 - 浏览器（锁内 simulator package 后 `-Dvms.browser-tests=true -Dtest=BrowserFlowTest`）：共 7 次运行，逐次原因与结果见证据第 5 节；rerun6 `BUILD SUCCESS`，Playwright `40 passed (3.6m)`（39 项基线 + 新增 `alarms.spec.ts` 1 项），rerun4 亦全绿。`alarms.spec.ts` 用真实 TCP simulator 触发超速，管理员在页面完成 PENDING→PROCESSING→HANDLED 并核对双状态、当时司机、规则快照与 2 条处置历史；车队长只读且电话 `138****5678`。首轮/rerun1 为新增 spec 自身字段路径与语法问题（已修正 spec），rerun2 为 `archives.spec.ts` 既有 5s 登录偶发超时（按允许重跑一次），rerun3/rerun5 为 `[Playwright finishes within four minutes]` 墙钟预算超时（rerun5 被中断前 1–37 项含新增用例均通过）；既有 spec 未修改、断言未放宽。
 - 容器：本票各轮运行的 mysql/redis/Ryuk 容器均已回收；现存 `086e2cc950ce` 属其他 session，按要求未清理。
+- 合并 `integration/tickets-08-27`（`82ff22a`，含任务15围栏）后复验：唯一代码冲突在 `Permission.java`（双方各自在枚举末尾新增常量），按双方语义同时保留 `ALARM_HANDLE` 与 `GEOFENCE_MANAGE`；合并后迁移总数为 12（V6 为 Java 迁移 + 11 个 SQL，新增 `V13__geofence.sql`），`SchemaUpgradeTest` 期望按合并语义更正为 12/12/6 并锁内重跑 2/2 通过；`AlarmHandlingFlowTest` 6/6、`OverspeedAlarmFlowTest` 10/10、`PositionQualityFlowTest` 8/8、`TelemetryFlowTest` 10/10；`pnpm --dir web typecheck/lint/build` 复跑均 exit 0。浏览器复跑 3 次：run3 `BUILD SUCCESS`，Playwright `43 passed (3.8m)`（39 项基线 + `alarms.spec.ts` 1 项 + `geofences.spec.ts` 3 项），run1/run2 因既有跨票 spec 偶发与 `[Playwright finishes within four minutes]` 墙钟预算中断，新增 `alarms.spec.ts` 三次均通过，逐次记录见证据第 3–6 节。
 
-偏差与边界：分支按指示从 `4e3cd32` 建立，先 `--no-ff` 合入任务12（`57b58af`），收尾合并 `integration/tickets-08-27`。规则配置与超速判定属任务12（已合入）；离线/GNSS/终端报警（14）、围栏（15）、导出（20）、WS 撤权深化（17）未在本票实现；未做人工归档、终态重开或自动处置。`BrowserFlowTest` 依赖 simulator 预编译产物的跨票问题（任务27 在干净环境处理），本轮以锁内 `-pl simulator -am -DskipTests package` 配合浏览器验证。
+偏差与边界：分支按指示从 `4e3cd32` 建立，先 `--no-ff` 合入任务12（`57b58af`），收尾已合并 `integration/tickets-08-27`（`82ff22a`；合并提交见交付报告最终 HEAD），冲突按双方语义解决。规则配置与超速判定属任务12（已合入）；离线/GNSS/终端报警（14）、围栏（15）、导出（20）、WS 撤权深化（17）未在本票实现；未做人工归档、终态重开或自动处置。`BrowserFlowTest` 依赖 simulator 预编译产物的跨票问题（任务27 在干净环境处理），本轮以锁内 `-pl simulator -am -DskipTests package` 配合浏览器验证。
+
 

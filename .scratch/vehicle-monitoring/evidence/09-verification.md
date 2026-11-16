@@ -3,6 +3,7 @@
 - 日期：2026-11-16
 - 分支：feat/ticket-09-batch-backfill
 - 基线：`integration/tickets-08-27` HEAD `b221243`（含任务08 幂等/质量与任务11 保留/分区）；提交前合并至 `f3d2645`（含任务10 车辆轨迹查询与回放），无冲突，合并后复跑见第 6 节。
+- 更正（2026-11-16）：原文“Playwright 37 passed”为**合并任务10 之前**的本分支结果（既有 36 + 本票新增 1）；合并 ticket 10 后本分支应为 **39** 项（集成分支 38 + 本票新增 1，由 merger 在集成分支实测 39 passed 确认）。原日志未改动。
 - 结论：**Status: resolved**。7 条 AC 均有真实 TCP / 真实 MySQL / MockMvc 三角色 / Playwright 证据；本票未新增迁移。
 
 ## 环境
@@ -66,7 +67,7 @@ mvnw.cmd -B -pl server,simulator -am -Dvms.browser-tests=true -Dtest=BrowserFlow
 ```
 
 - `09-browser.log`：BrowserFlowTest 1 通过，BUILD SUCCESS。
-- `09-playwright.log`：Playwright **37 passed**，含新增 `monitoring.spec.ts:157 断线重连补传旧时刻位置后列表与地图不回退`（真实 CLI 先发实时点 42.5 km/h，再 `--reconnect true --backfill 2 --backfill-seconds 120 --batch-size 2 --speed 12` 补传；列表仍显示 42.5 km/h，地图 `data-feature-count` 不变）。
+- `09-playwright.log`：合并任务10 之前本分支 Playwright **37 passed**（既有 36 + 本票新增 1）；该日志止于 `track-retention.spec.ts`，缺任务10 新增的 `tracks.spec.ts` 2 条，不能作为合并后计数。新增用例为 `monitoring.spec.ts:157 断线重连补传旧时刻位置后列表与地图不回退`（真实 CLI 先发实时点 42.5 km/h，再 `--reconnect true --backfill 2 --backfill-seconds 120 --batch-size 2 --speed 12` 补传；列表仍显示 42.5 km/h，地图 `data-feature-count` 不变）。
 - 截图：`web/test-results/09-backfill-no-rollback.png`（已复制为 `09-backfill-no-rollback.png`）。
 - 结果：通过（底图为 fixture，非真实天地图）。
 
@@ -100,6 +101,7 @@ mvnw.cmd -B -pl server -am -Dtest=PositionQualityFlowTest,TelemetryFlowTest,Sche
 - `09-postmerge-backend.log`：`Tests run: 45, Failures: 0, Errors: 0, Skipped: 0`，BUILD SUCCESS。
 - 合并后首跑发现 `TrackRetentionMaintenanceTest` 空指针：09 曾把保留期外拒绝摘要的 `vehicle_id` 置 NULL，而任务11 的运营摘要要求记录接收时绑定。修复为 retention 分支用 `currentOwnership(terminalId)` 解析接收时当前绑定（仅用于 `track_retention_rejection` 与 `RETENTION_OUTSIDE` 异常摘要，不写入 `track_point`，不参与历史归属与读取授权）。
 - 合并后浏览器：`mvnw.cmd -B -pl server,simulator -am -Dvms.browser-tests=true -Dtest=BrowserFlowTest -Dsurefire.failIfNoSpecifiedTests=false test`，BrowserFlowTest 1/1 通过，BUILD SUCCESS（`09-postmerge-browser.log`）。
+- 合并后 Playwright 本分支未单独重跑：`09-postmerge-browser.log` 只有 Maven / BrowserFlowTest 输出，无 Playwright 明细。集成分支（含任务10、不含本票）为 38 项；本分支保留任务10 全部用例并新增 1 项，应为 **39** 项，由 ticket 09 merger 在集成分支实测 39 passed 确认。
 ## AC 状态
 
 | # | Acceptance criterion | 状态 | 证据 |

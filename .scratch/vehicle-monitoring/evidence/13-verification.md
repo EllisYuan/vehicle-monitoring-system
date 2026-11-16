@@ -98,6 +98,12 @@ mvnw.cmd -B -pl server -am -Dtest=OverspeedAlarmFlowTest,TelemetryFlowTest,Schem
 - 说明：`SchemaUpgradeTest` 期望 11 个迁移且表清单含 `alarm_handle_log`，与 V9 一致；其余为既有业务回归，未修改断言。
 - 证据：`13-regression.log`（含 `[lock] acquired` 与 `[lock] command exit code: 0`）。
 
+### 合并 `integration/tickets-08-27`（`82ff22a`，含任务15围栏）后复验
+
+- 首次锁内 `clean test`（`13-post-merge-regression.log`）：`AlarmHandlingFlowTest` 6/6、`OverspeedAlarmFlowTest` 10/10、`PositionQualityFlowTest` 8/8、`TelemetryFlowTest` 10/10 通过；`SchemaUpgradeTest` 2 项失败，原因是合并后迁移总数为 12（`V6__durable_position` Java 迁移 + 11 个 SQL，新增 `V13__geofence.sql`），而测试仍沿用合并双方各自的 11；按合并后实际语义将期望更正为 12/12/6。
+- 修正后锁内重跑（`13-post-merge-schema.log`）：`Tests run: 2, Failures: 0, Errors: 0, Skipped: 0`，BUILD SUCCESS。
+- 其余四个测试类在同一次合并后运行中已全绿，未受该计数修正影响。
+
 ## 4. 前端静态检查与构建
 
 均使用 `pnpm --dir web <script>`（pnpm 10.16.1）：
@@ -108,6 +114,8 @@ mvnw.cmd -B -pl server -am -Dtest=OverspeedAlarmFlowTest,TelemetryFlowTest,Schem
 | `pnpm --dir web typecheck` | exit 0（`vue-tsc -b` 无报错） | `13-web-typecheck.log` |
 | `pnpm --dir web lint` | exit 0，`137 problems (0 errors, 137 warnings)`；本票新增 6 条 `vue/singleline-html-element-content-newline`（`AlarmListView.vue:227–229` 单行 `<dd>`），其余为既有 warning | `13-web-lint.log` |
 | `pnpm --dir web build` | exit 0，`✓ built in 563ms`，产物含 `AlarmListView-Du2wYoTt.js` | `13-web-build.log` |
+
+合并集成分支后复跑 `pnpm --dir web typecheck`、`lint`、`build`：均 exit 0（`13-post-merge-web-typecheck.log`、`13-post-merge-web-lint.log`、`13-post-merge-web-build.log`）；lint 仍为 0 error / 137 warning，构建同时含 `AlarmListView` 与围栏页面产物。
 
 ## 5. 浏览器 e2e
 
@@ -133,6 +141,18 @@ mvnw.cmd -B -pl server -am -Dtest=OverspeedAlarmFlowTest,TelemetryFlowTest,Schem
 
 - 结论：浏览器验证以 rerun6 全绿（40/40）为准，rerun4 亦为全绿。新增 `alarms.spec.ts` 覆盖：真实 TCP simulator 触发超速→`PENDING`，管理员在页面依次“开始处理”“处理完成”（详情双状态列、当时司机、完整电话、规则快照“阈值 80 km/h”、处置历史 2 条、终态提示）；车队长仅授权车队可见、只读提示、无处置表单、电话 `138****5678`。截图见 `13-alarm-handling.png`、`13-alarm-leader-readonly.png`。
 
+### 合并集成分支后复验（`82ff22a`）
+
+合并后按同一锁内两条命令执行 3 次（套件共 43 项 = 39 项基线 + `alarms.spec.ts` 1 项 + `geofences.spec.ts` 3 项）：
+
+| 次序 | 结果 | 说明 | 证据 |
+| --- | --- | --- | --- |
+| run1 | BUILD FAILURE，245.1s | 四分钟墙钟预算超时中断套件；中断前 `alarms.spec.ts` 通过，`geofences.spec.ts` 第 1 例失败（该例在任务15自身验证中也曾因圆心坐标偶发失败、重跑后通过）；套件被终止，无法取得完整错误详情 | `13-post-merge-browser-flow.log`、`13-post-merge-playwright-run1.log` |
+| run2 | BUILD FAILURE，244.2s | 四分钟墙钟预算超时；第 1–40 项通过（含 `alarms.spec.ts` 18.7s 与围栏 3 例），第 41 项 `track-retention.spec.ts` 偶发失败后被终止 | `13-post-merge-browser-flow-run2.log`、`13-post-merge-playwright-run2.log` |
+| run3 | BUILD SUCCESS，272.1s | Playwright `43 passed (3.8m)`，含 `alarms.spec.ts` 15.1s、`geofences.spec.ts` 3 例与 `track-retention.spec.ts` 5.6s | `13-post-merge-browser-flow-run3.log`、`13-post-merge-playwright-run3.log`、`13-playwright-merged.log` |
+
+- 结论：合并后浏览器验证以 run3 全绿为准。run1/run2 的失败来自既有 `geofences.spec.ts` 圆心坐标偶发、`track-retention.spec.ts` 偶发与 `BrowserFlowTest` 固定的四分钟墙钟预算（43 项套件接近该上限），本票新增 `alarms.spec.ts` 在三次合并后运行中全部通过；未修改既有 spec，未放宽断言。
+
 ## 6. Testcontainers/Ryuk 回收核对
 
 - 本票所有 Maven/浏览器运行均使用 Testcontainers `mysql:8.4`、`redis:8.4` 与 `testcontainers/ryuk:0.14.0`（Ryuk 启用，未关闭）。每次运行后核对 `docker ps -a`：
@@ -140,13 +160,11 @@ mvnw.cmd -B -pl server -am -Dtest=OverspeedAlarmFlowTest,TelemetryFlowTest,Schem
 - 现存的 `086e2cc950ce`（`reverent_brahmagupta`，`mysql:8.4`）标注 Testcontainers sessionId `4d5db3f4-edb5-447e-9f3e-f0d35d62a879`，不属于本票运行，按“不清理他人容器”保留未动；并发 ticket 15 agent 的容器已由其 Ryuk 回收。
 - 其余 Exited 容器（`plp-*`、`vms-*`、`pms_*` 等）为既有开发/其他项目资源，未触碰。
 
+- 合并后复验（run1–run3 与 SchemaUpgradeTest 重跑）的 mysql/redis/Ryuk 容器同样已回收；2026-11-16 17:12 核对时除他人 session 的 `086e2cc950ce` 外无 testcontainers 容器。
+
 ## 7. 偏差与遗留
 
-- 基线与分支：按要求从 `4e3cd32` 建立 `feat/ticket-13-alarm-handling`，先 `--no-ff` 合入任务12（`57b58af`）；`integration/tickets-08-27` 在收尾时合并。
+- 基线与分支：按要求从 `4e3cd32` 建立 `feat/ticket-13-alarm-handling`，先 `--no-ff` 合入任务12（`57b58af`）；2026-11-16 已合并 `integration/tickets-08-27`（`82ff22a`，含任务15围栏）并完成上述复验。合并后迁移总数为 12（V6 Java 迁移 + 11 个 SQL），`SchemaUpgradeTest` 期望已按合并语义更正为 12。
 - 浏览器用例首轮失败后经历多次重跑，原因与结果均如实记录于第 5 节；未放宽任何既有断言，未修改既有 spec（`archives.spec.ts`/`track-retention.spec.ts` 保持原样）。
 - 未实现（属其他票）：规则配置与超速判定（12，已合入）、离线/终端报警（14）、围栏（15）、导出（20）、WS 撤权深化（17）；未做人工归档、终态重开或自动处置。
 - 已知跨票问题：`BrowserFlowTest` 依赖 simulator 预编译产物（任务27 在干净环境处理）；本轮以锁内 simulator package/编译产物配合浏览器验证。
-
-
-
-
