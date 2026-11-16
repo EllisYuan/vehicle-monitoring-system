@@ -39,10 +39,10 @@ export const router = createRouter({
     {
       path: '/monitor/tracks',
       name: 'tracks',
-      component: PlaceholderView,
+      component: () => import('../features/tracks/views/TrackPlaybackView.vue'),
       meta: {
         title: '轨迹回放',
-        description: '按车辆与时间范围查询轨迹、分段与回放将在轨迹任务中交付。',
+        description: '按车辆与时间范围查询单车轨迹，按断点分段并支持播放、暂停、拖动与倍速回放。',
         area: 'monitoring',
         ticket: '10 单车轨迹查询与回放',
       },
@@ -185,4 +185,5 @@ router.beforeEach(async (to) => {
   }
   return true
 })
+
 

@@ -1,6 +1,7 @@
 package com.vms.telemetry;
 
 import com.vms.access.TerminalConnectionRegistry;
+import com.vms.protocol.PositionBatch;
 import com.vms.protocol.PositionReport;
 import com.vms.track.TrackRetentionPolicy;
 import java.security.MessageDigest;
@@ -35,55 +36,75 @@ public class PositionIngestService {
 
     @Transactional
     public void accept(TerminalConnectionRegistry.Session session, byte[] body, LocalDateTime receivedAt) {
-        long terminalId = session.terminalId();
-        List<String> terminals = jdbc.queryForList("SELECT status FROM terminal WHERE id = ? FOR UPDATE",
-                String.class, terminalId);
-        if (!connections.isCurrent(session)) {
-            throw new IllegalStateException("Terminal session is no longer admissible");
-        }
+        String terminalStatus = lockTerminal(session);
         RawPositionFrame frame = RawPositionFrame.parse(body);
         if (frame.problem() == RawPositionFrame.Problem.INVALID_TIME) {
-            recordAnomaly(terminalId, null, null, null, receivedAt, "INVALID_TIME", body);
+            recordAnomaly(session.terminalId(), null, null, null, receivedAt, "INVALID_TIME", body);
             return;
         }
         if (frame.problem() == RawPositionFrame.Problem.COORDINATE_OUT_OF_RANGE) {
-            recordAnomaly(terminalId, null, null, frame.gpsTime(), receivedAt, "COORDINATE_OUT_OF_RANGE", body);
+            recordAnomaly(session.terminalId(), null, null, frame.gpsTime(), receivedAt,
+                    "COORDINATE_OUT_OF_RANGE", body);
             return;
         }
         PositionReport report;
         try {
             report = frame.toReport();
         } catch (IllegalArgumentException e) {
-            recordAnomaly(terminalId, null, null, frame.gpsTime(), receivedAt, "INVALID_POSITION_FIELDS", body);
+            recordAnomaly(session.terminalId(), null, null, frame.gpsTime(), receivedAt,
+                    "INVALID_POSITION_FIELDS", body);
             return;
         }
-        Long vehicleId = null;
-        Long fleetId = null;
-        List<Long> vehicles = jdbc.queryForList(
-                "SELECT vehicle_id FROM terminal_vehicle_binding WHERE current_terminal_id = ?",
-                Long.class, terminalId);
-        if (!terminals.isEmpty() && "ENABLED".equals(terminals.getFirst()) && !vehicles.isEmpty()) {
-            long candidate = vehicles.getFirst();
-            var vehicle = jdbc.queryForMap("SELECT fleet_id, status FROM vehicle WHERE id = ? FOR UPDATE", candidate);
-            if ("ENABLED".equals(vehicle.get("status"))) {
-                vehicleId = candidate;
-                fleetId = ((Number) vehicle.get("fleet_id")).longValue();
-            }
+        ingest(session.terminalId(), "ENABLED".equals(terminalStatus), report, receivedAt, body);
+    }
+
+    /**
+     * 0x0704：先解析并校验整包结构、项数与长度，全部通过后才开启落库；
+     * 任一项失败整批回滚，调用方仅在事务提交后应答成功。
+     */
+    @Transactional
+    public void acceptBatch(TerminalConnectionRegistry.Session session, byte[] body, LocalDateTime receivedAt) {
+        PositionBatch batch = PositionBatch.parse(body);
+        String terminalStatus = lockTerminal(session);
+        boolean usable = "ENABLED".equals(terminalStatus);
+        for (PositionReport report : batch.items()) {
+            ingest(session.terminalId(), usable, report, receivedAt, report.encode());
         }
-        if (vehicleId == null) {
-            recordAnomaly(terminalId, null, null, report.time(), receivedAt, "UNASSIGNABLE", body);
-            return;
+    }
+
+    private String lockTerminal(TerminalConnectionRegistry.Session session) {
+        List<String> terminals = jdbc.queryForList("SELECT status FROM terminal WHERE id = ? FOR UPDATE",
+                String.class, session.terminalId());
+        if (!connections.isCurrent(session)) {
+            throw new IllegalStateException("Terminal session is no longer admissible");
         }
+        return terminals.isEmpty() ? null : terminals.getFirst();
+    }
+
+    private void ingest(long terminalId, boolean terminalUsable, PositionReport report, LocalDateTime receivedAt,
+                        byte[] rawBody) {
         // 保留期外按 11 的保留策略留拒绝摘要，同时按 08 的质量语义记受限异常；不落轨迹、不推进快照。
         if (!retention.isWithinTrackWindow(report.time())) {
-            recordRetentionRejection(terminalId, vehicleId, report, receivedAt);
-            recordAnomaly(terminalId, vehicleId, fleetId, report.time(), receivedAt, "RETENTION_OUTSIDE", body);
+            // 保留拒绝摘要属运营诊断，沿用 11 的当前绑定语义；不写入轨迹历史，也不参与历史归属。
+            Ownership current = terminalUsable ? currentOwnership(terminalId) : null;
+            recordRetentionRejection(terminalId, current == null ? null : current.vehicleId(), report, receivedAt);
+            recordAnomaly(terminalId, current == null ? null : current.vehicleId(),
+                    current == null ? null : current.fleetId(), report.time(), receivedAt,
+                    "RETENTION_OUTSIDE", rawBody);
             return;
         }
+        // 车辆与车队按 gps_time 落在当时的历史区间解析；无法唯一归属就记异常，不用当前关系猜测。
+        Ownership ownership = terminalUsable ? resolveOwnershipAt(terminalId, report.time()) : null;
+        if (ownership == null) {
+            recordAnomaly(terminalId, null, null, report.time(), receivedAt, "UNASSIGNABLE", rawBody);
+            return;
+        }
+        long vehicleId = ownership.vehicleId();
+        long fleetId = ownership.fleetId();
         long ageMillis = Duration.between(report.time(), receivedAt).toMillis();
         if (ageMillis < -FUTURE_TOLERANCE_MILLIS) {
             recordAnomaly(terminalId, vehicleId, fleetId, report.time(), receivedAt,
-                    "FUTURE_BEYOND_TOLERANCE", body);
+                    "FUTURE_BEYOND_TOLERANCE", rawBody);
             return;
         }
         List<LocalDateTime> previous = jdbc.queryForList(
@@ -106,7 +127,7 @@ public class PositionIngestService {
                     payloadHash, canonical);
         } catch (DuplicateKeyException duplicate) {
             // 唯一键 (terminal_id, gps_time) 是幂等权威：只在此处理预期重传/冲突，其余 SQL 错误照旧回滚。
-            handleExistingPosition(terminalId, vehicleId, fleetId, report, receivedAt, payloadHash, body);
+            handleExistingPosition(terminalId, vehicleId, fleetId, report, receivedAt, payloadHash, rawBody);
             return;
         }
         if (realtime && report.fixValid()) {
@@ -115,7 +136,50 @@ public class PositionIngestService {
         touchTerminal(terminalId, receivedAt);
     }
 
-    private void recordRetentionRejection(long terminalId, long vehicleId, PositionReport report,
+    /**
+     * 历史归属：终端绑定与车辆车队区间都以 [effective_from, effective_to) 覆盖 gps_time 且唯一为准。
+     * 车辆当前停用时不接收新位置，保持 08 的 UNASSIGNABLE 语义。
+     */
+    private Ownership resolveOwnershipAt(long terminalId, LocalDateTime gpsTime) {
+        List<Long> vehicles = jdbc.queryForList("""
+                SELECT vehicle_id FROM terminal_vehicle_binding
+                WHERE terminal_id = ? AND effective_from <= ? AND (effective_to IS NULL OR effective_to > ?)
+                """, Long.class, terminalId, gpsTime, gpsTime);
+        if (vehicles.size() != 1) {
+            return null;
+        }
+        long vehicleId = vehicles.getFirst();
+        List<String> statuses = jdbc.queryForList("SELECT status FROM vehicle WHERE id = ? FOR UPDATE",
+                String.class, vehicleId);
+        if (statuses.size() != 1 || !"ENABLED".equals(statuses.getFirst())) {
+            return null;
+        }
+        List<Long> fleets = jdbc.queryForList("""
+                SELECT fleet_id FROM vehicle_fleet_history
+                WHERE vehicle_id = ? AND effective_from <= ? AND (effective_to IS NULL OR effective_to > ?)
+                """, Long.class, vehicleId, gpsTime, gpsTime);
+        return fleets.size() == 1 ? new Ownership(vehicleId, fleets.getFirst()) : null;
+    }
+
+    /**
+     * 保留期外摘要使用的接收时当前绑定；不用于 track_point 的 fleet_id_at_event，也不用于历史读取授权。
+     */
+    private Ownership currentOwnership(long terminalId) {
+        List<Long> vehicles = jdbc.queryForList(
+                "SELECT vehicle_id FROM terminal_vehicle_binding WHERE current_terminal_id = ?",
+                Long.class, terminalId);
+        if (vehicles.size() != 1) {
+            return null;
+        }
+        long vehicleId = vehicles.getFirst();
+        var rows = jdbc.queryForList("SELECT fleet_id, status FROM vehicle WHERE id = ? FOR UPDATE", vehicleId);
+        if (rows.size() != 1 || !"ENABLED".equals(rows.getFirst().get("status"))) {
+            return null;
+        }
+        return new Ownership(vehicleId, ((Number) rows.getFirst().get("fleet_id")).longValue());
+    }
+
+    private void recordRetentionRejection(long terminalId, Long vehicleId, PositionReport report,
                                           LocalDateTime receivedAt) {
         byte[] canonical = report.encode();
         jdbc.update("""
@@ -195,4 +259,6 @@ public class PositionIngestService {
             throw new IllegalStateException(e);
         }
     }
+
+    private record Ownership(long vehicleId, long fleetId) { }
 }

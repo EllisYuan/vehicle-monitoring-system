@@ -153,4 +153,42 @@ test.describe('实时监控 public TCP / REST / WS / browser', () => {
     await expect(row).toBeVisible()
     await page.screenshot({ path: 'test-results/26-invalid-key-fixture.png', fullPage: true })
   })
+
+  test('断线重连补传旧时刻位置后列表与地图不回退', async ({ page, request }) => {
+    const suffix = `bf${Date.now().toString(36)}`
+    await page.route('**/__wmts-fixture/**', route => route.abort('failed'))
+    await signIn(page)
+    const { vehicleId, headers } = await createVehicle(request, page, suffix)
+    const terminalNo = `${Date.now()}0000010`
+    const terminal = await request.post('/api/v1/terminals', { headers, data: { terminalNo } })
+    expect(terminal.status()).toBe(201)
+    const terminalId = ((await terminal.json()) as { id: number }).id
+    expect((await request.put(`/api/v1/vehicles/${vehicleId}/terminal`, {
+      headers, data: { terminalId },
+    })).ok()).toBeTruthy()
+
+    await page.reload()
+    await expect(page.getByTestId('monitor-stream-status')).toContainText('实时连接已建立')
+    const row = page.getByTestId(`monitor-vehicle-${vehicleId}`)
+    await run(java, ['-cp', simulatorClasspath, 'com.vms.simulator.TerminalSimulator',
+      '--host', '127.0.0.1', '--port', tcpPort, '--terminal', terminalNo,
+      '--positions', '1', '--linger-ms', '1000',
+      '--longitude', '121.48', '--latitude', '31.235', '--speed', '42.5', '--direction', '90'],
+    { timeout: 20_000, windowsHide: true })
+    await expect(row).toContainText('42.5 km/h')
+    const map = page.getByTestId('monitor-map')
+    const featuresBefore = (await map.getAttribute('data-feature-count')) ?? '1'
+
+    // 断线重连后以 0x0704 补传 120 秒前的旧点，速度与实时点不同；界面必须保持实时位置。
+    await run(java, ['-cp', simulatorClasspath, 'com.vms.simulator.TerminalSimulator',
+      '--host', '127.0.0.1', '--port', tcpPort, '--terminal', terminalNo,
+      '--positions', '0', '--reconnect', 'true', '--backfill', '2', '--backfill-seconds', '120',
+      '--batch-size', '2', '--longitude', '121.48', '--latitude', '31.235',
+      '--speed', '12', '--direction', '90'],
+    { timeout: 20_000, windowsHide: true })
+
+    await expect(row).toContainText('42.5 km/h')
+    await expect(map).toHaveAttribute('data-feature-count', featuresBefore)
+    await page.screenshot({ path: 'test-results/09-backfill-no-rollback.png', fullPage: true })
+  })
 })

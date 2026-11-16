@@ -98,6 +98,9 @@ class PositionQualityFlowTest {
     void staleAndOldPointsOnlyBackfillHistoryAndNeverRollBackSnapshot() throws Exception {
         String token = login("quality-admin", "Quality-Pass-2026");
         BoundTerminal bound = boundTerminal(token);
+        // 08 原始用例假设所有点都归属当前绑定；09 起按 gps_time 解析历史区间，
+        // 先推进时钟使绑定生效早于待补历史点，保持“旧点只补历史”的原意。
+        clock.advance(java.time.Duration.ofSeconds(120));
         LocalDateTime now = LocalDateTime.now(clock).withNano(0);
         try (TerminalClient terminal = authenticated(bound)) {
             sendAndExpectSuccess(terminal, 10, position(now.minusSeconds(60), 116.30));
