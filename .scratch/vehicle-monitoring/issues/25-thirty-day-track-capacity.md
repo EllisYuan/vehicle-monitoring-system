@@ -1,6 +1,6 @@
 # 25: 30 天量级轨迹容量验收
 
-Status: open
+Status: claimed
 Labels: ready-for-agent
 Type: task
 Blocked by: 10, 11

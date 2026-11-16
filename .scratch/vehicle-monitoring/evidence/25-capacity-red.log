@@ -1,0 +1,270 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] vehicle-monitoring-system                                          [pom]
+[INFO] protocol                                                           [jar]
+[INFO] vehicle-monitoring-server                                          [jar]
+[INFO] 
+[INFO] -----------------< com.vms:vehicle-monitoring-system >------------------
+[INFO] Building vehicle-monitoring-system 0.1.0-SNAPSHOT                  [1/3]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --------------------------< com.vms:protocol >--------------------------
+[INFO] Building protocol 0.1.0-SNAPSHOT                                   [2/3]
+[INFO]   from protocol\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ protocol ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-aa44a6f4bd2ee4914\protocol\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ protocol ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ protocol ---
+[INFO] 
+[INFO] ---------------------------< com.vms:server >---------------------------
+[INFO] Building vehicle-monitoring-server 0.1.0-SNAPSHOT                  [3/3]
+[INFO]   from server\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-toolchain) @ server ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ server ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 8 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ server ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ server ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-aa44a6f4bd2ee4914\server\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ server ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 24 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-aa44a6f4bd2ee4914/server/src/test/java/com/vms/access/TerminalTcpIntegrationTest.java: Some input files use or override a deprecated API.
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-aa44a6f4bd2ee4914/server/src/test/java/com/vms/access/TerminalTcpIntegrationTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ server ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.vms.capacity.TrackCapacityHarnessTest
+[capacity] harness=TrackCapacityHarnessTest
+[capacity] started_at=2026-11-16 14:02:40 CST
+[capacity] business_today=2026-11-16
+[capacity] parameters=retainedDays=30, expiredDays=3, terminals=100, pointsPerDay=8640, batchSize=2000, generate=false
+[capacity] required_retained_rows=25920000
+14:02:40.750 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+14:02:40.757 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+14:02:40.832 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 2.0.5
+14:02:41.274 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+14:02:41.968 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+14:02:41.970 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+14:02:41.996 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+14:02:42.434 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Creating container for image: testcontainers/ryuk:0.14.0
+14:02:42.814 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 is starting: 85caa523a3083ef683d169fdb481d5a2894460aa42df76151dff01c3a9bdd715
+14:02:43.788 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT1.3529654S
+14:02:43.862 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+14:02:43.862 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+14:02:43.864 [main] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+14:02:43.874 [main] INFO tc.mysql:8.4 -- Creating container for image: mysql:8.4
+14:02:44.046 [main] INFO tc.mysql:8.4 -- Container mysql:8.4 is starting: a47c667232201048ee6e77d311054ede28a418598fd03bf25e7881028d98a793
+14:02:44.743 [main] INFO tc.mysql:8.4 -- Waiting for database connection to become available at jdbc:mysql://localhost:44813/vms?allowPublicKeyRetrieval=true&forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai&useSSL=false using query 'SELECT 1'
+14:02:59.258 [main] INFO tc.mysql:8.4 -- Container mysql:8.4 started in PT15.3838827S
+14:02:59.259 [main] INFO tc.mysql:8.4 -- Container is started (JDBC URL: jdbc:mysql://localhost:44813/vms?allowPublicKeyRetrieval=true&forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai&useSSL=false)
+14:03:00.670 [main] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:mysql://localhost:44813/vms?allowPublicKeyRetrieval=true&forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai&useSSL=false (MySQL 8.4)
+14:03:01.665 [main] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Schema history table `vms`.`flyway_schema_history` does not exist yet
+14:03:01.678 [main] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 9 migrations (execution time 00:00.096s)
+14:03:01.730 [main] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Creating Schema History table `vms`.`flyway_schema_history` ...
+14:03:01.870 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema `vms`: << Empty Schema >>
+14:03:01.908 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "1 - identity and audit"
+14:03:02.260 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "2 - fleet and user authorization"
+14:03:02.474 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "3 - login lockout fields"
+14:03:02.600 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "4 - vehicle terminal history"
+14:03:03.123 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "5 - driver and association history"
+14:03:03.385 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "6 - durable position"
+14:03:05.584 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "7 - telemetry anomaly"
+14:03:05.709 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "11 - track retention and partitions"
+14:03:06.089 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "14 - command log"
+14:03:06.302 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 9 migrations to schema `vms`, now at version v14 (execution time 00:03.875s)
+[capacity] flyway.migrationsExecuted=9
+14:03:06.741 [main] INFO com.zaxxer.hikari.HikariDataSource -- capacity-harness - Starting...
+14:03:06.795 [main] INFO com.zaxxer.hikari.pool.HikariPool -- capacity-harness - Added connection com.mysql.cj.jdbc.ConnectionImpl@6af87130
+14:03:06.802 [main] INFO com.zaxxer.hikari.HikariDataSource -- capacity-harness - Start completed.
+[capacity] mysql.version=8.4.13
+[capacity] mysql.innodb_buffer_pool_size=805306368
+[capacity] mysql.log_bin=0
+[capacity] mysql.innodb_flush_log_at_trx_commit=2
+[capacity] mysql.max_connections=40
+[capacity] mysql.performance_schema=0
+[capacity] mysql.charset=utf8mb4/utf8mb4_0900_ai_ci
+[capacity] mysql.session_time_zone=Asia/Shanghai
+[capacity] mysql.innodb_file_per_table=1
+[capacity] mysql.datadir=/var/lib/mysql/
+[capacity] host.os=Windows 11 10.0
+[capacity] host.java=21.0.9
+[capacity] host.cpus=18
+[capacity] host.memory_total_bytes=16799621120
+[capacity] host.memory_free_bytes=328949760
+[capacity] container.id=a47c667232201048ee6e77d311054ede28a418598fd03bf25e7881028d98a793
+[capacity] container.image=mysql:8.4
+[capacity] container.command=--skip-log-bin --innodb-buffer-pool-size=768M --innodb-flush-log-at-trx-commit=2 --innodb-log-buffer-size=64M --innodb-doublewrite=OFF --max-connections=40 --performance-schema=OFF
+[capacity] container.inspect=memory=1258291200 nanocpus=2000000000 image=sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+[capacity] docker.info=memTotal=1997275136 ncpu=2 server=29.1.3
+[capacity] docker.version=29.1.3
+[capacity] archives=fleet=CAP-FLEET, vehicles=100, terminals=100, admin=cap-capacity-admin
+14:03:10.988 [main] INFO com.vms.track.TrackPartitionMaintenance -- 轨迹分区维护完成 trigger=STARTUP retentionDays=30 created=[] dropped=[]
+[capacity] startup_maintenance=created=[], dropped=[], retentionDays=30
+[capacity] expired_partitions=p20261015,p20261016,p20261017
+[capacity] expected_rows=retained=25920000, expired=2592000, total=28512000
+[capacity] disk_before_generation=usable=47306989568, total=510528581632
+[capacity] generated.total_rows=0
+[capacity] generated.retained_rows=0
+[capacity] generated.expected_total_rows=28512000
+[capacity] generated.expected_retained_rows=25920000
+[capacity] generated.total_elapsed_ms=0
+[capacity] generated.rows_per_second=0.0
+[capacity] generated.batches=0
+[capacity] generated.batch_size=2000
+[capacity] partitions.count=40
+[capacity] partitions.first=p20261015
+[capacity] partitions.last=p20261123
+[capacity] partitions.retained_first=p20261018
+[capacity] partitions.retained_last=p20261116
+[capacity] table.track_point.estimated_rows=0
+[capacity] table.track_point.data_length_bytes=655360
+[capacity] table.track_point.index_length_bytes=1310720
+[capacity] table.track_point.total_bytes=1966080
+[capacity] table.track_point.data_free_bytes=0
+[capacity] table.track_point.avg_row_length_bytes=0
+[capacity] table.track_point.engine=InnoDB
+[capacity] table.track_point.collation=utf8mb4_0900_ai_ci
+[capacity] table.track_point.container_du_kb=5760
+[capacity] table.track_point.container_du_mib=5.625
+[capacity] cleanup.before.partitions=40
+[capacity] cleanup.before.retained_rows=0
+[capacity] cleanup.before.expired_rows=0
+[capacity] cleanup.before.total_rows=0
+[capacity] cleanup.before.container_du_kb=5760
+[capacity] cleanup.before.alerts=0
+[capacity] disk_before_cleanup=usable=47306969088, total=510528581632
+14:03:12.857 [main] INFO com.vms.track.TrackPartitionMaintenance -- 轨迹分区维护完成 trigger=MANUAL retentionDays=30 created=[] dropped=[p20261015, p20261016, p20261017]
+[capacity] cleanup.elapsed_ms=371
+[capacity] cleanup.result_success=true
+[capacity] cleanup.created_partitions=
+[capacity] cleanup.dropped_partitions=p20261015,p20261016,p20261017
+[capacity] cleanup.dropped_rows_estimate=0
+[capacity] cleanup.after.partitions=37
+[capacity] cleanup.after.retained_rows=0
+[capacity] cleanup.after.total_rows=0
+[capacity] cleanup.after.container_du_kb=5328
+[capacity] cleanup.after.alerts=0
+14:03:13.156 [main] INFO com.zaxxer.hikari.HikariDataSource -- capacity-harness - Shutdown initiated...
+14:03:13.166 [main] INFO com.zaxxer.hikari.HikariDataSource -- capacity-harness - Shutdown completed.
+[capacity] finished_at=2026-11-16 14:03:13 CST
+[ERROR] Tests run: 5, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 33.21 s <<< FAILURE! -- in com.vms.capacity.TrackCapacityHarnessTest
+[ERROR] com.vms.capacity.TrackCapacityHarnessTest.generatedDatasetReachesThirtyDayCapacityTarget -- Time elapsed: 0.088 s <<< FAILURE!
+java.lang.AssertionError: 
+[容量验证未完成：保留窗口实际 0 行，低于 30 天目标 25920000 行；不得以较小数据外推容量结论] 
+Expecting actual:
+  0L
+to be greater than or equal to:
+  25920000L
+
+	at com.vms.capacity.TrackCapacityHarnessTest.generatedDatasetReachesThirtyDayCapacityTarget(TrackCapacityHarnessTest.java:262)
+
+[ERROR] com.vms.capacity.TrackCapacityHarnessTest.tableIndexFootprintAndPartitionRowsAreRecorded -- Time elapsed: 0.341 s <<< FAILURE!
+java.lang.AssertionError: 
+[真实生成数据必须产生可计量的磁盘占用（du -sk 至少 1 GiB）] 
+Expecting actual:
+  5760L
+to be greater than:
+  1048576L
+
+	at com.vms.capacity.TrackCapacityHarnessTest.tableIndexFootprintAndPartitionRowsAreRecorded(TrackCapacityHarnessTest.java:339)
+
+[ERROR] com.vms.capacity.TrackCapacityHarnessTest.singleDayAndCrossMidnightQueriesPrunePartitionsAndRecordPlans -- Time elapsed: 0.220 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+[single-day 原始点数必须与生成参数一致] 
+expected: 8640
+ but was: 0
+	at com.vms.capacity.TrackCapacityHarnessTest.observeQuery(TrackCapacityHarnessTest.java:593)
+	at com.vms.capacity.TrackCapacityHarnessTest.singleDayAndCrossMidnightQueriesPrunePartitionsAndRecordPlans(TrackCapacityHarnessTest.java:375)
+
+[ERROR] com.vms.capacity.TrackCapacityHarnessTest.expiredPartitionCleanupPreservesRetainedDataAndQueries -- Time elapsed: 0.933 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+
+expected: 25920000L
+ but was: 0L
+	at com.vms.capacity.TrackCapacityHarnessTest.expiredPartitionCleanupPreservesRetainedDataAndQueries(TrackCapacityHarnessTest.java:429)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   TrackCapacityHarnessTest.expiredPartitionCleanupPreservesRetainedDataAndQueries:429 
+expected: 25920000L
+ but was: 0L
+[ERROR]   TrackCapacityHarnessTest.generatedDatasetReachesThirtyDayCapacityTarget:262 [容量验证未完成：保留窗口实际 0 行，低于 30 天目标 25920000 行；不得以较小数据外推容量结论] 
+Expecting actual:
+  0L
+to be greater than or equal to:
+  25920000L
+
+[ERROR]   TrackCapacityHarnessTest.singleDayAndCrossMidnightQueriesPrunePartitionsAndRecordPlans:375->observeQuery:593 [single-day 原始点数必须与生成参数一致] 
+expected: 8640
+ but was: 0
+[ERROR]   TrackCapacityHarnessTest.tableIndexFootprintAndPartitionRowsAreRecorded:339 [真实生成数据必须产生可计量的磁盘占用（du -sk 至少 1 GiB）] 
+Expecting actual:
+  5760L
+to be greater than:
+  1048576L
+
+[INFO] 
+[ERROR] Tests run: 5, Failures: 4, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for vehicle-monitoring-system 0.1.0-SNAPSHOT:
+[INFO] 
+[INFO] vehicle-monitoring-system .......................... SUCCESS [  0.008 s]
+[INFO] protocol ........................................... SUCCESS [  2.337 s]
+[INFO] vehicle-monitoring-server .......................... FAILURE [ 47.469 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  50.335 s
+[INFO] Finished at: 2026-11-16T14:03:14+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project server: There are test failures.
+[ERROR] 
+[ERROR] See C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-aa44a6f4bd2ee4914\server\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :server
