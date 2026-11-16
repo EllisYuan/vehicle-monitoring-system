@@ -1,6 +1,6 @@
 # 10: 单车轨迹查询与回放
 
-Status: open
+Status: resolved
 Labels: ready-for-agent
 Type: task
 Blocked by: 08
@@ -17,14 +17,14 @@ Blocked by: 08
 
 ## Acceptance criteria
 
-- [ ] 单车辆与 ≤24 小时范围校验，跨日允许，超范围返回明确错误
-- [ ] 真实 MySQL 数据查询展示点 ≤2000，原始轨迹行未被修改
-- [ ] 无效定位与 >30 秒缺口形成分段，回放不跨段连线
-- [ ] 抽稀保留首尾与分段边界；已存在的重要事件点输入不会被丢弃，可用受控样例验证，真实报警数据在 12/27 复验
-- [ ] 必要点超限返回缩小范围提示，不截断
-- [ ] 浏览器回放验证播放/暂停/拖动/1/2/4/8 倍速，时间轴与车辆位置一致
-- [ ] 车队长跨队查询被服务端拒绝，页面无原始轨迹导出入口
-- [ ] 查询与越权尝试产生审计记录
+- [x] 单车辆与 ≤24 小时范围校验，跨日允许，超范围返回明确错误
+- [x] 真实 MySQL 数据查询展示点 ≤2000，原始轨迹行未被修改
+- [x] 无效定位与 >30 秒缺口形成分段，回放不跨段连线
+- [x] 抽稀保留首尾与分段边界；已存在的重要事件点输入不会被丢弃，可用受控样例验证，真实报警数据在 12/27 复验
+- [x] 必要点超限返回缩小范围提示，不截断
+- [x] 浏览器回放验证播放/暂停/拖动/1/2/4/8 倍速，时间轴与车辆位置一致
+- [x] 车队长跨队查询被服务端拒绝，页面无原始轨迹导出入口
+- [x] 查询与越权尝试产生审计记录
 
 ## Scope boundaries
 
@@ -40,4 +40,8 @@ Blocked by: 08
 
 ## Answer
 
-尚未实施，尚未执行验证。
+已实现并通过真实验证。`GET /api/v1/tracks?vehicleId=&from=&to=` 走 `@RequiresPermission(FLEET_VIEW)` 与 `FleetScopeSql.where("fleet_id_at_event", scope, args)`，跨队返回 403 并记 `TRACK/QUERY` FAILURE 审计；查询只列窗口内 `track_point` 日分区 `pYYYYMMDD`，支持 ≤24 小时（含跨日）与 30 天保留期校验。无效定位与 >30 秒间隔分段；段内 Douglas-Peucker 从 10m 起调整至展示点 ≤2000，强制保留段首尾与 `alarm_flag` 事件点；必要点超限返回 400 `TRACK_TOO_DENSE` 并提示缩小范围，不截断，原始行不变。前端 `/monitor/tracks` 提供查询、分段/断点列表与回放（播放、暂停、拖动、1/2/4/8 倍速），断点内无 marker、不跨段插值，页面无原始轨迹导出入口。
+
+验证：`TrackQueryFlowTest` 8/8（真实 MySQL 8.4 + Redis 8.4）；`BrowserFlowTest` 最终运行 Playwright 38/38（本票 2 个用例：真实 TCP 三段数据 + 真实鼠标拖动与墙钟倍速校验、车队长授权范围与跨队 403）；`pnpm typecheck`、本票范围 eslint、`pnpm build` 通过；未新增迁移。证据见 `.scratch/vehicle-monitoring/evidence/10-verification.md`、`10-*.log`、`10-*.png`。首次浏览器运行曾在既有 `archives.spec.ts` 首例登录 5s 断言偶发失败（21 已记录同类问题），重跑与最终运行均 38/38。
+
+边界：真实报警事件点保留待 12/27 复验（本票用受控 `alarm_flag` 样例）；真实天地图底图属 26；30 天容量与 EXPLAIN 不在本票；必要点超限的页面提示仅静态检查；AC13 复验未在本票新增执行（查询只读，由 09 覆盖）。
