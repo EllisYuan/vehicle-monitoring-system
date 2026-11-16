@@ -15,6 +15,7 @@ import { getTopLeft, getWidth } from 'ol/extent.js'
 import { defaults as defaultControls } from 'ol/control/defaults.js'
 import { Fill, Stroke, Style, RegularShape } from 'ol/style.js'
 import { formatTime, type MonitorVehicle } from '../api'
+import { resolveBasemap, wmtsResolutions, WMTS_MATRIX_IDS, type BasemapLayerSpec } from '../basemap'
 import 'ol/ol.css'
 
 const props = defineProps<{ vehicles: MonitorVehicle[]; selectedId: number | null }>()
@@ -23,7 +24,18 @@ const target = ref<HTMLDivElement>()
 const error = ref('')
 const hover = ref<MonitorVehicle | null>(null)
 const basemapLoading = ref(false)
-const attribution = import.meta.env.VITE_WMTS_ATTRIBUTION || '天地图 · 国家地理信息公共服务平台'
+const basemap = resolveBasemap({
+  roadUrl: import.meta.env.VITE_WMTS_ROAD_URL,
+  labelUrl: import.meta.env.VITE_WMTS_LABEL_URL,
+  key: import.meta.env.VITE_WMTS_KEY,
+  roadLayer: import.meta.env.VITE_WMTS_ROAD_LAYER,
+  labelLayer: import.meta.env.VITE_WMTS_LABEL_LAYER,
+  matrixSet: import.meta.env.VITE_WMTS_MATRIX_SET,
+  style: import.meta.env.VITE_WMTS_STYLE,
+  format: import.meta.env.VITE_WMTS_FORMAT,
+  attribution: import.meta.env.VITE_WMTS_ATTRIBUTION,
+})
+const attribution = basemap.attribution ?? ''
 const source = new VectorSource<Feature<Point>>()
 let map: Map | undefined
 let observer: ResizeObserver | undefined
@@ -33,19 +45,18 @@ let centered = false
 let pendingTiles = 0
 let failed = false
 
-function tileLayer(urlTemplate: string, layer: string): TileLayer<WMTS> {
+function tileLayer(spec: BasemapLayerSpec): TileLayer<WMTS> {
   const projection = getProjection('EPSG:3857')!
   const extent = projection.getExtent()
   const maxResolution = getWidth(extent) / 256
   const source = new WMTS({
-    url: urlTemplate.replaceAll('{key}', encodeURIComponent(import.meta.env.VITE_WMTS_KEY || '')),
-    layer, matrixSet: import.meta.env.VITE_WMTS_MATRIX_SET || 'w',
-    format: import.meta.env.VITE_WMTS_FORMAT || 'tiles',
-    style: import.meta.env.VITE_WMTS_STYLE || 'default', projection,
+    url: spec.url, layer: spec.layer, matrixSet: spec.matrixSet,
+    format: spec.format, style: spec.style, projection,
     tileGrid: new WMTSTileGrid({
       origin: getTopLeft(extent),
-      resolutions: Array.from({ length: 19 }, (_, index) => maxResolution / 2 ** index),
-      matrixIds: Array.from({ length: 19 }, (_, index) => String(index)),
+      // 天地图 TileMatrix 编号从 1 开始，编号 N 对应 maxResolution / 2^N。
+      resolutions: wmtsResolutions(maxResolution),
+      matrixIds: WMTS_MATRIX_IDS,
     }),
     crossOrigin: 'anonymous', wrapX: false,
   })
@@ -56,7 +67,7 @@ function tileLayer(urlTemplate: string, layer: string): TileLayer<WMTS> {
   })
   source.on('tileloaderror', () => {
     failed = true
-    error.value = '底图加载失败，车辆列表与定位数据仍可使用。'
+    error.value = '底图加载失败：请检查网络与访问 key 配置，车辆列表与定位数据仍可使用。'
     pendingTiles = Math.max(0, pendingTiles - 1)
     basemapLoading.value = false
   })
@@ -109,16 +120,9 @@ watch(() => props.selectedId, () => {
   if (position?.fixValid) map?.getView().setCenter(fromLonLat([position.lng, position.lat]))
 })
 onMounted(() => {
-  const roadUrl = import.meta.env.VITE_WMTS_ROAD_URL || ''
-  const labelUrl = import.meta.env.VITE_WMTS_LABEL_URL || ''
-  const matrixSet = import.meta.env.VITE_WMTS_MATRIX_SET || 'w'
   const layers: TileLayer<WMTS>[] = []
-  if (matrixSet !== 'w') {
-    error.value = '底图配置错误：当前仅支持 Web Mercator（matrixSet=w），车辆列表与定位数据仍可使用。'
-  } else if (roadUrl && labelUrl) {
-    layers.push(tileLayer(roadUrl, import.meta.env.VITE_WMTS_ROAD_LAYER || 'vec'))
-    layers.push(tileLayer(labelUrl, import.meta.env.VITE_WMTS_LABEL_LAYER || 'cva'))
-  } else error.value = '底图未配置，道路与注记服务接入后可显示；车辆列表与定位数据仍可使用。'
+  if (basemap.error) error.value = basemap.error
+  for (const spec of basemap.layers) layers.push(tileLayer(spec))
   map = new Map({ target: target.value, layers: [...layers, new VectorLayer({ source })],
     controls: defaultControls({ attribution: false, rotate: false }),
     view: new View({ center: fromLonLat([105, 35]), zoom: 4, minZoom: 2, maxZoom: 18 }) })
@@ -204,7 +208,11 @@ onUnmounted(() => {
       <span>{{ hover.position?.speedKph.toFixed(1) }} km/h · {{ hover.position?.directionDeg }}°</span>
       <small>有效定位 {{ formatTime(hover.position?.gpsTime) }}</small>
     </div>
-    <div class="attribution">
+    <div
+      v-if="attribution"
+      class="attribution"
+      data-testid="monitor-map-attribution"
+    >
       {{ attribution }} <span>· OpenLayers</span>
     </div>
   </div>
@@ -229,3 +237,5 @@ button:focus-visible { outline: 2px solid #24669c; outline-offset: 2px; }
 .attribution span { color: #718395; }
 @media (max-width: 700px) { .map-workspace, .map-target { min-height: 380px; } .map-caption { top: auto; bottom: 24px; left: 10px; font-size: 10px; } }
 </style>
+
+
