@@ -1,0 +1,1363 @@
+[lock] acquired: C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-afb076e113f7e6bf5\mvnw.cmd -B -pl server -am -Dtest=OfflineAndPositionAlarmFlowTest -Dsurefire.failIfNoSpecifiedTests=false test
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] vehicle-monitoring-system                                          [pom]
+[INFO] protocol                                                           [jar]
+[INFO] vehicle-monitoring-server                                          [jar]
+[INFO] 
+[INFO] -----------------< com.vms:vehicle-monitoring-system >------------------
+[INFO] Building vehicle-monitoring-system 0.1.0-SNAPSHOT                  [1/3]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --------------------------< com.vms:protocol >--------------------------
+[INFO] Building protocol 0.1.0-SNAPSHOT                                   [2/3]
+[INFO]   from protocol\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ protocol ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-afb076e113f7e6bf5\protocol\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ protocol ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ protocol ---
+[INFO] 
+[INFO] ---------------------------< com.vms:server >---------------------------
+[INFO] Building vehicle-monitoring-server 0.1.0-SNAPSHOT                  [3/3]
+[INFO]   from server\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-toolchain) @ server ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ server ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 10 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ server ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 90 source files with javac [debug parameters release 21] to target\classes
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-afb076e113f7e6bf5/server/src/main/java/com/vms/access/TerminalTcpServer.java: C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-afb076e113f7e6bf5\server\src\main\java\com\vms\access\TerminalTcpServer.java uses or overrides a deprecated API.
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-afb076e113f7e6bf5/server/src/main/java/com/vms/access/TerminalTcpServer.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ server ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-afb076e113f7e6bf5\server\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ server ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 26 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-afb076e113f7e6bf5/server/src/test/java/com/vms/access/TerminalTcpIntegrationTest.java: Some input files use or override a deprecated API.
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-afb076e113f7e6bf5/server/src/test/java/com/vms/access/TerminalTcpIntegrationTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ server ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.vms.alarm.OfflineAndPositionAlarmFlowTest
+15:01:31.034 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.alarm.OfflineAndPositionAlarmFlowTest]: OfflineAndPositionAlarmFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:01:31.225 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.alarm.OfflineAndPositionAlarmFlowTest
+15:01:31.307 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.alarm.OfflineAndPositionAlarmFlowTest]: OfflineAndPositionAlarmFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:01:31.315 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.alarm.OfflineAndPositionAlarmFlowTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-16T15:01:31.771+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] c.v.a.OfflineAndPositionAlarmFlowTest    : Starting OfflineAndPositionAlarmFlowTest using Java 21.0.9 with PID 29040 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-afb076e113f7e6bf5\server)
+2026-11-16T15:01:31.772+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] c.v.a.OfflineAndPositionAlarmFlowTest    : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T15:01:32.895+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-16T15:01:32.897+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-16T15:01:32.938+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 22 ms. Found 0 Redis repository interfaces.
+2026-11-16T15:01:34.016+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-11-16T15:01:34.041+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-16T15:01:34.041+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-16T15:01:34.152+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2344 ms
+2026-11-16T15:01:34.362+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-16T15:01:34.369+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-16T15:01:34.434+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-16T15:01:34.946+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-16T15:01:35.492+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-16T15:01:35.494+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-16T15:01:35.515+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-16T15:01:35.858+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-16T15:01:36.132+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 2ef65961ef9caa859dd1f0f362ec4493ac70ac226af792d692875097d543a0f3
+2026-11-16T15:01:36.829+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT0.970553S
+2026-11-16T15:01:36.840+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-16T15:01:36.840+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-16T15:01:36.841+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-16T15:01:36.843+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-16T15:01:36.966+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: d184ce17642acd0e330092c85f47e86e4f1d278543167742d6fe0f3e9402336e
+2026-11-16T15:01:37.481+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:45349/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-16T15:01:46.859+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT10.0159524S
+2026-11-16T15:01:46.860+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:45349/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-16T15:01:46.860+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-16T15:01:46.937+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: 26cd99df28848686aeefa9350ea37b7bda93a644f715a2f3751028cda17f1d7c
+2026-11-16T15:01:47.653+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.7925082S
+2026-11-16T15:01:48.265+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45349/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-16T15:01:48.823+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-16T15:01:48.830+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 11 migrations (execution time 00:00.037s)
+2026-11-16T15:01:48.861+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-16T15:01:48.956+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-16T15:01:48.971+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-16T15:01:49.082+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-16T15:01:49.172+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-16T15:01:49.258+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-16T15:01:49.427+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-16T15:01:49.592+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "6 - durable position"
+2026-11-16T15:01:50.489+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "7 - telemetry anomaly"
+2026-11-16T15:01:50.589+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "8 - overspeed alarm"
+2026-11-16T15:01:50.635+08:00  WARN 29040 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T15:01:50.794+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "11 - track retention and partitions"
+2026-11-16T15:01:50.987+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "12 - offline and terminal alarms"
+2026-11-16T15:01:51.425+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "14 - command log"
+2026-11-16T15:01:51.541+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 11 migrations to schema `vms`, now at version v14 (execution time 00:02.047s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-16T15:01:54.303+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@35eb4a3b
+2026-11-16T15:01:54.534+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring TestDispatcherServlet ''
+2026-11-16T15:01:54.534+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-16T15:01:54.537+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-11-16T15:01:54.625+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 11672 (http) with context path '/'
+2026-11-16T15:01:54.890+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] c.v.a.OfflineAndPositionAlarmFlowTest    : Started OfflineAndPositionAlarmFlowTest in 23.515 seconds (process running for 24.81)
+2026-11-16T15:01:54.900+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-16T15:01:54.942+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3d70dab8
+2026-11-16T15:01:54.944+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-16T15:01:55.277+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：alarm14-admin
+2026-11-16T15:01:55.454+08:00  INFO 29040 --- [vehicle-monitoring-system] [           main] c.vms.track.TrackPartitionMaintenance    : 轨迹分区维护完成 trigger=STARTUP retentionDays=30 created=[] dropped=[]
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-11-16T15:02:01.478+08:00  WARN 29040 --- [vehicle-monitoring-system] [ntLoopGroup-7-4] com.vms.access.TerminalFrameHandler      : 终端 TCP 连接处理失败
+
+org.springframework.jdbc.UncategorizedSQLException: PreparedStatementCallback; uncategorized SQLException; SQL state [HY000]; error code [3819]; Check constraint 'injected_invalid_alarm_failure' is violated.
+	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1550) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:689) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:997) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at com.vms.alarm.PositionInvalidAlarmParticipant.insertAlarm(PositionInvalidAlarmParticipant.java:145) ~[classes/:na]
+	at com.vms.alarm.PositionInvalidAlarmParticipant.activate(PositionInvalidAlarmParticipant.java:105) ~[classes/:na]
+	at com.vms.alarm.PositionInvalidAlarmParticipant.observePosition(PositionInvalidAlarmParticipant.java:74) ~[classes/:na]
+	at com.vms.alarm.PositionInvalidAlarmParticipant.observe(PositionInvalidAlarmParticipant.java:52) ~[classes/:na]
+	at com.vms.telemetry.PositionIngestService.observeInvalidRealtime(PositionIngestService.java:206) ~[classes/:na]
+	at com.vms.telemetry.PositionIngestService.ingest(PositionIngestService.java:140) ~[classes/:na]
+	at com.vms.telemetry.PositionIngestService.accept(PositionIngestService.java:61) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-7.0.10.jar:7.0.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190) ~[spring-aop-7.0.10.jar:7.0.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:158) ~[spring-aop-7.0.10.jar:7.0.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133) ~[spring-tx-7.0.10.jar:7.0.10]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371) ~[spring-tx-7.0.10.jar:7.0.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130) ~[spring-tx-7.0.10.jar:7.0.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.10.jar:7.0.10]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:714) ~[spring-aop-7.0.10.jar:7.0.10]
+	at com.vms.telemetry.PositionIngestService$$SpringCGLIB$$0.accept(<generated>) ~[classes/:na]
+	at com.vms.access.TerminalFrameHandler.position(TerminalFrameHandler.java:143) ~[classes/:na]
+	at com.vms.access.TerminalFrameHandler.channelRead0(TerminalFrameHandler.java:47) ~[classes/:na]
+	at com.vms.access.TerminalFrameHandler.channelRead0(TerminalFrameHandler.java:18) ~[classes/:na]
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:99) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.lambda$fireChannelRead$2(AbstractChannelHandlerContext.java:366) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:228) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1214) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.sql.SQLException: Check constraint 'injected_invalid_alarm_failure' is violated.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:988) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1166) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1101) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1448) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1084) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java) ~[HikariCP-7.0.2.jar:na]
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$update$1(JdbcTemplate.java:998) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:670) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	... 33 common frames omitted
+
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/auth/login
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"59"]
+             Body = {"username":"alarm14-admin","password":"Alarm14-Pass-2026"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.identity.auth.AuthController
+           Method = com.vms.identity.auth.AuthController#login(LoginRequest, HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"token":"a2d10c5d-1638-4870-8b4d-3c2a7ffb3423","username":"alarm14-admin","roleCode":"ADMIN","expiresIn":28800}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/fleets
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"a2d10c5d-1638-4870-8b4d-3c2a7ffb3423", Content-Length:"60"]
+             Body = {"fleetName":"报警车队0dc9e352","fleetCode":"A0dc9e352"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.FleetController
+           Method = com.vms.fleet.FleetController#create(CreateFleetRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":3,"fleetCode":"A0dc9e352","fleetName":"报警车队0dc9e352","status":"ENABLED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/vehicles
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"a2d10c5d-1638-4870-8b4d-3c2a7ffb3423", Content-Length:"40"]
+             Body = {"fleetId":3,"plateNo":"报警0dc9e352"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.VehicleController
+           Method = com.vms.fleet.VehicleController#create(CreateRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":3,"plateNo":"报警0dc9e352","fleetId":3,"fleetName":"报警车队0dc9e352","status":"ENABLED","terminalId":null,"terminalNo":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/terminals
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"a2d10c5d-1638-4870-8b4d-3c2a7ffb3423", Content-Length:"37"]
+             Body = {"terminalNo":"01380013900000000004"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalController
+           Method = com.vms.terminal.TerminalController#create(RegisterRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":3,"terminalNo":"01380013900000000004","status":"ENABLED","vehicleId":null,"plateNo":null,"fleetId":null,"lastSeenAt":null,"everAuthenticated":false,"communicationStatus":"NOT_CONNECTED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = PUT
+      Request URI = /api/v1/vehicles/3/terminal
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"a2d10c5d-1638-4870-8b4d-3c2a7ffb3423", Content-Length:"16"]
+             Body = {"terminalId":3}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalBindingController
+           Method = com.vms.terminal.TerminalBindingController#bind(long, BindingRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":3,"plateNo":"报警0dc9e352","fleetId":3,"fleetName":"报警车队0dc9e352","status":"ENABLED","terminalId":3,"terminalNo":"01380013900000000004"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/auth/login
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"59"]
+             Body = {"username":"alarm14-admin","password":"Alarm14-Pass-2026"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.identity.auth.AuthController
+           Method = com.vms.identity.auth.AuthController#login(LoginRequest, HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"token":"d5f37352-a7ef-44ba-b65a-4e7ffdf97eb6","username":"alarm14-admin","roleCode":"ADMIN","expiresIn":28800}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/fleets
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"d5f37352-a7ef-44ba-b65a-4e7ffdf97eb6", Content-Length:"60"]
+             Body = {"fleetName":"报警车队62f20274","fleetCode":"A62f20274"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.FleetController
+           Method = com.vms.fleet.FleetController#create(CreateFleetRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":4,"fleetCode":"A62f20274","fleetName":"报警车队62f20274","status":"ENABLED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/vehicles
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"d5f37352-a7ef-44ba-b65a-4e7ffdf97eb6", Content-Length:"40"]
+             Body = {"fleetId":4,"plateNo":"报警62f20274"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.VehicleController
+           Method = com.vms.fleet.VehicleController#create(CreateRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":4,"plateNo":"报警62f20274","fleetId":4,"fleetName":"报警车队62f20274","status":"ENABLED","terminalId":null,"terminalNo":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/terminals
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"d5f37352-a7ef-44ba-b65a-4e7ffdf97eb6", Content-Length:"37"]
+             Body = {"terminalNo":"01380013900000000005"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalController
+           Method = com.vms.terminal.TerminalController#create(RegisterRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":4,"terminalNo":"01380013900000000005","status":"ENABLED","vehicleId":null,"plateNo":null,"fleetId":null,"lastSeenAt":null,"everAuthenticated":false,"communicationStatus":"NOT_CONNECTED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = PUT
+      Request URI = /api/v1/vehicles/4/terminal
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"d5f37352-a7ef-44ba-b65a-4e7ffdf97eb6", Content-Length:"16"]
+             Body = {"terminalId":4}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalBindingController
+           Method = com.vms.terminal.TerminalBindingController#bind(long, BindingRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":4,"plateNo":"报警62f20274","fleetId":4,"fleetName":"报警车队62f20274","status":"ENABLED","terminalId":4,"terminalNo":"01380013900000000005"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/auth/login
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"59"]
+             Body = {"username":"alarm14-admin","password":"Alarm14-Pass-2026"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.identity.auth.AuthController
+           Method = com.vms.identity.auth.AuthController#login(LoginRequest, HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"token":"73f9fd24-93f2-4589-bea5-5ec694313a8e","username":"alarm14-admin","roleCode":"ADMIN","expiresIn":28800}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/fleets
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"73f9fd24-93f2-4589-bea5-5ec694313a8e", Content-Length:"60"]
+             Body = {"fleetName":"报警车队600178b8","fleetCode":"A600178b8"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.FleetController
+           Method = com.vms.fleet.FleetController#create(CreateFleetRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":5,"fleetCode":"A600178b8","fleetName":"报警车队600178b8","status":"ENABLED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/vehicles
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"73f9fd24-93f2-4589-bea5-5ec694313a8e", Content-Length:"40"]
+             Body = {"fleetId":5,"plateNo":"报警600178b8"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.VehicleController
+           Method = com.vms.fleet.VehicleController#create(CreateRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":5,"plateNo":"报警600178b8","fleetId":5,"fleetName":"报警车队600178b8","status":"ENABLED","terminalId":null,"terminalNo":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/terminals
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"73f9fd24-93f2-4589-bea5-5ec694313a8e", Content-Length:"37"]
+             Body = {"terminalNo":"01380013900000000006"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalController
+           Method = com.vms.terminal.TerminalController#create(RegisterRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":5,"terminalNo":"01380013900000000006","status":"ENABLED","vehicleId":null,"plateNo":null,"fleetId":null,"lastSeenAt":null,"everAuthenticated":false,"communicationStatus":"NOT_CONNECTED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = PUT
+      Request URI = /api/v1/vehicles/5/terminal
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"73f9fd24-93f2-4589-bea5-5ec694313a8e", Content-Length:"16"]
+             Body = {"terminalId":5}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalBindingController
+           Method = com.vms.terminal.TerminalBindingController#bind(long, BindingRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":5,"plateNo":"报警600178b8","fleetId":5,"fleetName":"报警车队600178b8","status":"ENABLED","terminalId":5,"terminalNo":"01380013900000000006"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/fleets
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"73f9fd24-93f2-4589-bea5-5ec694313a8e", Content-Length:"60"]
+             Body = {"fleetName":"报警车队01b8541e","fleetCode":"A01b8541e"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.FleetController
+           Method = com.vms.fleet.FleetController#create(CreateFleetRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":6,"fleetCode":"A01b8541e","fleetName":"报警车队01b8541e","status":"ENABLED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/vehicles
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"73f9fd24-93f2-4589-bea5-5ec694313a8e", Content-Length:"40"]
+             Body = {"fleetId":6,"plateNo":"报警01b8541e"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.VehicleController
+           Method = com.vms.fleet.VehicleController#create(CreateRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":6,"plateNo":"报警01b8541e","fleetId":6,"fleetName":"报警车队01b8541e","status":"ENABLED","terminalId":null,"terminalNo":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/terminals
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"73f9fd24-93f2-4589-bea5-5ec694313a8e", Content-Length:"37"]
+             Body = {"terminalNo":"01380013900000000007"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalController
+           Method = com.vms.terminal.TerminalController#create(RegisterRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":6,"terminalNo":"01380013900000000007","status":"ENABLED","vehicleId":null,"plateNo":null,"fleetId":null,"lastSeenAt":null,"everAuthenticated":false,"communicationStatus":"NOT_CONNECTED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = PUT
+      Request URI = /api/v1/vehicles/6/terminal
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"73f9fd24-93f2-4589-bea5-5ec694313a8e", Content-Length:"16"]
+             Body = {"terminalId":6}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalBindingController
+           Method = com.vms.terminal.TerminalBindingController#bind(long, BindingRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":6,"plateNo":"报警01b8541e","fleetId":6,"fleetName":"报警车队01b8541e","status":"ENABLED","terminalId":6,"terminalNo":"01380013900000000007"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/auth/login
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"59"]
+             Body = {"username":"alarm14-admin","password":"Alarm14-Pass-2026"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.identity.auth.AuthController
+           Method = com.vms.identity.auth.AuthController#login(LoginRequest, HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"token":"b0f191e5-0338-4cfd-869e-fe66b72b012c","username":"alarm14-admin","roleCode":"ADMIN","expiresIn":28800}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/fleets
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"b0f191e5-0338-4cfd-869e-fe66b72b012c", Content-Length:"60"]
+             Body = {"fleetName":"报警车队9ca4d4bd","fleetCode":"A9ca4d4bd"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.FleetController
+           Method = com.vms.fleet.FleetController#create(CreateFleetRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":7,"fleetCode":"A9ca4d4bd","fleetName":"报警车队9ca4d4bd","status":"ENABLED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/vehicles
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"b0f191e5-0338-4cfd-869e-fe66b72b012c", Content-Length:"40"]
+             Body = {"fleetId":7,"plateNo":"报警9ca4d4bd"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.VehicleController
+           Method = com.vms.fleet.VehicleController#create(CreateRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":7,"plateNo":"报警9ca4d4bd","fleetId":7,"fleetName":"报警车队9ca4d4bd","status":"ENABLED","terminalId":null,"terminalNo":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/terminals
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"b0f191e5-0338-4cfd-869e-fe66b72b012c", Content-Length:"37"]
+             Body = {"terminalNo":"01380013900000000008"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalController
+           Method = com.vms.terminal.TerminalController#create(RegisterRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":7,"terminalNo":"01380013900000000008","status":"ENABLED","vehicleId":null,"plateNo":null,"fleetId":null,"lastSeenAt":null,"everAuthenticated":false,"communicationStatus":"NOT_CONNECTED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = PUT
+      Request URI = /api/v1/vehicles/7/terminal
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"b0f191e5-0338-4cfd-869e-fe66b72b012c", Content-Length:"16"]
+             Body = {"terminalId":7}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalBindingController
+           Method = com.vms.terminal.TerminalBindingController#bind(long, BindingRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":7,"plateNo":"报警9ca4d4bd","fleetId":7,"fleetName":"报警车队9ca4d4bd","status":"ENABLED","terminalId":7,"terminalNo":"01380013900000000008"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/auth/login
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"59"]
+             Body = {"username":"alarm14-admin","password":"Alarm14-Pass-2026"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.identity.auth.AuthController
+           Method = com.vms.identity.auth.AuthController#login(LoginRequest, HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"token":"a7c96ab4-34ae-4c05-ba7c-46621af4093d","username":"alarm14-admin","roleCode":"ADMIN","expiresIn":28800}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/fleets
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"a7c96ab4-34ae-4c05-ba7c-46621af4093d", Content-Length:"60"]
+             Body = {"fleetName":"报警车队d6ae688e","fleetCode":"Ad6ae688e"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.FleetController
+           Method = com.vms.fleet.FleetController#create(CreateFleetRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":9,"fleetCode":"Ad6ae688e","fleetName":"报警车队d6ae688e","status":"ENABLED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/vehicles
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"a7c96ab4-34ae-4c05-ba7c-46621af4093d", Content-Length:"40"]
+             Body = {"fleetId":9,"plateNo":"报警d6ae688e"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.VehicleController
+           Method = com.vms.fleet.VehicleController#create(CreateRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":9,"plateNo":"报警d6ae688e","fleetId":9,"fleetName":"报警车队d6ae688e","status":"ENABLED","terminalId":null,"terminalNo":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/terminals
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"a7c96ab4-34ae-4c05-ba7c-46621af4093d", Content-Length:"37"]
+             Body = {"terminalNo":"01380013900000000010"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalController
+           Method = com.vms.terminal.TerminalController#create(RegisterRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":9,"terminalNo":"01380013900000000010","status":"ENABLED","vehicleId":null,"plateNo":null,"fleetId":null,"lastSeenAt":null,"everAuthenticated":false,"communicationStatus":"NOT_CONNECTED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = PUT
+      Request URI = /api/v1/vehicles/9/terminal
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"a7c96ab4-34ae-4c05-ba7c-46621af4093d", Content-Length:"16"]
+             Body = {"terminalId":9}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalBindingController
+           Method = com.vms.terminal.TerminalBindingController#bind(long, BindingRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":9,"plateNo":"报警d6ae688e","fleetId":9,"fleetName":"报警车队d6ae688e","status":"ENABLED","terminalId":9,"terminalNo":"01380013900000000010"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+[ERROR] Tests run: 8, Failures: 1, Errors: 4, Skipped: 0, Time elapsed: 36.85 s <<< FAILURE! -- in com.vms.alarm.OfflineAndPositionAlarmFlowTest
+[ERROR] com.vms.alarm.OfflineAndPositionAlarmFlowTest.startupGraceSuppressesOfflineAlarmFor180Seconds -- Time elapsed: 0.396 s <<< ERROR!
+org.springframework.dao.EmptyResultDataAccessException: Incorrect result size: expected 1, actual 0
+	at org.springframework.dao.support.DataAccessUtils.nullableSingleResult(DataAccessUtils.java:198)
+	at org.springframework.jdbc.core.JdbcTemplate.queryForObject(JdbcTemplate.java:894)
+	at org.springframework.jdbc.core.JdbcTemplate.queryForMap(JdbcTemplate.java:922)
+	at com.vms.alarm.OfflineAndPositionAlarmFlowTest.offlineAlarm(OfflineAndPositionAlarmFlowTest.java:489)
+	at com.vms.alarm.OfflineAndPositionAlarmFlowTest.startupGraceSuppressesOfflineAlarmFor180Seconds(OfflineAndPositionAlarmFlowTest.java:236)
+
+[ERROR] com.vms.alarm.OfflineAndPositionAlarmFlowTest.offlineAlarmActivatesAfter180SecondsAndRecoversOnReconnect -- Time elapsed: 0.910 s <<< ERROR!
+org.springframework.dao.EmptyResultDataAccessException: Incorrect result size: expected 1, actual 0
+	at org.springframework.dao.support.DataAccessUtils.nullableSingleResult(DataAccessUtils.java:198)
+	at org.springframework.jdbc.core.JdbcTemplate.queryForObject(JdbcTemplate.java:894)
+	at org.springframework.jdbc.core.JdbcTemplate.queryForMap(JdbcTemplate.java:922)
+	at com.vms.alarm.OfflineAndPositionAlarmFlowTest.offlineAlarm(OfflineAndPositionAlarmFlowTest.java:489)
+	at com.vms.alarm.OfflineAndPositionAlarmFlowTest.offlineAlarmActivatesAfter180SecondsAndRecoversOnReconnect(OfflineAndPositionAlarmFlowTest.java:262)
+
+[ERROR] com.vms.alarm.OfflineAndPositionAlarmFlowTest.unconnectedLawfullyLoggedOutDisabledAndUnboundTerminalsDoNotAlarm -- Time elapsed: 1.109 s <<< FAILURE!
+java.lang.AssertionError: 
+
+Expecting actual not to be null
+	at com.vms.alarm.OfflineAndPositionAlarmFlowTest.unconnectedLawfullyLoggedOutDisabledAndUnboundTerminalsDoNotAlarm(OfflineAndPositionAlarmFlowTest.java:313)
+
+[ERROR] com.vms.alarm.OfflineAndPositionAlarmFlowTest.backfillReceiveRecoversOfflineWithoutAdvancingRealtimeState -- Time elapsed: 1.012 s <<< ERROR!
+org.springframework.dao.EmptyResultDataAccessException: Incorrect result size: expected 1, actual 0
+	at org.springframework.dao.support.DataAccessUtils.nullableSingleResult(DataAccessUtils.java:198)
+	at org.springframework.jdbc.core.JdbcTemplate.queryForObject(JdbcTemplate.java:894)
+	at org.springframework.jdbc.core.JdbcTemplate.queryForMap(JdbcTemplate.java:922)
+	at com.vms.alarm.OfflineAndPositionAlarmFlowTest.offlineAlarm(OfflineAndPositionAlarmFlowTest.java:489)
+	at com.vms.alarm.OfflineAndPositionAlarmFlowTest.backfillReceiveRecoversOfflineWithoutAdvancingRealtimeState(OfflineAndPositionAlarmFlowTest.java:370)
+
+[ERROR] com.vms.alarm.OfflineAndPositionAlarmFlowTest.managementOperationsKeepActiveOfflineAlarmAndMarkScopeChange -- Time elapsed: 1.056 s <<< ERROR!
+org.springframework.dao.EmptyResultDataAccessException: Incorrect result size: expected 1, actual 0
+	at org.springframework.dao.support.DataAccessUtils.nullableSingleResult(DataAccessUtils.java:198)
+	at org.springframework.jdbc.core.JdbcTemplate.queryForObject(JdbcTemplate.java:894)
+	at org.springframework.jdbc.core.JdbcTemplate.queryForMap(JdbcTemplate.java:922)
+	at com.vms.alarm.OfflineAndPositionAlarmFlowTest.offlineAlarm(OfflineAndPositionAlarmFlowTest.java:489)
+	at com.vms.alarm.OfflineAndPositionAlarmFlowTest.activateOfflineAlarm(OfflineAndPositionAlarmFlowTest.java:485)
+	at com.vms.alarm.OfflineAndPositionAlarmFlowTest.managementOperationsKeepActiveOfflineAlarmAndMarkScopeChange(OfflineAndPositionAlarmFlowTest.java:441)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   OfflineAndPositionAlarmFlowTest.unconnectedLawfullyLoggedOutDisabledAndUnboundTerminalsDoNotAlarm:313 
+Expecting actual not to be null
+[ERROR] Errors: 
+[ERROR]   OfflineAndPositionAlarmFlowTest.backfillReceiveRecoversOfflineWithoutAdvancingRealtimeState:370->offlineAlarm:489 » EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   OfflineAndPositionAlarmFlowTest.managementOperationsKeepActiveOfflineAlarmAndMarkScopeChange:441->activateOfflineAlarm:485->offlineAlarm:489 » EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   OfflineAndPositionAlarmFlowTest.offlineAlarmActivatesAfter180SecondsAndRecoversOnReconnect:262->offlineAlarm:489 » EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[ERROR]   OfflineAndPositionAlarmFlowTest.startupGraceSuppressesOfflineAlarmFor180Seconds:236->offlineAlarm:489 » EmptyResultDataAccess Incorrect result size: expected 1, actual 0
+[INFO] 
+[ERROR] Tests run: 8, Failures: 1, Errors: 4, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for vehicle-monitoring-system 0.1.0-SNAPSHOT:
+[INFO] 
+[INFO] vehicle-monitoring-system .......................... SUCCESS [  0.003 s]
+[INFO] protocol ........................................... SUCCESS [  0.852 s]
+[INFO] vehicle-monitoring-server .......................... FAILURE [ 50.480 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  51.736 s
+[INFO] Finished at: 2026-11-16T15:02:09+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project server: There are test failures.
+[ERROR] 
+[ERROR] See C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-afb076e113f7e6bf5\server\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :server
+[lock] command exit code: 1

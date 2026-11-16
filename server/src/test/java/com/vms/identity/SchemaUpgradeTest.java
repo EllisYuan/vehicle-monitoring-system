@@ -42,7 +42,7 @@ class SchemaUpgradeTest {
 
         Flyway flyway = Flyway.configure().dataSource(url, mysql.getUsername(), mysql.getPassword())
                 .locations("classpath:db/migration").load();
-        assertThat(flyway.migrate().migrationsExecuted).isEqualTo(10);
+        assertThat(flyway.migrate().migrationsExecuted).isEqualTo(11);
         assertThat(flyway.migrate().migrationsExecuted).isZero();
 
         JdbcTemplate jdbc = new JdbcTemplate(new org.springframework.jdbc.datasource.DriverManagerDataSource(
@@ -60,8 +60,8 @@ class SchemaUpgradeTest {
         Map<String, Object> history = jdbc.queryForMap(
                 "SELECT count(*) AS applied, count(DISTINCT version) AS versions, min(success) AS all_ok "
                         + "FROM " + schema + ".flyway_schema_history");
-        assertThat(((Number) history.get("applied")).longValue()).isEqualTo(10L);
-        assertThat(((Number) history.get("versions")).longValue()).isEqualTo(10L);
+        assertThat(((Number) history.get("applied")).longValue()).isEqualTo(11L);
+        assertThat(((Number) history.get("versions")).longValue()).isEqualTo(11L);
         assertThat(((Number) history.get("all_ok")).intValue()).isEqualTo(1);
 
         assertThat(jdbc.queryForObject("SELECT count(*) FROM " + schema + ".sys_user", Long.class)).isZero();
@@ -100,7 +100,7 @@ class SchemaUpgradeTest {
 
         Flyway latest = Flyway.configure().dataSource(url, mysql.getUsername(), mysql.getPassword())
                 .locations("classpath:db/migration").load();
-        assertThat(latest.migrate().migrationsExecuted).isEqualTo(4);
+        assertThat(latest.migrate().migrationsExecuted).isEqualTo(5);
 
         Map<String, Object> point = jdbc.queryForMap(
                 "SELECT * FROM " + schema + ".track_point WHERE terminal_id = 1");
