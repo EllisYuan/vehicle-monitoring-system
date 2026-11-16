@@ -2,7 +2,7 @@
 
 - 日期：2026-11-16
 - 分支：feat/ticket-12-overspeed-alarm；基线 integration/tickets-08-27 HEAD `b221243`
-- 结论：**Status: resolved**（待提交前合并集成分支并按合并后结果复验）。9 条 AC 中 8 条有真实 TCP / 真实 MySQL / WS 帧证据，1 条（越界 fleetId 的 403 分支）为静态检查。
+- 结论：**Status: resolved**。9 条 AC 中 8 条有真实 TCP / 真实 MySQL / WS 帧证据，1 条（越界 fleetId 的 403 分支）为静态检查。
 
 ## 环境
 
@@ -96,6 +96,7 @@ with-test-lock.ps1 mvnw.cmd -B -pl server -am test
 
 - 全量运行结束后 `docker ps -a` 中无本轮 Testcontainers 的 MySQL/Redis/Ryuk 容器（Ryuk 保持启用并自动回收）。
 - 其他项目的停止容器（`plp-*`、`pms_*`、`vms-mysql84` 等）保持原状，未清理。
+- 合并后复验结束时，观察到锁被其他任务接管并启动新的 Ryuk 容器；本轮 Ryuk 已回收，未清理他任务资源。
 
 ## 逐项 AC 状态
 
@@ -127,4 +128,11 @@ with-test-lock.ps1 mvnw.cmd -B -pl server -am test
 
 ## 合并与复验
 
-（提交前合并 integration/tickets-08-27 后回填）
+- 合并 `integration/tickets-08-27`（`4e3cd32`，含任务09、10）到本分支，无冲突；`web/src/app/router.ts` 自动合并，同时保留 `/monitor/tracks` 的 `TrackPlaybackView` 与 `/admin/alarm-rules` 的 `AlarmRuleView`。
+- 合并后确认 `PositionIngestService.applyRealtimeState` 仍按 `List<PositionStateParticipant>` 调用 `participant.apply`，报警判定仍与位置同事务；批量补传与重复点路径不进入实时判定。
+- 合并后复跑：
+  ```
+  with-test-lock.ps1 mvnw.cmd -B -pl server -am -Dtest=OverspeedAlarmFlowTest,SchemaUpgradeTest -Dsurefire.failIfNoSpecifiedTests=false test
+  ```
+  `12-postmerge-alarm-schema.log`：`Tests run: 12, Failures: 0, Errors: 0, Skipped: 0`，BUILD SUCCESS；其中 `OverspeedAlarmFlowTest` 10 项、`SchemaUpgradeTest` 2 项全部通过。
+- 结果：通过。
