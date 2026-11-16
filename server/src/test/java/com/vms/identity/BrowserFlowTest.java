@@ -60,8 +60,9 @@ class BrowserFlowTest {
         try {
             ProcessBuilder frontendBuilder = pnpm(web, "dev --host 127.0.0.1 --strictPort --port " + webPort);
             frontendBuilder.environment().put("VMS_API_TARGET", "http://127.0.0.1:" + serverPort);
-            frontendBuilder.environment().put("VITE_WMTS_ROAD_URL", "/__wmts-fixture/road");
-            frontendBuilder.environment().put("VITE_WMTS_LABEL_URL", "/__wmts-fixture/label");
+            frontendBuilder.environment().put("VITE_WMTS_ROAD_URL", "/__wmts-fixture/road?tk={key}");
+            frontendBuilder.environment().put("VITE_WMTS_LABEL_URL", "/__wmts-fixture/label?tk={key}");
+            frontendBuilder.environment().put("VITE_WMTS_KEY", "e2e-fixture-key-not-real");
             frontendBuilder.environment().put("VITE_WMTS_ATTRIBUTION", "WMTS failure fixture · 非真实天地图服务");
             frontendBuilder.redirectErrorStream(true).redirectOutput(logs.resolve("02-browser-vite.log").toFile());
             frontend = frontendBuilder.start();
@@ -72,6 +73,7 @@ class BrowserFlowTest {
             browserBuilder.environment().put("VMS_E2E_PASSWORD", ADMIN_PASSWORD);
             browserBuilder.environment().put("VMS_E2E_WEB_PORT", String.valueOf(webPort));
             browserBuilder.environment().put("VMS_E2E_TCP_PORT", String.valueOf(terminalAccess.port()));
+            browserBuilder.environment().put("VMS_E2E_WMTS_KEY", "e2e-fixture-key-not-real");
             boolean windows = System.getProperty("os.name").toLowerCase().contains("win");
             browserBuilder.environment().put("VMS_E2E_JAVA", Path.of(System.getProperty("java.home"), "bin",
                     windows ? "java.exe" : "java").toString());
@@ -139,3 +141,4 @@ class BrowserFlowTest {
         }
     }
 }
+

@@ -6,9 +6,13 @@ import com.vms.protocol.FrameCodec;
 import com.vms.protocol.MessageHeader;
 import com.vms.protocol.PlatformGeneralResponse;
 import com.vms.protocol.PositionReport;
+import com.vms.protocol.TemporaryTracking;
 import com.vms.protocol.TerminalAuthentication;
+import com.vms.protocol.TerminalGeneralResponse;
 import com.vms.protocol.TerminalRegister;
 import com.vms.protocol.TerminalRegisterResponse;
+import com.vms.protocol.TextIssue;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -23,11 +27,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-/** 最小真实 TCP JT/T 808 模拟终端；输出标明模拟数据，不记录鉴权码。 */
+/**
+ * 最小真实 TCP JT/T 808 模拟终端；输出标明模拟数据，不记录鉴权码。
+ * 复用共享 codec 接收平台指令，真实回 0x0001 通用应答，并按 0x8202 调整位置上报节奏。
+ */
 public final class TerminalSimulator {
 
     private static final int CONNECT_TIMEOUT_MS = 5000;
     private static final int RESPONSE_TIMEOUT_MS = 5000;
+    private static final int COMMAND_POLL_MS = 200;
     private static final long HEARTBEAT_INTERVAL_NANOS = TimeUnit.SECONDS.toNanos(10);
     private static final double LONGITUDE_STEP = 0.0001;
     private static final ZoneId POSITION_ZONE = ZoneId.of("Asia/Shanghai");
@@ -44,49 +52,45 @@ public final class TerminalSimulator {
             } catch (SocketTimeoutException e) {
                 throw new SocketTimeoutException("TCP connect timeout after " + CONNECT_TIMEOUT_MS + " ms");
             }
-            socket.setSoTimeout(RESPONSE_TIMEOUT_MS);
-            int serial = 1;
+            FrameReader reader = new FrameReader(socket);
+            Serial serial = new Serial();
             String terminalNo = options.terminalNo();
-            write(socket, frame(0x0100, serial, new TerminalRegister(1, 1, "VMS01", "SIMULATOR",
+            write(socket, frame(0x0100, serial.next(), new TerminalRegister(1, 1, "VMS01", "SIMULATOR",
                     terminalNo, 2, "模拟终端").encode(), terminalNo));
-            Frame registerFrame = read(socket, "register");
-            requireHeader("register", registerFrame, 0x8100, terminalNo);
+            Frame registerFrame = await(socket, reader, serial, terminalNo, "register",
+                    0x8100, 1);
             TerminalRegisterResponse response = TerminalRegisterResponse.parse(registerFrame.body());
-            if (response.responseSerial() != serial) {
-                throw new IllegalStateException("register ACK serial mismatch: expected=" + serial
-                        + ", actual=" + response.responseSerial());
-            }
             if (response.result() != TerminalRegisterResponse.RESULT_SUCCESS
                     || response.authCode() == null || response.authCode().isBlank()) {
                 throw new IllegalStateException("register rejected, result=" + response.result());
             }
             System.out.println("register: accepted");
-            serial = nextSerial(serial);
-            exchange(socket, terminalNo, "authentication", 0x0102, serial,
+            exchange(socket, reader, serial, terminalNo, "authentication", 0x0102,
                     new TerminalAuthentication(response.authCode(), options.imei(), options.version()).encode());
             System.out.println("authentication: accepted");
-            serial = nextSerial(serial);
-            exchange(socket, terminalNo, "heartbeat", 0x0002, serial, new byte[0]);
+            exchange(socket, reader, serial, terminalNo, "heartbeat", 0x0002, new byte[0]);
             System.out.println("heartbeat: accepted");
-            serial = nextSerial(serial);
+
+            TrackingControl tracking = new TrackingControl(options.intervalMs());
             for (int i = 0; i < options.positions(); i++) {
                 if (i > 0) {
-                    serial = waitWithHeartbeats(socket, terminalNo, serial, options.intervalMs());
+                    waitWithHeartbeats(socket, reader, serial, terminalNo, tracking.currentIntervalMs(), tracking);
                 }
                 PositionReport position = new PositionReport(0, options.fixValid() ? 3 : 1, options.latitude(),
                         options.longitude() + i * LONGITUDE_STEP, 0, options.speed(), options.direction(),
                         LocalDateTime.now(POSITION_ZONE).truncatedTo(ChronoUnit.SECONDS), List.of());
-                exchange(socket, terminalNo, "position", 0x0200, serial, position.encode());
-                System.out.println("position: accepted serial=" + serial + " simulation=true");
-                serial = nextSerial(serial);
+                exchange(socket, reader, serial, terminalNo, "position", 0x0200, position.encode());
+                System.out.println("position: accepted simulation=true trackingIntervalSeconds="
+                        + tracking.activeIntervalSeconds());
             }
-            serial = waitWithHeartbeats(socket, terminalNo, serial, options.lingerMs());
-            exchange(socket, terminalNo, "logout", 0x0003, serial, new byte[0]);
+            waitWithHeartbeats(socket, reader, serial, terminalNo, options.lingerMs(), tracking);
+            exchange(socket, reader, serial, terminalNo, "logout", 0x0003, new byte[0]);
             System.out.println("logout: accepted");
         }
     }
 
-    private static int waitWithHeartbeats(Socket socket, String terminalNo, int serial, int durationMs)
+    private static void waitWithHeartbeats(Socket socket, FrameReader reader, Serial serial,
+                                           String terminalNo, int durationMs, TrackingControl tracking)
             throws Exception {
         long deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(durationMs);
         long nextHeartbeat = System.nanoTime() + HEARTBEAT_INTERVAL_NANOS;
@@ -94,67 +98,95 @@ public final class TerminalSimulator {
             long now = System.nanoTime();
             long remaining = deadline - now;
             if (remaining <= 0) {
-                return serial;
+                return;
             }
-            if (now >= nextHeartbeat) {
-                exchange(socket, terminalNo, "heartbeat", 0x0002, serial, new byte[0]);
+            long untilHeartbeat = nextHeartbeat - now;
+            int waitMs = (int) Math.max(1, Math.min(TimeUnit.NANOSECONDS.toMillis(remaining),
+                    Math.min(TimeUnit.NANOSECONDS.toMillis(Math.max(0, untilHeartbeat)), COMMAND_POLL_MS)));
+            Frame frame = reader.next(waitMs);
+            if (frame != null && handlePlatformCommand(socket, serial, terminalNo, frame, tracking)) {
+                continue;
+            }
+            if (System.nanoTime() >= nextHeartbeat) {
+                exchange(socket, reader, serial, terminalNo, "heartbeat", 0x0002, new byte[0]);
                 System.out.println("heartbeat: accepted");
-                serial = nextSerial(serial);
                 nextHeartbeat = System.nanoTime() + HEARTBEAT_INTERVAL_NANOS;
-            } else {
-                TimeUnit.NANOSECONDS.sleep(Math.min(remaining, nextHeartbeat - now));
             }
         }
     }
 
-    private static int nextSerial(int serial) {
-        return (serial + 1) & 0xFFFF;
+    private static void exchange(Socket socket, FrameReader reader, Serial serial, String terminalNo,
+                                 String name, int id, byte[] body) throws Exception {
+        int frameSerial = serial.next();
+        write(socket, frame(id, frameSerial, body, terminalNo));
+        Frame response = await(socket, reader, serial, terminalNo, name, 0x8001, frameSerial);
+        requireSuccess(name, PlatformGeneralResponse.parse(response.body()), id, frameSerial);
+    }
+
+    /**
+     * 等待指定应答；期间收到平台下发的 0x8300/0x8202 时先真实处理并回应，
+     * 避免平台指令与上行应答交错时丢失任何一方。
+     */
+    private static Frame await(Socket socket, FrameReader reader, Serial serial, String terminalNo,
+                               String name, int expectedId, int expectedSerial) throws Exception {
+        while (true) {
+            Frame response = reader.next(RESPONSE_TIMEOUT_MS);
+            if (response == null) {
+                throw responseTimeout(name);
+            }
+            if (handlePlatformCommand(socket, serial, terminalNo, response, new TrackingControl(1000))) {
+                continue;
+            }
+            requireHeader(name, response, expectedId, terminalNo);
+            if (response.header().serialNumber() != expectedSerial) {
+                throw new IllegalStateException(name + " ACK serial mismatch: expected=" + expectedSerial
+                        + ", actual=" + response.header().serialNumber());
+            }
+            return response;
+        }
+    }
+
+    private static boolean handlePlatformCommand(Socket socket, Serial serial, String terminalNo,
+                                                 Frame frame, TrackingControl tracking) throws Exception {
+        int messageId = frame.header().messageId();
+        if (messageId == 0x8300) {
+            TextIssue text = TextIssue.parse(frame.body());
+            System.out.println("text: received type=" + text.textType() + " flag=" + text.flag()
+                    + " content=" + text.text());
+            acknowledge(socket, serial, terminalNo, frame, 0x8300);
+            return true;
+        }
+        if (messageId == 0x8202) {
+            TemporaryTracking command = TemporaryTracking.parse(frame.body());
+            tracking.apply(command);
+            if (command.stop()) {
+                System.out.println("tracking: stopped");
+            } else {
+                System.out.println("tracking: intervalSeconds=" + command.intervalSeconds()
+                        + " validSeconds=" + command.validSeconds());
+            }
+            acknowledge(socket, serial, terminalNo, frame, 0x8202);
+            return true;
+        }
+        return false;
+    }
+
+    private static void acknowledge(Socket socket, Serial serial, String terminalNo, Frame command,
+                                    int commandId) throws Exception {
+        TerminalGeneralResponse response = new TerminalGeneralResponse(
+                command.header().serialNumber(), commandId, 0);
+        write(socket, frame(0x0001, serial.next(), response.encode(), terminalNo));
+        System.out.println("ack: responseId=0x" + Integer.toHexString(commandId)
+                + " commandSerial=" + command.header().serialNumber());
     }
 
     private static Frame frame(int id, int serial, byte[] body, String terminalNo) {
         return new Frame(new MessageHeader(id, BodyProperties.plain(body.length), 1, terminalNo, serial), body);
     }
 
-    private static void exchange(Socket socket, String terminalNo, String name, int id, int serial, byte[] body)
-            throws Exception {
-        write(socket, frame(id, serial, body, terminalNo));
-        Frame response = read(socket, name);
-        requireHeader(name, response, 0x8001, terminalNo);
-        requireSuccess(name, PlatformGeneralResponse.parse(response.body()), id, serial);
-    }
-
     private static void write(Socket socket, Frame frame) throws Exception {
         socket.getOutputStream().write(FrameCodec.encode(frame));
         socket.getOutputStream().flush();
-    }
-
-    private static Frame read(Socket socket, String name) throws Exception {
-        InputStream in = socket.getInputStream();
-        byte[] buffer = new byte[4096];
-        int length = 0;
-        long deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(RESPONSE_TIMEOUT_MS);
-        while (length < buffer.length) {
-            long remaining = deadline - System.nanoTime();
-            if (remaining <= 0) {
-                throw responseTimeout(name);
-            }
-            socket.setSoTimeout((int) Math.max(1, TimeUnit.NANOSECONDS.toMillis(remaining)));
-            int read;
-            try {
-                read = in.read(buffer, length, buffer.length - length);
-            } catch (SocketTimeoutException e) {
-                throw responseTimeout(name);
-            }
-            if (read < 0) {
-                throw new IllegalStateException(name + ": TCP listener closed before response");
-            }
-            length += read;
-            var frames = FrameCodec.splitFrames(Arrays.copyOf(buffer, length));
-            if (!frames.isEmpty()) {
-                return FrameCodec.decode(frames.getFirst());
-            }
-        }
-        throw new IllegalStateException(name + ": TCP response exceeds " + buffer.length + " bytes");
     }
 
     private static SocketTimeoutException responseTimeout(String name) {
@@ -176,6 +208,106 @@ public final class TerminalSimulator {
         }
         if (response.result() != 0) {
             throw new IllegalStateException(name + " rejected, result=" + response.result());
+        }
+    }
+
+    /** 终端侧消息流水号，平台指令应答也使用同一序列。 */
+    private static final class Serial {
+        private int value = 1;
+
+        int next() {
+            int current = value;
+            value = (value + 1) & 0xFFFF;
+            return current;
+        }
+    }
+
+    /** 0x8202 临时跟踪：间隔 0 停止，有效期 0 表示不设到期时间。 */
+    private static final class TrackingControl {
+        private final int defaultIntervalMs;
+        private int intervalSeconds;
+        private long validUntilNanos;
+
+        TrackingControl(int defaultIntervalMs) {
+            this.defaultIntervalMs = defaultIntervalMs;
+        }
+
+        void apply(TemporaryTracking tracking) {
+            if (tracking.stop()) {
+                intervalSeconds = 0;
+                validUntilNanos = 0;
+                return;
+            }
+            intervalSeconds = tracking.intervalSeconds();
+            validUntilNanos = tracking.validSeconds() == 0
+                    ? Long.MAX_VALUE
+                    : System.nanoTime() + TimeUnit.SECONDS.toNanos(tracking.validSeconds());
+        }
+
+        int currentIntervalMs() {
+            if (intervalSeconds > 0 && System.nanoTime() < validUntilNanos) {
+                return intervalSeconds * 1000;
+            }
+            return defaultIntervalMs;
+        }
+
+        int activeIntervalSeconds() {
+            return System.nanoTime() < validUntilNanos ? intervalSeconds : 0;
+        }
+    }
+
+    /**
+     * 保留跨读取的未完成字节，避免应答与平台指令相邻到达时丢失帧。
+     */
+    private static final class FrameReader {
+        private final Socket socket;
+        private final byte[] buffer = new byte[8192];
+        private int length;
+
+        FrameReader(Socket socket) {
+            this.socket = socket;
+        }
+
+        Frame next(int timeoutMs) throws IOException {
+            long deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(timeoutMs);
+            while (true) {
+                int end = firstFrameEnd();
+                if (end > 0) {
+                    byte[] raw = Arrays.copyOf(buffer, end);
+                    System.arraycopy(buffer, end, buffer, 0, length - end);
+                    length -= end;
+                    return FrameCodec.decode(raw);
+                }
+                long remaining = deadline - System.nanoTime();
+                if (remaining <= 0) {
+                    return null;
+                }
+                socket.setSoTimeout((int) Math.max(1, TimeUnit.NANOSECONDS.toMillis(remaining)));
+                int read;
+                try {
+                    read = socket.getInputStream().read(buffer, length, buffer.length - length);
+                } catch (SocketTimeoutException e) {
+                    return null;
+                }
+                if (read < 0) {
+                    throw new IllegalStateException("TCP listener closed before response");
+                }
+                length += read;
+            }
+        }
+
+        private int firstFrameEnd() {
+            int start = -1;
+            for (int i = 0; i < length; i++) {
+                if ((buffer[i] & 0xFF) == 0x7E) {
+                    if (start < 0) {
+                        start = i;
+                    } else {
+                        return i + 1;
+                    }
+                }
+            }
+            return -1;
         }
     }
 

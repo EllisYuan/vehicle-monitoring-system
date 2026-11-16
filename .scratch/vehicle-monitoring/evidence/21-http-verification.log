@@ -1,0 +1,51 @@
+### 2026-11-16T10:32:41.2132789+08:00 ticket 21 真实 HTTP 三角色与 MySQL 直查验证
+环境：Windows 11 / JDK 21.0.9 / Spring Boot 4.1.2 / MySQL 8.4 容器(t21-mysql:13307) / Redis 8.4 容器(t21-redis:16380) / 服务端口 18081
+MySQL 容器就绪；开始打包 server（-DskipTests package）
+mvn -B -pl server -am -DskipTests package：BUILD SUCCESS（日志 evidence/21-package.log）
+服务已就绪：http://127.0.0.1:18081（Flyway 6 个迁移，初始管理员已建立）
+POST /api/v1/auth/login (audit-admin) HTTP 200 roleCode=ADMIN tokenLength=36（token 未落盘）
+POST /api/v1/users (MONITOR) HTTP 201
+POST /api/v1/users (FLEET_LEADER) HTTP 201
+POST /api/v1/users (ADMIN audit-admin-2) HTTP 201 id=4
+POST /api/v1/auth/login (audit-monitor) HTTP 200
+POST /api/v1/auth/login (audit-leader) HTTP 200
+POST /api/v1/auth/login (audit-admin-2) HTTP 200
+POST /api/v1/auth/login (ghost-user, 错误密码) HTTP 401 code=INVALID_CREDENTIALS（响应不含提交密码：True）
+POST /api/v1/fleets (ADMIN) HTTP 201 id=1
+GET /api/v1/audit/logs?actor=ghost-user&result=FAILURE (ADMIN) HTTP 200 total=1 first={category:LOGIN,action:LOGIN,actorName:ghost-user,target:auth,result:FAILURE,detail:UNKNOWN_ACCOUNT}
+GET /api/v1/audit/logs?category=FLEET&action=CREATE (ADMIN) HTTP 200 total=1 first={category:FLEET,action:CREATE,target:fleet:1,result:SUCCESS} targetMatches=True
+GET /api/v1/audit/logs?actor=mask-probe (ADMIN) HTTP 200 detail=password=***, authCode=***, token=***, wsTicket=***
+脱敏断言：不含 password/鉴权码/token/WS ticket 明文=True
+登录失败记录不含提交密码 Submitted-Pass-999=True
+GET /api/v1/audit/logs (MONITOR) HTTP 403 code=FORBIDDEN
+GET /api/v1/audit/operation-records (MONITOR) HTTP 403 code=FORBIDDEN
+GET /api/v1/audit/logs (FLEET_LEADER) HTTP 403 code=FORBIDDEN
+GET /api/v1/audit/operation-records (FLEET_LEADER) HTTP 403 code=FORBIDDEN
+GET /api/v1/audit/logs?size=101 (ADMIN) HTTP 400 code=INVALID_PAGE_SIZE
+GET /api/v1/audit/logs?page=501&size=20 (ADMIN) HTTP 400 code=PAGE_OFFSET_TOO_LARGE
+GET /api/v1/audit/logs?from=2026-01-01&to=2026-03-01 (ADMIN) HTTP 400 code=TIME_RANGE_TOO_WIDE
+GET /api/v1/audit/logs?page=0&size=2 (ADMIN) HTTP 200 page=0 size=2 total=11 hasMore=True items=2
+有界查询后 POST /api/v1/fleets (ADMIN) HTTP 201 id=2（业务写入未被阻塞）
+POST /api/v1/audit/logs (ADMIN) HTTP 405
+PUT /api/v1/audit/logs (ADMIN) HTTP 405
+DELETE /api/v1/audit/logs (ADMIN) HTTP 405
+GET /api/v1/audit/operation-records (ADMIN) HTTP 200 outboxCounts=PENDING:0 RETRY:0 DONE:0 DEAD:0 deadOutbox=0 generatedAt=11/16/2026 10:33:15
+MySQL 直查 notification_outbox：(空表)
+插入 DEAD 行后 GET /api/v1/audit/operation-records (ADMIN) HTTP 200 outboxCounts.DEAD=1 deadOutbox=1 first={eventId:http-dead-1,eventType:POSITION,aggregateId:42,attempts:10}
+MySQL 直查 notification_outbox（DEAD 插入后）：DEAD	1
+GET /api/v1/audit/logs (audit-admin-2 撤权前) HTTP 200
+PUT /api/v1/users/4/status DISABLED (ADMIN) HTTP 200
+GET /api/v1/audit/logs (audit-admin-2 撤权后同一 token) HTTP 401 code=ACCOUNT_DISABLED
+MySQL 直查 audit_log（actor_name/category/action/result/target）：
+  audit-admin	BOOTSTRAP	INITIAL_ADMIN_CREATED	SUCCESS	sys_user:1
+  audit-admin	LOGIN	LOGIN	SUCCESS	auth
+  audit-admin	ACCOUNT	CREATE	SUCCESS	sys_user:2
+  audit-admin	ACCOUNT	CREATE	SUCCESS	sys_user:3
+  audit-admin	ACCOUNT	CREATE	SUCCESS	sys_user:4
+  audit-admin-2	LOGIN	LOGIN	SUCCESS	auth
+  ghost-user	LOGIN	LOGIN	FAILURE	auth
+  audit-admin	FLEET	CREATE	SUCCESS	fleet:1
+  mask-probe	ACCOUNT	RESET_PASSWORD	SUCCESS	sys_user:1
+  audit-admin	FLEET	CREATE	SUCCESS	fleet:2
+  audit-admin	ACCOUNT	UPDATE_STATUS	SUCCESS	sys_user:4
+验证脚本完成：真实 HTTP 三角色 + MySQL 直查对照
