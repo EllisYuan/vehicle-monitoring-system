@@ -50,10 +50,10 @@ export const router = createRouter({
     {
       path: '/monitor/alarms',
       name: 'alarms',
-      component: PlaceholderView,
+      component: () => import('../features/alarms/views/AlarmListView.vue'),
       meta: {
         title: '报警管理',
-        description: '报警列表、详情与处置将在报警任务中交付；车队长只读查看授权范围。',
+        description: '报警列表、详情与处置；车队长只读查看授权范围。',
         area: 'monitoring',
         ticket: '13 报警处置闭环',
       },

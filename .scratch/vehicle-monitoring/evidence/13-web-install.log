@@ -1,0 +1,47 @@
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +277
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 277, reused 253, downloaded 0, added 0
+Progress: resolved 277, reused 275, downloaded 0, added 39
+Progress: resolved 277, reused 276, downloaded 0, added 113
+Progress: resolved 277, reused 276, downloaded 0, added 170
+Progress: resolved 277, reused 276, downloaded 0, added 216
+Progress: resolved 277, reused 276, downloaded 0, added 265
+Progress: resolved 277, reused 276, downloaded 0, added 269
+Progress: resolved 277, reused 277, downloaded 0, added 271
+Progress: resolved 277, reused 277, downloaded 0, added 274
+Progress: resolved 277, reused 277, downloaded 0, added 275
+Progress: resolved 277, reused 277, downloaded 0, added 276
+Progress: resolved 277, reused 277, downloaded 0, added 277
+Progress: resolved 277, reused 277, downloaded 0, added 277, done
+
+dependencies:
++ axios 1.13.2
++ element-plus 2.13.1
++ ol 10.11.0
++ pinia 4.1.0
++ vue 3.5.45
++ vue-router 5.4.0
+
+devDependencies:
++ @eslint/js 9.39.5
++ @playwright/test 1.58.1
++ @types/node 24.10.1
++ @vitejs/plugin-vue 6.0.10
++ eslint 9.39.5
++ eslint-plugin-vue 10.6.2
++ typescript 5.9.3
++ typescript-eslint 8.72.1
++ vite 8.3.6
++ vue-tsc 3.3.14
+
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: vue-demi.                                           │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+Done in 25.9s using pnpm v10.16.1

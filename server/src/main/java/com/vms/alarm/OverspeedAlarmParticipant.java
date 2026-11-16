@@ -130,6 +130,11 @@ public class OverspeedAlarmParticipant implements PositionStateParticipant {
                     WHERE id = ? AND condition_state = 'ACTIVE'
                     """, pointTime, now, alarmId);
             if (updated > 0) {
+                jdbc.update("""
+                        INSERT INTO alarm_handle_log (alarm_id, change_type, from_status, to_status,
+                            operator_id, remark, created_at)
+                        VALUES (?, 'CONDITION', 'ACTIVE', 'RECOVERED', NULL, NULL, ?)
+                        """, alarmId, now);
                 enqueue("alarm:recovered:" + alarmId, alarmId, now);
             }
         }
