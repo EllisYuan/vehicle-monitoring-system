@@ -1,5 +1,6 @@
 package com.vms.infrastructure.monitor;
 
+import com.vms.alarm.AlarmNotificationService;
 import com.vms.audit.AuditService;
 import com.vms.identity.account.UserAccount;
 import com.vms.identity.auth.AuthService;
@@ -49,6 +50,7 @@ public class MonitorWebSocketHandler extends TextWebSocketHandler {
     private final Map<String, Subscription> subscriptions = new ConcurrentHashMap<>();
     private final AuthService auth;
     private final MonitorSnapshotService snapshots;
+    private final AlarmNotificationService alarms;
     private final AuditService audit;
     private final ObjectMapper json;
     private final Clock clock;
@@ -61,12 +63,14 @@ public class MonitorWebSocketHandler extends TextWebSocketHandler {
         return thread;
     });
 
-    public MonitorWebSocketHandler(AuthService auth, MonitorSnapshotService snapshots, AuditService audit,
+    public MonitorWebSocketHandler(AuthService auth, MonitorSnapshotService snapshots,
+                                   AlarmNotificationService alarms, AuditService audit,
                                    ObjectMapper json, Clock clock,
                                    @Value("${vms.monitor.ws-outbound-capacity:512}") int outboundCapacity,
                                    @Value("${vms.monitor.ws-revalidate-interval-ms:1000}") long revalidateIntervalMillis) {
         this.auth = auth;
         this.snapshots = snapshots;
+        this.alarms = alarms;
         this.audit = audit;
         this.json = json;
         this.clock = clock;
@@ -135,6 +139,31 @@ public class MonitorWebSocketHandler extends TextWebSocketHandler {
         return complete;
     }
 
+    /** 报警事件只在提交后经 outbox 推送；同一帧按订阅者当前车队范围复用授权结果。 */
+    public boolean publishAlarm(String eventId, long alarmId) {
+        boolean complete = true;
+        String frame = null;
+        for (Subscription subscription : subscriptions.values()) {
+            if (subscription.closed.get()) continue;
+            try {
+                UserAccount user = auth.requireToken(subscription.token);
+                auth.requirePermission(user, Permission.FLEET_VIEW);
+                var alarm = alarms.find(user, alarmId);
+                if (alarm == null) continue;
+                if (frame == null) frame = alarmFrame(eventId, alarmId, alarm);
+                subscription.offer(frame);
+            } catch (SessionRevokedException e) {
+                revoke(subscription, e.code());
+            } catch (ForbiddenException e) {
+                revoke(subscription, "PERMISSION_REVOKED");
+            } catch (RuntimeException e) {
+                // 瞬时基础设施故障：本 tick 视为未完成，由 outbox 重试。
+                complete = false;
+            }
+        }
+        return complete;
+    }
+
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         // 订阅范围由身份决定；不接受客户端任意声明 fleet_id 或 vehicle_id。
@@ -156,6 +185,12 @@ public class MonitorWebSocketHandler extends TextWebSocketHandler {
                 "event_id", "position:" + vehicleId + ":" + version,
                 "aggregate_id", vehicleId, "version", version,
                 "server_time", OffsetDateTime.now(clock), "payload", vehicle));
+    }
+
+    private String alarmFrame(String eventId, long alarmId, Object alarm) {
+        return json.writeValueAsString(Map.of("type", "alarm_event",
+                "event_id", eventId, "aggregate_id", alarmId, "version", 1,
+                "server_time", OffsetDateTime.now(clock), "payload", alarm));
     }
 
     /** 无位置变化时也要在 5 秒内停止旧授权订阅；这是 17 相对 07 的增量。 */
