@@ -7,7 +7,7 @@ import { COMMUNICATION_LABELS, formatTime, isStale, type CommunicationStatus } f
 import { useMonitorStream } from '../useMonitorStream'
 
 const session = useSessionStore()
-const { vehicles, loading, failure, state, statusLabel, lastSyncAt, now, retry } = useMonitorStream()
+const { vehicles, loading, failure, state, statusLabel, lastSyncAt, now, stale, retry } = useMonitorStream()
 const search = ref('')
 const fleetId = ref('')
 const communication = ref('')
@@ -48,6 +48,11 @@ function select(vehicleId: number) { selectedId.value = vehicleId }
             <span aria-hidden="true">{{ state === 'connected' ? '●' : '○' }}</span>{{ statusLabel }}
           </span>
           <span class="sync-time">快照 {{ formatTime(lastSyncAt) }} · 上海时间</span>
+          <span
+            v-if="stale"
+            class="stream-stale"
+            data-testid="monitor-data-stale"
+          >数据陈旧</span>
           <button
             type="button"
             class="quiet-button"
@@ -228,6 +233,7 @@ h1 { margin: 0; font-size: 24px; line-height: 1.4; letter-spacing: 1px; font-wei
 .sync-group { display: flex; align-items: center; gap: 14px; }
 .stream-status { display: flex; align-items: center; gap: 6px; color: #7b5b22; font-size: 12px; }
 .stream-status.connected { color: #32634c; }
+.stream-stale { padding: 3px 7px; border: 1px solid #e0c48a; background: #fff8e9; color: #825b20; font-size: 11px; }
 .sync-time { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
 .quiet-button { border: 1px solid #c5d2de; border-radius: 3px; background: #fff; padding: 6px 12px; color: var(--ink); cursor: pointer; font: inherit; font-size: 12px; }
 .quiet-button:hover { background: #edf4fa; }

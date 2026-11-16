@@ -1,0 +1,16 @@
+[WebServer] (node:35748) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `pnpm --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:9792) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:40636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:40636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › e2e\monitoring-stream.spec.ts:163:3 › 实时订阅前端状态与版本顺序 › 旧版本帧不覆盖新版本，异常断开后显示断线与重连中并重建订阅补齐窗口 (8.1s)
+  ✓  2 [chromium] › e2e\monitoring-stream.spec.ts:206:3 › 实时订阅前端状态与版本顺序 › 1008 撤权关闭后停止自动重连并清空旧数据 (4.1s)
+  ✓  3 [chromium] › e2e\monitoring-stream.spec.ts:222:3 › 实时订阅前端状态与版本顺序 › 撤权时仍在途的快照返回后不能恢复旧数据 (3.8s)
+
+  3 passed (23.1s)
