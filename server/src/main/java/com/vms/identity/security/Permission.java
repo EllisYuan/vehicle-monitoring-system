@@ -18,7 +18,9 @@ public enum Permission {
     /** 文本与临时跟踪指令下发；管理员与监控员。 */
     COMMAND_DISPATCH(RoleCode.ADMIN, RoleCode.MONITOR),
     /** 轨迹保留期调整与分区维护告警查看；仅管理员。 */
-    TRACK_RETENTION_MANAGE(RoleCode.ADMIN);
+    TRACK_RETENTION_MANAGE(RoleCode.ADMIN),
+    /** 全局默认与车队覆盖报警规则维护；仅管理员。 */
+    ALARM_RULE_MANAGE(RoleCode.ADMIN);
 
     private final RoleCode[] roles;
 

@@ -36,18 +36,22 @@ public class PositionOutboxWorker {
     public void dispatch() {
         try {
             var pending = jdbc.query("""
-                    SELECT event_id, aggregate_id, version, attempts FROM notification_outbox
+                    SELECT event_id, event_type, aggregate_id, version, attempts FROM notification_outbox
                     WHERE status IN ('PENDING','RETRY') AND retry_at <= ? ORDER BY retry_at LIMIT 100
-                    """, (rs, row) -> new Pending(rs.getString(1), rs.getLong(2), rs.getLong(3), rs.getInt(4)), LocalDateTime.now(clock));
+                    """, (rs, row) -> new Pending(rs.getString(1), rs.getString(2), rs.getLong(3),
+                    rs.getLong(4), rs.getInt(5)), LocalDateTime.now(clock));
             for (Pending event : pending) {
                 try {
-                    if (!websocket.publish(event.vehicleId(), event.version())) throw new IllegalStateException("WS unavailable");
+                    boolean delivered = "ALARM_EVENT".equals(event.eventType())
+                            ? websocket.publishAlarm(event.id(), event.aggregateId())
+                            : websocket.publish(event.aggregateId(), event.version());
+                    if (!delivered) throw new IllegalStateException("WS unavailable");
                     int updated = jdbc.update("UPDATE notification_outbox SET status='DONE', updated_at=? WHERE event_id=? AND version=?",
                             LocalDateTime.now(clock), event.id(), event.version());
                     if (updated == 0) {
                         // 新版本已覆盖当前读到的标记；不要用旧 worker 清掉新版本待发送状态。
-                        log.debug("Position notification version was superseded: vehicle={}, version={}",
-                                event.vehicleId(), event.version());
+                        log.debug("Notification version was superseded: event={}, version={}",
+                                event.id(), event.version());
                     }
                 } catch (RuntimeException e) {
                     int updated = jdbc.update("""
@@ -56,11 +60,11 @@ public class PositionOutboxWorker {
                             WHERE event_id=? AND version=? AND status IN ('PENDING','RETRY')
                             """, LocalDateTime.now(clock).plusSeconds(2), LocalDateTime.now(clock), event.id(), event.version());
                     if (updated == 0) {
-                        log.debug("Position retry was superseded: vehicle={}, version={}", event.vehicleId(), event.version());
+                        log.debug("Notification retry was superseded: event={}, version={}", event.id(), event.version());
                     } else if (event.attempts() + 1 >= 10) {
-                        log.error("Position notification moved to DEAD: vehicle={}, version={}", event.vehicleId(), event.version());
+                        log.error("Notification moved to DEAD: event={}, version={}", event.id(), event.version());
                     } else {
-                        log.warn("Position notification will retry: vehicle={}, version={}", event.vehicleId(), event.version());
+                        log.warn("Notification will retry: event={}, version={}", event.id(), event.version());
                     }
                 }
             }
@@ -83,5 +87,6 @@ public class PositionOutboxWorker {
         }
     }
 
-    private record Pending(String id, long vehicleId, long version, int attempts) { }
+    /** 位置事件按车合并、报警事件按事件 id 独立投递，路由由 event_type 决定。 */
+    private record Pending(String id, String eventType, long aggregateId, long version, int attempts) { }
 }

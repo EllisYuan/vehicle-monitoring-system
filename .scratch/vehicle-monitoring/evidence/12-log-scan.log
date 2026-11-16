@@ -1,0 +1,7 @@
+日志凭证扫描（2026-11-16）
+范围：.scratch/vehicle-monitoring/evidence/12-*.log
+结论：
+- 未发现真实外部凭证或 API key；未发现 auth_secret 或天地图 key。
+- 出现的 Alarm-Pass-2026 为 OverspeedAlarmFlowTest 内 bootstrap-admin 测试账号固定密码（测试容器每次重建，非生产凭证）。
+- satoken 为 Testcontainers 测试会话的临时 token，随容器销毁失效。
+- Bootstrap-Pass-2026 未出现在 12-*.log。
