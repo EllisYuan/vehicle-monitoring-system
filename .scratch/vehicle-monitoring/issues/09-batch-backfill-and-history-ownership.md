@@ -1,6 +1,6 @@
 # 09: 断线补传与历史归属
 
-Status: open
+Status: resolved
 Labels: ready-for-agent
 Type: task
 Blocked by: 08
@@ -17,13 +17,13 @@ Blocked by: 08
 
 ## Acceptance criteria
 
-- [ ] 0x0704 先整包验证结构/项数/长度，再单事务处理
-- [ ] 混合新点、重复、冲突的成功包全部可解释，重复不新增
-- [ ] 结构或中途数据库失败不部分提交、不回成功
-- [ ] CLI 断线重连后补传旧时刻位置，归属旧车辆与旧车队
-- [ ] 换绑后新队不可读转入前历史；旧队不因补传获得新位置权限
-- [ ] 无法唯一归属写异常，不按当前关系推测
-- [ ] 补传不回退最新位置与实时状态
+- [x] 0x0704 先整包验证结构/项数/长度，再单事务处理
+- [x] 混合新点、重复、冲突的成功包全部可解释，重复不新增
+- [x] 结构或中途数据库失败不部分提交、不回成功
+- [x] CLI 断线重连后补传旧时刻位置，归属旧车辆与旧车队
+- [x] 换绑后新队不可读转入前历史；旧队不因补传获得新位置权限
+- [x] 无法唯一归属写异常，不按当前关系推测
+- [x] 补传不回退最新位置与实时状态
 
 ## Scope boundaries
 
@@ -42,4 +42,18 @@ Blocked by: 08
 
 ## Answer
 
-尚未实施；验证未执行。
+实现：
+- `PositionIngestService.acceptBatch` 先 `PositionBatch.parse` 整包校验（≤20 项、body ≤1023、声明项数与实际一致），再在单个 `@Transactional` 中逐项落库；任一项失败整批回滚，`TerminalFrameHandler` 关闭连接且不发 0x8001。
+- `resolveOwnershipAt` 按 `gps_time` 在 `terminal_vehicle_binding` 与 `vehicle_fleet_history` 的唯一有效区间内归属车辆/车队，车辆须 `ENABLED`；无法唯一归属写 `telemetry_anomaly.reason='UNASSIGNABLE'`，不按当前关系推测。`track_point.fleet_id_at_event` 记录事件时刻车队。
+- 幂等保持 08 语义：`uk_track_terminal_time (terminal_id, gps_time)`；重复一致不新增，同秒不同内容写 `CONFLICTING_CONTENT`。补传仅写 HISTORY，不推进 `vehicle_last_position`/`vehicle_monitor_state`/`notification_outbox`。
+- simulator 增加 `--batch mixed`、`--batch-size`、`--backfill`、`--backfill-seconds`、`--backfill-interval-ms`、`--reconnect true|false`；`web/e2e/monitoring.spec.ts` 增加“断线重连补传后列表与地图不回退”用例。
+- 无新增迁移；`SchemaUpgradeTest` 未改动（9 migrations/23 表/37 partitions）。
+
+验证命令与结果（完整记录见 `.scratch/vehicle-monitoring/evidence/09-verification.md`）：
+- `mvnw.cmd -B -pl server -am -Dtest=BatchBackfillFlowTest -Dsurefire.failIfNoSpecifiedTests=false test`：7/7 通过。
+- 真实 CLI + 独立 MySQL/Redis + HTTP 三角色：`verify-09.ps1` 输出 `ALL CHECKS PASSED`（`09-cli-http-sql.log`）。
+- `mvnw.cmd -B -pl server,simulator -am -Dvms.browser-tests=true -Dtest=BrowserFlowTest -Dsurefire.failIfNoSpecifiedTests=false test`：BrowserFlowTest 通过，Playwright 37 passed（`09-browser.log`、`09-playwright.log`，截图 `09-backfill-no-rollback.png`）。
+- 回归 `PositionQualityFlowTest`+`TelemetryFlowTest`+`SchemaUpgradeTest`+`BatchBackfillFlowTest`：27/27 通过（`09-regression.log`）。
+- 前端 `pnpm --dir web typecheck|lint|build`：exit 0（lint 39 条既有 warning，0 error；`09-web-checks.log`）。
+
+边界与后续复验：轨迹查询 API/回放属 10；司机与报警关联属 12/13；报警产生与处置属 14；真实天地图属 26。本票不替代 08 幂等/冲突测试与 06 注册鉴权测试；`TelemetryFlowTest` 仅在测试辅助中把绑定区间回溯以适配按 `gps_time` 归属的新语义。

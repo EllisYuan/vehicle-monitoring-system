@@ -1,0 +1,111 @@
+== 清理本脚本专用的旧容器
+== 启动独立 MySQL 8.4 与 Redis 8.4 容器
+PASS MySQL 容器可连接
+== 启动真实 server（随机开发端口，连接独立容器）
+PASS server 启动并完成管理员登录
+== 建立两个车队、两台车辆和一个终端（终端先绑定旧车）
+PASS create fleet old -> 201
+PASS create fleet new -> 201
+PASS create vehicle old -> 201
+PASS create vehicle new -> 201
+PASS create terminal -> 201
+PASS bind terminal -> old vehicle -> 200
+== 把既有绑定与旧车初始车队区间回溯到 1 小时前（模拟长期存在的历史关系）
+SQL[rewind history]: SET time_zone='+08:00'; UPDATE terminal_vehicle_binding SET effective_from = DATE_SUB(NOW(), INTERVAL 1 HOUR) WHERE terminal_id=1 AND effective_to IS NULL; UPDATE vehicle_fleet_history SET effective_from = DATE_SUB(NOW(), INTERVAL 1 HOUR) WHERE vehicle_id=1 AND effective_to IS NULL;
+== CLI 断线重连场景 1/2：实时上报一点，归属旧车与旧车队
+== CLI realtime-before-rebind
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  position: accepted simulation=true trackingIntervalSeconds=0
+  logout: accepted
+PASS CLI realtime-before-rebind exit 0
+== 平台换绑与转队：先解绑旧车，再改绑新车，旧车转入新车队
+PASS unbind terminal from old vehicle -> 200
+PASS rebind terminal -> new vehicle -> 200
+PASS transfer old vehicle -> new fleet -> 200
+== CLI 断线重连场景 2/2：重连后用 0x0704 补传 120 秒前旧点
+== CLI reconnect-backfill-0704
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  reconnect: disconnected
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  reconnect: accepted
+  batch: accepted items=2
+  backfill: accepted items=2 gpsSecondsAgo=120
+  logout: accepted
+PASS CLI reconnect-backfill-0704 exit 0
+== CLI 0x0704 混合包：新点、重复点、同秒冲突点
+== CLI mixed-batch-0704
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  batch: accepted items=3 mixed=true
+  logout: accepted
+PASS CLI mixed-batch-0704 exit 0
+== CLI 0x0704 无法归属：补传早于所有绑定区间的旧点
+== CLI unassignable-backfill-0704
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  batch: accepted items=2
+  backfill: accepted items=2 gpsSecondsAgo=7200
+  logout: accepted
+PASS CLI unassignable-backfill-0704 exit 0
+== SQL 核对 track_point / telemetry_anomaly / 快照 / outbox
+SQL[track points]: SELECT vehicle_id, fleet_id_at_event, gps_time, lng, speed, report_type FROM track_point WHERE terminal_id=1 ORDER BY gps_time
+  1	1	2026-11-16 13:20:34	121.480000	12.0	HISTORY
+  1	1	2026-11-16 13:20:35	121.480100	12.0	HISTORY
+  1	1	2026-11-16 13:22:26	121.480000	42.5	REALTIME
+  2	2	2026-11-16 13:22:34	121.490000	30.0	REALTIME
+PASS track_point 恰有 4 条（1 实时 + 2 补传 + 1 混合新点；重复/冲突不新增）
+PASS 补传 2 点归属旧车旧车队且为 HISTORY
+PASS 混合包新点归属新车新队且为 REALTIME
+SQL[anomalies]: SELECT reason, vehicle_id, fleet_id_at_event, count(*) FROM telemetry_anomaly WHERE terminal_id=1 GROUP BY reason, vehicle_id, fleet_id_at_event ORDER BY reason
+  CONFLICTING_CONTENT	2	2	1
+  UNASSIGNABLE	NULL	NULL	2
+PASS 同秒不同内容写 1 条 CONFLICTING_CONTENT，归属当时新车新队
+PASS 无法归属的 2 个旧点写 UNASSIGNABLE，未按当前关系猜测
+SQL[last positions]: SELECT vehicle_id, lng, speed, version FROM vehicle_last_position ORDER BY vehicle_id
+  1	121.480000	42.5	1
+  2	121.490000	30.0	1
+PASS 旧车快照仍为实时点（42.5），补传未回退
+PASS 新车快照为混合包实时点（30.0），重复/冲突未推进
+SQL[outbox]: SELECT aggregate_id, version, status FROM notification_outbox WHERE aggregate_id IN (1,2) ORDER BY aggregate_id
+  1	1	DONE
+  2	1	DONE
+PASS outbox 恰有两条实时版本（两个车辆各 1），补传不产生新事件
+== HTTP 三角色历史读取权限
+PASS create monitor user -> 201
+PASS create old leader -> 201
+PASS create new leader -> 201
+PASS login t09-monitor -> 200
+PASS login t09-leader-old -> 200
+PASS login t09-leader-new -> 200
+PASS monitor fleet-history -> 200
+PASS 全范围角色可读旧队与新车队两段历史
+PASS new leader fleet-history -> 200
+PASS 新车队只能读转入后区间，不能读转入前历史
+PASS old leader fleet-history forbidden -> 403 (actual 403)
+PASS old leader vehicle forbidden -> 403 (actual 403)
+PASS new leader snapshot -> 200
+PASS 新车队看到旧车最新实时位置（121.48），未被补传回退
+PASS old leader snapshot -> 200
+PASS 旧车队不再看到该车，补传未赋予新位置权限
+SQL[binding intervals]: SELECT terminal_id, vehicle_id, effective_from, effective_to IS NULL FROM terminal_vehicle_binding WHERE terminal_id=1 ORDER BY effective_from
+  1	1	2026-11-16 12:22:26.000	0
+  1	2	2026-11-16 13:22:30.944	1
+PASS 终端绑定保留旧车与新车的两段区间
+SQL[fleet intervals]: SELECT fleet_id, effective_from, effective_to IS NULL FROM vehicle_fleet_history WHERE vehicle_id=1 ORDER BY effective_from
+  1	2026-11-16 12:22:26.000	0
+  2	2026-11-16 13:22:30.996	1
+PASS 旧车转队保留旧队与新车队两段区间
+ALL CHECKS PASSED
+cleanup: server stopped, t09-mysql/t09-redis removed
