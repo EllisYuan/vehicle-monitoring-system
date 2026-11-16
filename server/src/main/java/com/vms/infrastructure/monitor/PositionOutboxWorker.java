@@ -76,7 +76,7 @@ public class PositionOutboxWorker {
     /**
      * AC5：清理完成满 7 天的 DONE 通知；DEAD 与未完成事件永不自动删除。
      * 完成时间取 worker 置 DONE 时写入的 updated_at，与业务事件的 gps_time 无关。
-     * 新增任务是低频清理，与 dispatch/refreshCache 共用 pool.size=2；清理偶有排队不影响其小时级语义。
+     * 新增任务是低频清理，与 dispatch/refreshCache 等任务共用调度池（合并任务14后 pool.size=4）；清理偶有排队不影响其小时级语义。
      */
     @Scheduled(fixedDelayString = "${vms.monitor.cleanup-interval-ms:3600000}", initialDelayString = "${vms.monitor.cleanup-initial-delay-ms:60000}")
     public void cleanupCompleted() {

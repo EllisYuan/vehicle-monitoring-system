@@ -43,7 +43,7 @@ Blocked by: 13
 
 - 既有实现复验并补测：`event_id` 唯一与按车合并、worker 只清已读版本、报警/处置事件独立、10 次上限转 DEAD、崩溃恢复不重复业务事实、Redis 恢复只重建派生快照且不伪造在线、故障注入下 ACK 不依赖缓存。
 - 本票新增：`PositionOutboxWorker.cleanupCompleted()` 按实际完成时间清理满 7 天的 `DONE`（`DEAD` 与 `PENDING/RETRY` 永不自动删除），新增小时级 `@Scheduled`（`vms.monitor.cleanup-interval-ms` / `vms.monitor.cleanup-initial-delay-ms`）；`POST /api/v1/outbox/{eventId}/redeliver`（权限 `OUTBOX_REDELIVER` 仅 ADMIN）只接受 `DEAD`，条件更新 `WHERE event_id=? AND version=? AND status='DEAD'` 置 `PENDING`、`attempts=0`、`retry_at=now`，未知事件 404 `OUTBOX_EVENT_NOT_FOUND`、非 DEAD 或已被更高版本覆盖 409 `OUTBOX_NOT_DEAD`，每次尝试写 `OUTBOX/REDELIVER` 审计且不改变原业务事件事实；`AuditService` 增加 `CATEGORY_OUTBOX`。
-- 验证：真红 `Tests run: 12, Failures: 4, Errors: 0`（清理未实现 2、重投端点缺失 2）；绿 `Tests run: 12, Failures: 0`。回归 `TelemetryFlowTest`、`PositionQualityFlowTest`、`SchemaUpgradeTest`、`OverspeedAlarmFlowTest`、`AlarmHandlingFlowTest`、`GeofenceJudgementFlowTest`、`AuditViewerTest` 共 51 个用例全部通过。
-- 迁移：未新增迁移，V10 未占用；`SchemaUpgradeTest` 未改并通过（12 个迁移、30 张表、37 个分区、第二测试增量 6）。
+- 验证：真红 `Tests run: 12, Failures: 4, Errors: 0`（清理未实现 2、重投端点缺失 2）；绿 `Tests run: 12, Failures: 0`。回归 `TelemetryFlowTest`、`PositionQualityFlowTest`、`SchemaUpgradeTest`、`OverspeedAlarmFlowTest`、`AlarmHandlingFlowTest`、`GeofenceJudgementFlowTest`、`AuditViewerTest` 共 51 个用例全部通过；合并任务14 后复跑 10 类 71 个用例全部通过（含 `OfflineAndPositionAlarmFlowTest` 8 个）。
+- 迁移：未新增迁移，V10 未占用；合并前 `SchemaUpgradeTest` 维持 12 个迁移，合并任务14（V12）后按集成分支 13 个迁移、30 张表、37 个分区通过（自 V6 增量 6，随后增量 7）。
 - 未执行：浏览器套件（本票无前端改动；DEAD 列表沿用既有审计页）、跨实例/集群语义（范围外）。
-- 证据：`.scratch/vehicle-monitoring/evidence/18-verification.md` 与 `evidence/logs/18-*.log`。
+- 证据：`.scratch/vehicle-monitoring/evidence/18-verification.md` 与归档的 `evidence/18-*.log`（含 `18-postmerge-1.log`）。

@@ -97,7 +97,14 @@
 
 ## 4. 迁移与 SchemaUpgrade
 
-本票未新增迁移：`cleanupCompleted()` 与重投端点在既有 `notification_outbox` 上完成，无 DDL 变更；保留号 V10 未占用。`SchemaUpgradeTest` 未修改并通过，实测维持 12 个迁移（V1–V5 SQL、V6 Java、V7、V8、V9、V11、V13、V14）、30 张表、37 个日分区，第二次增量迁移 6 个（`18-regression-1.log`）。
+本票未新增迁移：`cleanupCompleted()` 与重投端点在既有 `notification_outbox` 上完成，无 DDL 变更；保留号 V10 未占用。合并前 `SchemaUpgradeTest` 未修改并通过，实测维持 12 个迁移（V1–V5 SQL、V6 Java、V7、V8、V9、V11、V13、V14）、30 张表、37 个日分区，第二次增量迁移 6 个（`18-regression-1.log`）。合并任务14（新增 V12）后按集成分支迁移集合通过：13 个迁移、30 张表、37 个分区，`target=6` 执行 6 个、随后增量 7 个（`18-postmerge-1.log`）。
+
+## 6. 合并集成分支后复验
+
+- 合并：`git merge integration/tickets-08-27`，集成分支 tip 为 `6cf3998`（任务14 已合入），合并提交 `a7f9fae`，无冲突。
+- 复跑命令（锁内）：`mvnw.cmd -B -pl server -am -Dtest=OutboxRetentionTest,OutboxRetryAndCacheRecoveryTest,SchemaUpgradeTest,TelemetryFlowTest,PositionQualityFlowTest,OverspeedAlarmFlowTest,AlarmHandlingFlowTest,GeofenceJudgementFlowTest,AuditViewerTest,OfflineAndPositionAlarmFlowTest -Dsurefire.failIfNoSpecifiedTests=false test`
+- 实际：`Tests run: 71, Failures: 0, Errors: 0`，BUILD SUCCESS；本票 12 个用例全通过，合并引入的任务14 `OfflineAndPositionAlarmFlowTest` 8 个用例同批通过（`18-postmerge-1.log`）。
+- 调度池：任务14 合并后 `spring.task.scheduling.pool.size` 为 4，本票清理任务与既有任务共用，语义不变。
 
 ## 5. 未执行与说明
 
