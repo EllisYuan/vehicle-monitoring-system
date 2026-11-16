@@ -1,6 +1,7 @@
 package com.vms.telemetry;
 
 import com.vms.access.TerminalConnectionRegistry;
+import com.vms.alarm.OfflineAlarmService;
 import com.vms.protocol.PositionBatch;
 import com.vms.protocol.PositionReport;
 import com.vms.track.TrackRetentionPolicy;
@@ -24,14 +25,20 @@ public class PositionIngestService {
     private final JdbcTemplate jdbc;
     private final TerminalConnectionRegistry connections;
     private final List<PositionStateParticipant> participants;
+    private final List<PositionQualityParticipant> qualityParticipants;
     private final TrackRetentionPolicy retention;
+    private final OfflineAlarmService offlineAlarms;
 
     public PositionIngestService(JdbcTemplate jdbc, TerminalConnectionRegistry connections,
-                                 List<PositionStateParticipant> participants, TrackRetentionPolicy retention) {
+                                 List<PositionStateParticipant> participants,
+                                 List<PositionQualityParticipant> qualityParticipants,
+                                 TrackRetentionPolicy retention, OfflineAlarmService offlineAlarms) {
         this.jdbc = jdbc;
         this.connections = connections;
         this.participants = participants;
+        this.qualityParticipants = qualityParticipants;
         this.retention = retention;
+        this.offlineAlarms = offlineAlarms;
     }
 
     @Transactional
@@ -130,8 +137,12 @@ public class PositionIngestService {
             handleExistingPosition(terminalId, vehicleId, fleetId, report, receivedAt, payloadHash, rawBody);
             return;
         }
-        if (realtime && report.fixValid()) {
-            applyRealtimeState(terminalId, vehicleId, fleetId, report, receivedAt);
+        if (realtime) {
+            if (report.fixValid()) {
+                applyRealtimeState(terminalId, vehicleId, fleetId, report, receivedAt);
+            } else {
+                observeInvalidRealtime(terminalId, vehicleId, fleetId, report, receivedAt);
+            }
         }
         touchTerminal(terminalId, receivedAt);
     }
@@ -187,6 +198,17 @@ public class PositionIngestService {
                     reason, payload_hash, body_length, created_at)
                 VALUES (?, ?, ?, ?, 'OUTSIDE_RETENTION', ?, ?, ?)
                 """, terminalId, vehicleId, report.time(), receivedAt, hash(canonical), canonical.length, receivedAt);
+    }
+
+    /**
+     * 实时无效点只观察定位质量并触发无效定位报警；不写最新有效快照、不产生位置通知，
+     * 也不参与超速与围栏判定。
+     */
+    private void observeInvalidRealtime(long terminalId, long vehicleId, long fleetId, PositionReport report,
+                                        LocalDateTime receivedAt) {
+        for (PositionQualityParticipant participant : qualityParticipants) {
+            participant.observe(vehicleId, terminalId, fleetId, report, receivedAt);
+        }
     }
 
     private void applyRealtimeState(long terminalId, long vehicleId, long fleetId, PositionReport report,
@@ -250,6 +272,8 @@ public class PositionIngestService {
     private void touchTerminal(long terminalId, LocalDateTime receivedAt) {
         jdbc.update("UPDATE terminal SET last_seen_at = ?, updated_at = ? WHERE id = ?",
                 receivedAt, receivedAt, terminalId);
+        // 报文接收属于有效通信：恢复既有离线事件，但不推进包内历史定位的实时状态
+        offlineAlarms.recover(terminalId, receivedAt);
     }
 
     private String hash(byte[] body) {

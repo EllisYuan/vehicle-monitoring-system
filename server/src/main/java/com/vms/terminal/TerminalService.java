@@ -1,6 +1,7 @@
 package com.vms.terminal;
 
 import com.vms.access.TerminalAccessPort;
+import com.vms.alarm.OfflineAlarmService;
 import com.vms.audit.AuditService;
 import com.vms.fleet.VehicleService;
 import com.vms.identity.access.FleetScope;
@@ -43,15 +44,18 @@ public class TerminalService {
     private final AuditService audit;
     private final Clock clock;
     private final TerminalAccessPort terminalAccess;
+    private final OfflineAlarmService offlineAlarms;
 
     public TerminalService(JdbcTemplate jdbc, VehicleService vehicles, FleetScopeResolver scopes,
-                           AuditService audit, Clock clock, TerminalAccessPort access) {
+                           AuditService audit, Clock clock, TerminalAccessPort access,
+                           OfflineAlarmService offlineAlarms) {
         this.jdbc = jdbc;
         this.vehicles = vehicles;
         this.scopes = scopes;
         this.audit = audit;
         this.clock = clock;
         this.terminalAccess = access;
+        this.offlineAlarms = offlineAlarms;
     }
 
     public List<TerminalView> list(UserAccount actor) {
@@ -106,6 +110,8 @@ public class TerminalService {
         lockTerminal(id);
         jdbc.update("UPDATE terminal SET status = ?, updated_at = ? WHERE id = ?", status, now(), id);
         if ("DISABLED".equals(status)) {
+            // 停用不新造离线报警；既有 ACTIVE 保留并标注监控范围变化
+            offlineAlarms.markScopeChangedByTerminal(id, now());
             terminalAccess.revoke(id);
         }
         record(actor, "UPDATE_STATUS", "terminal:" + id, "status=" + status);
@@ -176,6 +182,8 @@ public class TerminalService {
             throw new ConflictException("BINDING_CONFLICT", "车辆或终端已被绑定，请刷新后重试");
         }
         if (current != null && !Objects.equals(current, terminalId)) {
+            // 解绑或换绑：旧终端既有 ACTIVE 保留并标注监控范围变化
+            offlineAlarms.markScopeChangedByVehicleTerminal(vehicleId, current, now);
             terminalAccess.revoke(current);
         }
         record(actor, terminalId == null ? "UNBIND" : "BIND", "vehicle:" + vehicleId,
