@@ -2,7 +2,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { errorMessage, isUnauthorized } from '../../shared/http'
 import { getSnapshot, getWsTicket, type MonitorVehicle } from './api'
 
-type StreamState = 'connecting' | 'connected' | 'reconnecting' | 'stopped'
+type StreamState = 'connecting' | 'connected' | 'disconnected' | 'reconnecting' | 'stopped'
 interface PositionFrame {
   type: 'vehicle_position'
   aggregate_id: number
@@ -12,6 +12,8 @@ interface PositionFrame {
 }
 
 const retryDelays = [1000, 2000, 4000, 8000, 15_000]
+const STALE_AFTER_MS = 60_000
+const REVOKED_MESSAGE = '实时订阅已失效：账号状态、密码或车队授权已变化，请重新登录后重试。'
 
 export function useMonitorStream() {
   const vehicles = ref<MonitorVehicle[]>([])
@@ -23,6 +25,8 @@ export function useMonitorStream() {
   const now = ref(Date.now())
   let serverOffset = 0
   let disposed = false
+  // 1008 撤权后禁止任何在途快照回填，直到用户手动重试建立新的订阅。
+  let revoked = false
   let generation = 0
   let socket: WebSocket | null = null
   let controller: AbortController | null = null
@@ -36,9 +40,17 @@ export function useMonitorStream() {
   const statusLabel = computed(() => ({
     connecting: '正在建立实时连接',
     connected: '实时连接已建立',
-    reconnecting: `实时连接中断 · 正在重连 ${retryCount.value}/${retryDelays.length}`,
+    disconnected: '实时连接已断开',
+    reconnecting: `正在重连 ${retryCount.value}/${retryDelays.length}`,
     stopped: '实时连接已停止 · 请手动重试',
   })[state.value])
+
+  // 快照或推送超过 60 秒未更新时提示数据陈旧；车辆行另有逐车定位陈旧标记。
+  const stale = computed(() => {
+    if (!lastSyncAt.value) return false
+    const synced = Date.parse(lastSyncAt.value)
+    return Number.isFinite(synced) && now.value - synced > STALE_AFTER_MS
+  })
 
   function updateClock(value: string) {
     const time = Date.parse(value)
@@ -52,7 +64,8 @@ export function useMonitorStream() {
     snapshotController = request
     try {
       const snapshot = await getSnapshot(request.signal)
-      if (disposed || current !== generation || request.signal.aborted) return
+      // 撤权后仍在途的快照必须丢弃，不能恢复已清空的车辆列表或清除失效提示。
+      if (disposed || revoked || current !== generation || request.signal.aborted) return
       const previous = new Map(vehicles.value.map(vehicle => [vehicle.vehicleId, vehicle]))
       // 列表归属以新快照为准；请求期间到达的较新 WS 位置不会被旧快照覆盖。
       vehicles.value = snapshot.vehicles.map(vehicle => {
@@ -65,26 +78,28 @@ export function useMonitorStream() {
       lastSyncAt.value = snapshot.serverTime
       failure.value = ''
     } catch (error) {
-      if (!disposed && !request.signal.aborted && current === generation && !isUnauthorized(error)) {
+      if (!disposed && !revoked && !request.signal.aborted && current === generation
+        && !isUnauthorized(error)) {
         failure.value = errorMessage(error, '车辆快照加载失败，请检查连接后重试。')
       }
     } finally {
-      if (!disposed && current === generation) loading.value = false
+      if (!disposed && !revoked && current === generation) loading.value = false
     }
   }
 
   function closeSocket() {
     clearTimeout(handshakeTimer)
     if (!socket) return
-    socket.onopen = null
-    socket.onmessage = null
-    socket.onerror = null
-    socket.onclose = null
-    socket.close()
+    const closing = socket
     socket = null
+    closing.onopen = null
+    closing.onmessage = null
+    closing.onerror = null
+    closing.onclose = null
+    closing.close()
   }
 
-  function reconnect(current: number) {
+  function scheduleReconnect(current: number) {
     if (disposed || current !== generation) return
     clearTimeout(handshakeTimer)
     if (openedAt && Date.now() - openedAt >= 30_000) retryCount.value = 0
@@ -96,18 +111,25 @@ export function useMonitorStream() {
     }
     const delay = retryDelays[retryCount.value]!
     retryCount.value += 1
-    state.value = 'reconnecting'
-    retryTimer = setTimeout(() => { void connect() }, delay)
+    // 连接断开与等待重连分开呈现，页面能明确显示“断线”而不是一直“重连中”。
+    state.value = 'disconnected'
+    clearTimeout(retryTimer)
+    retryTimer = setTimeout(() => {
+      if (disposed || current !== generation) return
+      state.value = 'reconnecting'
+      void connect()
+    }, delay)
   }
 
   async function connect() {
     const current = ++generation
+    revoked = false
     controller?.abort()
     snapshotController?.abort()
     closeSocket()
     const request = new AbortController()
     controller = request
-    // REST 独立于 WS 可用性；握手后再次校正，以补足初次查询与订阅间隙。
+    // REST 独立于 WS 可用性；握手后再次校正，以补足查询与订阅间隙。
     void syncSnapshot(current)
     try {
       const ticket = await getWsTicket(request.signal)
@@ -119,11 +141,12 @@ export function useMonitorStream() {
       socket = connection
       // 握手不能永久挂起；每次重连使用新的一次性 ticket。
       handshakeTimer = setTimeout(() => {
+        if (disposed || current !== generation || socket !== connection) return
         closeSocket()
-        reconnect(current)
+        scheduleReconnect(current)
       }, 10_000)
       connection.onopen = () => {
-        if (disposed || current !== generation) return
+        if (disposed || current !== generation || socket !== connection) return
         clearTimeout(handshakeTimer)
         openedAt = Date.now()
         state.value = 'connected'
@@ -131,7 +154,7 @@ export function useMonitorStream() {
         void syncSnapshot(current)
       }
       connection.onmessage = event => {
-        if (disposed || current !== generation) return
+        if (disposed || current !== generation || socket !== connection) return
         let frame: PositionFrame
         try { frame = JSON.parse(String(event.data)) as PositionFrame } catch { return }
         if (frame.type !== 'vehicle_position' || !frame.payload?.position
@@ -140,18 +163,42 @@ export function useMonitorStream() {
           || frame.payload.position.version !== frame.version) return
         const index = vehicles.value.findIndex(vehicle => vehicle.vehicleId === frame.aggregate_id)
         const previous = vehicles.value[index]
+        // 旧版本帧不得覆盖已显示的新版本；断线补发与重复推送由这里幂等消化。
         if (previous?.position && previous.position.version >= frame.version) return
         if (index < 0) vehicles.value.push(frame.payload)
         else vehicles.value[index] = frame.payload
         updateClock(frame.server_time)
       }
-      connection.onerror = () => connection.close()
-      connection.onclose = () => reconnect(current)
+      connection.onerror = () => {
+        if (disposed || current !== generation || socket !== connection) return
+        closeSocket()
+        scheduleReconnect(current)
+      }
+      connection.onclose = event => {
+        if (disposed || current !== generation || socket !== connection) return
+        socket = null
+        clearTimeout(handshakeTimer)
+        openedAt = 0
+        if (event.code === 1008) {
+          // 授权失效（停用、改密、新登录替换、撤权或到期）：停止旧订阅，不再自动重连。
+          revoked = true
+          snapshotController?.abort()
+          snapshotController = null
+          vehicles.value = []
+          lastSyncAt.value = null
+          loading.value = false
+          state.value = 'stopped'
+          failure.value = REVOKED_MESSAGE
+          return
+        }
+        // 1011 等异常关闭：重建订阅，重连成功后重新获取快照。
+        scheduleReconnect(current)
+      }
     } catch (error) {
       if (disposed || request.signal.aborted || current !== generation) return
       if (isUnauthorized(error)) return
       failure.value = errorMessage(error, '无法建立实时连接；恢复连接后将重新获取快照。')
-      reconnect(current)
+      scheduleReconnect(current)
     }
   }
 
@@ -183,5 +230,5 @@ export function useMonitorStream() {
     closeSocket()
   })
 
-  return { vehicles, loading, failure, state, statusLabel, lastSyncAt, now, retry }
+  return { vehicles, loading, failure, state, statusLabel, lastSyncAt, now, stale, retry }
 }

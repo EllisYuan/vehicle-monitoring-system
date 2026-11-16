@@ -25,10 +25,13 @@ final class TerminalFrameHandler extends SimpleChannelInboundHandler<TerminalFra
 
     private final TerminalAccessService access;
     private final com.vms.telemetry.PositionIngestService positions;
+    private final CommandLifecycleListener commandListener;
 
-    TerminalFrameHandler(TerminalAccessService access, com.vms.telemetry.PositionIngestService positions) {
+    TerminalFrameHandler(TerminalAccessService access, com.vms.telemetry.PositionIngestService positions,
+                         CommandLifecycleListener commandListener) {
         this.access = access;
         this.positions = positions;
+        this.commandListener = commandListener;
     }
 
     @Override
@@ -100,9 +103,18 @@ final class TerminalFrameHandler extends SimpleChannelInboundHandler<TerminalFra
             context.close();
             return;
         }
-        TerminalGeneralResponse.parse(frame.body());
-        if (!access.touch(currentSession(context, frame.header().terminalPhone()))) {
+        TerminalConnectionRegistry.Session session = currentSession(context, frame.header().terminalPhone());
+        TerminalGeneralResponse response = TerminalGeneralResponse.parse(frame.body());
+        if (!access.touch(session)) {
             context.close();
+            return;
+        }
+        if (commandListener != null) {
+            try {
+                commandListener.onTerminalReply(session.terminalId(), session.terminalNo(), session.epoch(), response);
+            } catch (RuntimeException e) {
+                log.warn("指令应答处理失败", e);
+            }
         }
     }
 
@@ -142,6 +154,13 @@ final class TerminalFrameHandler extends SimpleChannelInboundHandler<TerminalFra
         Frame response = response(frame, 0x8001,
                 new PlatformGeneralResponse(frame.header().serialNumber(), 0x0003, 0).encode());
         access.logout(session);
+        if (commandListener != null) {
+            try {
+                commandListener.onLawfulLogout(session.terminalId(), session.terminalNo(), session.epoch());
+            } catch (RuntimeException e) {
+                log.warn("注销指令收尾失败", e);
+            }
+        }
         context.writeAndFlush(Unpooled.wrappedBuffer(FrameCodec.encode(response)))
                 .addListener(future -> context.close());
     }

@@ -1,6 +1,6 @@
 # 26: 真实天地图接入验证
 
-Status: open
+Status: blocked
 Labels: ready-for-agent
 Type: task
 Blocked by: 07
@@ -20,9 +20,9 @@ Blocked by: 07
 - [ ] attribution 按供应商条款正确显示
 - [ ] 额度与服务条款核对结论有记录
 - [ ] 开发环境与部署网络分别验证
-- [ ] 网络失败时显示错误且车辆列表可用
-- [ ] 无 key 时仅本票 blocked，不伪造结果
-- [ ] 不以静态截图冒充实时底图验证
+- [x] 网络失败时显示错误且车辆列表可用
+- [x] 无 key 时仅本票 blocked，不伪造结果
+- [x] 不以静态截图冒充实时底图验证
 
 ## Scope boundaries
 
@@ -38,4 +38,35 @@ Blocked by: 07
 
 ## Answer
 
-尚未实施；AC30 未执行；未提供真实 key。
+真实天地图 key 未提供，本票 blocked；AC30 未通过，真实底图、真实网络与真实坐标对齐均未执行，未勾选未执行项。
+
+已完成（不依赖真实 key）：
+
+- 新增 `web/src/features/monitoring/basemap.ts`：集中解析 VITE_WMTS_*（URL、layer、matrixSet、style、format、attribution、key 占位符），key 仅编码后进入瓦片请求，错误信息不含 key。
+- 修正 `VehicleMap.vue` 的 TileMatrix 编号：由 0..18 改为符合天地图服务的 1..18（层级 N 分辨率 = maxResolution / 2^N），并接入配置解析；新增 `data-testid="monitor-map-attribution"`，仅在底图配置时显示 attribution（默认 `天地图 · 国家地理信息公共服务平台` · OpenLayers）。
+- 新增 `web/e2e/basemap-config.spec.ts`（8 项）与 `web/e2e/fixtures/tianditu-wmts-metadata.json`：用公开 GetCapabilities 元数据核对 layer=vec、TileMatrixSet=w、EPSG:900913、层级 1—18 与分辨率，并给出已知点（天安门/外滩/广州塔）WGS84→Web Mercator 与 z14 瓦片行列号比对基准。未抓取瓦片。
+- `web/e2e/monitoring.spec.ts` 覆盖：attribution 显示、key 只进入瓦片请求（页面正文/错误/console 不含 key）、403 与非图片响应时显示 `底图加载失败…` 且车辆列表可用。`BrowserFlowTest` 使用本地 fixture URL，不访问第三方底图。
+- `web/.env.example` 补充 TileMatrix 起始层级、key 浏览器可见需域名白名单、不得提交仓库的说明。
+
+命令与结果：
+
+- `pnpm --dir web typecheck`、`lint`、`build`：均 exit 0。
+- BrowserFlowTest（全局锁内串行）：红测 exit 1（attribution testid 缺失 2 项失败）；最终 BUILD SUCCESS，27 项 Playwright 全通过。
+- 本轮 Testcontainers（MySQL 8.4/Redis 8.4/Ryuk）已回收，无残留；无 DB migration 或 schema 变更。
+
+证据：
+
+- `.scratch/vehicle-monitoring/evidence/26-verification.md`（逐项 AC 状态与真实 key 到位后的比对步骤）
+- `26-browser-red.log`、`26-browser-green.log`、`26-typecheck.log`、`26-lint.log`、`26-build.log`
+- `26-wmts-fixture-failure.png`、`26-invalid-key-fixture.png`（fixture 失败态，非真实底图）
+
+未执行及原因：
+
+- 真实 vec_w/cva_w 底图可见与真实瓦片请求记录：无真实 key。
+- 真实底图已知点对齐：已准备基准与方法，未在真实底图上执行。
+- 开发与部署网络分别验证：仅本地 fixture，无部署网络。
+- attribution 按供应商条款核对：条款页为 SPA，仅获取页面外壳，正文未读到。
+- 账户额度核对：需登录控制台，不代用户操作；官方文档仅确认存在个人/企业配额限制、需申请 Key、GetCapabilities 标注 Fees none / AccessConstraints none。
+
+需要用户提供/确认：许可的真实天地图 key（配置在本地或部署环境，不在聊天/仓库/日志中出现）、部署域名白名单与网络可达性、账户额度与条款确认。之后可按 `26-verification.md` 的步骤完成 AC30；本票保持 blocked 不影响其他票。
+

@@ -13,6 +13,8 @@ public enum Permission {
     DRIVER_MANAGE(RoleCode.ADMIN),
     /** 账号、角色与车队授权维护；仅管理员。 */
     ACCOUNT_MANAGE(RoleCode.ADMIN),
+    /** 文本与临时跟踪指令下发；管理员与监控员。 */
+    COMMAND_DISPATCH(RoleCode.ADMIN, RoleCode.MONITOR),
     /** 轨迹保留期调整与分区维护告警查看；仅管理员。 */
     TRACK_RETENTION_MANAGE(RoleCode.ADMIN);
 

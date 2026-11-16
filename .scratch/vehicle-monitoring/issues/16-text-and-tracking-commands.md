@@ -1,6 +1,6 @@
 # 16: 文本与临时跟踪指令
 
-Status: open
+Status: resolved
 Labels: ready-for-agent
 Type: task
 Blocked by: 07
@@ -16,16 +16,16 @@ Blocked by: 07
 
 ## Acceptance criteria
 
-- [ ] 页面发起文本与跟踪，模拟终端经真实 TCP 接收并应答
-- [ ] 超过 100 汉字或 GBK 字节超限的文本被拒
-- [ ] 跟踪间隔 1–60 秒、有效期最多 3600 秒校验
-- [ ] 状态区分 SUBMITTED/SENT/ACK_SUCCESS/FAILED/TIMEOUT
-- [ ] 30 秒超时不自动重发，手工重试建新记录
-- [ ] 离线终端拒绝发送，不排队
-- [ ] 旧 epoch 或迟到应答留痕，不改写历史
-- [ ] 合法注销时在途指令 FAILED 收尾
-- [ ] 车队长发送被拒，操作写入审计
-- [ ] 模拟终端临时上报行为实际改变
+- [x] 页面发起文本与跟踪，模拟终端经真实 TCP 接收并应答
+- [x] 超过 100 汉字或 GBK 字节超限的文本被拒
+- [x] 跟踪间隔 1–60 秒、有效期最多 3600 秒校验
+- [x] 状态区分 SUBMITTED/SENT/ACK_SUCCESS/FAILED/TIMEOUT
+- [x] 30 秒超时不自动重发，手工重试建新记录
+- [x] 离线终端拒绝发送，不排队
+- [x] 旧 epoch 或迟到应答留痕，不改写历史
+- [x] 合法注销时在途指令 FAILED 收尾
+- [x] 车队长发送被拒，操作写入审计
+- [x] 模拟终端临时上报行为实际改变
 
 ## Scope boundaries
 
@@ -41,4 +41,10 @@ Blocked by: 07
 
 ## Answer
 
-尚未实施，尚未执行验证。
+已实现并验证文本（0x8300）与临时跟踪（0x8202）完整链路：页面/API 发起、服务端校验、真实 TCP 下行、状态流转、审计与独立 simulator CLI 应答。验证于 2026-11-16 在锁内执行：
+
+- CommandFlowTest 11/11 通过（80.66 s，BUILD SUCCESS，含 timeoutAt 与不自动重发断言）：fixture 报文、文本/跟踪边界、离线不排队、30 s 超时与迟到留痕、旧 epoch、终端拒绝、注销 FAILED、车队长拒绝与 MONITOR 放行、手工重试、列表分离。
+- BrowserFlowTest + simulator：Playwright 28 passed（2.5m），commands.spec.ts 28.2 s；simulator 实际收到 0x8300/0x8202、回 0x0001，并在跟踪后按 1 s 上报（trackingIntervalSeconds=1），页面提交与通信结果分开展示。
+- pnpm --dir web typecheck、lint、build 均 exit 0。
+
+未执行/阻塞：0x8202 停止跟踪形态（间隔 0）缺少 05 独立 fixture，标准字节未核对，页面不暴露入口，标注 blocked；真实车载终端未接入，本轮为模拟终端。详见 evidence/16-verification.md 与 evidence/16-*.log、16-commands-ack.png。
