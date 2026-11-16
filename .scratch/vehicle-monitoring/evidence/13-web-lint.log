@@ -1,0 +1,153 @@
+
+> vehicle-monitoring-web@0.1.0 lint C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-af272b0b89e8b0169\web
+> eslint .
+
+
+C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-af272b0b89e8b0169\web\src\features\alarm-rules\views\AlarmRuleView.vue
+  114:23  warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  114:37  warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  114:68  warning  Expected 1 line break after opening tag (`<p>`), but no line breaks found         vue/singleline-html-element-content-newline
+  114:79  warning  Expected 1 line break before closing tag (`</p>`), but no line breaks found       vue/singleline-html-element-content-newline
+  115:24  warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  115:39  warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  115:71  warning  Expected 1 line break after opening tag (`<p>`), but no line breaks found         vue/singleline-html-element-content-newline
+  115:83  warning  Expected 1 line break before closing tag (`</p>`), but no line breaks found       vue/singleline-html-element-content-newline
+  119:27  warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  119:40  warning  Expected 1 line break after opening tag (`<p>`), but no line breaks found         vue/singleline-html-element-content-newline
+  119:44  warning  Expected 1 line break before closing tag (`</p>`), but no line breaks found       vue/singleline-html-element-content-newline
+  120:42  warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  122:46  warning  Expected 1 line break after opening tag (`<dd>`), but no line breaks found        vue/singleline-html-element-content-newline
+  122:85  warning  Expected 1 line break before closing tag (`</dd>`), but no line breaks found      vue/singleline-html-element-content-newline
+  124:44  warning  Expected 1 line break after opening tag (`<dd>`), but no line breaks found        vue/singleline-html-element-content-newline
+  124:73  warning  Expected 1 line break before closing tag (`</dd>`), but no line breaks found      vue/singleline-html-element-content-newline
+  128:19  warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  128:32  warning  Expected 1 line break after opening tag (`<p>`), but no line breaks found         vue/singleline-html-element-content-newline
+  128:45  warning  Expected 1 line break before closing tag (`</p>`), but no line breaks found       vue/singleline-html-element-content-newline
+  140:33  warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  140:59  warning  '@click' should be on a new line                                                  vue/max-attributes-per-line
+  140:79  warning  Expected 1 line break after opening tag (`<button>`), but no line breaks found    vue/singleline-html-element-content-newline
+  140:85  warning  Expected 1 line break before closing tag (`</button>`), but no line breaks found  vue/singleline-html-element-content-newline
+  153:20  warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  176:54  warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  178:47  warning  ':key' should be on a new line                                                    vue/max-attributes-per-line
+  178:63  warning  ':value' should be on a new line                                                  vue/max-attributes-per-line
+  193:33  warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  193:61  warning  '@click' should be on a new line                                                  vue/max-attributes-per-line
+  193:83  warning  Expected 1 line break after opening tag (`<button>`), but no line breaks found    vue/singleline-html-element-content-newline
+  193:89  warning  Expected 1 line break before closing tag (`</button>`), but no line breaks found  vue/singleline-html-element-content-newline
+
+C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-af272b0b89e8b0169\web\src\features\alarms\views\AlarmListView.vue
+  227:43  warning  Expected 1 line break after opening tag (`<dd>`), but no line breaks found    vue/singleline-html-element-content-newline
+  227:71  warning  Expected 1 line break before closing tag (`</dd>`), but no line breaks found  vue/singleline-html-element-content-newline
+  228:43  warning  Expected 1 line break after opening tag (`<dd>`), but no line breaks found    vue/singleline-html-element-content-newline
+  228:70  warning  Expected 1 line break before closing tag (`</dd>`), but no line breaks found  vue/singleline-html-element-content-newline
+  229:43  warning  Expected 1 line break after opening tag (`<dd>`), but no line breaks found    vue/singleline-html-element-content-newline
+  229:73  warning  Expected 1 line break before closing tag (`</dd>`), but no line breaks found  vue/singleline-html-element-content-newline
+
+C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-af272b0b89e8b0169\web\src\features\track-retention\views\TrackRetentionView.vue
+   74:23   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+   74:37   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+   74:67   warning  Expected 1 line break after opening tag (`<p>`), but no line breaks found         vue/singleline-html-element-content-newline
+   74:78   warning  Expected 1 line break before closing tag (`</p>`), but no line breaks found       vue/singleline-html-element-content-newline
+   75:24   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+   75:39   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+   75:70   warning  Expected 1 line break after opening tag (`<p>`), but no line breaks found         vue/singleline-html-element-content-newline
+   75:82   warning  Expected 1 line break before closing tag (`</p>`), but no line breaks found       vue/singleline-html-element-content-newline
+   79:27   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+   79:40   warning  Expected 1 line break after opening tag (`<p>`), but no line breaks found         vue/singleline-html-element-content-newline
+   79:44   warning  Expected 1 line break before closing tag (`</p>`), but no line breaks found       vue/singleline-html-element-content-newline
+   80:34   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+   81:57   warning  Expected 1 line break after opening tag (`<dd>`), but no line breaks found        vue/singleline-html-element-content-newline
+   81:85   warning  Expected 1 line break before closing tag (`</dd>`), but no line breaks found      vue/singleline-html-element-content-newline
+  101:33   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  101:65   warning  '@click' should be on a new line                                                  vue/max-attributes-per-line
+  101:88   warning  Expected 1 line break after opening tag (`<button>`), but no line breaks found    vue/singleline-html-element-content-newline
+  101:92   warning  Expected 1 line break before closing tag (`</button>`), but no line breaks found  vue/singleline-html-element-content-newline
+  103:29   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  103:45   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  111:33   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  111:48   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  111:80   warning  '@click' should be on a new line                                                  vue/max-attributes-per-line
+  111:103  warning  Expected 1 line break after opening tag (`<button>`), but no line breaks found    vue/singleline-html-element-content-newline
+  111:107  warning  Expected 1 line break before closing tag (`</button>`), but no line breaks found  vue/singleline-html-element-content-newline
+  113:29   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  113:44   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  120:61   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  120:74   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  123:20   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  124:48   warning  ':key' should be on a new line                                                    vue/max-attributes-per-line
+  124:61   warning  Expected 1 line break after opening tag (`<li>`), but no line breaks found        vue/singleline-html-element-content-newline
+  124:72   warning  Expected 1 line break before closing tag (`</li>`), but no line breaks found      vue/singleline-html-element-content-newline
+  130:70   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  130:83   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  133:20   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  134:55   warning  ':key' should be on a new line                                                    vue/max-attributes-per-line
+  134:66   warning  Expected 1 line break after opening tag (`<li>`), but no line breaks found        vue/singleline-html-element-content-newline
+  134:75   warning  Expected 1 line break before closing tag (`</li>`), but no line breaks found      vue/singleline-html-element-content-newline
+
+C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-af272b0b89e8b0169\web\src\features\tracks\views\TrackPlaybackView.vue
+  154:27   warning  'aria-labelledby' should be on a new line                                         vue/max-attributes-per-line
+  158:32   warning  Expected 1 line break after opening tag (`<h1>`), but no line breaks found        vue/singleline-html-element-content-newline
+  158:36   warning  Expected 1 line break before closing tag (`</h1>`), but no line breaks found      vue/singleline-html-element-content-newline
+  165:27   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  165:41   warning  'role' should be on a new line                                                    vue/max-attributes-per-line
+  165:54   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  165:85   warning  Expected 1 line break after opening tag (`<p>`), but no line breaks found         vue/singleline-html-element-content-newline
+  165:100  warning  Expected 1 line break before closing tag (`</p>`), but no line breaks found       vue/singleline-html-element-content-newline
+  167:29   warning  '@submit.prevent' should be on a new line                                         vue/max-attributes-per-line
+  170:46   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  171:35   warning  'disabled' should be on a new line                                                vue/max-attributes-per-line
+  172:49   warning  ':key' should be on a new line                                                    vue/max-attributes-per-line
+  172:74   warning  ':value' should be on a new line                                                  vue/max-attributes-per-line
+  179:38   warning  'type' should be on a new line                                                    vue/max-attributes-per-line
+  179:60   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  183:36   warning  'type' should be on a new line                                                    vue/max-attributes-per-line
+  183:58   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  185:31   warning  ':disabled' should be on a new line                                               vue/max-attributes-per-line
+  185:51   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  190:23   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  190:37   warning  'role' should be on a new line                                                    vue/max-attributes-per-line
+  190:50   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  190:76   warning  Expected 1 line break after opening tag (`<p>`), but no line breaks found         vue/singleline-html-element-content-newline
+  190:87   warning  Expected 1 line break before closing tag (`</p>`), but no line breaks found       vue/singleline-html-element-content-newline
+  191:26   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  191:39   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  196:34   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  203:30   warning  Expected 1 line break after opening tag (`<div>`), but no line breaks found       vue/singleline-html-element-content-newline
+  203:121  warning  Expected 1 line break before closing tag (`</div>`), but no line breaks found     vue/singleline-html-element-content-newline
+  218:34   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  218:60   warning  Expected 1 line break after opening tag (`<p>`), but no line breaks found         vue/singleline-html-element-content-newline
+  218:75   warning  Expected 1 line break before closing tag (`</p>`), but no line breaks found       vue/singleline-html-element-content-newline
+  219:33   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  219:55   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  219:82   warning  Expected 1 line break after opening tag (`<p>`), but no line breaks found         vue/singleline-html-element-content-newline
+  219:94   warning  Expected 1 line break before closing tag (`</p>`), but no line breaks found       vue/singleline-html-element-content-newline
+  221:41   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  221:66   warning  '@click' should be on a new line                                                  vue/max-attributes-per-line
+  221:80   warning  Expected 1 line break after opening tag (`<button>`), but no line breaks found    vue/singleline-html-element-content-newline
+  221:82   warning  Expected 1 line break before closing tag (`</button>`), but no line breaks found  vue/singleline-html-element-content-newline
+  222:41   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  222:67   warning  '@click' should be on a new line                                                  vue/max-attributes-per-line
+  222:82   warning  Expected 1 line break after opening tag (`<button>`), but no line breaks found    vue/singleline-html-element-content-newline
+  222:84   warning  Expected 1 line break before closing tag (`</button>`), but no line breaks found  vue/singleline-html-element-content-newline
+  236:37   warning  'role' should be on a new line                                                    vue/max-attributes-per-line
+  236:50   warning  'aria-label' should be on a new line                                              vue/max-attributes-per-line
+  253:46   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  253:59   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  253:90   warning  Expected 1 line break after opening tag (`<p>`), but no line breaks found         vue/singleline-html-element-content-newline
+  253:93   warning  Expected 1 line break before closing tag (`</p>`), but no line breaks found       vue/singleline-html-element-content-newline
+  254:28   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  254:41   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  255:58   warning  ':key' should be on a new line                                                    vue/max-attributes-per-line
+  255:98   warning  ':data-testid' should be on a new line                                            vue/max-attributes-per-line
+  264:50   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  264:63   warning  'data-testid' should be on a new line                                             vue/max-attributes-per-line
+  264:89   warning  Expected 1 line break after opening tag (`<p>`), but no line breaks found         vue/singleline-html-element-content-newline
+  264:100  warning  Expected 1 line break before closing tag (`</p>`), but no line breaks found       vue/singleline-html-element-content-newline
+  265:28   warning  'class' should be on a new line                                                   vue/max-attributes-per-line
+  266:66   warning  ':key' should be on a new line                                                    vue/max-attributes-per-line
+  275:40   warning  ':marker' should be on a new line                                                 vue/max-attributes-per-line
+
+✖ 137 problems (0 errors, 137 warnings)
+  0 errors and 106 warnings potentially fixable with the `--fix` option.
+

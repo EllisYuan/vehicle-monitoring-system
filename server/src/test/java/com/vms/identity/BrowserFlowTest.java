@@ -82,8 +82,10 @@ class BrowserFlowTest {
                     web.resolve("../simulator/target/classes").normalize().toString()));
             browserBuilder.redirectErrorStream(true).redirectOutput(logs.resolve("02-playwright.log").toFile());
             browser = browserBuilder.start();
-            assertThat(browser.waitFor(240, TimeUnit.SECONDS))
-                    .as("Playwright finishes within four minutes").isTrue();
+            // 防挂死上限，不是性能断言：套件已增至 42 项，实测逐项耗时合计约 223 秒，
+            // 240 秒会把本来全绿的运行判失败（任务15 合并时第 2 次即如此）。
+            assertThat(browser.waitFor(600, TimeUnit.SECONDS))
+                    .as("Playwright finishes within ten minutes; see 02-playwright.log").isTrue();
             assertThat(browser.exitValue()).as("Playwright exit code; see 02-playwright.log").isZero();
         } finally {
             try {

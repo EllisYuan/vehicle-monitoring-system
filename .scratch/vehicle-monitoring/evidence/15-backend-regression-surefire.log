@@ -1,0 +1,32 @@
+# 任务15 后端测试 surefire 摘要（本轮同一锁内 Maven 串行执行：SchemaUpgradeTest、OverspeedAlarmFlowTest、GeofenceApiFlowTest、GeofenceJudgementFlowTest、PositionQualityFlowTest、TelemetryFlowTest，共 6 类 39 项）
+
+-------------------------------------------------------------------------------
+Test set: com.vms.identity.SchemaUpgradeTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 27.59 s -- in com.vms.identity.SchemaUpgradeTest
+
+-------------------------------------------------------------------------------
+Test set: com.vms.alarm.OverspeedAlarmFlowTest
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 78.00 s -- in com.vms.alarm.OverspeedAlarmFlowTest
+
+-------------------------------------------------------------------------------
+Test set: com.vms.telemetry.TelemetryFlowTest
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 85.04 s -- in com.vms.telemetry.TelemetryFlowTest
+
+-------------------------------------------------------------------------------
+Test set: com.vms.telemetry.PositionQualityFlowTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 55.55 s -- in com.vms.telemetry.PositionQualityFlowTest
+
+-------------------------------------------------------------------------------
+Test set: com.vms.geofence.GeofenceApiFlowTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 58.90 s -- in com.vms.geofence.GeofenceApiFlowTest
+
+-------------------------------------------------------------------------------
+Test set: com.vms.geofence.GeofenceJudgementFlowTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 63.39 s -- in com.vms.geofence.GeofenceJudgementFlowTest
+

@@ -50,10 +50,10 @@ export const router = createRouter({
     {
       path: '/monitor/alarms',
       name: 'alarms',
-      component: PlaceholderView,
+      component: () => import('../features/alarms/views/AlarmListView.vue'),
       meta: {
         title: '报警管理',
-        description: '报警列表、详情与处置将在报警任务中交付；车队长只读查看授权范围。',
+        description: '报警列表、详情与处置；车队长只读查看授权范围。',
         area: 'monitoring',
         ticket: '13 报警处置闭环',
       },
@@ -61,7 +61,7 @@ export const router = createRouter({
     {
       path: '/monitor/geofences',
       name: 'geofences',
-      component: PlaceholderView,
+      component: () => import('../features/geofences/views/GeofenceView.vue'),
       meta: {
         title: '电子围栏',
         description: '围栏绘制、车辆绑定与进出事件在围栏任务中交付，仅管理员和监控员可操作。',

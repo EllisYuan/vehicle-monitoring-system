@@ -1,0 +1,17 @@
+-------------------------------------------------------------------------------
+Test set: com.vms.geofence.GeofenceApiFlowTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 58.90 s -- in com.vms.geofence.GeofenceApiFlowTest
+CASE com.vms.geofence.GeofenceApiFlowTest.editDisableAndBindingAreVersionedAuditedAndGeometryStoredAsWgs84 (4.381s)
+CASE com.vms.geofence.GeofenceApiFlowTest.monitorMaintainsGeofencesWhileFleetLeaderOnlySeesAuthorizedVehicleBindings (2.064s)
+CASE com.vms.geofence.GeofenceApiFlowTest.serverRejectsInvalidCircleAndPolygonGeometryWithSameRulesAsPage (0.68s)
+-------------------------------------------------------------------------------
+Test set: com.vms.geofence.GeofenceJudgementFlowTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 63.39 s -- in com.vms.geofence.GeofenceJudgementFlowTest
+CASE com.vms.geofence.GeofenceJudgementFlowTest.firstValidRealtimePointBuildsBaselineAndBoundaryCountsInsideWithMetricDistances (6.219s)
+CASE com.vms.geofence.GeofenceJudgementFlowTest.threeConsecutivePointsConfirmCrossingAndProduceOneEventPushedOverWebSocket (3.336s)
+CASE com.vms.geofence.GeofenceJudgementFlowTest.disabledEventTypeStillUpdatesBaselineWithoutCreatingThatEvent (1.486s)
+CASE com.vms.geofence.GeofenceJudgementFlowTest.jitterLongGapAndHistoryPointsDoNotEmitDuplicateEvents (1.86s)
+CASE com.vms.geofence.GeofenceJudgementFlowTest.shapeAndBindingChangesRebuildBaselineAuditAndKeepOtherActiveAlarms (1.324s)
+CASE com.vms.geofence.GeofenceJudgementFlowTest.eventStateAndOutboxSharePositionTransactionSoFailureRollsBackWithoutAck (2.854s)
