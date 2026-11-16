@@ -1,0 +1,88 @@
+
+> vehicle-monitoring-web@0.1.0 test:e2e C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a9b17de9e052cfbbb\web
+> playwright test
+
+
+Running 28 tests using 1 worker
+
+(node:11636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › e2e\archives.spec.ts:24:3 › 车辆、终端档案与历史绑定 › 管理员通过页面登记、启停、换绑、解绑、转队并保留历史 (16.9s)
+  ✓   2 [chromium] › e2e\archives.spec.ts:98:3 › 车辆、终端档案与历史绑定 › 监控员与车队长通过页面只读且按车队限定档案 (6.1s)
+  ✓   3 [chromium] › e2e\basemap-config.spec.ts:18:3 › 底图配置解析 › 道路与注记图层参数来自配置，key 仅替换到请求地址 (5ms)
+  ✓   4 [chromium] › e2e\basemap-config.spec.ts:29:3 › 底图配置解析 › key 中的特殊字符编码后进入请求地址，错误提示不含 key 值 (1ms)
+  ✓   5 [chromium] › e2e\basemap-config.spec.ts:36:3 › 底图配置解析 › 仅支持球面墨卡托 matrixSet=w (2ms)
+  ✓   6 [chromium] › e2e\basemap-config.spec.ts:43:3 › 底图配置解析 › 缺少道路或注记地址时不请求底图且不显示 attribution (1ms)
+  ✓   7 [chromium] › e2e\basemap-config.spec.ts:50:3 › 底图配置解析 › 地址含 {key} 占位符但未配置 key 时给出配置错误而不发请求 (2ms)
+  ✓   8 [chromium] › e2e\basemap-config.spec.ts:57:3 › 底图配置解析 › 自定义 layer/style/format 与 attribution 生效 (2ms)
+  ✓   9 [chromium] › e2e\basemap-config.spec.ts:64:3 › 底图配置解析 › WMTS 矩阵编号与分辨率对齐服务 GetCapabilities 元数据 (20ms)
+  ✓  10 [chromium] › e2e\basemap-config.spec.ts:85:3 › 底图配置解析 › 已知点的 Web Mercator 坐标与 14 级瓦片行列号可作为真实底图对齐基准 (7ms)
+  ✘  11 [chromium] › e2e\commands.spec.ts:15:3 › 文本与临时跟踪指令 public TCP / REST / browser › 页面发起文本与临时跟踪，终端应答后通信结果独立更新 (9.2s)
+(node:36868) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:36868) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  12 [chromium] › e2e\drivers.spec.ts:24:3 › 司机档案与关联历史 › 管理员通过页面登记司机、关联与解除并保留历史区间 (8.0s)
+  ✓  13 [chromium] › e2e\drivers.spec.ts:74:3 › 司机档案与关联历史 › 监控员与车队长只读司机档案，车队长仅见授权车队且电话掩码 (6.3s)
+  ✓  14 [chromium] › e2e\layouts.spec.ts:73:3 › 两布局导航与三角色权限 › 管理员可切换管理端并维护车队与账号页面 (2.1s)
+  ✓  15 [chromium] › e2e\layouts.spec.ts:91:3 › 两布局导航与三角色权限 › 管理员改密沿用管理布局，且不能停用自己 (2.8s)
+  ✓  16 [chromium] › e2e\layouts.spec.ts:119:3 › 两布局导航与三角色权限 › 监控员只有监控导航，不能进入管理端 (1.8s)
+  ✓  17 [chromium] › e2e\layouts.spec.ts:135:3 › 两布局导航与三角色权限 › 监控员携带 area=admin 进入改密页仍使用监控布局 (1.4s)
+  ✓  18 [chromium] › e2e\layouts.spec.ts:148:3 › 两布局导航与三角色权限 › 车队长导航不含处置类功能，直接改 URL 也被拒绝 (1.9s)
+  ✓  19 [chromium] › e2e\layouts.spec.ts:173:3 › 两布局导航与三角色权限 › 后登录替换旧会话并在旧页面给出明确提示 (2.3s)
+  ✓  20 [chromium] › e2e\login.spec.ts:9:3 › 登录与退出 › 未登录访问首页被重定向到登录页 (572ms)
+  ✓  21 [chromium] › e2e\login.spec.ts:15:3 › 登录与退出 › 错误凭证停留在登录页且不泄露账号是否存在 (1.0s)
+  ✓  22 [chromium] › e2e\login.spec.ts:25:3 › 登录与退出 › 正确凭证进入会话，退出后原会话不能继续访问 (1.4s)
+  ✓  23 [chromium] › e2e\login.spec.ts:54:3 › 登录与退出 › 过期 token 深链登录后保留内部 redirect (744ms)
+  ✓  24 [chromium] › e2e\login.spec.ts:65:3 › 登录与退出 › 会话恢复遇到 503 保留 token 并提示稍后重试 (706ms)
+  ✓  25 [chromium] › e2e\login.spec.ts:81:3 › 登录与退出 › 退出请求中断仍完成本地退出 (1.6s)
+  ✓  26 [chromium] › e2e\monitoring.spec.ts:43:3 › 实时监控 public TCP / REST / WS / browser › TCP 位置实时进入地图与车辆列表，底图失败仍能查看并过滤 (6.9s)
+  ✓  27 [chromium] › e2e\monitoring.spec.ts:86:3 › 实时监控 public TCP / REST / WS / browser › 底图 key 只进入瓦片请求，不进入页面正文、错误提示或控制台 (1.1s)
+  ✓  28 [chromium] › e2e\monitoring.spec.ts:103:3 › 实时监控 public TCP / REST / WS / browser › 底图返回 403 或非图片内容时显示错误且车辆列表可用 (3.0s)
+
+
+  1) [chromium] › e2e\commands.spec.ts:15:3 › 文本与临时跟踪指令 public TCP / REST / browser › 页面发起文本与临时跟踪，终端应答后通信结果独立更新 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: getByTestId('commands-latest')
+    Expected substring: [32m"间隔 5 秒"[39m
+    Received string:    [31m"最近一次提交指令#2 临时跟踪提交结果已提交 · browser-admin · 2026-11-16 10:30:08.258通信结果终端应答成功流水号 / epoch2 / 1"[39m
+    Timeout: 5000ms
+
+    Call log:
+    [2m  - Expect "toContainText" with timeout 5000ms[22m
+    [2m  - waiting for getByTestId('commands-latest')[22m
+    [2m    3 × locator resolved to <section class="latest" data-v-b01f3ae5="" data-testid="commands-latest">…</section>[22m
+    [2m      - unexpected value "最近一次提交指令#1 文本通知提交结果已提交 · browser-admin · 2026-11-16 10:30:07.362通信结果终端应答成功流水号 / epoch1 / 1"[22m
+    [2m    - locator resolved to <section class="latest" data-v-b01f3ae5="" data-testid="commands-latest">…</section>[22m
+    [2m    - unexpected value "最近一次提交指令#2 临时跟踪提交结果已提交 · browser-admin · 2026-11-16 10:30:08.258通信结果已下发流水号 / epoch2 / 1"[22m
+    [2m    5 × locator resolved to <section class="latest" data-v-b01f3ae5="" data-testid="commands-latest">…</section>[22m
+    [2m      - unexpected value "最近一次提交指令#2 临时跟踪提交结果已提交 · browser-admin · 2026-11-16 10:30:08.258通信结果终端应答成功流水号 / epoch2 / 1"[22m
+
+
+      65 |       await page.getByTestId('commands-tracking-valid').fill('60')
+      66 |       await page.getByTestId('commands-tracking-submit').click()
+    > 67 |       await expect(latest).toContainText('间隔 5 秒')
+         |                            ^
+      68 |       await expect(page.getByTestId('commands-latest-communication')).toContainText('终端应答成功', { timeout: 15_000 })
+      69 |
+      70 |       await expect.poll(() => output).toContain('text: received type=1 flag=1 content=模拟文本指令')
+        at C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a9b17de9e052cfbbb\web\e2e\commands.spec.ts:67:28
+
+    Error Context: test-results\commands-文本与临时跟踪指令-public--be045-r-页面发起文本与临时跟踪，终端应答后通信结果独立更新-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\commands-文本与临时跟踪指令-public--be045-r-页面发起文本与临时跟踪，终端应答后通信结果独立更新-chromium\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results\commands-文本与临时跟踪指令-public--be045-r-页面发起文本与临时跟踪，终端应答后通信结果独立更新-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › e2e\commands.spec.ts:15:3 › 文本与临时跟踪指令 public TCP / REST / browser › 页面发起文本与临时跟踪，终端应答后通信结果独立更新 
+  27 passed (1.4m)
+ ELIFECYCLE  Command failed with exit code 1.

@@ -42,6 +42,10 @@ public class TerminalConnectionRegistry {
                 });
     }
 
+    Optional<Session> session(String terminalNo) {
+        return Optional.ofNullable(sessions.get(terminalNo));
+    }
+
     public Optional<TerminalAccessPort.SessionView> current(String terminalNo) {
         Session session = sessions.get(terminalNo);
         if (session == null) {
