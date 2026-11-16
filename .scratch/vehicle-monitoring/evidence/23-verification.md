@@ -9,7 +9,7 @@
 - 执行命令（锁内）：
   `& 'C:\Users\YuanS\AppData\Local\Temp\vms-spec-notes\with-test-lock.ps1' -Command 'C:\Users\YuanS\AppData\Local\Microsoft\WindowsApps\Microsoft.PowerShell_8wekyb3d8bbwe\pwsh.exe','-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-File','C:\Users\YuanS\AppData\Local\Temp\vms-ticket23\verify23.ps1'`
 - 证据存放：以下均在 `.scratch/vehicle-monitoring/evidence/` 顶层（`.gitignore` 仅放行该目录顶层的 `*.log`）：
-  `23-server-r{1,2}-s{1,2}.log`、`23-playwright-{r1,r2}.log`、`23-vite-{r1,r2}.log`、`23-r{1,2}-23-browser-*.png`、`23-web-checks.log`、`23-red-{1,2,3}-*.log`。
+  `23-server-r{1,2}-s{1,2}.log`、`23-playwright-{r1,r2}.log`、`23-vite-{r1,r2}.log`、`23-r{1,2}-23-browser-*.png`、`23-web-checks.log`、`23-red-{1,2,3}-*.log`；合并集成分支后的复验另存为 `23-merge-*`（见第 7 节）。
 ## 1. 红→绿记录
 
 本票是验收编排，不改产品代码；验收脚本与新 e2e 本身也按红→绿推进。红阶段的失败均定位为**测试数据/测试驱动方式**问题，不调整任何判定阈值或放宽断言：
@@ -173,7 +173,12 @@ ALL CHECKS PASSED (2 consecutive rounds)
 
 ## 7. 合并集成分支后复验
 
-待合并最新 `integration/tickets-08-27` 后补充。
+- 合并提交：`abfeda9`（`merge: 合入集成分支（含任务19、20）`），双亲为 `9d04bf6`（本票提交）与 `5e0cc93`（`integration/tickets-08-27`，含任务19、20）；`ort` 策略自动合并，无冲突，未改动本票新增的 e2e spec、证据与 ticket 文件。
+- 重新编译（锁内）：`mvnw.cmd -B -DskipTests package` → 四模块全部 SUCCESS（protocol、server、simulator、根），`[lock] command exit code: 0`；证据 `23-merge-package.log`。
+- 前端（锁外）：`pnpm typecheck` exit 0；`pnpm lint` exit 0（`0 errors, 137 warnings`）；`pnpm build` exit 0（`✓ built in 550ms`）；证据 `23-merge-web-checks.log`。
+- 全量复验（锁内，同环境连续两轮，使用合并后重新打包的 `server-0.1.0-SNAPSHOT.jar`）：`SUMMARY round=1 result=PASS roundSeconds=279s mysqlOutage=25s redisOutage=6s tcpOutage=11s playwright=PASS`；`SUMMARY round=2 result=PASS roundSeconds=289s mysqlOutage=26s redisOutage=6s tcpOutage=9s playwright=PASS`；`ALL CHECKS PASSED (2 consecutive rounds)`，`[lock] command exit code: 0`；证据 `23-merge-harness.log`。
+- 合并后两轮 Playwright 均 `5 passed`、exit 0（第 1 轮 2.2 min、第 2 轮约 2.2 min），逐条明细与截图另存为 `23-merge-playwright-r{1,2}.log`、`23-merge-r{1,2}-23-browser-*.png`；合并前的两轮证据保持为首次提交 `9d04bf6` 中的 `23-server-*`、`23-playwright-*`、`23-vite-*`、`23-r*-23-browser-*.png`。
+- 结论：合入任务19/20 后，四类中断与恢复、重启后报警/处置/候选/围栏保持、启动宽限、补传只补轨迹、Redis 数据与派生缓存、重连补齐与去重、页面断线与陈旧状态均再次两轮通过，未发现合并引入的回归。合并只涉及任务19/20 的后端、前端与证据文件，未触及本票范围文件。
 
 ## 8. 未执行与说明
 

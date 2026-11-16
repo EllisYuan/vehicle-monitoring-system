@@ -1,0 +1,43 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-16T22:08:20.009+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : Starting VehicleMonitoringApplication v0.1.0-SNAPSHOT using Java 21.0.9 with PID 14932 (C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\server\target\server-0.1.0-SNAPSHOT.jar started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0)
+2026-11-16T22:08:20.013+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T22:08:21.243+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-16T22:08:21.247+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-16T22:08:21.300+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 0 Redis repository interfaces.
+2026-11-16T22:08:22.512+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 18195 (http)
+2026-11-16T22:08:22.534+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-16T22:08:22.535+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-16T22:08:22.584+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2491 ms
+2026-11-16T22:08:23.202+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-16T22:08:23.416+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6248cfab
+2026-11-16T22:08:23.419+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-16T22:08:23.455+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://127.0.0.1:13313/vms?useUnicode=true&characterEncoding=utf8&connectionTimeZone=Asia/Shanghai&forceConnectionTimeZoneToSession=true&allowPublicKeyRetrieval=true&useSSL=false (MySQL 8.4)
+2026-11-16T22:08:23.595+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 13 migrations (execution time 00:00.067s)
+2026-11-16T22:08:23.615+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: 14
+2026-11-16T22:08:23.620+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Schema `vms` is up to date. No migration necessary.
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-16T22:08:26.101+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@42e3ede4
+2026-11-16T22:08:26.362+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 18195 (http) with context path '/'
+2026-11-16T22:08:26.535+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : Started VehicleMonitoringApplication in 7.244 seconds (process running for 8.349)
+2026-11-16T22:08:26.560+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 账号已存在，跳过初始管理员建立
+2026-11-16T22:08:26.611+08:00  INFO 14932 --- [vehicle-monitoring-system] [           main] c.vms.track.TrackPartitionMaintenance    : 轨迹分区维护完成 trigger=STARTUP retentionDays=30 created=[] dropped=[]
+2026-11-16T22:08:27.313+08:00  INFO 14932 --- [vehicle-monitoring-system] [io-18195-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-16T22:08:27.313+08:00  INFO 14932 --- [vehicle-monitoring-system] [io-18195-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-16T22:08:27.315+08:00  INFO 14932 --- [vehicle-monitoring-system] [io-18195-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-16T22:09:39.714+08:00  INFO 14932 --- [vehicle-monitoring-system] [io-18195-exec-9] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=c8c71b69-bf2b-46e9-879b-b9e5fbc9480a, user=t23-admin
+2026-11-16T22:09:42.731+08:00  INFO 14932 --- [vehicle-monitoring-system] [o-18195-exec-10] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=083e192a-0739-4850-a2f3-c298e5ca56a2, user=t23-admin
+2026-11-16T22:09:51.695+08:00  INFO 14932 --- [vehicle-monitoring-system] [io-18195-exec-3] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=739e1cb2-5e80-4445-8678-97d547cbc19f, user=t23-admin
+2026-11-16T22:09:53.893+08:00  INFO 14932 --- [vehicle-monitoring-system] [o-18195-exec-10] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=fd5acb3e-47d7-4b88-b58b-8d0993bea052, user=t23-admin
+2026-11-16T22:11:31.144+08:00  INFO 14932 --- [vehicle-monitoring-system] [io-18195-exec-2] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=c2459756-2d32-4f3e-8c5c-873ce9cdbf70, user=t23-admin
