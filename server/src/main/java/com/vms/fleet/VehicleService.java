@@ -34,6 +34,10 @@ public class VehicleService {
             LEFT JOIN terminal t ON t.id = b.terminal_id
             """;
 
+    private static final String COUNT_SELECT = """
+            SELECT count(*) FROM vehicle v JOIN fleet f ON f.id = v.fleet_id
+            """;
+
     private final JdbcTemplate jdbc;
     private final FleetScopeResolver scopes;
     private final AuditService audit;
@@ -55,12 +59,27 @@ public class VehicleService {
             throw new ForbiddenException();
         }
         List<Object> args = new ArrayList<>();
+        return jdbc.query(SELECT + filter(scope, fleetId, args) + " ORDER BY v.plate_no",
+                VehicleService::view, args.toArray());
+    }
+
+    /** 导出前按与列表相同的条件计数，避免加载超限结果。 */
+    public long count(UserAccount user, Long fleetId) {
+        FleetScope scope = scopes.resolve(user);
+        if (fleetId != null && !scope.contains(fleetId)) {
+            throw new ForbiddenException();
+        }
+        List<Object> args = new ArrayList<>();
+        return jdbc.queryForObject(COUNT_SELECT + filter(scope, fleetId, args), Long.class, args.toArray());
+    }
+
+    private String filter(FleetScope scope, Long fleetId, List<Object> args) {
         String where = " WHERE " + FleetScopeSql.where("v.fleet_id", scope, args);
         if (fleetId != null) {
             where += " AND v.fleet_id = ?";
             args.add(fleetId);
         }
-        return jdbc.query(SELECT + where + " ORDER BY v.plate_no", VehicleService::view, args.toArray());
+        return where;
     }
 
     public VehicleView get(UserAccount user, long id) {

@@ -30,6 +30,19 @@ public class AlarmQueryService {
             FROM alarm a JOIN vehicle v ON v.id=a.vehicle_id JOIN fleet f ON f.id=a.fleet_id_at_event
             """;
 
+    private static final String COUNT_SELECT = "SELECT count(*) FROM alarm a";
+
+    private static final String HANDLING_SELECT = """
+            SELECT l.id,l.alarm_id,v.plate_no,a.fleet_id_at_event,f.fleet_name,l.change_type,l.from_status,
+                   l.to_status,l.operator_id,u.username,l.remark,l.created_at
+            FROM alarm_handle_log l JOIN alarm a ON a.id=l.alarm_id
+            JOIN vehicle v ON v.id=a.vehicle_id JOIN fleet f ON f.id=a.fleet_id_at_event
+            LEFT JOIN sys_user u ON u.id=l.operator_id
+            """;
+
+    private static final String HANDLING_COUNT_SELECT =
+            "SELECT count(*) FROM alarm_handle_log l JOIN alarm a ON a.id=l.alarm_id";
+
     private static final String DETAIL_SELECT = """
             SELECT a.id,a.vehicle_id,v.plate_no,a.fleet_id_at_event,f.fleet_name,a.source,a.alarm_type,
                    a.condition_state,a.handle_status,a.driver_id,a.rule_id,a.rule_version,a.rule_snapshot,
@@ -48,19 +61,50 @@ public class AlarmQueryService {
     }
 
     public List<AlarmRow> list(UserAccount user, Long fleetId) {
+        List<Object> args = new ArrayList<>();
+        String where = filter(scope(user, fleetId), fleetId, args);
+        String sql = LIST_SELECT + " WHERE " + where + " ORDER BY a.start_time DESC, a.id DESC";
+        return jdbc.query(sql, this::row, args.toArray());
+    }
+
+    /** 导出前计数，与列表使用同一数据范围与筛选条件。 */
+    public long count(UserAccount user, Long fleetId) {
+        List<Object> args = new ArrayList<>();
+        String where = filter(scope(user, fleetId), fleetId, args);
+        Long total = jdbc.queryForObject(COUNT_SELECT + " WHERE " + where, Long.class, args.toArray());
+        return total == null ? 0 : total;
+    }
+
+    /** 处置记录，与处置页面使用同一数据范围与车队筛选。 */
+    public List<HandlingRow> handlingRecords(UserAccount user, Long fleetId) {
+        List<Object> args = new ArrayList<>();
+        String where = filter(scope(user, fleetId), fleetId, args);
+        String sql = HANDLING_SELECT + " WHERE " + where + " ORDER BY l.created_at, l.id";
+        return jdbc.query(sql, this::handlingRow, args.toArray());
+    }
+
+    public long countHandlingRecords(UserAccount user, Long fleetId) {
+        List<Object> args = new ArrayList<>();
+        String where = filter(scope(user, fleetId), fleetId, args);
+        Long total = jdbc.queryForObject(HANDLING_COUNT_SELECT + " WHERE " + where, Long.class, args.toArray());
+        return total == null ? 0 : total;
+    }
+
+    private FleetScope scope(UserAccount user, Long fleetId) {
         FleetScope scope = scopes.resolve(user);
         if (fleetId != null && !scope.contains(fleetId)) {
             throw new ForbiddenException();
         }
-        List<Object> args = new ArrayList<>();
-        StringBuilder sql = new StringBuilder(LIST_SELECT).append(" WHERE ");
-        sql.append(FleetScopeSql.where("a.fleet_id_at_event", scope, args));
+        return scope;
+    }
+
+    private String filter(FleetScope scope, Long fleetId, List<Object> args) {
+        StringBuilder where = new StringBuilder(FleetScopeSql.where("a.fleet_id_at_event", scope, args));
         if (fleetId != null) {
-            sql.append(" AND a.fleet_id_at_event=?");
+            where.append(" AND a.fleet_id_at_event=?");
             args.add(fleetId);
         }
-        sql.append(" ORDER BY a.start_time DESC, a.id DESC");
-        return jdbc.query(sql.toString(), this::row, args.toArray());
+        return where.toString();
     }
 
     public AlarmDetail detail(UserAccount user, long alarmId) {
@@ -96,6 +140,14 @@ public class AlarmQueryService {
                 offset(rs.getObject("start_time", LocalDateTime.class)),
                 offset(rs.getObject("last_time", LocalDateTime.class)),
                 offset(rs.getObject("recovered_at", LocalDateTime.class)));
+    }
+
+    private HandlingRow handlingRow(ResultSet rs, int index) throws SQLException {
+        return new HandlingRow(rs.getLong("id"), rs.getLong("alarm_id"), rs.getString("plate_no"),
+                rs.getLong("fleet_id_at_event"), rs.getString("fleet_name"), rs.getString("change_type"),
+                rs.getString("from_status"), rs.getString("to_status"), rs.getObject("operator_id", Long.class),
+                rs.getString("username"), rs.getString("remark"),
+                offset(rs.getObject("created_at", LocalDateTime.class)));
     }
 
     private AlarmBase base(ResultSet rs, int index) throws SQLException {
@@ -172,6 +224,10 @@ public class AlarmQueryService {
 
     public record HandleLog(long id, String changeType, String fromStatus, String toStatus, Long operatorId,
                             String operatorName, String remark, OffsetDateTime createdAt) { }
+
+    public record HandlingRow(long id, long alarmId, String plateNo, long fleetId, String fleetName,
+                              String changeType, String fromStatus, String toStatus, Long operatorId,
+                              String operatorName, String remark, OffsetDateTime createdAt) { }
 
     private record AlarmBase(long id, long vehicleId, String plateNo, long fleetId, String fleetName,
                              String source, String alarmType, String conditionState, String handleStatus,

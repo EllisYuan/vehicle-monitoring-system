@@ -83,10 +83,10 @@ export const router = createRouter({
     {
       path: '/monitor/stats',
       name: 'stats',
-      component: PlaceholderView,
+      component: () => import('../features/statistics/views/StatisticsView.vue'),
       meta: {
         title: '监控统计',
-        description: '在线、报警与处理率统计在统计任务中交付，按角色数据范围过滤。',
+        description: '按角色数据范围查看今日车辆与报警指标、日期趋势、类型分布及车队聚合，处理率可复算。',
         area: 'monitoring',
         ticket: '19 有权限的监控统计',
       },
