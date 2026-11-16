@@ -1,0 +1,99 @@
+{
+  "source": "http://t0.tianditu.gov.cn/vec_w/wmts?request=GetCapabilities&service=wmts",
+  "fetchedAt": "2026-11-16",
+  "layer": "vec",
+  "tileMatrixSet": "w",
+  "supportedCrs": "urn:ogc:def:crs:EPSG::900913",
+  "matrices": [
+    {
+      "id": "1",
+      "scaleDenominator": 295829355.4545656,
+      "matrixWidth": 2
+    },
+    {
+      "id": "2",
+      "scaleDenominator": 147914677.7272828,
+      "matrixWidth": 4
+    },
+    {
+      "id": "3",
+      "scaleDenominator": 73957338.8636414,
+      "matrixWidth": 8
+    },
+    {
+      "id": "4",
+      "scaleDenominator": 36978669.4318207,
+      "matrixWidth": 16
+    },
+    {
+      "id": "5",
+      "scaleDenominator": 18489334.71591035,
+      "matrixWidth": 32
+    },
+    {
+      "id": "6",
+      "scaleDenominator": 9244667.357955175,
+      "matrixWidth": 64
+    },
+    {
+      "id": "7",
+      "scaleDenominator": 4622333.678977588,
+      "matrixWidth": 128
+    },
+    {
+      "id": "8",
+      "scaleDenominator": 2311166.839488794,
+      "matrixWidth": 256
+    },
+    {
+      "id": "9",
+      "scaleDenominator": 1155583.419744397,
+      "matrixWidth": 512
+    },
+    {
+      "id": "10",
+      "scaleDenominator": 577791.7098721985,
+      "matrixWidth": 1024
+    },
+    {
+      "id": "11",
+      "scaleDenominator": 288895.85493609926,
+      "matrixWidth": 2048
+    },
+    {
+      "id": "12",
+      "scaleDenominator": 144447.92746804963,
+      "matrixWidth": 4096
+    },
+    {
+      "id": "13",
+      "scaleDenominator": 72223.96373402482,
+      "matrixWidth": 8192
+    },
+    {
+      "id": "14",
+      "scaleDenominator": 36111.98186701241,
+      "matrixWidth": 16384
+    },
+    {
+      "id": "15",
+      "scaleDenominator": 18055.990933506204,
+      "matrixWidth": 32768
+    },
+    {
+      "id": "16",
+      "scaleDenominator": 9027.995466753102,
+      "matrixWidth": 65536
+    },
+    {
+      "id": "17",
+      "scaleDenominator": 4513.997733376551,
+      "matrixWidth": 131072
+    },
+    {
+      "id": "18",
+      "scaleDenominator": 2256.998866688275,
+      "matrixWidth": 262144
+    }
+  ]
+}
