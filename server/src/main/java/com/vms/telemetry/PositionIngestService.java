@@ -85,8 +85,12 @@ public class PositionIngestService {
                         byte[] rawBody) {
         // 保留期外按 11 的保留策略留拒绝摘要，同时按 08 的质量语义记受限异常；不落轨迹、不推进快照。
         if (!retention.isWithinTrackWindow(report.time())) {
-            recordRetentionRejection(terminalId, null, report, receivedAt);
-            recordAnomaly(terminalId, null, null, report.time(), receivedAt, "RETENTION_OUTSIDE", rawBody);
+            // 保留拒绝摘要属运营诊断，沿用 11 的当前绑定语义；不写入轨迹历史，也不参与历史归属。
+            Ownership current = terminalUsable ? currentOwnership(terminalId) : null;
+            recordRetentionRejection(terminalId, current == null ? null : current.vehicleId(), report, receivedAt);
+            recordAnomaly(terminalId, current == null ? null : current.vehicleId(),
+                    current == null ? null : current.fleetId(), report.time(), receivedAt,
+                    "RETENTION_OUTSIDE", rawBody);
             return;
         }
         // 车辆与车队按 gps_time 落在当时的历史区间解析；无法唯一归属就记异常，不用当前关系猜测。
@@ -155,6 +159,24 @@ public class PositionIngestService {
                 WHERE vehicle_id = ? AND effective_from <= ? AND (effective_to IS NULL OR effective_to > ?)
                 """, Long.class, vehicleId, gpsTime, gpsTime);
         return fleets.size() == 1 ? new Ownership(vehicleId, fleets.getFirst()) : null;
+    }
+
+    /**
+     * 保留期外摘要使用的接收时当前绑定；不用于 track_point 的 fleet_id_at_event，也不用于历史读取授权。
+     */
+    private Ownership currentOwnership(long terminalId) {
+        List<Long> vehicles = jdbc.queryForList(
+                "SELECT vehicle_id FROM terminal_vehicle_binding WHERE current_terminal_id = ?",
+                Long.class, terminalId);
+        if (vehicles.size() != 1) {
+            return null;
+        }
+        long vehicleId = vehicles.getFirst();
+        var rows = jdbc.queryForList("SELECT fleet_id, status FROM vehicle WHERE id = ? FOR UPDATE", vehicleId);
+        if (rows.size() != 1 || !"ENABLED".equals(rows.getFirst().get("status"))) {
+            return null;
+        }
+        return new Ownership(vehicleId, ((Number) rows.getFirst().get("fleet_id")).longValue());
     }
 
     private void recordRetentionRejection(long terminalId, Long vehicleId, PositionReport report,

@@ -2,7 +2,7 @@
 
 - 日期：2026-11-16
 - 分支：feat/ticket-09-batch-backfill
-- 基线：`integration/tickets-08-27` HEAD `b221243`（含任务08 幂等/质量与任务11 保留/分区）
+- 基线：`integration/tickets-08-27` HEAD `b221243`（含任务08 幂等/质量与任务11 保留/分区）；提交前合并至 `f3d2645`（含任务10 车辆轨迹查询与回放），无冲突，合并后复跑见第 6 节。
 - 结论：**Status: resolved**。7 条 AC 均有真实 TCP / 真实 MySQL / MockMvc 三角色 / Playwright 证据；本票未新增迁移。
 
 ## 环境
@@ -87,7 +87,19 @@ mvnw.cmd -B -pl server -am -Dtest=PositionQualityFlowTest,TelemetryFlowTest,Sche
 - `pnpm --dir web lint`：exit 0，39 warnings（均为 `TrackRetentionView.vue` 既有格式告警，0 errors）。
 - `pnpm --dir web build`：exit 0，312 modules transformed。
 - 证据：`09-web-checks.log`。
+- 合并任务10 前端代码后复跑：`typecheck` exit 0；`lint` exit 0，100 warnings（含任务10 新增 `TrackMap.vue`/`TrackPlaybackView.vue` 的格式告警，0 errors）；`build` exit 0（313 modules transformed）。证据：`09-postmerge-web-checks.log`。
 
+### 6. 合并后回归（走锁）
+
+提交前 `git merge integration/tickets-08-27`：集成分支已前进到 `f3d2645`（含任务10 单车轨迹查询与回放），无冲突。
+
+```
+mvnw.cmd -B -pl server -am -Dtest=PositionQualityFlowTest,TelemetryFlowTest,SchemaUpgradeTest,BatchBackfillFlowTest,TrackQueryFlowTest,TrackRetentionMaintenanceTest -Dsurefire.failIfNoSpecifiedTests=false test
+```
+
+- `09-postmerge-backend.log`：`Tests run: 45, Failures: 0, Errors: 0, Skipped: 0`，BUILD SUCCESS。
+- 合并后首跑发现 `TrackRetentionMaintenanceTest` 空指针：09 曾把保留期外拒绝摘要的 `vehicle_id` 置 NULL，而任务11 的运营摘要要求记录接收时绑定。修复为 retention 分支用 `currentOwnership(terminalId)` 解析接收时当前绑定（仅用于 `track_retention_rejection` 与 `RETENTION_OUTSIDE` 异常摘要，不写入 `track_point`，不参与历史归属与读取授权）。
+- 合并后浏览器：`mvnw.cmd -B -pl server,simulator -am -Dvms.browser-tests=true -Dtest=BrowserFlowTest -Dsurefire.failIfNoSpecifiedTests=false test`，BrowserFlowTest 1/1 通过，BUILD SUCCESS（`09-postmerge-browser.log`）。
 ## AC 状态
 
 | # | Acceptance criterion | 状态 | 证据 |

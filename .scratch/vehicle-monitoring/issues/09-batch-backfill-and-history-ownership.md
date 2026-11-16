@@ -55,5 +55,6 @@ Blocked by: 08
 - `mvnw.cmd -B -pl server,simulator -am -Dvms.browser-tests=true -Dtest=BrowserFlowTest -Dsurefire.failIfNoSpecifiedTests=false test`：BrowserFlowTest 通过，Playwright 37 passed（`09-browser.log`、`09-playwright.log`，截图 `09-backfill-no-rollback.png`）。
 - 回归 `PositionQualityFlowTest`+`TelemetryFlowTest`+`SchemaUpgradeTest`+`BatchBackfillFlowTest`：27/27 通过（`09-regression.log`）。
 - 前端 `pnpm --dir web typecheck|lint|build`：exit 0（lint 39 条既有 warning，0 error；`09-web-checks.log`）。
+- 提交前合并 `integration/tickets-08-27` 至 `f3d2645`（含任务10）无冲突；合并后回归 6 个测试类 45/45 通过（`09-postmerge-backend.log`），BrowserFlowTest 1/1 通过（`09-postmerge-browser.log`），前端 typecheck/lint/build exit 0（`09-postmerge-web-checks.log`）。保留期外拒绝摘要恢复接收时绑定语义（`currentOwnership`），仅用于运营摘要，不参与历史归属与读取授权。
 
 边界与后续复验：轨迹查询 API/回放属 10；司机与报警关联属 12/13；报警产生与处置属 14；真实天地图属 26。本票不替代 08 幂等/冲突测试与 06 注册鉴权测试；`TelemetryFlowTest` 仅在测试辅助中把绑定区间回溯以适配按 `gps_time` 归属的新语义。
