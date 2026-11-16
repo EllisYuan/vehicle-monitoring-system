@@ -2,7 +2,11 @@ package com.vms.access;
 
 import com.vms.audit.AuditService;
 import com.vms.identity.security.PasswordHasher;
+import com.vms.protocol.Frame;
+import com.vms.protocol.FrameCodec;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import java.security.SecureRandom;
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -130,6 +134,21 @@ public class TerminalAccessService {
 
     public void revoke(long terminalId) {
         connections.revoke(terminalId);
+    }
+
+    public TerminalAccessPort.SendResult send(String terminalNo, long expectedEpoch, Frame frame) {
+        TerminalConnectionRegistry.Session session = connections.session(terminalNo).orElse(null);
+        if (session == null) {
+            return TerminalAccessPort.SendResult.NOT_CONNECTED;
+        }
+        if (session.epoch() != expectedEpoch || !connections.isCurrent(session)) {
+            return TerminalAccessPort.SendResult.STALE_EPOCH;
+        }
+        ChannelFuture future = session.channel().writeAndFlush(
+                Unpooled.wrappedBuffer(FrameCodec.encode(frame)));
+        boolean completed = future.awaitUninterruptibly(1000);
+        return completed && future.isSuccess()
+                ? TerminalAccessPort.SendResult.SENT : TerminalAccessPort.SendResult.WRITE_FAILED;
     }
 
     public boolean isCurrent(TerminalConnectionRegistry.Session session) {

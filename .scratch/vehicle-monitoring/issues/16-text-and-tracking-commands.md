@@ -1,6 +1,6 @@
 # 16: 文本与临时跟踪指令
 
-Status: open
+Status: claimed
 Labels: ready-for-agent
 Type: task
 Blocked by: 07

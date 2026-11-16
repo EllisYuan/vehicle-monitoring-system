@@ -9,6 +9,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.net.InetSocketAddress;
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.stereotype.Component;
 
@@ -24,16 +25,19 @@ public class TerminalTcpServer implements TerminalAccessPort, SmartLifecycle {
     private volatile int boundPort;
     private final com.vms.telemetry.PositionIngestService positions;
     private final TerminalSerialDispatcher dispatcher;
+    private final ObjectProvider<CommandLifecycleListener> commandListener;
 
     private final java.time.Clock clock;
 
     public TerminalTcpServer(TerminalAccessProperties properties, TerminalAccessService access,
                              com.vms.telemetry.PositionIngestService positions,
-                             TerminalSerialDispatcher dispatcher, java.time.Clock clock) {
+                             TerminalSerialDispatcher dispatcher, java.time.Clock clock,
+                             ObjectProvider<CommandLifecycleListener> commandListener) {
         this.properties = properties;
         this.access = access;
         this.positions = positions;
         this.dispatcher = dispatcher;
+        this.commandListener = commandListener;
         this.clock = clock;
     }
 
@@ -53,7 +57,7 @@ public class TerminalTcpServer implements TerminalAccessPort, SmartLifecycle {
                         protected void initChannel(SocketChannel channel) {
                             channel.pipeline().addLast(new TerminalFrameDecoder(clock));
                             channel.pipeline().addLast("terminalDispatch", new TerminalDispatchHandler(dispatcher));
-                            channel.pipeline().addLast("terminalAccess", new TerminalFrameHandler(access, positions));
+                            channel.pipeline().addLast("terminalAccess", new TerminalFrameHandler(access, positions, commandListener.getIfAvailable()));
                         }
                     })
                     .bind(new InetSocketAddress("127.0.0.1", properties.getTcpPort()))
@@ -116,6 +120,11 @@ public class TerminalTcpServer implements TerminalAccessPort, SmartLifecycle {
     @Override
     public void revoke(long terminalId) {
         access.revoke(terminalId);
+    }
+
+    @Override
+    public SendResult send(String terminalNo, long expectedEpoch, com.vms.protocol.Frame frame) {
+        return access.send(terminalNo, expectedEpoch, frame);
     }
 
     @Override

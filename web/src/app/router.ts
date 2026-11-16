@@ -73,13 +73,11 @@ export const router = createRouter({
     {
       path: '/monitor/commands',
       name: 'commands',
-      component: PlaceholderView,
+      component: () => import('../features/commands/views/CommandListView.vue'),
       meta: {
         title: '指令记录',
-        description: '文本与临时跟踪指令的提交、应答与超时在指令任务中交付，车队长不可下发。',
         area: 'monitoring',
         roles: ['ADMIN', 'MONITOR'] satisfies RoleCode[],
-        ticket: '16 文本与临时跟踪指令',
       },
     },
     {
