@@ -1,0 +1,6 @@
+== pnpm --dir web lint ==
+
+> vehicle-monitoring-web@0.1.0 lint C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a9b17de9e052cfbbb\web
+> eslint .
+
+exit=0 elapsed=21s
