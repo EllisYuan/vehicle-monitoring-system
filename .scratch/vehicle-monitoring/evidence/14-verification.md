@@ -64,7 +64,7 @@ mvnw.cmd -B -DskipTests package
 
 - `14-compile.log`：BUILD SUCCESS。
 - `14-regression.log`：`Tests run: 47, Failures: 0, Errors: 0, Skipped: 0`，BUILD SUCCESS。分项：`OverspeedAlarmFlowTest` 10、`SchemaUpgradeTest` 2、`BatchBackfillFlowTest` 7、`PositionQualityFlowTest` 8、`TelemetryFlowTest` 10、`TrackRetentionMaintenanceTest` 10。日志中的 `injected_alarm_failure` 堆栈为 `OverspeedAlarmFlowTest` 故意注入失败的用例，该类最终 10/10 通过。
-- `SchemaUpgradeTest` 已按本分支实际迁移集合更新为空库 11 个迁移、`flyway_schema_history` applied/versions=11、V6 起升级 5 个；日志确认升级到 v14。
+- `SchemaUpgradeTest` 当时按本分支实际迁移集合更新为空库 11 个迁移、`flyway_schema_history` applied/versions=11、V6 起升级 5 个；日志确认升级到 v14。该数字已被第 5 节合并后的实测取代。
 - `14-build.log`：`-DskipTests package` BUILD SUCCESS，server jar 44,160,921 字节，simulator 含 `--logout` 的类已重新编译。
 
 ### 4. 最小独立 CLI 场景（真实 TCP + 独立 MySQL/Redis + 数据库核对）
@@ -88,6 +88,14 @@ mvnw.cmd -B -DskipTests package
 - 结果：`ALL CHECKS PASSED`，`[lock] command exit code: 0`，`cleanup: server stopped, t14-mysql/t14-redis removed`；`t14-mysql`/`t14-redis` 已从容器列表消失，未触碰其他 agent 的容器。
 - server 控制台：`14-server-first.log`、`14-server-second.log`；两个 `.err.log` 均为空。server #1 日志仅有 MySQL 8.4 对 `Integer display width is deprecated` 的 Flyway WARN，无 ERROR/Exception。
 
+### 5. 合并最新集成分支与合并后复跑（全局锁内）
+
+- 预合并复核：`git merge-base` 为 `7412c1f`，集成分支 tip `d8ddd88`。锁内复跑第 3 步同一命令（显式 `-f <worktree>\pom.xml`，防止在错误目录构建），7 类 **55/55** 通过、BUILD SUCCESS（`14-premerge-rerun.log`）：Offline 8、Overspeed 10、SchemaUpgrade 2、BatchBackfill 7、PositionQuality 8、Telemetry 10、TrackRetention 10。
+- 合并：`git merge --no-ff integration/tickets-08-27`，合并提交 `bf25ecd`（双亲 `290b289` + `d8ddd88`）。唯一文本冲突 `server/src/test/java/com/vms/identity/SchemaUpgradeTest.java`（3 组数字），按合并后实测对齐：空库 `migrationsExecuted=13`、history applied/versions=13、自 V6 增量 7；表清单 30 张与 37 分区沿用集成分支断言并实测通过。
+- 约束顺序冲突：V13（任务15）晚于 V12 执行，其 `DROP/ADD ck_alarm_type` 原仅允许 `OVERSPEED/GEOFENCE_ENTER/GEOFENCE_LEAVE`，会回退 V12 的 OFFLINE/POSITION_INVALID。合并提交把 V13 约束改为并集 `('OVERSPEED','OFFLINE','POSITION_INVALID','GEOFENCE_ENTER','GEOFENCE_LEAVE')`，保持 13 个迁移；副作用是 V13 checksum 变化，已应用旧 V13 的本地开发库需重建或 `flyway repair`。
+- 合并后复跑：同一锁内执行同一 8 类命令，**61/61** 通过、BUILD SUCCESS（`14-postmerge2.log`）：AlarmHandling 6、Offline 8、Overspeed 10、SchemaUpgrade 2、BatchBackfill 7、PositionQuality 8、Telemetry 10、TrackRetention 10。日志确认 `Successfully applied 13 migrations ... now at version v14`，且 Offline 用例在含 V13 的实际 schema 上通过，证明约束并集生效。
+- 日志中的 `ck_fail_outbox_13_9`（任务13 注入）与 `CommunicationsException`（任务07 断链用例）为测试故意制造的失败路径，对应测试类均通过。
+
 ## AC 状态
 
 | # | Acceptance criterion | 状态 | 证据 |
@@ -108,6 +116,7 @@ mvnw.cmd -B -DskipTests package
 - 围栏：任务15 未实现；本票只保证无效点不进入实时状态路径，未执行围栏计算断言，也未修改围栏相关代码。
 - 不重做任务12 的超速规则；不实现任务13 的报警处置界面/接口；未修改 `/monitor/alarms`；未改变任务09 的 `resolveOwnershipAt` 语义；未实现断线补传归属。
 - `application.yml` 将调度池 2→4 属本票配置变更，用于避免新增离线扫描与既有 outbox/指令超时/分区维护互相挤占。
-- `SchemaUpgradeTest` 按实际迁移集合由 10 改为 11；本分支迁移为 V1–V8、V11、V12、V14（V6 为 Java 迁移）。
+- 合并后 `SchemaUpgradeTest` 按实际迁移集合断言 13 个迁移、30 张表、37 分区、自 V6 增量 7；合并后迁移集合为 V1–V5 SQL、V6 Java、V7、V8、V9、V11、V12、V13、V14。
+- 本票未改动 `web/`（相对集成分支净差异无前端文件），合并后未执行前端 typecheck/lint。
 - CLI 脚本调用锁时以脚本路径作为命令参数（Maven 命令仍以 worktree `mvnw.cmd` 为首参）；锁实现为通用命令包装，脚本结束后自动释放。
 - 本轮 Testcontainers/Ryuk 在回归结束后已核对无残留；CLI 脚本在 finally 中只删除 `t14-mysql`/`t14-redis`，未清理其他 agent 的容器。
