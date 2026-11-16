@@ -1,6 +1,6 @@
 # 任务 21 验证记录
 
-状态：2026-11-16 验证完成（合并前基线 907c234；第一次合并后复验于 e3a28fa；第二次合并含任务16后复验于 e5f7936，并叠加分类筛选补齐提交）。合并前：后端审计查询测试 9/9、统一浏览器入口 Playwright 20/20（含本票 3 项）、真实 HTTP 三角色 + 独立 MySQL 8.4 容器直查、前端 typecheck/lint/build 均通过。合并后：`AuditViewerTest` 再次 9/9；`BrowserFlowTest` 第三次运行 Playwright 30/30（含本票 3 项），前两次为首个既有用例 5s 登录断言超时，定位见“合并后复验”。第二次合并含任务16：`AuditViewerTest` 9/9、`BrowserFlowTest` 首跑 Playwright 31/31（含本票 3 项与任务16指令 1 项）；任务16的 V14 使 `SchemaUpgradeTest` 既有断言失配，属集成基线待修，见文末。本票无迁移，未改动 `SchemaUpgradeTest`。
+状态：2026-11-16 验证完成（合并前基线 907c234；第一次合并后复验于 e3a28fa；第二次合并含任务16后复验于 e5f7936，并叠加分类筛选补齐提交）。合并前：后端审计查询测试 9/9、统一浏览器入口 Playwright 20/20（含本票 3 项）、真实 HTTP 三角色 + 独立 MySQL 8.4 容器直查、前端 typecheck/lint/build 均通过。合并后：`AuditViewerTest` 再次 9/9；`BrowserFlowTest` 第三次运行 Playwright 30/30（含本票 3 项），前两次为首个既有用例 5s 登录断言超时，定位见“合并后复验”。第二次合并含任务16：`AuditViewerTest` 9/9、`BrowserFlowTest` 首跑 Playwright 31/31（含本票 3 项与任务16指令 1 项）；任务16的 V14 使 `SchemaUpgradeTest` 既有断言失配，该缺口已由集成分支 `899daf1` 修复，第三次合并（`38bd3a1`）后复验：`AuditViewerTest` 9/9、`SchemaUpgradeTest` 1/1、`BrowserFlowTest` Playwright 31/31。本票无迁移，未改动 `SchemaUpgradeTest`。
 
 ## 环境与资源边界
 
@@ -80,7 +80,7 @@
 - 审计导出与自动清理：明确在 Scope 外，未实现、未验证。
 - 浏览器覆盖沿用项目基线 Chromium 单浏览器；未扩展其他浏览器。
 - 合并后的受影响验证见“合并后复验”：`AuditViewerTest` 9/9、`BrowserFlowTest` 第三次 30/30 通过；前两次失败为首个既有用例的 5s 登录断言超时，与本票功能无关。
-- 集成基线缺口（本票未改动）：任务16合入的 `V14__command_log.sql` 使迁移数与表清单超出 `SchemaUpgradeTest` 的既有断言，详见“合并后复验（e5f7936，含任务16指令票）”。
+- 集成基线缺口已由集成分支修复：任务16的 `V14__command_log.sql` 曾使 `SchemaUpgradeTest` 迁移数与表清单断言失配；集成分支 `899daf1` 已对齐断言，本票第三次合并（`38bd3a1`）后 `SchemaUpgradeTest` 1/1 通过（见文末复验）。
 
 ## 合并后复验（e3a28fa）
 
@@ -100,4 +100,11 @@
 - 浏览器验证前先执行 `mvnw.cmd -B -pl simulator -am -DskipTests package`（任务16修改了 simulator）：BUILD SUCCESS，lock exit 0（`evidence/21-simulator-build-post-merge-16.log`）。
 - `BrowserFlowTest` 本次首跑通过：`Tests run: 1, Failures: 0`，Playwright `31 passed (1.9m)`，其中 `audit.spec.ts` 3/3、`commands.spec.ts` 1/1；BUILD SUCCESS，lock exit 0（`evidence/21-browser-post-merge-16.log`、`evidence/logs/02-playwright.log`）；截图 `web/test-results/admin-audit-page.png` 重新生成（63499 bytes）。
 - 复验结束后本轮 Testcontainers 容器已由 Ryuk 回收；检查时 11:38:45 起新建的 `mysql:8.4` 与 `testcontainers-ryuk-*` 属于其他 ticket 的新一轮测试，未清理，也未删除其他项目或开发容器。
-- 集成基线缺口（不属本票改动，未修改、未运行）：任务16合入的 `V14__command_log.sql` 使 Flyway 迁移由 6 个增至 7 个，并新增 `command_log`、`terminal_command_sequence` 两张表；`SchemaUpgradeTest` 仍断言 `migrationsExecuted == 6` 且 `containsExactly` 表清单不含这两张表，在当前合并基线上会失败，需由任务16或集成基线后续同步。
+- 集成基线缺口（观察记录，现已修复）：任务16合入的 `V14__command_log.sql` 使 Flyway 迁移由 6 个增至 7 个，并新增 `command_log`、`terminal_command_sequence` 两张表，当时 `SchemaUpgradeTest` 断言未同步；集成分支 `899daf1` 已修正，本票第三次合并（`38bd3a1`）后该测试 1/1 通过。
+
+## 合并后复验（38bd3a1，含集成迁移断言修复）
+
+- 集成分支 `899daf1`（fix: 对齐集成分支迁移数与命令表断言）仅修改 `SchemaUpgradeTest`：迁移数 6→7、表清单加入 `command_log` 与 `terminal_command_sequence`、history 计数 6→7。第三次合并提交 `38bd3a1`（父 `88af4ec` 与 `899daf1`），无冲突。
+- `AuditViewerTest` 与 `SchemaUpgradeTest`：`Tests run: 10, Failures: 0, Errors: 0, Skipped: 0`（前者 9、后者 1），BUILD SUCCESS，lock exit 0（`evidence/21-backend-post-merge-899daf1.log`）。
+- `BrowserFlowTest`：`Tests run: 1, Failures: 0`，Playwright `31 passed (2.3m)`（`audit.spec.ts` 3/3、`commands.spec.ts` 1/1），BUILD SUCCESS，lock exit 0（`evidence/21-browser-post-merge-899daf1.log`、`evidence/logs/02-playwright.log`）；截图 `web/test-results/admin-audit-page.png` 重新生成（63783 bytes）。
+- 本轮 Testcontainers 容器由 Ryuk 回收；未清理其他 ticket 或开发容器。
