@@ -1,5 +1,6 @@
 package com.vms.access;
 
+import com.vms.alarm.OfflineAlarmService;
 import com.vms.audit.AuditService;
 import com.vms.identity.security.PasswordHasher;
 import com.vms.protocol.Frame;
@@ -29,16 +30,18 @@ public class TerminalAccessService {
     private final PasswordHasher hasher;
     private final TerminalConnectionRegistry connections;
     private final AuditService audit;
+    private final OfflineAlarmService offlineAlarms;
     private final Clock clock;
     private final SecureRandom random = new SecureRandom();
 
     public TerminalAccessService(JdbcTemplate jdbc, PasswordHasher hasher,
                                  TerminalConnectionRegistry connections, AuditService audit,
-                                 Clock clock) {
+                                 OfflineAlarmService offlineAlarms, Clock clock) {
         this.jdbc = jdbc;
         this.hasher = hasher;
         this.connections = connections;
         this.audit = audit;
+        this.offlineAlarms = offlineAlarms;
         this.clock = clock;
     }
 
@@ -93,6 +96,8 @@ public class TerminalAccessService {
                     "reason=not_admissible");
             return null;
         }
+        // 有效鉴权即恢复通信在线：恢复既有离线事件，与本次通信写入同一事务
+        offlineAlarms.recover(registration.terminalId(), now);
         TerminalConnectionRegistry.Session session = connections.replace(
                 terminalNo, registration.terminalId(), channel);
         record("AUTHENTICATION_ACCEPTED", terminalNo, AuditService.RESULT_SUCCESS,
@@ -120,6 +125,8 @@ public class TerminalAccessService {
                     "reason=not_admissible");
             return false;
         }
+        // 心跳与终端应答属于有效通信，恢复既有离线事件
+        offlineAlarms.recover(session.terminalId(), now);
         record("COMMUNICATION_ACCEPTED", session.terminalNo(), AuditService.RESULT_SUCCESS,
                 "epoch=" + session.epoch());
         return true;
@@ -127,6 +134,21 @@ public class TerminalAccessService {
 
     public void logout(TerminalConnectionRegistry.Session session) {
         if (connections.removeIfCurrent(session)) {
+            record("LOGOUT", session.terminalNo(), AuditService.RESULT_SUCCESS,
+                    "epoch=" + session.epoch());
+        }
+    }
+
+    /**
+     * 合法注销（0x0003）：记录最后注销时刻，离线扫描据此排除主动注销；
+     * 既有 ACTIVE 离线事件不因注销恢复，也不新造通信故障报警。
+     */
+    @Transactional
+    public void lawfulLogout(TerminalConnectionRegistry.Session session) {
+        LocalDateTime now = now();
+        if (connections.removeIfCurrent(session)) {
+            jdbc.update("UPDATE terminal SET last_logout_at = ?, updated_at = ? WHERE id = ?",
+                    now, now, session.terminalId());
             record("LOGOUT", session.terminalNo(), AuditService.RESULT_SUCCESS,
                     "epoch=" + session.epoch());
         }

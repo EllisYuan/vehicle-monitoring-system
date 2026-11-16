@@ -1,0 +1,109 @@
+[lock] acquired: C:\Users\YuanS\AppData\Local\Temp\vms-ticket14\verify-14.ps1
+== cleanup stale t14 containers
+== start dedicated MySQL 8.4 and Redis 8.4
+PASS MySQL container ready
+== start server #1 (fresh schema on dedicated containers)
+PASS server listening and admin login -> 200
+PASS server #1 started with admin session
+== create fleet, three vehicles and three terminals
+PASS create fleet -> 201
+PASS create vehicle A -> 201
+PASS create vehicle B -> 201
+PASS create vehicle C -> 201
+PASS create terminal A -> 201
+PASS create terminal B -> 201
+PASS create terminal C -> 201
+PASS bind A -> 200
+PASS bind B -> 200
+PASS bind C -> 200
+== scenario logout: terminal B connects and sends 0x0003
+== CLI logout-lawful
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  logout: accepted
+PASS CLI logout-lawful exit 0
+SQL[terminal B logout state]: SELECT ever_authenticated, last_logout_at IS NOT NULL, last_seen_at IS NOT NULL FROM terminal WHERE id=2
+  1	1	1
+PASS terminal B authenticated, last_seen and lawful logout recorded
+SQL[backdate B last_seen behind logout]: UPDATE terminal SET last_seen_at = DATE_SUB(NOW(3), INTERVAL 400 SECOND) WHERE id=2
+== scenario offline: terminal A connects and drops without logout
+== CLI offline-a
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  logout: skipped by option
+PASS CLI offline-a exit 0
+== scenario restart grace: terminal C connects and drops without logout
+== CLI restart-c
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  logout: skipped by option
+PASS CLI restart-c exit 0
+SQL[terminal A/C no logout]: SELECT id, last_logout_at IS NULL FROM terminal WHERE id IN (1,3) ORDER BY id
+  1	1
+  3	1
+PASS terminals A and C disconnected without lawful logout
+== wait server #1 180s startup grace elapsed
+SQL[backdate A last_seen]: UPDATE terminal SET last_seen_at = DATE_SUB(NOW(3), INTERVAL 400 SECOND) WHERE id=1
+== wait for offline scan to activate A
+SQL[alarm A active]: SELECT id, source, alarm_type, condition_state, rule_id IS NULL, TIMESTAMPDIFF(SECOND, (SELECT last_seen_at FROM terminal WHERE id=1) + INTERVAL 180 SECOND, start_time) FROM alarm WHERE terminal_id=1 ORDER BY id
+  1	PLATFORM	OFFLINE	ACTIVE	1	0
+PASS offline alarm ACTIVE: PLATFORM source, no rule, start_time = last_seen + 180s
+SQL[created outbox A]: SELECT event_type, aggregate_id, version FROM notification_outbox WHERE event_id='alarm:created:1'
+  ALARM_EVENT	1	1
+PASS alarm:created outbox row exists with version 1
+SQL[B excluded]: SELECT count(*) FROM alarm WHERE terminal_id=2 AND alarm_type='OFFLINE'
+  0
+PASS lawfully logged out terminal B has no offline alarm after scan
+SQL[C fresh]: SELECT count(*) FROM alarm WHERE terminal_id=3
+  0
+PASS terminal C with fresh last_seen has no offline alarm before restart
+== scenario recovery: terminal A authenticates again
+== CLI recover-a
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  logout: accepted
+PASS CLI recover-a exit 0
+SQL[alarm A recovered]: SELECT condition_state, recovered_at IS NULL, TIMESTAMPDIFF(SECOND, start_time, last_time) FROM alarm WHERE id=1
+  RECOVERED	0	0
+PASS offline alarm RECOVERED on valid reconnect, last_time unchanged
+SQL[recovered outbox A]: SELECT event_type, aggregate_id FROM notification_outbox WHERE event_id='alarm:recovered:1'
+  ALARM_EVENT	1
+PASS alarm:recovered outbox row exists
+SQL[A alarm total]: SELECT count(*) FROM alarm WHERE terminal_id=1
+  1
+PASS no duplicate offline alarm for A after recovery
+== scenario restart grace: stop server #1, backdate C, start server #2
+server stopped
+SQL[backdate C last_seen]: UPDATE terminal SET last_seen_at = DATE_SUB(NOW(3), INTERVAL 400 SECOND) WHERE id=3
+PASS server listening and admin login -> 200
+PASS server #2 started with admin session
+== wait restart grace check point
+SQL[C during restart grace]: SELECT count(*) FROM alarm WHERE terminal_id=3
+  0
+PASS no offline alarm during restart grace despite stale last_seen_at
+restart grace check elapsed seconds=26
+== wait server #2 180s startup grace elapsed
+SQL[C alarm after grace]: SELECT id, source, alarm_type, condition_state, rule_id IS NULL, TIMESTAMPDIFF(SECOND, (SELECT last_seen_at FROM terminal WHERE id=3) + INTERVAL 180 SECOND, start_time) FROM alarm WHERE terminal_id=3
+  2	PLATFORM	OFFLINE	ACTIVE	1	0
+PASS offline alarm created after restart grace, start_time = stale last_seen + 180s
+SQL[created outbox C]: SELECT event_type, aggregate_id FROM notification_outbox WHERE event_id='alarm:created:2'
+  ALARM_EVENT	2
+PASS restart-grace alarm has created outbox row
+SQL[alarm summary]: SELECT t.terminal_no, a.alarm_type, a.condition_state, a.source, a.recovered_at IS NOT NULL, a.scope_changed_at IS NOT NULL FROM alarm a JOIN terminal t ON t.id=a.terminal_id ORDER BY t.terminal_no
+  01380015000000000014	OFFLINE	RECOVERED	PLATFORM	1	0
+  01380015000000000034	OFFLINE	ACTIVE	PLATFORM	0	0
+== alarm summary
+  01380015000000000014	OFFLINE	RECOVERED	PLATFORM	1	0
+  01380015000000000034	OFFLINE	ACTIVE	PLATFORM	0	0
+ALL CHECKS PASSED
+server stopped
+cleanup: server stopped, t14-mysql/t14-redis removed
+[lock] command exit code: 0
