@@ -24,7 +24,9 @@ public enum Permission {
     /** 报警人工处置；管理员与监控员，车队长只读。 */
     ALARM_HANDLE(RoleCode.ADMIN, RoleCode.MONITOR),
     /** 围栏创建/编辑/停用与车辆绑定；管理员与监控员。 */
-    GEOFENCE_MANAGE(RoleCode.ADMIN, RoleCode.MONITOR);
+    GEOFENCE_MANAGE(RoleCode.ADMIN, RoleCode.MONITOR),
+    /** 车辆、报警与处置记录 Excel 导出；车队长仅限授权车队。 */
+    EXPORT_DATA(RoleCode.ADMIN, RoleCode.MONITOR, RoleCode.FLEET_LEADER);
 
     private final RoleCode[] roles;
 
