@@ -1,0 +1,37 @@
+# 任务19 静态约束核查（源码 grep）
+
+## 1. statistics 包内不允许裸取当前时间/不得引用 currentOwnership
+StatisticsService.java:120: LocalDate today = LocalDate.now(clock);
+
+## 2. 车队过滤入口（必须全部 FleetScopeSql.where）
+StatisticsService.java:29: * 历史报警按 fleet_id_at_event 归属，车辆当前状态按当前档案归属，权限先于统计过滤。
+StatisticsService.java:142: sql.append(FleetScopeSql.where("id", scope, args));
+StatisticsService.java:154: StringBuilder where = new StringBuilder(FleetScopeSql.where("v.fleet_id", scope, args));
+StatisticsService.java:164: LEFT JOIN terminal_vehicle_binding b ON b.current_vehicle_id=v.id
+StatisticsService.java:209: where.append(FleetScopeSql.where("a.fleet_id_at_event", scope, args));
+StatisticsService.java:211: where.append(" AND a.fleet_id_at_event=?");
+StatisticsService.java:215: SELECT DATE(a.start_time) AS alarm_day,a.fleet_id_at_event AS fleet_id,
+StatisticsService.java:218: """ + where + " GROUP BY alarm_day,a.fleet_id_at_event,a.alarm_type,a.handle_status"
+StatisticsService.java:219: + " ORDER BY alarm_day,a.fleet_id_at_event,a.alarm_type,a.handle_status";
+
+## 3. 控制器权限与参数
+StatisticsController.java:15: @RequestMapping("/api/v1/statistics")
+StatisticsController.java:16: @RequiresPermission(Permission.FLEET_VIEW)
+StatisticsController.java:27: @GetMapping("/overview")
+StatisticsController.java:28: public StatisticsService.Overview overview(@RequestParam(required = false) Long fleetId) {
+StatisticsController.java:29: return statistics.overview(auth.currentUser(), fleetId);
+StatisticsController.java:32: @GetMapping("/trend")
+StatisticsController.java:34: @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+StatisticsController.java:35: @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+StatisticsController.java:36: @RequestParam(required = false) Long fleetId) {
+StatisticsController.java:37: return statistics.trend(auth.currentUser(), startDate, endDate, fleetId);
+StatisticsController.java:40: @GetMapping("/types")
+StatisticsController.java:42: @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+StatisticsController.java:43: @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+StatisticsController.java:44: @RequestParam(required = false) Long fleetId) {
+StatisticsController.java:45: return statistics.types(auth.currentUser(), startDate, endDate, fleetId);
+StatisticsController.java:48: @GetMapping("/fleets")
+StatisticsController.java:50: @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+StatisticsController.java:51: @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+StatisticsController.java:52: @RequestParam(required = false) Long fleetId) {
+StatisticsController.java:53: return statistics.fleets(auth.currentUser(), startDate, endDate, fleetId);

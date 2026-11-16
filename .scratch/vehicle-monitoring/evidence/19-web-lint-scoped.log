@@ -1,0 +1,2 @@
+COMMAND: pnpm --dir web exec eslint src/features/statistics e2e/statistics.spec.ts src/app/router.ts
+EXIT=0 (0 problems means no output above)

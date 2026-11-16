@@ -59,3 +59,6 @@ vms:
     # 来源速率限制（工程补充，避免凭证猜测与锁定滥用）
     rate-limit-max-attempts: 20
     rate-limit-window-seconds: 60
+  statistics:
+    # “启动待确认”宽限（秒）；生产默认 180，与离线判定宽限一致
+    startup-grace-seconds: ${VMS_STATISTICS_STARTUP_GRACE_SECONDS:180}
