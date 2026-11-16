@@ -1,6 +1,6 @@
 # 17: 实时订阅撤权与重连校正
 
-Status: open
+Status: resolved
 Labels: ready-for-agent
 Type: task
 Blocked by: 07
@@ -39,4 +39,31 @@ Blocked by: 07
 
 ## Answer
 
-尚未实施，尚未执行验证。
+已完成实时订阅撤权与重连校正，并合入 `integration/tickets-08-27` 后复跑通过。
+
+### 实现
+
+- 后端 `MonitorWebSocketHandler`：握手鉴权通过后才进入订阅列表；每秒重新 `auth.requireToken` 与 `requirePermission(FLEET_VIEW)`，停用、改密、新登录替换、撤权、到期均以 close code 1008 / `SUBSCRIPTION_REVOKED` 关闭；慢客户端使用有界 `ArrayBlockingQueue`（默认 512，测试配 8）+ 虚拟线程 sender，超限以 1011 `SESSION_NOT_RELIABLE` 关闭并记 WARN；每帧重新鉴权并按当前车队范围过滤；审计 `WS_SUBSCRIBE` / `WS_SUBSCRIPTION_REVOKED`，detail 仅 `sessionId=...;reason=...`，不含 ticket/token。
+- 前端 `useMonitorStream`：新增 `disconnected` / `stopped` 状态与“数据陈旧”；1008 后停止自动重连、清空车辆列表并显示失效提示；新增 `revoked` 守卫并 abort 在途快照，撤权后迟到快照不得回填；重连成功后重新查询快照；旧 `position.version` 帧丢弃。
+- `HomeView.vue` 增加 `data-testid="monitor-data-stale"`。
+- 新增 `MonitorWebSocketSubscriptionTest`（6 项）、`MonitorWebSocketExpiryTest`（1 项）、`web/e2e/monitoring-stream.spec.ts`（3 项）、`web/playwright.mock.config.ts`；未删除既有用例。
+
+### 命令与结果
+
+- 合并前后端订阅/到期：`mvnw.cmd -B -pl server -am -Dtest=MonitorWebSocketSubscriptionTest,MonitorWebSocketExpiryTest -Dsurefire.failIfNoSpecifiedTests=false test` → `Tests run: 7, Failures: 0, Errors: 0`。
+- 合并后后端：`mvnw.cmd -B -pl server -am -Dtest=MonitorWebSocketSubscriptionTest,MonitorWebSocketExpiryTest,TelemetryFlowTest -Dsurefire.failIfNoSpecifiedTests=false test` → `Tests run: 17, Failures: 0, Errors: 0`（含 07 一次性 ticket 与位置合并用例）。
+- 合并后前端 mock e2e（`web` 目录、锁内）：`.\node_modules\.bin\playwright.cmd test -c playwright.mock.config.ts --reporter=list` → `3 passed`。
+- 合并后真实浏览器：先 `mvnw.cmd -B -pl simulator -am -DskipTests package`，再 `mvnw.cmd -B -pl server,simulator -am -Dvms.browser-tests=true -Dtest=BrowserFlowTest -Dsurefire.failIfNoSpecifiedTests=false test` → BrowserFlowTest 1/1，内层 Playwright `31 passed`（含真实 WS 的 `monitoring.spec.ts` 与本票 3 条用例）。首次执行因 worktree 未预编译 simulator 导致 2 条既有用例无法启动 `TerminalSimulator`，预编译后复跑通过，失败日志保留。
+- `pnpm --dir web typecheck`、`lint`、`build` 均 exit 0。
+- 合并：`git merge integration/tickets-08-27` fast-forward 至 `6987d1b`，无冲突；ticket 26 基线（`basemap.ts`、`monitor-map-attribution`、TileMatrix 1..18、tianditu fixture 与环境变量）保留。
+- 容器：Ryuk 0.14.0 全程启用，复跑结束 `docker ps` 无本轮 Testcontainers 容器残留；未清理其他 ticket/项目容器。
+
+### 证据
+
+`.scratch/vehicle-monitoring/evidence/17-verification.md`（逐条 AC 状态与说明）、`17-*.log`（含 `17-postmerge-backend.log`、`17-postmerge-web-stream.log`、`17-postmerge-browser.log`、`17-postmerge-playwright.log`、`17-simulator-build.log` 及首次失败记录）。
+
+### 后续复验
+
+- 13/27 交付报警列表后，复验首次快照至订阅之间、断线重连期间报警新增/处置的补齐；本票以位置快照受控变化验证同一通用校正机制。
+- 8 小时绝对到期用 `sa-token.timeout=4` 缩短验证同一 `requireToken` 语义，未等待生产时长。
+- 慢客户端为真实 TCP 不读帧客户端，不是真实网络拥塞；以服务器 WARN 与订阅移除作为断开证据。
