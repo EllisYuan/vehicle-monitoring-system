@@ -1,6 +1,6 @@
 # 11: 30 天保留与分区维护
 
-Status: open
+Status: claimed
 Labels: ready-for-agent
 Type: task
 Blocked by: 07

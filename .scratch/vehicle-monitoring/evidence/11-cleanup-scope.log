@@ -1,0 +1,5 @@
+$ grep -rnE "DELETE|TRUNCATE|DROP TABLE" server/src/main/java/com/vms/track/
+(no matches: no business-table delete/truncate statements)
+
+$ grep -rn "DROP PARTITION" server/src/main/java/com/vms/track/
+server\src\main\java\com\vms\track\TrackPartitionCatalog.java:95:                jdbc.execute("ALTER TABLE " + TABLE + " DROP PARTITION " + partition.name());

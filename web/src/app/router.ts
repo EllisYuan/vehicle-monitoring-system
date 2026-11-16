@@ -158,6 +158,16 @@ export const router = createRouter({
         ticket: '21 管理员审计与运行记录查询',
       },
     },
+    {
+      path: '/admin/track-retention',
+      name: 'admin-track-retention',
+      component: () => import('../features/track-retention/views/TrackRetentionView.vue'),
+      meta: {
+        title: '轨迹保留',
+        area: 'admin',
+        roles: ['ADMIN'] satisfies RoleCode[],
+      },
+    },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
 })

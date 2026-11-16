@@ -2,6 +2,7 @@ package com.vms.telemetry;
 
 import com.vms.access.TerminalConnectionRegistry;
 import com.vms.protocol.PositionReport;
+import com.vms.track.TrackRetentionPolicy;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
@@ -16,11 +17,13 @@ public class PositionIngestService {
     private final JdbcTemplate jdbc;
     private final TerminalConnectionRegistry connections;
     private final List<PositionStateParticipant> participants;
+    private final TrackRetentionPolicy retention;
     public PositionIngestService(JdbcTemplate jdbc, TerminalConnectionRegistry connections,
-                                 List<PositionStateParticipant> participants) {
+                                 List<PositionStateParticipant> participants, TrackRetentionPolicy retention) {
         this.jdbc = jdbc;
         this.connections = connections;
         this.participants = participants;
+        this.retention = retention;
     }
 
     @Transactional
@@ -39,6 +42,19 @@ public class PositionIngestService {
         if (!"ENABLED".equals(vehicle.get("status"))) throw new IllegalStateException("Vehicle is disabled");
         // 本票只接收正常有效单点；质量、幂等与历史归属由后续 ticket 扩展。
         if (!report.fixValid()) throw new IllegalArgumentException("Invalid fixes are not accepted yet");
+        if (!retention.isWithinTrackWindow(report.time())) {
+            // 保留期外上报只留受限摘要：不落轨迹、不推进实时快照、不重建过期分区。
+            byte[] rejectedBody = report.encode();
+            jdbc.update("""
+                    INSERT INTO track_retention_rejection (terminal_id, vehicle_id, gps_time, received_at,
+                        reason, payload_hash, body_length, created_at)
+                    VALUES (?, ?, ?, ?, 'OUTSIDE_RETENTION', ?, ?, ?)
+                    """, session.terminalId(), vehicleId, report.time(), receivedAt, hash(rejectedBody),
+                    rejectedBody.length, receivedAt);
+            jdbc.update("UPDATE terminal SET last_seen_at = ?, updated_at = ? WHERE id = ?",
+                    receivedAt, receivedAt, session.terminalId());
+            return;
+        }
         long fleetId = ((Number) vehicle.get("fleet_id")).longValue();
         byte[] body = report.encode();
         jdbc.update("""
