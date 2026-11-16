@@ -149,14 +149,8 @@ export const router = createRouter({
     {
       path: '/admin/audit',
       name: 'admin-audit',
-      component: PlaceholderView,
-      meta: {
-        title: '系统审计',
-        description: '登录、账号与授权变更审计的查询页面在审计任务中交付；本期已写入审计。',
-        area: 'admin',
-        roles: ['ADMIN'] satisfies RoleCode[],
-        ticket: '21 管理员审计与运行记录查询',
-      },
+      component: () => import('../features/audit/views/AuditListView.vue'),
+      meta: { area: 'admin', roles: ['ADMIN'] satisfies RoleCode[] },
     },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
@@ -185,3 +179,4 @@ router.beforeEach(async (to) => {
   }
   return true
 })
+
