@@ -1,6 +1,6 @@
 # 任务 21 验证记录
 
-状态：2026-11-16 验证完成（合并前基线 907c234）。后端审计查询测试 9/9、统一浏览器入口 Playwright 20/20（含本票 3 项）、真实 HTTP 三角色 + 独立 MySQL 8.4 容器直查、前端 typecheck/lint/build 均通过。本票无迁移，未改动 `SchemaUpgradeTest`。
+状态：2026-11-16 验证完成（合并前基线 907c234，合并 `integration/tickets-08-27` 后复验于 e3a28fa）。合并前：后端审计查询测试 9/9、统一浏览器入口 Playwright 20/20（含本票 3 项）、真实 HTTP 三角色 + 独立 MySQL 8.4 容器直查、前端 typecheck/lint/build 均通过。合并后：`AuditViewerTest` 再次 9/9；`BrowserFlowTest` 第三次运行 Playwright 30/30（含本票 3 项），前两次为首个既有用例 5s 登录断言超时，定位见“合并后复验”。本票无迁移，未改动 `SchemaUpgradeTest`。
 
 ## 环境与资源边界
 
@@ -79,4 +79,13 @@
 - 分区维护失败告警：依赖 11 号票的维护功能，本票未接入、未伪造记录；按 ticket 约定在 11/18/27 补充复验。
 - 审计导出与自动清理：明确在 Scope 外，未实现、未验证。
 - 浏览器覆盖沿用项目基线 Chromium 单浏览器；未扩展其他浏览器。
-- 合并 `integration/tickets-08-27` 后的受影响验证在合并完成后另行记录。
+- 合并后的受影响验证见“合并后复验”：`AuditViewerTest` 9/9、`BrowserFlowTest` 第三次 30/30 通过；前两次失败为首个既有用例的 5s 登录断言超时，与本票功能无关。
+
+## 合并后复验（e3a28fa）
+
+- 合并提交 `e3a28fa`（父 `064383b` 与 `integration/tickets-08-27` 的 `2e9fbe2`），无冲突；合并后 Flyway 仍为 6 个迁移，无新增 schema 变更。
+- `AuditViewerTest`：`Tests run: 9, Failures: 0, Errors: 0, Skipped: 0`，BUILD SUCCESS，lock exit 0（`evidence/21-audit-tests-post-merge.log`）。
+- `BrowserFlowTest` 前两次运行失败于 `web/e2e/archives.spec.ts:24` 首个用例 `signIn` 的 `current-user` 断言 5s 超时（Maven `Tests run: 1, Failures: 1`，Playwright 1 failed / 29 passed；两次的 `audit.spec.ts` 均 3/3 通过）：`evidence/21-browser-post-merge.log`、`evidence/21-browser-post-merge-rerun.log`。
+- 失败定位（Playwright trace）：POST `/api/v1/auth/login` 实际返回 200，但耗时 3389ms；随后 `/api/v1/auth/me` 67ms、首页模块加载完成，失败快照已显示 `browser-admin（管理员）` 登录态。服务端登录使用 BCrypt strength=12，首个页面登录叠加 Vite 首次页面模块加载，超过 Playwright 默认 5s 的 expect 超时；审计页与审计接口不在该用例路径上。该失败与本票功能无关，属于既有浏览器用例的时序敏感问题，未修改共享测试配置。
+- 第三次运行通过：`Tests run: 1, Failures: 0`，Playwright `30 passed (1.4m)`（含 `audit.spec.ts` 3/3），BUILD SUCCESS，lock exit 0（`evidence/21-browser-post-merge-final.log`）；截图重新生成 `web/test-results/admin-audit-page.png`。
+- 复验结束后本轮 Testcontainers 容器已由 Ryuk 回收；检查时仍在运行的 `testcontainers-ryuk-*`（创建于 11:09:01）属于其他 ticket 的新一轮测试，未清理。未删除其他项目或开发容器。

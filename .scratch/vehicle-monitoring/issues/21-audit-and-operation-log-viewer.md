@@ -49,4 +49,6 @@ Blocked by: 03
 - `pnpm typecheck` / `pnpm lint` / `pnpm build` 均 exit 0（`evidence/21-web-checks.log`）。
 - 汇总见 `evidence/21-verification.md`。
 
+合并后复验（合并提交 `e3a28fa`，父 `064383b` 与 `integration/tickets-08-27` 的 `2e9fbe2`，无冲突）：`AuditViewerTest` 再次 9/9；`BrowserFlowTest` 第三次运行 Playwright 30/30（`audit.spec.ts` 3/3，`evidence/21-browser-post-merge-final.log`）。前两次运行仅首个既有用例 `archives.spec.ts` 的 `current-user` 5s 登录断言超时（登录 POST 实际 200、耗时 3389ms，失败快照已登录），trace 定位与本票改动无关；详见 `evidence/21-verification.md` 的“合并后复验”。
+
 缺口：分区维护失败告警依赖 11 号票的维护功能，尚未交付，本票如实提示且未编造占位数据，按约定在 11/18/27 补充复验；outbox DEAD 已实现并验证。审计导出与自动清理在 Scope 外。
