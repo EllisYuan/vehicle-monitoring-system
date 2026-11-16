@@ -96,7 +96,12 @@ public class TrackRetentionAdminService {
         return new PreviewView(token, currentDays, proposedDays, cutoff, partitions, estimatedRows, expiresAt);
     }
 
-    @Transactional
+    /**
+     * 失败留痕必须提交：预览失效、配置版本变化或分区维护失败时，先写 FAILED/EXPIRED 状态、
+     * 维护失败记录、告警与失败审计，再抛 ConflictException；若按默认规则回滚，这些证据会被
+     * 一并撤销，管理员只能看到 409 而查不到原因。
+     */
+    @Transactional(noRollbackFor = ConflictException.class)
     public ConfirmView confirm(UserAccount actor, String token) {
         List<Map<String, Object>> rows = jdbc.queryForList(
                 "SELECT * FROM track_retention_change WHERE token = ? FOR UPDATE", token);

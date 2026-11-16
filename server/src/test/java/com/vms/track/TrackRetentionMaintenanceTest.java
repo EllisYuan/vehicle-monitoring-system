@@ -320,6 +320,63 @@ class TrackRetentionMaintenanceTest {
         assertThat(partitions.get(index + 1)).isEqualTo(partitionName(missing.plusDays(1)));
     }
 
+    @Test
+    @Order(10)
+    void failedConfirmKeepsFailureEvidenceAndDoesNotReportSuccess() throws Exception {
+        String token = login();
+        JsonNode preview = json.readTree(mvc.perform(post("/api/v1/admin/track-retention/preview")
+                        .header("satoken", token).contentType(MediaType.APPLICATION_JSON)
+                        .content(json.writeValueAsString(Map.of("retentionDays", 5))))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isOk())
+                .andReturn().getResponse().getContentAsByteArray());
+        String changeToken = preview.path("token").asText();
+        LocalDate retainedDay = LocalDate.now(ClockConfig.BUSINESS_ZONE).minusDays(5);
+        assertThat(partitionNames()).contains(partitionName(retainedDay));
+
+        byte[] problem;
+        jdbc.execute("RENAME TABLE track_point TO track_point_unavailable");
+        try {
+            problem = mvc.perform(post("/api/v1/admin/track-retention/confirm")
+                            .header("satoken", token).contentType(MediaType.APPLICATION_JSON)
+                            .content(json.writeValueAsString(Map.of("token", changeToken))))
+                    .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isConflict())
+                    .andReturn().getResponse().getContentAsByteArray();
+        } finally {
+            jdbc.execute("RENAME TABLE track_point_unavailable TO track_point");
+        }
+        assertThat(json.readTree(problem).path("code").asText()).isEqualTo("RETENTION_MAINTENANCE_FAILED");
+
+        Map<String, Object> change = jdbc.queryForMap(
+                "SELECT * FROM track_retention_change WHERE token = ?", changeToken);
+        assertThat(change.get("status")).isEqualTo("FAILED");
+        assertThat(change.get("confirmed_at")).isNull();
+
+        JsonNode overview = json.readTree(mvc.perform(
+                        org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                                .get("/api/v1/admin/track-retention")
+                                .header("satoken", token))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.status().isOk())
+                .andReturn().getResponse().getContentAsByteArray());
+        assertThat(overview.path("maintenanceRuns").toString())
+                .contains("CONFIRM FAILED").contains("track_point");
+        assertThat(overview.path("alerts").toString())
+                .contains("PARTITION_MAINTENANCE_FAILED");
+
+        Map<String, Object> audit = jdbc.queryForMap("""
+                SELECT * FROM audit_log WHERE category = 'TRACK_RETENTION'
+                ORDER BY id DESC LIMIT 1
+                """);
+        assertThat(audit.get("result")).isEqualTo("FAILURE");
+        assertThat(audit.get("actor_name")).isEqualTo(ADMIN_NAME);
+        assertThat((String) audit.get("detail")).contains("10 -> 5").contains("分区维护失败");
+
+        assertThat(jdbc.queryForObject(
+                "SELECT config_value FROM system_config WHERE config_key = 'track.retention.days'", String.class))
+                .isEqualTo("5");
+        assertThat(partitionNames()).as("failed cleanup must not drop retained-range partitions")
+                .contains(partitionName(retainedDay));
+    }
+
     private long count(String table) {
         return jdbc.queryForObject("SELECT count(*) FROM " + table, Long.class);
     }
