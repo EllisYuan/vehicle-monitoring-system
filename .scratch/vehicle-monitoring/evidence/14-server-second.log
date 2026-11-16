@@ -1,0 +1,38 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-16T15:25:15.121+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : Starting VehicleMonitoringApplication v0.1.0-SNAPSHOT using Java 21.0.9 with PID 38028 (C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-afb076e113f7e6bf5\server\target\server-0.1.0-SNAPSHOT.jar started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-afb076e113f7e6bf5)
+2026-11-16T15:25:15.127+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T15:25:16.522+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-16T15:25:16.525+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-16T15:25:16.591+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 29 ms. Found 0 Redis repository interfaces.
+2026-11-16T15:25:17.815+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 18094 (http)
+2026-11-16T15:25:17.839+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-16T15:25:17.840+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-16T15:25:17.877+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2666 ms
+2026-11-16T15:25:18.581+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-16T15:25:18.927+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@249b54af
+2026-11-16T15:25:18.932+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-16T15:25:18.980+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://127.0.0.1:13311/vms?useUnicode=true&characterEncoding=utf8&connectionTimeZone=Asia/Shanghai&forceConnectionTimeZoneToSession=true&allowPublicKeyRetrieval=true&useSSL=false (MySQL 8.4)
+2026-11-16T15:25:19.153+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 11 migrations (execution time 00:00.066s)
+2026-11-16T15:25:19.185+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: 14
+2026-11-16T15:25:19.193+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Schema `vms` is up to date. No migration necessary.
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-16T15:25:22.114+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@a5bd950
+2026-11-16T15:25:22.368+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 18094 (http) with context path '/'
+2026-11-16T15:25:22.555+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : Started VehicleMonitoringApplication in 8.193 seconds (process running for 9.033)
+2026-11-16T15:25:22.575+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 账号已存在，跳过初始管理员建立
+2026-11-16T15:25:22.633+08:00  INFO 38028 --- [vehicle-monitoring-system] [           main] c.vms.track.TrackPartitionMaintenance    : 轨迹分区维护完成 trigger=STARTUP retentionDays=30 created=[] dropped=[]
+2026-11-16T15:25:22.713+08:00  INFO 38028 --- [vehicle-monitoring-system] [io-18094-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-16T15:25:22.714+08:00  INFO 38028 --- [vehicle-monitoring-system] [io-18094-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-16T15:25:22.716+08:00  INFO 38028 --- [vehicle-monitoring-system] [io-18094-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms

@@ -66,8 +66,12 @@ public final class TerminalSimulator {
                         options.longitude() + options.positions() * LONGITUDE_STEP, true);
             }
             waitWithHeartbeats(session, options.lingerMs(), tracking);
-            exchange(session, "logout", 0x0003, new byte[0]);
-            System.out.println("logout: accepted");
+            if (options.logout()) {
+                exchange(session, "logout", 0x0003, new byte[0]);
+                System.out.println("logout: accepted");
+            } else {
+                System.out.println("logout: skipped by option");
+            }
         } finally {
             session.close();
         }
@@ -398,7 +402,7 @@ public final class TerminalSimulator {
     private record Options(String host, int port, String terminalNo, String imei, String version,
             int positions, int intervalMs, int lingerMs, boolean fixValid, double longitude, double latitude,
             int speed, int direction, String batchMode, int batchSize, int backfill, int backfillSeconds,
-            int backfillIntervalMs, boolean reconnect) {
+            int backfillIntervalMs, boolean reconnect, boolean logout) {
 
         boolean mixedBatch() {
             return "mixed".equals(batchMode);
@@ -408,7 +412,7 @@ public final class TerminalSimulator {
             Set<String> names = Set.of("--host", "--port", "--terminal", "--imei", "--version", "--positions",
                     "--interval-ms", "--linger-ms", "--longitude", "--latitude", "--speed", "--direction",
                     "--fix-valid", "--batch", "--batch-size", "--backfill", "--backfill-seconds",
-                    "--backfill-interval-ms", "--reconnect");
+                    "--backfill-interval-ms", "--reconnect", "--logout");
             Map<String, String> values = new HashMap<>();
             for (int i = 0; i < args.length; i += 2) {
                 String name = args[i];
@@ -452,7 +456,7 @@ public final class TerminalSimulator {
             return new Options(host, integer(values, "--port", 9000, 1, 65535), terminalNo, imei, version,
                     positions, intervalMs, lingerMs, bool(values, "--fix-valid", true), longitude, latitude, speed,
                     integer(values, "--direction", 90, 0, 359), batchMode, batchSize, backfill, backfillSeconds,
-                    backfillIntervalMs, bool(values, "--reconnect", false));
+                    backfillIntervalMs, bool(values, "--reconnect", false), bool(values, "--logout", true));
         }
 
         private static int integer(Map<String, String> values, String name, int fallback, int min, int max) {
