@@ -1,6 +1,6 @@
 # 12: 可配置超速报警与持续事件
 
-Status: open
+Status: claimed
 Labels: ready-for-agent
 Type: task
 Blocked by: 04, 08

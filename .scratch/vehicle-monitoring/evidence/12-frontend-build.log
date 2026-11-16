@@ -1,0 +1,41 @@
+
+> vehicle-monitoring-web@0.1.0 build C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a6956af855f147d6b\web
+> vue-tsc -b && vite build
+
+vite v8.3.6 building client environment for production...
+transforming...
+✓ 316 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                0.34 kB │ gzip:  0.27 kB
+dist/assets/PlaceholderView-CvnvLx4d.css       0.25 kB │ gzip:  0.15 kB
+dist/assets/ChangePasswordView-AdKgJC4B.css    0.74 kB │ gzip:  0.32 kB
+dist/assets/LoginView-CTzkvtig.css             1.02 kB │ gzip:  0.45 kB
+dist/assets/TrackRetentionView-Do_30jQB.css    1.21 kB │ gzip:  0.47 kB
+dist/assets/FleetListView-BBpHoRkt.css         1.28 kB │ gzip:  0.48 kB
+dist/assets/AlarmRuleView-BlQF6jEs.css         1.45 kB │ gzip:  0.51 kB
+dist/assets/AccountListView-DXWG1LQY.css       1.71 kB │ gzip:  0.59 kB
+dist/assets/AppShell-rdbl8npt.css              1.72 kB │ gzip:  0.58 kB
+dist/assets/AuditListView-Cu9ItWY1.css         1.87 kB │ gzip:  0.65 kB
+dist/assets/DriverListView-BSatO-U9.css        2.99 kB │ gzip:  0.94 kB
+dist/assets/ArchiveListView-CDq14bZy.css       3.08 kB │ gzip:  0.99 kB
+dist/assets/CommandListView-GCHk8a7X.css       3.11 kB │ gzip:  1.02 kB
+dist/assets/HomeView-BKA3LTfb.css             14.64 kB │ gzip:  3.41 kB
+dist/assets/api-BgyOLhN8.js                    0.32 kB │ gzip:  0.20 kB
+dist/assets/PlaceholderView-mgwcRjci.js        0.87 kB │ gzip:  0.66 kB
+dist/assets/api-CGyvUAcX.js                    0.89 kB │ gzip:  0.30 kB
+dist/assets/ChangePasswordView-3j9y7NIt.js     2.16 kB │ gzip:  1.12 kB
+dist/assets/LoginView-UJpV541h.js              2.42 kB │ gzip:  1.34 kB
+dist/assets/AppShell-CelpxwXk.js               3.11 kB │ gzip:  1.40 kB
+dist/assets/FleetListView-ChewDRus.js          4.16 kB │ gzip:  1.78 kB
+dist/assets/TrackRetentionView-uoAVgifP.js     4.33 kB │ gzip:  1.89 kB
+dist/assets/AlarmRuleView-D8__d5UM.js          5.02 kB │ gzip:  2.08 kB
+dist/assets/AuditListView-tQZzZJCw.js          6.52 kB │ gzip:  2.81 kB
+dist/assets/AccountListView-BAiMCDME.js        6.52 kB │ gzip:  2.51 kB
+dist/assets/DriverListView-C-e0r5wW.js         9.09 kB │ gzip:  3.42 kB
+dist/assets/CommandListView-DsRe8UYo.js       10.23 kB │ gzip:  3.92 kB
+dist/assets/ArchiveListView-DAU8Iqzc.js       10.57 kB │ gzip:  3.79 kB
+dist/assets/index-YrO6jIQu.js                143.92 kB │ gzip: 55.56 kB
+dist/assets/HomeView-A_VfyvaN.js             330.06 kB │ gzip: 98.66 kB
+
+✓ built in 765ms
