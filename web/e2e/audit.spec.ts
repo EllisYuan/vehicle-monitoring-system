@@ -76,6 +76,8 @@ test.describe('管理员审计与运行记录查询', () => {
     await expect(row).toContainText('FAILURE')
     await expect(row).toContainText('UNKNOWN_ACCOUNT')
     await expect(page.getByTestId('audit-table')).not.toContainText('Wrong-Pass-2026')
+    // 合并任务16后前序票实际写入 COMMAND 分类，审计页分类筛选须可选
+    await expect(page.getByTestId('audit-category')).toContainText('COMMAND')
     // 只读：表格行内没有操作按钮，页面也没有删除或修改入口
     await expect(page.getByTestId('audit-table').getByRole('button')).toHaveCount(0)
     await expect(page.getByTestId('audit-delete')).toHaveCount(0)

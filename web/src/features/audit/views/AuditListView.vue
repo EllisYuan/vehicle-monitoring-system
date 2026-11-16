@@ -20,6 +20,7 @@ const categories = [
   'VEHICLE',
   'TERMINAL',
   'DRIVER',
+  'COMMAND',
 ]
 
 const filters = reactive({
