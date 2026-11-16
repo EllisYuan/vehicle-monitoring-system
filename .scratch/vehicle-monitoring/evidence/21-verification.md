@@ -1,6 +1,6 @@
 # 任务 21 验证记录
 
-状态：2026-11-16 验证完成（合并前基线 907c234；第一次合并后复验于 e3a28fa；第二次合并含任务16后复验于 e5f7936，并叠加分类筛选补齐提交）。合并前：后端审计查询测试 9/9、统一浏览器入口 Playwright 20/20（含本票 3 项）、真实 HTTP 三角色 + 独立 MySQL 8.4 容器直查、前端 typecheck/lint/build 均通过。合并后：`AuditViewerTest` 再次 9/9；`BrowserFlowTest` 第三次运行 Playwright 30/30（含本票 3 项），前两次为首个既有用例 5s 登录断言超时，定位见“合并后复验”。第二次合并含任务16：`AuditViewerTest` 9/9、`BrowserFlowTest` 首跑 Playwright 31/31（含本票 3 项与任务16指令 1 项）；任务16的 V14 使 `SchemaUpgradeTest` 既有断言失配，该缺口已由集成分支 `899daf1` 修复，第三次合并（`38bd3a1`）后复验：`AuditViewerTest` 9/9、`SchemaUpgradeTest` 1/1、`BrowserFlowTest` Playwright 31/31。本票无迁移，未改动 `SchemaUpgradeTest`。
+状态：2026-11-16 验证完成（合并前基线 907c234；第一次合并后复验于 e3a28fa；第二次合并含任务16后复验于 e5f7936，并叠加分类筛选补齐提交）。合并前：后端审计查询测试 9/9、统一浏览器入口 Playwright 20/20（含本票 3 项）、真实 HTTP 三角色 + 独立 MySQL 8.4 容器直查、前端 typecheck/lint/build 均通过。合并后：`AuditViewerTest` 再次 9/9；`BrowserFlowTest` 第三次运行 Playwright 30/30（含本票 3 项），前两次为首个既有用例 5s 登录断言超时，定位见“合并后复验”。第二次合并含任务16：`AuditViewerTest` 9/9、`BrowserFlowTest` 首跑 Playwright 31/31（含本票 3 项与任务16指令 1 项）；任务16的 V14 使 `SchemaUpgradeTest` 既有断言失配，该缺口已由集成分支 `899daf1` 修复，第三次合并（`38bd3a1`）后复验：`AuditViewerTest` 9/9、`SchemaUpgradeTest` 1/1、`BrowserFlowTest` Playwright 31/31。第四次合并含任务17后复验：`AuditViewerTest` 9/9、`BrowserFlowTest` Playwright 34/34。本票无迁移，未改动 `SchemaUpgradeTest`。
 
 ## 环境与资源边界
 
@@ -107,4 +107,11 @@
 - 集成分支 `899daf1`（fix: 对齐集成分支迁移数与命令表断言）仅修改 `SchemaUpgradeTest`：迁移数 6→7、表清单加入 `command_log` 与 `terminal_command_sequence`、history 计数 6→7。第三次合并提交 `38bd3a1`（父 `88af4ec` 与 `899daf1`），无冲突。
 - `AuditViewerTest` 与 `SchemaUpgradeTest`：`Tests run: 10, Failures: 0, Errors: 0, Skipped: 0`（前者 9、后者 1），BUILD SUCCESS，lock exit 0（`evidence/21-backend-post-merge-899daf1.log`）。
 - `BrowserFlowTest`：`Tests run: 1, Failures: 0`，Playwright `31 passed (2.3m)`（`audit.spec.ts` 3/3、`commands.spec.ts` 1/1），BUILD SUCCESS，lock exit 0（`evidence/21-browser-post-merge-899daf1.log`、`evidence/logs/02-playwright.log`）；截图 `web/test-results/admin-audit-page.png` 重新生成（63783 bytes）。
+- 本轮 Testcontainers 容器由 Ryuk 回收；未清理其他 ticket 或开发容器。
+
+## 合并后复验（64644ed，含任务17订阅撤权）
+
+- 集成分支 `eecda2c`（任务17实时订阅撤权与重连校正）合入 `MonitorWebSocketHandler`、`useMonitorStream`、`HomeView` 及 `monitoring-stream.spec.ts` 等；第四次合并提交 `64644ed`（父 `7d28c17` 与 `eecda2c`），无冲突。
+- `AuditViewerTest`：`Tests run: 9, Failures: 0, Errors: 0, Skipped: 0`，BUILD SUCCESS，lock exit 0（`evidence/21-audit-tests-post-merge-64644ed.log`）。
+- `BrowserFlowTest`：`Tests run: 1, Failures: 0`，Playwright `34 passed (2.0m)`（`audit.spec.ts` 3/3、`commands.spec.ts` 1/1，任务17新增 3 项亦通过），BUILD SUCCESS，lock exit 0（`evidence/21-browser-post-merge-64644ed.log`、`evidence/logs/02-playwright.log`）；截图 `web/test-results/admin-audit-page.png` 重新生成。
 - 本轮 Testcontainers 容器由 Ryuk 回收；未清理其他 ticket 或开发容器。
