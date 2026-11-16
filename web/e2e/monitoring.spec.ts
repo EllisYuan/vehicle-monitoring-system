@@ -64,5 +64,24 @@ test.describe('实时监控 public TCP / REST / WS / browser', () => {
     await page.getByLabel('搜索车辆或终端').fill(`模拟监控-${suffix}`)
     await expect(row).toBeVisible()
     await page.screenshot({ path: 'test-results/07-live-monitor-wmts-fixture-failure.png', fullPage: true })
+    const invalidVehicle = await create('/vehicles', { plateNo: `模拟无效-${suffix}`, fleetId: fleet.id })
+    const invalidTerminalNo = `${Date.now()}0000008`
+    const invalidTerminal = await create('/terminals', { terminalNo: invalidTerminalNo })
+    expect((await request.put(`/api/v1/vehicles/${invalidVehicle.id}/terminal`, {
+      headers, data: { terminalId: invalidTerminal.id },
+    })).ok()).toBeTruthy()
+    await page.reload()
+    await expect(page.getByTestId('monitor-stream-status')).toContainText('实时连接已建立')
+    const invalidRow = page.getByTestId(`monitor-vehicle-${invalidVehicle.id}`)
+    await expect(invalidRow).toContainText('暂无有效定位')
+    await run(java, ['-cp', simulatorClasspath, 'com.vms.simulator.TerminalSimulator',
+      '--host', '127.0.0.1', '--port', tcpPort, '--terminal', invalidTerminalNo,
+      '--positions', '2', '--interval-ms', '1100', '--linger-ms', '1000',
+      '--longitude', '121.5', '--latitude', '31.24', '--speed', '10', '--direction', '45',
+      '--fix-valid', 'false'],
+    { timeout: 20_000, windowsHide: true })
+    await expect(invalidRow).toContainText('暂无有效定位')
+    await expect(page.getByTestId('monitor-map')).toHaveAttribute('data-feature-count', '1')
+    await page.screenshot({ path: 'test-results/08-invalid-fix-not-on-map.png', fullPage: true })
   })
 })

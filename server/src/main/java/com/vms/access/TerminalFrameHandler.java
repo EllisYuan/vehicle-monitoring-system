@@ -127,7 +127,7 @@ final class TerminalFrameHandler extends SimpleChannelInboundHandler<TerminalFra
             context.close();
             return;
         }
-        positions.accept(session, com.vms.protocol.PositionReport.parse(frame.body()), receivedAt);
+        positions.accept(session, frame.body(), receivedAt);
         // accept 经 Spring transaction proxy 返回时已提交；Redis/WS 仅由 outbox worker 执行。
         send(context, frame, 0x8001,
                 new PlatformGeneralResponse(frame.header().serialNumber(), 0x0200, 0).encode());

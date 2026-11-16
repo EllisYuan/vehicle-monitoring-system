@@ -23,6 +23,7 @@ const target = ref<HTMLDivElement>()
 const error = ref('')
 const hover = ref<MonitorVehicle | null>(null)
 const basemapLoading = ref(false)
+const markerCount = ref(0)
 const attribution = import.meta.env.VITE_WMTS_ATTRIBUTION || '天地图 · 国家地理信息公共服务平台'
 const source = new VectorSource<Feature<Point>>()
 let map: Map | undefined
@@ -81,6 +82,7 @@ function updateVehicles() {
     }))
     source.addFeature(feature)
   }
+  markerCount.value = source.getFeatures().length
   if (!centered && source.getFeatures().length) { fitVehicles(); centered = true }
 }
 
@@ -155,6 +157,7 @@ onUnmounted(() => {
   <div
     class="map-workspace"
     data-testid="monitor-map"
+    :data-feature-count="markerCount"
   >
     <div
       ref="target"

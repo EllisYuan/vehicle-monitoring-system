@@ -73,7 +73,7 @@ public final class TerminalSimulator {
                 if (i > 0) {
                     serial = waitWithHeartbeats(socket, terminalNo, serial, options.intervalMs());
                 }
-                PositionReport position = new PositionReport(0, 3, options.latitude(),
+                PositionReport position = new PositionReport(0, options.fixValid() ? 3 : 1, options.latitude(),
                         options.longitude() + i * LONGITUDE_STEP, 0, options.speed(), options.direction(),
                         LocalDateTime.now(POSITION_ZONE).truncatedTo(ChronoUnit.SECONDS), List.of());
                 exchange(socket, terminalNo, "position", 0x0200, serial, position.encode());
@@ -180,11 +180,11 @@ public final class TerminalSimulator {
     }
 
     private record Options(String host, int port, String terminalNo, String imei, String version,
-            int positions, int intervalMs, int lingerMs, double longitude, double latitude, int speed, int direction) {
+            int positions, int intervalMs, int lingerMs, boolean fixValid, double longitude, double latitude, int speed, int direction) {
 
         private static Options parse(String[] args) {
             Set<String> names = Set.of("--host", "--port", "--terminal", "--imei", "--version", "--positions",
-                    "--interval-ms", "--linger-ms", "--longitude", "--latitude", "--speed", "--direction");
+                    "--interval-ms", "--linger-ms", "--longitude", "--latitude", "--speed", "--direction", "--fix-valid");
             Map<String, String> values = new HashMap<>();
             for (int i = 0; i < args.length; i += 2) {
                 String name = args[i];
@@ -210,7 +210,7 @@ public final class TerminalSimulator {
             int positions = integer(values, "--positions", 0, 0, Integer.MAX_VALUE);
             int intervalMs = integer(values, "--interval-ms", 1000, 1000, Integer.MAX_VALUE);
             int lingerMs = integer(values, "--linger-ms", 0, 0, Integer.MAX_VALUE);
-            // status=3 固定为 ACC+有效定位，南纬/西经状态位为 0，只接受东北半球坐标。
+            // --fix-valid=false 模拟结构合法但定位无效（status=ACC，无有效定位）；南纬/西经状态位为 0，只接受东北半球坐标。
             double longitude = decimal(values, "--longitude", 116.397, 0, 180);
             double latitude = decimal(values, "--latitude", 39.908, 0, 90);
             if (longitude + Math.max(0, positions - 1) * LONGITUDE_STEP > 180) {
@@ -218,7 +218,7 @@ public final class TerminalSimulator {
             }
             int speed = (int) Math.round(decimal(values, "--speed", 60, 0, 6553.5) * 10);
             return new Options(host, integer(values, "--port", 9000, 1, 65535), terminalNo, imei, version,
-                    positions, intervalMs, lingerMs, longitude, latitude, speed,
+                    positions, intervalMs, lingerMs, bool(values, "--fix-valid", true), longitude, latitude, speed,
                     integer(values, "--direction", 90, 0, 359));
         }
 
@@ -232,6 +232,17 @@ public final class TerminalSimulator {
                 // 统一报告参数名和范围，不把数值解析异常直接抛给 CLI 用户。
             }
             throw new IllegalArgumentException(name + " requires an integer in [" + min + ", " + max + "]");
+        }
+
+        private static boolean bool(Map<String, String> values, String name, boolean fallback) {
+            String value = values.getOrDefault(name, Boolean.toString(fallback));
+            if ("true".equals(value)) {
+                return true;
+            }
+            if ("false".equals(value)) {
+                return false;
+            }
+            throw new IllegalArgumentException(name + " requires true or false");
         }
 
         private static double decimal(Map<String, String> values, String name, double fallback,

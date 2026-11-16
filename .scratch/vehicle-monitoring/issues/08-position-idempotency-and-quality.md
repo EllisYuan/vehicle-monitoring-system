@@ -1,6 +1,6 @@
 # 08: 重复、冲突与定位质量处理
 
-Status: open
+Status: claimed
 Labels: ready-for-agent
 Type: task
 Blocked by: 07
