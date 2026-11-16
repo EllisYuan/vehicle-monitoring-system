@@ -1,0 +1,94 @@
+[WebServer] (node:5784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `pnpm --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:26500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:20808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium] › e2e\monitoring-stream.spec.ts:158:3 › 实时订阅前端状态与版本顺序 › 旧版本帧不覆盖新版本，异常断开后显示断线与重连中并重建订阅补齐窗口 (8.1s)
+(node:40300) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:40300) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [chromium] › e2e\monitoring-stream.spec.ts:201:3 › 实时订阅前端状态与版本顺序 › 1008 撤权关闭后停止自动重连并清空旧数据 (3.6s)
+  ✘  3 [chromium] › e2e\monitoring-stream.spec.ts:217:3 › 实时订阅前端状态与版本顺序 › 撤权时仍在途的快照返回后不能恢复旧数据 (9.2s)
+
+
+  1) [chromium] › e2e\monitoring-stream.spec.ts:158:3 › 实时订阅前端状态与版本顺序 › 旧版本帧不覆盖新版本，异常断开后显示断线与重连中并重建订阅补齐窗口 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: getByTestId('monitor-stream-status')
+    Expected substring: [32m"正在重连"[39m
+    Received string:    [31m"●实时连接已建立"[39m
+    Timeout: 5000ms
+
+    Call log:
+    [2m  - Expect "toContainText" with timeout 5000ms[22m
+    [2m  - waiting for getByTestId('monitor-stream-status')[22m
+    [2m    5 × locator resolved to <span role="status" data-v-07a5387f="" class="stream-status" data-testid="monitor-stream-status">…</span>[22m
+    [2m      - unexpected value "○实时连接已断开"[22m
+    [2m    4 × locator resolved to <span role="status" data-v-07a5387f="" class="stream-status connected" data-testid="monitor-stream-status">…</span>[22m
+    [2m      - unexpected value "●实时连接已建立"[22m
+
+
+      191 |     // 断线期间发生的受控变化没有经过 WS；重连后必须由重新查询快照补齐。
+      192 |     calls.applyControlledChange()
+    > 193 |     await expect(page.getByTestId('monitor-stream-status')).toContainText('正在重连')
+          |                                                             ^
+      194 |     await expect.poll(() => socketCount(page), { timeout: 10_000 }).toBe(before + 1)
+      195 |     await expect(page.getByTestId('monitor-stream-status')).toContainText('实时连接已建立')
+      196 |     await expect(row).toContainText('66.0 km/h')
+        at C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ad26fcaa8934e558b\web\e2e\monitoring-stream.spec.ts:193:61
+
+    Error Context: test-results\monitoring-stream-实时订阅前端状态-7440d-盖新版本，异常断开后显示断线与重连中并重建订阅补齐窗口-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\monitoring-stream-实时订阅前端状态-7440d-盖新版本，异常断开后显示断线与重连中并重建订阅补齐窗口-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\monitoring-stream-实时订阅前端状态-7440d-盖新版本，异常断开后显示断线与重连中并重建订阅补齐窗口-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › e2e\monitoring-stream.spec.ts:217:3 › 实时订阅前端状态与版本顺序 › 撤权时仍在途的快照返回后不能恢复旧数据 ────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoContainText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: getByRole('alert')
+    Expected substring: [32m"实时订阅已失效"[39m
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toContainText" with timeout 5000ms[22m
+    [2m  - waiting for getByRole('alert')[22m
+
+
+      225 |     await page.waitForTimeout(2200)
+      226 |     await expect(page.getByTestId('monitor-stream-status')).toContainText('实时连接已停止')
+    > 227 |     await expect(page.getByRole('alert')).toContainText('实时订阅已失效')
+          |                                           ^
+      228 |     await expect(page.getByTestId('monitor-empty')).toContainText('暂无可见车辆')
+      229 |     expect(await socketCount(page)).toBe(1)
+      230 |     expect(calls.tickets()).toBe(1)
+        at C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ad26fcaa8934e558b\web\e2e\monitoring-stream.spec.ts:227:43
+
+    Error Context: test-results\monitoring-stream-实时订阅前端状态与版本顺序-撤权时仍在途的快照返回后不能恢复旧数据-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\monitoring-stream-实时订阅前端状态与版本顺序-撤权时仍在途的快照返回后不能恢复旧数据-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\monitoring-stream-实时订阅前端状态与版本顺序-撤权时仍在途的快照返回后不能恢复旧数据-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › e2e\monitoring-stream.spec.ts:158:3 › 实时订阅前端状态与版本顺序 › 旧版本帧不覆盖新版本，异常断开后显示断线与重连中并重建订阅补齐窗口 
+    [chromium] › e2e\monitoring-stream.spec.ts:217:3 › 实时订阅前端状态与版本顺序 › 撤权时仍在途的快照返回后不能恢复旧数据 ─────────
+  1 passed (28.8s)
