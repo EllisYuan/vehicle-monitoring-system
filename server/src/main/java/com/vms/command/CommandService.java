@@ -209,7 +209,15 @@ public class CommandService {
                 new SubmissionView(CommandStore.STATUS_SUBMITTED, row.operatorId(), row.operatorName(),
                         row.submittedAt()),
                 new CommunicationView(row.status(), row.sendTime(), row.replyTime(), row.replyResult(),
-                        row.replyMessageId(), row.failureReason()));
+                        row.replyMessageId(), row.failureReason(), timeoutAt(row)));
+    }
+
+    /** 超时时刻按发送时刻加默认 30 秒推导：超时状态只说明期限内未应答，不改写发送与应答时间。 */
+    private LocalDateTime timeoutAt(CommandRow row) {
+        if (!CommandStore.STATUS_TIMEOUT.equals(row.status()) || row.sendTime() == null) {
+            return null;
+        }
+        return row.sendTime().plusSeconds(ACK_TIMEOUT_SECONDS);
     }
 
     private TextPayload validateText(String text, Integer textType) {
@@ -277,5 +285,5 @@ public class CommandService {
 
     public record CommunicationView(String status, LocalDateTime sendTime, LocalDateTime replyTime,
                                     Integer replyResult, Integer replyMessageId,
-                                    String failureReason) { }
+                                    String failureReason, LocalDateTime timeoutAt) { }
 }

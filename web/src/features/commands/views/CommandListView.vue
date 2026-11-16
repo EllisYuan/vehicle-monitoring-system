@@ -93,7 +93,7 @@ function submitTrackingCommand(intervalSeconds: number, validSeconds: number) {
   if (!trackingForm.terminalId) return
   return perform(
     () => submitTracking(Number(trackingForm.terminalId), intervalSeconds, validSeconds),
-    intervalSeconds === 0 ? '停止跟踪指令已提交' : '跟踪指令已提交，等待通信结果',
+    '跟踪指令已提交，等待通信结果',
   )
 }
 
@@ -231,15 +231,6 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
           >
             提交跟踪指令
           </button>
-          <button
-            type="button"
-            class="secondary"
-            :disabled="busy || loading || !trackingForm.terminalId"
-            data-testid="commands-tracking-stop"
-            @click="submitTrackingCommand(0, 0)"
-          >
-            停止跟踪
-          </button>
         </form>
       </div>
       <p
@@ -264,7 +255,7 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
           </div>
           <div>
             <dt>通信结果</dt><dd data-testid="commands-latest-communication">
-              {{ COMMAND_STATUS_LABELS[latest.communication.status] }}
+              {{ COMMAND_STATUS_LABELS[latest.communication.status] }}<small v-if="latest.communication.timeoutAt">超时 {{ time(latest.communication.timeoutAt) }}</small>
             </dd>
           </div>
           <div>
@@ -327,7 +318,7 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
                   class="number"
                 >应答 0x{{ command.communication.replyMessageId.toString(16).padStart(4, '0') }}</small>
               </td>
-              <td>发送 {{ time(command.communication.sendTime) }}<small>应答 {{ time(command.communication.replyTime) }}</small></td>
+              <td>发送 {{ time(command.communication.sendTime) }}<small>应答 {{ time(command.communication.replyTime) }}</small><small v-if="command.communication.timeoutAt">超时 {{ time(command.communication.timeoutAt) }}</small></td>
               <td>
                 <button
                   v-if="command.communication.status === 'FAILED' || command.communication.status === 'TIMEOUT'"
@@ -370,7 +361,6 @@ label { display: grid; gap: .3rem; font-size: .85rem; } label.wide { flex-basis:
 input, select, textarea { min-height: 2.2rem; max-width: 100%; padding: .4rem .6rem; border: 1px solid #c7d0d9; border-radius: 5px; background: #fff; color: var(--ink); font: inherit; }
 textarea { resize: vertical; }
 button { padding: .45rem .75rem; border: 1px solid var(--accent); border-radius: 5px; background: var(--accent); color: #fff; cursor: pointer; }
-button.secondary { background: #fff; color: var(--accent); }
 button:disabled { opacity: .55; cursor: default; } button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #2075bb; outline-offset: 3px; }
 .list-heading { margin: 1.5rem 0 .75rem; } .list-heading h2 { margin: 0; margin-right: auto; }
 .latest { margin: 1rem 0; } dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .75rem 1.5rem; margin: 0; }

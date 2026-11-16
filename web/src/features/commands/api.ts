@@ -17,6 +17,7 @@ export interface CommandCommunication {
   replyResult: number | null
   replyMessageId: number | null
   failureReason: string | null
+  timeoutAt: string | null
 }
 
 export interface CommandRecord {

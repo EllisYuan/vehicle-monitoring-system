@@ -1,6 +1,7 @@
 package com.vms.command;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -19,7 +20,9 @@ import com.vms.support.IntegrationContainers;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
@@ -174,7 +177,16 @@ class CommandFlowTest {
             clock.advance(Duration.ofSeconds(31));
             JsonNode timedOut = awaitStatus(token, commandId, "TIMEOUT");
             assertThat(timedOut.path("communication").path("replyTime").isNull()).isTrue();
+            LocalDateTime sendTime = LocalDateTime.parse(
+                    created.path("communication").path("sendTime").asText());
+            assertThat(LocalDateTime.parse(timedOut.path("communication").path("timeoutAt").asText()))
+                    .isEqualTo(sendTime.plusSeconds(30));
             assertThat(auditCount("TIMEOUT", "command:" + commandId)).isEqualTo(1);
+
+            // 超时不自动重发：等待窗口内终端连接上不应再出现第二个下行帧。
+            socket.setSoTimeout(500);
+            assertThatThrownBy(() -> receive(socket)).isInstanceOf(SocketTimeoutException.class);
+            socket.setSoTimeout(3000);
 
             acknowledge(socket, bound.terminalNo(), 904, downlink.header().serialNumber(), 0x8300, 0);
             awaitAudit("LATE_REPLY", "command:" + commandId);
@@ -246,7 +258,7 @@ class CommandFlowTest {
     }
 
     @Test
-    void fleetLeaderCannotSendAndDeniedAttemptIsAudited() throws Exception {
+    void fleetLeaderCannotSendAndMonitorPassesDispatchPermission() throws Exception {
         String token = login(ADMIN, ADMIN_PASSWORD);
         String suffix = UUID.randomUUID().toString().substring(0, 8);
         long fleet = create(token, "/fleets", Map.of("fleetCode", "C" + suffix, "fleetName", "指令只读车队"));
@@ -261,6 +273,14 @@ class CommandFlowTest {
         assertThat(auditCount("DENIED", "terminal:" + bound.terminalId())).isEqualTo(1);
         assertThat(jdbc.queryForObject("SELECT COUNT(*) FROM command_log WHERE terminal_id = ?",
                 Integer.class, bound.terminalId())).isZero();
+
+        create(token, "/users", Map.of("username", "monitor-" + suffix, "password", "Monitor-Pass-2026",
+                "roleCode", "MONITOR"));
+        String monitor = login("monitor-" + suffix, "Monitor-Pass-2026");
+        // MONITOR 允许进入下发流程；本终端未接入，因此得到离线业务拒绝而不是权限拒绝。
+        expectError(post("/api/v1/commands/text"), monitor,
+                Map.of("terminalId", bound.terminalId(), "text", "监控员文本"),
+                409, "COMMAND_TERMINAL_OFFLINE");
     }
 
     @Test

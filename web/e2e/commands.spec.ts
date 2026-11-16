@@ -36,12 +36,24 @@ test.describe('文本与临时跟踪指令 public TCP / REST / browser', () => {
     })).ok()).toBeTruthy()
 
     let output = ''
+    let pending = ''
+    const positionEvents: { at: number; line: string }[] = []
+    function collect(chunk: Buffer) {
+      const text = chunk.toString()
+      output += text
+      pending += text
+      const lines = pending.split(/\r?\n/)
+      pending = lines.pop() ?? ''
+      for (const line of lines) {
+        if (line.includes('position: accepted')) positionEvents.push({ at: Date.now(), line })
+      }
+    }
     const simulator = spawn(java, ['-cp', simulatorClasspath, 'com.vms.simulator.TerminalSimulator',
       '--host', '127.0.0.1', '--port', tcpPort, '--terminal', terminalNo,
-      '--positions', '0', '--linger-ms', '30000'],
+      '--positions', '3', '--interval-ms', '20000', '--linger-ms', '20000'],
     { windowsHide: true })
-    simulator.stdout.on('data', (chunk: Buffer) => { output += chunk.toString() })
-    simulator.stderr.on('data', (chunk: Buffer) => { output += chunk.toString() })
+    simulator.stdout.on('data', collect)
+    simulator.stderr.on('data', collect)
     try {
       await expect.poll(async () => {
         const response = await request.get('/api/v1/terminals', { headers })
@@ -61,21 +73,25 @@ test.describe('文本与临时跟踪指令 public TCP / REST / browser', () => {
       await expect(page.getByTestId('commands-latest-communication')).toContainText('终端应答成功', { timeout: 15_000 })
 
       await page.getByTestId('commands-tracking-terminal').selectOption(String(terminal.id))
-      await page.getByTestId('commands-tracking-interval').fill('5')
+      await page.getByTestId('commands-tracking-interval').fill('1')
       await page.getByTestId('commands-tracking-valid').fill('60')
       await page.getByTestId('commands-tracking-submit').click()
-      await expect(latest).toContainText('间隔 5 秒')
-      await expect(page.getByTestId('commands-latest-communication')).toContainText('终端应答成功', { timeout: 15_000 })
-
-      await page.getByTestId('commands-tracking-stop').click()
-      await expect(latest).toContainText('停止临时跟踪')
+      await expect(latest).toContainText('临时跟踪')
+      await expect(page.getByTestId('commands-table')).toContainText('间隔 1 秒 · 有效期 60 秒')
       await expect(page.getByTestId('commands-latest-communication')).toContainText('终端应答成功', { timeout: 15_000 })
 
       await expect.poll(() => output).toContain('text: received type=1 flag=1 content=模拟文本指令')
-      await expect.poll(() => output).toContain('tracking: intervalSeconds=5 validSeconds=60')
-      await expect.poll(() => output).toContain('tracking: stopped')
+      await expect.poll(() => output).toContain('tracking: intervalSeconds=1 validSeconds=60')
       await expect.poll(() => output).toContain('ack: responseId=0x8300')
       await expect.poll(() => output).toContain('ack: responseId=0x8202')
+      // 跟踪生效后，后续位置上报按 1 秒间隔继续；默认间隔为 20 秒，用于证明上报行为确实改变。
+      await expect.poll(() => positionEvents.length, { timeout: 30_000 }).toBeGreaterThanOrEqual(3)
+      const trackedPositions = positionEvents.filter(event => event.line.includes('trackingIntervalSeconds=1'))
+      expect(trackedPositions.length).toBeGreaterThanOrEqual(2)
+      const trackingGap = trackedPositions[trackedPositions.length - 1].at
+        - trackedPositions[trackedPositions.length - 2].at
+      expect(trackingGap).toBeGreaterThanOrEqual(500)
+      expect(trackingGap).toBeLessThan(5_000)
       // 保留独立 CLI 的真实接收、应答与跟踪参数输出，供 evidence 核对
       console.log(`simulator output:\n${output}`)
       await page.screenshot({ path: 'test-results/16-commands-ack.png', fullPage: true })
