@@ -118,3 +118,10 @@ Worktree：`C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\
 - **服务端日志窗口**：仓库中保留的 `logs/22-server-run.log` 只覆盖 21:37:06—21:37:17 的启动阶段，不含 21:39—21:40 的 run1 流量；因此验收脚本的“服务端日志无连接失败或 deadlock”无法从现有日志复核到 run1 窗口，run1 无断开主要由终端状态与 ACK 记录支撑。
 - **GNSS alarm bit**：见 §6，未实现、未验证。
 - 未执行：第二轮复跑、单场景端到端运行、浏览器全量、100 终端性能（24）、30 天容量（25）。
+
+### 合并后最小验证（2026-11-17，integration/tickets-08-27 @ 4a38b98）
+
+- 合并：`git merge --no-ff integration/tickets-08-27` 无冲突，合并提交 `6afd4ab`。
+- 构建：`mvnw.cmd -B -f <worktree>\pom.xml -DskipTests package`，BUILD SUCCESS（exit 0），server 105 个源文件与 simulator 模块均编译通过。
+- 测试：`-pl server -am -Dtest=OverspeedAlarmFlowTest,OfflineAndPositionAlarmFlowTest,SchemaUpgradeTest -Dsurefire.failIfNoSpecifiedTests=false test`，共 20 项通过：`OverspeedAlarmFlowTest` 10、`OfflineAndPositionAlarmFlowTest` 8、`SchemaUpgradeTest` 2；BUILD SUCCESS（exit 0，完整输出 `22-postmerge-tests.log`）。
+- 迁移事实：本票提交未改 `server/src/main/resources/db` 与 `SchemaUpgradeTest`；合并后 Flyway 仍为 13 个 migration、版本 v14，`SchemaUpgradeTest` 断言通过。
