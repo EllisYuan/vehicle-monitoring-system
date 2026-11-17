@@ -1,0 +1,520 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] vehicle-monitoring-system                                          [pom]
+[INFO] protocol                                                           [jar]
+[INFO] vehicle-monitoring-server                                          [jar]
+[INFO] 
+[INFO] -----------------< com.vms:vehicle-monitoring-system >------------------
+[INFO] Building vehicle-monitoring-system 0.1.0-SNAPSHOT                  [1/3]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --------------------------< com.vms:protocol >--------------------------
+[INFO] Building protocol 0.1.0-SNAPSHOT                                   [2/3]
+[INFO]   from protocol\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ protocol ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ac2bfb44954865d72\protocol\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ protocol ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ protocol ---
+[INFO] 
+[INFO] ---------------------------< com.vms:server >---------------------------
+[INFO] Building vehicle-monitoring-server 0.1.0-SNAPSHOT                  [3/3]
+[INFO]   from server\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-toolchain) @ server ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ server ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 12 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ server ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 97 source files with javac [debug parameters release 21] to target\classes
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-ac2bfb44954865d72/server/src/main/java/com/vms/access/TerminalTcpServer.java: C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ac2bfb44954865d72\server\src\main\java\com\vms\access\TerminalTcpServer.java uses or overrides a deprecated API.
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-ac2bfb44954865d72/server/src/main/java/com/vms/access/TerminalTcpServer.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ server ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ac2bfb44954865d72\server\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ server ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 29 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-ac2bfb44954865d72/server/src/test/java/com/vms/access/TerminalTcpIntegrationTest.java: Some input files use or override a deprecated API.
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-ac2bfb44954865d72/server/src/test/java/com/vms/access/TerminalTcpIntegrationTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ server ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.vms.alarm.OfflineAndPositionAlarmFlowTest
+20:45:07.506 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.alarm.OfflineAndPositionAlarmFlowTest]: OfflineAndPositionAlarmFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:45:07.779 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.alarm.OfflineAndPositionAlarmFlowTest
+20:45:07.880 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.alarm.OfflineAndPositionAlarmFlowTest]: OfflineAndPositionAlarmFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:45:07.893 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.alarm.OfflineAndPositionAlarmFlowTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-16T20:45:08.326+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] c.v.a.OfflineAndPositionAlarmFlowTest    : Starting OfflineAndPositionAlarmFlowTest using Java 21.0.9 with PID 4092 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ac2bfb44954865d72\server)
+2026-11-16T20:45:08.327+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] c.v.a.OfflineAndPositionAlarmFlowTest    : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T20:45:09.267+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-16T20:45:09.272+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-16T20:45:09.313+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 0 Redis repository interfaces.
+2026-11-16T20:45:10.520+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-11-16T20:45:10.544+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-16T20:45:10.545+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-16T20:45:10.650+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2295 ms
+2026-11-16T20:45:10.818+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-16T20:45:10.824+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-16T20:45:10.879+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-16T20:45:11.291+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-16T20:45:12.153+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-16T20:45:12.156+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-16T20:45:12.192+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-16T20:45:12.579+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-16T20:45:13.322+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 0df9ca4e2889f2f5a4d2ef2f0273f96d518b2c800d73e7075ab9ba41a7179901
+2026-11-16T20:45:14.351+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT1.7723342S
+2026-11-16T20:45:14.364+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-16T20:45:14.365+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-16T20:45:14.366+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-16T20:45:14.368+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-16T20:45:14.685+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: a0e6e881e54c525ebedafd738c845a2caf5f8c06050adb2390822adf1d164446
+2026-11-16T20:45:15.317+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:44843/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-16T20:45:31.484+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT17.1153762S
+2026-11-16T20:45:31.484+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:44843/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-16T20:45:31.485+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-16T20:45:31.656+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: 91c608ab14c9ccc5d979cffcc3a4a3f5fb9d1bedd8d9d2a6fe71e7868ce3917c
+2026-11-16T20:45:32.769+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT1.2834385S
+2026-11-16T20:45:33.597+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:44843/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-16T20:45:34.272+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-16T20:45:34.280+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 13 migrations (execution time 00:00.057s)
+2026-11-16T20:45:34.312+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-16T20:45:34.422+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-16T20:45:34.443+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-16T20:45:34.562+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-16T20:45:34.668+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-16T20:45:34.760+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-16T20:45:34.941+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-16T20:45:35.056+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "6 - durable position"
+2026-11-16T20:45:35.772+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "7 - telemetry anomaly"
+2026-11-16T20:45:35.835+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "8 - overspeed alarm"
+2026-11-16T20:45:35.870+08:00  WARN 4092 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:45:35.996+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "9 - alarm handle"
+2026-11-16T20:45:36.058+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "11 - track retention and partitions"
+2026-11-16T20:45:36.247+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "12 - offline and terminal alarms"
+2026-11-16T20:45:36.686+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "13 - geofence"
+2026-11-16T20:45:36.721+08:00  WARN 4092 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:45:36.722+08:00  WARN 4092 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:45:36.894+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "14 - command log"
+2026-11-16T20:45:36.982+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 13 migrations to schema `vms`, now at version v14 (execution time 00:02.087s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-16T20:45:39.647+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@73fb1d7f
+2026-11-16T20:45:39.887+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring TestDispatcherServlet ''
+2026-11-16T20:45:39.888+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-16T20:45:39.891+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+2026-11-16T20:45:39.990+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 12877 (http) with context path '/'
+2026-11-16T20:45:40.211+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] c.v.a.OfflineAndPositionAlarmFlowTest    : Started OfflineAndPositionAlarmFlowTest in 32.239 seconds (process running for 33.719)
+2026-11-16T20:45:40.224+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-16T20:45:40.269+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4afdcdf6
+2026-11-16T20:45:40.272+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-16T20:45:40.620+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：alarm14-admin
+2026-11-16T20:45:40.724+08:00  INFO 4092 --- [vehicle-monitoring-system] [           main] c.vms.track.TrackPartitionMaintenance    : 轨迹分区维护完成 trigger=STARTUP retentionDays=30 created=[] dropped=[]
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-11-16T20:45:46.984+08:00  WARN 4092 --- [vehicle-monitoring-system] [ntLoopGroup-7-4] com.vms.access.TerminalFrameHandler      : 终端 TCP 连接处理失败
+
+org.springframework.jdbc.UncategorizedSQLException: PreparedStatementCallback; uncategorized SQLException; SQL state [HY000]; error code [3819]; Check constraint 'injected_invalid_alarm_failure' is violated.
+	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1550) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:689) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:997) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at com.vms.alarm.PositionInvalidAlarmParticipant.insertAlarm(PositionInvalidAlarmParticipant.java:163) ~[classes/:na]
+	at com.vms.alarm.PositionInvalidAlarmParticipant.activate(PositionInvalidAlarmParticipant.java:123) ~[classes/:na]
+	at com.vms.alarm.PositionInvalidAlarmParticipant.observePosition(PositionInvalidAlarmParticipant.java:80) ~[classes/:na]
+	at com.vms.alarm.PositionInvalidAlarmParticipant.observe(PositionInvalidAlarmParticipant.java:52) ~[classes/:na]
+	at com.vms.telemetry.PositionIngestService.observeInvalidRealtime(PositionIngestService.java:210) ~[classes/:na]
+	at com.vms.telemetry.PositionIngestService.ingest(PositionIngestService.java:144) ~[classes/:na]
+	at com.vms.telemetry.PositionIngestService.accept(PositionIngestService.java:65) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-7.0.10.jar:7.0.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190) ~[spring-aop-7.0.10.jar:7.0.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:158) ~[spring-aop-7.0.10.jar:7.0.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133) ~[spring-tx-7.0.10.jar:7.0.10]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371) ~[spring-tx-7.0.10.jar:7.0.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130) ~[spring-tx-7.0.10.jar:7.0.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.10.jar:7.0.10]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:714) ~[spring-aop-7.0.10.jar:7.0.10]
+	at com.vms.telemetry.PositionIngestService$$SpringCGLIB$$0.accept(<generated>) ~[classes/:na]
+	at com.vms.access.TerminalFrameHandler.position(TerminalFrameHandler.java:143) ~[classes/:na]
+	at com.vms.access.TerminalFrameHandler.channelRead0(TerminalFrameHandler.java:47) ~[classes/:na]
+	at com.vms.access.TerminalFrameHandler.channelRead0(TerminalFrameHandler.java:18) ~[classes/:na]
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:99) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.lambda$fireChannelRead$2(AbstractChannelHandlerContext.java:366) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:228) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1214) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.sql.SQLException: Check constraint 'injected_invalid_alarm_failure' is violated.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:988) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1166) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1101) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1448) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1084) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java) ~[HikariCP-7.0.2.jar:na]
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$update$1(JdbcTemplate.java:998) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:670) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	... 33 common frames omitted
+
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 49.61 s -- in com.vms.alarm.OfflineAndPositionAlarmFlowTest
+[INFO] Running com.vms.alarm.OverspeedAlarmFlowTest
+20:45:59.613 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.alarm.OverspeedAlarmFlowTest]: OverspeedAlarmFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:45:59.817 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.alarm.OverspeedAlarmFlowTest
+20:45:59.896 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.alarm.OverspeedAlarmFlowTest]: OverspeedAlarmFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:45:59.903 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.alarm.OverspeedAlarmFlowTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-16T20:46:00.319+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] com.vms.alarm.OverspeedAlarmFlowTest     : Starting OverspeedAlarmFlowTest using Java 21.0.9 with PID 20160 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ac2bfb44954865d72\server)
+2026-11-16T20:46:00.321+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] com.vms.alarm.OverspeedAlarmFlowTest     : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T20:46:01.338+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-16T20:46:01.341+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-16T20:46:01.383+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24 ms. Found 0 Redis repository interfaces.
+2026-11-16T20:46:02.512+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-11-16T20:46:02.538+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-16T20:46:02.540+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-16T20:46:02.659+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2308 ms
+2026-11-16T20:46:02.842+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-16T20:46:02.847+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-16T20:46:02.898+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-16T20:46:03.362+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-16T20:46:04.079+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-16T20:46:04.081+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-16T20:46:04.107+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-16T20:46:04.443+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-16T20:46:04.780+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: f433edc7ffecd1585b1213ea09e8f0b8d00f617b5d4c0d2d0eb3123f17d0c50e
+2026-11-16T20:46:05.471+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT1.0277362S
+2026-11-16T20:46:05.484+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-16T20:46:05.484+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-16T20:46:05.485+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-16T20:46:05.488+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-16T20:46:05.636+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: 7fb855c4ff6f0091c1e439f78c2c557e3e259a72a360f4bebba8bc5832afb3e7
+2026-11-16T20:46:06.139+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:44901/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-16T20:46:15.214+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT9.7254531S
+2026-11-16T20:46:15.214+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:44901/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-16T20:46:15.215+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-16T20:46:15.276+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: e649e36bdb109741f8da3c92ead6f0eea6d5ca634086a561739670405947acc7
+2026-11-16T20:46:15.949+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.7345739S
+2026-11-16T20:46:16.661+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:44901/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-16T20:46:17.303+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-16T20:46:17.310+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 13 migrations (execution time 00:00.050s)
+2026-11-16T20:46:17.342+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-16T20:46:17.451+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-16T20:46:17.470+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-16T20:46:17.588+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-16T20:46:17.671+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-16T20:46:17.748+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-16T20:46:17.905+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-16T20:46:18.011+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "6 - durable position"
+2026-11-16T20:46:19.522+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "7 - telemetry anomaly"
+2026-11-16T20:46:19.641+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "8 - overspeed alarm"
+2026-11-16T20:46:19.677+08:00  WARN 20160 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:46:19.951+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "9 - alarm handle"
+2026-11-16T20:46:20.075+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "11 - track retention and partitions"
+2026-11-16T20:46:20.340+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "12 - offline and terminal alarms"
+2026-11-16T20:46:21.359+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "13 - geofence"
+2026-11-16T20:46:21.448+08:00  WARN 20160 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:46:21.448+08:00  WARN 20160 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:46:21.792+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "14 - command log"
+2026-11-16T20:46:21.949+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 13 migrations to schema `vms`, now at version v14 (execution time 00:04.066s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-16T20:46:28.289+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@10afe71a
+2026-11-16T20:46:28.535+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring TestDispatcherServlet ''
+2026-11-16T20:46:28.535+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-16T20:46:28.536+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-11-16T20:46:29.010+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 12776 (http) with context path '/'
+2026-11-16T20:46:29.352+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] com.vms.alarm.OverspeedAlarmFlowTest     : Started OverspeedAlarmFlowTest in 29.392 seconds (process running for 30.754)
+2026-11-16T20:46:29.368+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-16T20:46:29.410+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1f02ce3
+2026-11-16T20:46:29.413+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-16T20:46:29.696+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：alarm-admin
+2026-11-16T20:46:29.855+08:00  INFO 20160 --- [vehicle-monitoring-system] [           main] c.vms.track.TrackPartitionMaintenance    : 轨迹分区维护完成 trigger=STARTUP retentionDays=30 created=[] dropped=[]
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+2026-11-16T20:46:40.247+08:00  INFO 20160 --- [vehicle-monitoring-system] [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-16T20:46:40.247+08:00  INFO 20160 --- [vehicle-monitoring-system] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-16T20:46:40.249+08:00  INFO 20160 --- [vehicle-monitoring-system] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-11-16T20:46:40.338+08:00  INFO 20160 --- [vehicle-monitoring-system] [o-auto-1-exec-1] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=0675294f-458a-4a55-96e4-9b29a030f8f5, user=alarm-admin
+2026-11-16T20:46:40.361+08:00  INFO 20160 --- [vehicle-monitoring-system] [o-auto-1-exec-2] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=0179e3d1-cbbc-42b3-9b1c-11c12d266c20, user=alarm-ws-c5fbca40
+2026-11-16T20:46:46.701+08:00  WARN 20160 --- [vehicle-monitoring-system] [ntLoopGroup-7-7] com.vms.access.TerminalFrameHandler      : 终端 TCP 连接处理失败
+
+org.springframework.jdbc.UncategorizedSQLException: PreparedStatementCallback; uncategorized SQLException; SQL state [HY000]; error code [3819]; Check constraint 'injected_alarm_failure' is violated.
+	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1550) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:689) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:997) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at com.vms.alarm.OverspeedAlarmParticipant.insertAlarm(OverspeedAlarmParticipant.java:179) ~[classes/:na]
+	at com.vms.alarm.OverspeedAlarmParticipant.activate(OverspeedAlarmParticipant.java:132) ~[classes/:na]
+	at com.vms.alarm.OverspeedAlarmParticipant.apply(OverspeedAlarmParticipant.java:81) ~[classes/:na]
+	at com.vms.telemetry.PositionIngestService.applyRealtimeState(PositionIngestService.java:232) ~[classes/:na]
+	at com.vms.telemetry.PositionIngestService.ingest(PositionIngestService.java:142) ~[classes/:na]
+	at com.vms.telemetry.PositionIngestService.accept(PositionIngestService.java:65) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-7.0.10.jar:7.0.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190) ~[spring-aop-7.0.10.jar:7.0.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:158) ~[spring-aop-7.0.10.jar:7.0.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:133) ~[spring-tx-7.0.10.jar:7.0.10]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:371) ~[spring-tx-7.0.10.jar:7.0.10]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:130) ~[spring-tx-7.0.10.jar:7.0.10]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179) ~[spring-aop-7.0.10.jar:7.0.10]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:714) ~[spring-aop-7.0.10.jar:7.0.10]
+	at com.vms.telemetry.PositionIngestService$$SpringCGLIB$$0.accept(<generated>) ~[classes/:na]
+	at com.vms.access.TerminalFrameHandler.position(TerminalFrameHandler.java:143) ~[classes/:na]
+	at com.vms.access.TerminalFrameHandler.channelRead0(TerminalFrameHandler.java:47) ~[classes/:na]
+	at com.vms.access.TerminalFrameHandler.channelRead0(TerminalFrameHandler.java:18) ~[classes/:na]
+	at io.netty.channel.SimpleChannelInboundHandler.channelRead(SimpleChannelInboundHandler.java:99) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:357) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.lambda$fireChannelRead$2(AbstractChannelHandlerContext.java:366) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:228) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1214) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+Caused by: java.sql.SQLException: Check constraint 'injected_alarm_failure' is violated.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:988) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1166) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1101) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1448) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1084) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java) ~[HikariCP-7.0.2.jar:na]
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$update$1(JdbcTemplate.java:998) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:670) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	... 32 common frames omitted
+
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 54.70 s -- in com.vms.alarm.OverspeedAlarmFlowTest
+[INFO] Running com.vms.identity.SchemaUpgradeTest
+20:46:58.724 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.SchemaUpgradeTest]: SchemaUpgradeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:46:59.171 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.SchemaUpgradeTest
+20:46:59.509 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.identity.SchemaUpgradeTest]: SchemaUpgradeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:46:59.519 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.identity.SchemaUpgradeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-16T20:47:00.645+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] com.vms.identity.SchemaUpgradeTest       : Starting SchemaUpgradeTest using Java 21.0.9 with PID 8600 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ac2bfb44954865d72\server)
+2026-11-16T20:47:00.646+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] com.vms.identity.SchemaUpgradeTest       : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T20:47:03.206+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-16T20:47:03.210+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-16T20:47:03.274+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 35 ms. Found 0 Redis repository interfaces.
+2026-11-16T20:47:04.167+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-16T20:47:04.173+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-16T20:47:04.282+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-16T20:47:04.752+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-16T20:47:05.400+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-16T20:47:05.402+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-16T20:47:05.426+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-16T20:47:05.765+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-16T20:47:06.069+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 91abd2040b60f32d3d30541c93099ab1d149cadfded504e8df4cfc132255539e
+2026-11-16T20:47:06.893+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT1.1274719S
+2026-11-16T20:47:06.905+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-16T20:47:06.906+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-16T20:47:06.907+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-16T20:47:06.909+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-16T20:47:07.115+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: 46b092f889c4b6673898b62d34fbe0a109f21b8a56127466d0d33a531a628b99
+2026-11-16T20:47:07.623+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:44847/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-16T20:47:20.330+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT13.4204663S
+2026-11-16T20:47:20.330+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:44847/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-16T20:47:20.331+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-16T20:47:20.395+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: ece23ffcc31a1932145b673f153994f75e66a38f57da393d691e2e2db6a3c18e
+2026-11-16T20:47:21.095+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.7643381S
+2026-11-16T20:47:21.808+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:44847/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-16T20:47:22.457+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-16T20:47:22.464+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 13 migrations (execution time 00:00.049s)
+2026-11-16T20:47:22.488+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-16T20:47:22.578+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-16T20:47:22.595+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-16T20:47:22.683+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-16T20:47:22.760+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-16T20:47:22.833+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-16T20:47:22.972+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-16T20:47:23.054+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "6 - durable position"
+2026-11-16T20:47:23.680+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "7 - telemetry anomaly"
+2026-11-16T20:47:23.740+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "8 - overspeed alarm"
+2026-11-16T20:47:23.773+08:00  WARN 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:47:23.892+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "9 - alarm handle"
+2026-11-16T20:47:23.948+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "11 - track retention and partitions"
+2026-11-16T20:47:24.093+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "12 - offline and terminal alarms"
+2026-11-16T20:47:24.452+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "13 - geofence"
+2026-11-16T20:47:24.481+08:00  WARN 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:47:24.482+08:00  WARN 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:47:24.656+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "14 - command log"
+2026-11-16T20:47:24.741+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 13 migrations to schema `vms`, now at version v14 (execution time 00:01.779s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-16T20:47:27.318+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@19382338
+2026-11-16T20:47:27.941+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] com.vms.identity.SchemaUpgradeTest       : Started SchemaUpgradeTest in 28.082 seconds (process running for 31.619)
+2026-11-16T20:47:27.961+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-16T20:47:28.014+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@34c3e307
+2026-11-16T20:47:28.018+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-16T20:47:28.352+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：bootstrap-admin
+2026-11-16T20:47:28.455+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] c.vms.track.TrackPartitionMaintenance    : 轨迹分区维护完成 trigger=STARTUP retentionDays=30 created=[] dropped=[]
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-11-16T20:47:29.382+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:44847/vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-16T20:47:29.422+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0`.`flyway_schema_history` does not exist yet
+2026-11-16T20:47:29.423+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 13 migrations (execution time 00:00.017s)
+2026-11-16T20:47:29.439+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0`.`flyway_schema_history` ...
+2026-11-16T20:47:29.483+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0`: << Empty Schema >>
+2026-11-16T20:47:29.491+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` to version "1 - identity and audit"
+2026-11-16T20:47:29.566+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` to version "2 - fleet and user authorization"
+2026-11-16T20:47:29.639+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` to version "3 - login lockout fields"
+2026-11-16T20:47:29.699+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` to version "4 - vehicle terminal history"
+2026-11-16T20:47:29.831+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` to version "5 - driver and association history"
+2026-11-16T20:47:29.916+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` to version "6 - durable position"
+2026-11-16T20:47:30.584+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` to version "7 - telemetry anomaly"
+2026-11-16T20:47:30.645+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` to version "8 - overspeed alarm"
+2026-11-16T20:47:30.686+08:00  WARN 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:47:30.820+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` to version "9 - alarm handle"
+2026-11-16T20:47:30.878+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` to version "11 - track retention and partitions"
+2026-11-16T20:47:31.029+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` to version "12 - offline and terminal alarms"
+2026-11-16T20:47:31.372+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` to version "13 - geofence"
+2026-11-16T20:47:31.396+08:00  WARN 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:47:31.397+08:00  WARN 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:47:31.566+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` to version "14 - command log"
+2026-11-16T20:47:31.639+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 13 migrations to schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0`, now at version v14 (execution time 00:01.845s)
+2026-11-16T20:47:31.788+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:44847/vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-16T20:47:31.851+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 13 migrations (execution time 00:00.029s)
+2026-11-16T20:47:31.872+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0`: 14
+2026-11-16T20:47:31.875+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Schema `vms_upgrade_2713e4a78c4a4249a962c7e8e81d5bf0` is up to date. No migration necessary.
+2026-11-16T20:47:32.100+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:44847/vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-16T20:47:32.150+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec`.`flyway_schema_history` does not exist yet
+2026-11-16T20:47:32.154+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 13 migrations (execution time 00:00.021s)
+2026-11-16T20:47:32.176+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec`.`flyway_schema_history` ...
+2026-11-16T20:47:32.243+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec`: << Empty Schema >>
+2026-11-16T20:47:32.251+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec` to version "1 - identity and audit"
+2026-11-16T20:47:32.347+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec` to version "2 - fleet and user authorization"
+2026-11-16T20:47:32.435+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec` to version "3 - login lockout fields"
+2026-11-16T20:47:32.521+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec` to version "4 - vehicle terminal history"
+2026-11-16T20:47:32.653+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec` to version "5 - driver and association history"
+2026-11-16T20:47:32.747+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec` to version "6 - durable position"
+2026-11-16T20:47:33.620+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 6 migrations to schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec`, now at version v6 (execution time 00:01.101s)
+2026-11-16T20:47:34.034+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:44847/vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-16T20:47:34.089+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 13 migrations (execution time 00:00.021s)
+2026-11-16T20:47:34.103+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec`: 6
+2026-11-16T20:47:34.107+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec` to version "7 - telemetry anomaly"
+2026-11-16T20:47:34.182+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec` to version "8 - overspeed alarm"
+2026-11-16T20:47:34.217+08:00  WARN 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:47:34.330+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec` to version "9 - alarm handle"
+2026-11-16T20:47:34.390+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec` to version "11 - track retention and partitions"
+2026-11-16T20:47:34.572+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec` to version "12 - offline and terminal alarms"
+2026-11-16T20:47:35.001+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec` to version "13 - geofence"
+2026-11-16T20:47:35.033+08:00  WARN 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:47:35.034+08:00  WARN 8600 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T20:47:35.255+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec` to version "14 - command log"
+2026-11-16T20:47:35.343+08:00  INFO 8600 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 7 migrations to schema `vms_upgrade_data_d0fc3525fba9423f9339e602bdcaf7ec`, now at version v14 (execution time 00:01.041s)
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 37.51 s -- in com.vms.identity.SchemaUpgradeTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for vehicle-monitoring-system 0.1.0-SNAPSHOT:
+[INFO] 
+[INFO] vehicle-monitoring-system .......................... SUCCESS [  0.003 s]
+[INFO] protocol ........................................... SUCCESS [  0.673 s]
+[INFO] vehicle-monitoring-server .......................... SUCCESS [02:42 min]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:43 min
+[INFO] Finished at: 2026-11-16T20:47:37+08:00
+[INFO] ------------------------------------------------------------------------
