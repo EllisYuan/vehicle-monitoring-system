@@ -359,6 +359,12 @@ class TelemetryFlowTest {
         mvc.perform(put("/api/v1/vehicles/" + vehicle + "/terminal").header("satoken", token)
                         .contentType(MediaType.APPLICATION_JSON).content(json.writeValueAsString(Map.of("terminalId", terminal))))
                 .andExpect(status().isOk());
+        // ticket 09 起按 gps_time 归属历史区间；测试中的绑定须先于待上报点存在，故把当前区间起点回溯。
+        LocalDateTime bindingSince = LocalDateTime.now(ZoneId.of("Asia/Shanghai")).minusHours(1);
+        jdbc.update("UPDATE terminal_vehicle_binding SET effective_from = ? WHERE terminal_id = ? AND effective_to IS NULL",
+                bindingSince, terminal);
+        jdbc.update("UPDATE vehicle_fleet_history SET effective_from = ? WHERE vehicle_id = ? AND effective_to IS NULL",
+                bindingSince, vehicle);
         return new BoundTerminal(terminal, vehicle, fleet, terminalNo);
     }
 

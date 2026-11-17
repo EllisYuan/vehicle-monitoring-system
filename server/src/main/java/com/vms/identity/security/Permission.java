@@ -18,7 +18,17 @@ public enum Permission {
     /** 文本与临时跟踪指令下发；管理员与监控员。 */
     COMMAND_DISPATCH(RoleCode.ADMIN, RoleCode.MONITOR),
     /** 轨迹保留期调整与分区维护告警查看；仅管理员。 */
-    TRACK_RETENTION_MANAGE(RoleCode.ADMIN);
+    TRACK_RETENTION_MANAGE(RoleCode.ADMIN),
+    /** 全局默认与车队覆盖报警规则维护；仅管理员。 */
+    ALARM_RULE_MANAGE(RoleCode.ADMIN),
+    /** 报警人工处置；管理员与监控员，车队长只读。 */
+    ALARM_HANDLE(RoleCode.ADMIN, RoleCode.MONITOR),
+    /** 围栏创建/编辑/停用与车辆绑定；管理员与监控员。 */
+    GEOFENCE_MANAGE(RoleCode.ADMIN, RoleCode.MONITOR),
+    /** DEAD 通知的审计重投；仅管理员。 */
+    OUTBOX_REDELIVER(RoleCode.ADMIN),
+    /** 车辆、报警与处置记录 Excel 导出；车队长仅限授权车队。 */
+    EXPORT_DATA(RoleCode.ADMIN, RoleCode.MONITOR, RoleCode.FLEET_LEADER);
 
     private final RoleCode[] roles;
 

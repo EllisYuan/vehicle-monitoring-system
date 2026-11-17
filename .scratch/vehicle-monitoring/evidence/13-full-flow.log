@@ -1,0 +1,249 @@
+[lock] acquired: C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-af272b0b89e8b0169\mvnw.cmd -B -pl server -am -Dtest=AlarmHandlingFlowTest -Dsurefire.failIfNoSpecifiedTests=false test
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] vehicle-monitoring-system                                          [pom]
+[INFO] protocol                                                           [jar]
+[INFO] vehicle-monitoring-server                                          [jar]
+[INFO] 
+[INFO] -----------------< com.vms:vehicle-monitoring-system >------------------
+[INFO] Building vehicle-monitoring-system 0.1.0-SNAPSHOT                  [1/3]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --------------------------< com.vms:protocol >--------------------------
+[INFO] Building protocol 0.1.0-SNAPSHOT                                   [2/3]
+[INFO]   from protocol\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ protocol ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-af272b0b89e8b0169\protocol\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ protocol ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ protocol ---
+[INFO] 
+[INFO] ---------------------------< com.vms:server >---------------------------
+[INFO] Building vehicle-monitoring-server 0.1.0-SNAPSHOT                  [3/3]
+[INFO]   from server\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-toolchain) @ server ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ server ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 10 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ server ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ server ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-af272b0b89e8b0169\server\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ server ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 26 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-af272b0b89e8b0169/server/src/test/java/com/vms/access/TerminalTcpIntegrationTest.java: Some input files use or override a deprecated API.
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-af272b0b89e8b0169/server/src/test/java/com/vms/access/TerminalTcpIntegrationTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ server ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.vms.alarm.AlarmHandlingFlowTest
+15:07:52.713 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.alarm.AlarmHandlingFlowTest]: AlarmHandlingFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:07:52.962 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.alarm.AlarmHandlingFlowTest
+15:07:53.068 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.alarm.AlarmHandlingFlowTest]: AlarmHandlingFlowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:07:53.076 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.alarm.AlarmHandlingFlowTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-16T15:07:53.688+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] com.vms.alarm.AlarmHandlingFlowTest      : Starting AlarmHandlingFlowTest using Java 21.0.9 with PID 39396 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-af272b0b89e8b0169\server)
+2026-11-16T15:07:53.691+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] com.vms.alarm.AlarmHandlingFlowTest      : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T15:07:54.998+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-16T15:07:55.002+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-16T15:07:55.042+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 0 Redis repository interfaces.
+2026-11-16T15:07:56.064+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-11-16T15:07:56.082+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-16T15:07:56.083+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-16T15:07:56.165+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2431 ms
+2026-11-16T15:07:56.348+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-16T15:07:56.354+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-16T15:07:56.397+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-16T15:07:56.643+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-16T15:07:57.088+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-16T15:07:57.090+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-16T15:07:57.111+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-16T15:07:57.436+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-16T15:07:57.685+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: 7426401a96202432141fe387072aa482a75e0f35d9c4bfe501067ff2a12ca793
+2026-11-16T15:07:58.399+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT0.9626285S
+2026-11-16T15:07:58.409+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-16T15:07:58.409+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-16T15:07:58.410+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-16T15:07:58.412+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-16T15:07:58.583+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: acd703885d019f1848a335c7ead9c95ee37e3d157e725e5246e8e152a3b3af97
+2026-11-16T15:07:59.094+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:45213/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-16T15:08:11.389+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT12.976244S
+2026-11-16T15:08:11.389+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:45213/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-16T15:08:11.390+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-16T15:08:11.484+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: bbd5f3356c1d75fea0c5ad134031639bcfbf21644938895d657ec6571b9808d3
+2026-11-16T15:08:12.253+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT0.8633267S
+2026-11-16T15:08:12.890+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45213/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-16T15:08:13.416+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-16T15:08:13.425+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 11 migrations (execution time 00:00.052s)
+2026-11-16T15:08:13.464+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-16T15:08:13.640+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-16T15:08:13.661+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-16T15:08:13.873+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-16T15:08:14.051+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-16T15:08:14.162+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-16T15:08:14.418+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-16T15:08:14.589+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "6 - durable position"
+2026-11-16T15:08:15.964+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "7 - telemetry anomaly"
+2026-11-16T15:08:16.112+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "8 - overspeed alarm"
+2026-11-16T15:08:16.163+08:00  WARN 39396 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T15:08:16.335+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "9 - alarm handle"
+2026-11-16T15:08:16.743+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "11 - track retention and partitions"
+2026-11-16T15:08:17.131+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "14 - command log"
+2026-11-16T15:08:17.289+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 11 migrations to schema `vms`, now at version v14 (execution time 00:03.014s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-16T15:08:20.817+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@7cea0110
+2026-11-16T15:08:21.138+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 7545 (http) with context path '/'
+2026-11-16T15:08:21.443+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] com.vms.alarm.AlarmHandlingFlowTest      : Started AlarmHandlingFlowTest in 28.297 seconds (process running for 29.724)
+2026-11-16T15:08:21.459+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-16T15:08:21.511+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6affbed1
+2026-11-16T15:08:21.514+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-16T15:08:21.901+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：handle-admin
+2026-11-16T15:08:22.090+08:00  INFO 39396 --- [vehicle-monitoring-system] [           main] c.vms.track.TrackPartitionMaintenance    : 轨迹分区维护完成 trigger=STARTUP retentionDays=30 created=[] dropped=[]
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-11-16T15:08:24.249+08:00  INFO 39396 --- [vehicle-monitoring-system] [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-16T15:08:24.250+08:00  INFO 39396 --- [vehicle-monitoring-system] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-16T15:08:24.252+08:00  INFO 39396 --- [vehicle-monitoring-system] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-11-16T15:08:34.896+08:00  INFO 39396 --- [vehicle-monitoring-system] [-auto-1-exec-14] c.v.i.monitor.MonitorWebSocketHandler    : WS 订阅建立：session=40c712a0-5621-4ffa-be33-229b97512782, user=handle-admin
+2026-11-16T15:08:36.773+08:00 ERROR 39396 --- [vehicle-monitoring-system] [-auto-1-exec-16] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.jdbc.UncategorizedSQLException: PreparedStatementCallback; uncategorized SQLException for SQL [INSERT INTO notification_outbox (event_id, event_type, aggregate_id, version, status,
+    retry_at, attempts, updated_at)
+VALUES (?, 'ALARM_EVENT', ?, 1, 'PENDING', ?, 0, ?)
+]; SQL state [HY000]; error code [3819]; Check constraint 'ck_fail_outbox_13_9' is violated.] with root cause
+
+java.sql.SQLException: Check constraint 'ck_fail_outbox_13_9' is violated.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:114) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:988) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1166) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1101) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1448) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1084) ~[mysql-connector-j-9.7.0.jar:9.7.0]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java) ~[HikariCP-7.0.2.jar:na]
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$update$0(JdbcTemplate.java:971) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:670) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:966) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:1010) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at org.springframework.jdbc.core.JdbcTemplate.update(JdbcTemplate.java:1020) ~[spring-jdbc-7.0.10.jar:7.0.10]
+	at com.vms.alarm.AlarmHandleService.perform(AlarmHandleService.java:106) ~[classes/:na]
+	at com.vms.alarm.AlarmHandleService.lambda$handle$1(AlarmHandleService.java:79) ~[classes/:na]
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137) ~[spring-tx-7.0.10.jar:7.0.10]
+	at com.vms.alarm.AlarmHandleService.handle(AlarmHandleService.java:79) ~[classes/:na]
+	at com.vms.alarm.AlarmController.handle(AlarmController.java:48) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:903) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649) ~[tomcat-embed-core-11.0.27.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.10.jar:7.0.10]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.27.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:132) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:59) ~[tomcat-embed-websocket-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at cn.dev33.satoken.filter.SaFirewallCheckFilterForJakartaServlet.doFilter(SaFirewallCheckFilterForJakartaServlet.java:70) ~[sa-token-spring-boot-webmvc-v3v4-common-1.46.0.jar:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at cn.dev33.satoken.filter.SaTokenCorsFilterForJakartaServlet.doFilter(SaTokenCorsFilterForJakartaServlet.java:52) ~[sa-token-spring-boot-webmvc-v3v4-common-1.46.0.jar:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at cn.dev33.satoken.filter.SaTokenContextFilterForJakartaServlet.doFilter(SaTokenContextFilterForJakartaServlet.java:40) ~[sa-token-spring-boot-webmvc-v3v4-common-1.46.0.jar:na]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.10.jar:7.0.10]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:111) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:164) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:540) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:86) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:71) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:347) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:411) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:71) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:1308) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:2202) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:74) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:947) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:481) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.27.jar:11.0.27]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 44.53 s -- in com.vms.alarm.AlarmHandlingFlowTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for vehicle-monitoring-system 0.1.0-SNAPSHOT:
+[INFO] 
+[INFO] vehicle-monitoring-system .......................... SUCCESS [  0.003 s]
+[INFO] protocol ........................................... SUCCESS [  0.934 s]
+[INFO] vehicle-monitoring-server .......................... SUCCESS [ 55.396 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  56.677 s
+[INFO] Finished at: 2026-11-16T15:08:38+08:00
+[INFO] ------------------------------------------------------------------------
+[lock] command exit code: 0

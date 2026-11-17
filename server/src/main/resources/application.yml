@@ -11,7 +11,8 @@ spring:
   task:
     scheduling:
       pool:
-        size: 2
+        # outbox 两个任务、指令超时、离线扫描与每日分区维护互不挤占
+        size: 4
   flyway:
     enabled: true
     locations: classpath:db/migration
@@ -44,6 +45,10 @@ sa-token:
     timeout: 5s
 
 vms:
+  alarm:
+    # 离线扫描间隔与启动宽限；宽限避免应用重启造成批量误报
+    offline-scan-interval-ms: 10000
+    offline-scan-initial-delay-ms: 180000
   bootstrap-admin:
     username: ${VMS_BOOTSTRAP_ADMIN_USERNAME:}
     password: ${VMS_BOOTSTRAP_ADMIN_PASSWORD:}
@@ -54,3 +59,6 @@ vms:
     # 来源速率限制（工程补充，避免凭证猜测与锁定滥用）
     rate-limit-max-attempts: 20
     rate-limit-window-seconds: 60
+  statistics:
+    # “启动待确认”宽限（秒）；生产默认 180，与离线判定宽限一致
+    startup-grace-seconds: ${VMS_STATISTICS_STARTUP_GRACE_SECONDS:180}

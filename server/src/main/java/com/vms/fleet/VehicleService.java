@@ -1,5 +1,6 @@
 package com.vms.fleet;
 
+import com.vms.alarm.OfflineAlarmService;
 import com.vms.audit.AuditService;
 import com.vms.identity.access.FleetScope;
 import com.vms.identity.access.FleetScopeResolver;
@@ -33,15 +34,22 @@ public class VehicleService {
             LEFT JOIN terminal t ON t.id = b.terminal_id
             """;
 
+    private static final String COUNT_SELECT = """
+            SELECT count(*) FROM vehicle v JOIN fleet f ON f.id = v.fleet_id
+            """;
+
     private final JdbcTemplate jdbc;
     private final FleetScopeResolver scopes;
     private final AuditService audit;
+    private final OfflineAlarmService offlineAlarms;
     private final Clock clock;
 
-    public VehicleService(JdbcTemplate jdbc, FleetScopeResolver scopes, AuditService audit, Clock clock) {
+    public VehicleService(JdbcTemplate jdbc, FleetScopeResolver scopes, AuditService audit,
+                          OfflineAlarmService offlineAlarms, Clock clock) {
         this.jdbc = jdbc;
         this.scopes = scopes;
         this.audit = audit;
+        this.offlineAlarms = offlineAlarms;
         this.clock = clock;
     }
 
@@ -51,12 +59,27 @@ public class VehicleService {
             throw new ForbiddenException();
         }
         List<Object> args = new ArrayList<>();
+        return jdbc.query(SELECT + filter(scope, fleetId, args) + " ORDER BY v.plate_no",
+                VehicleService::view, args.toArray());
+    }
+
+    /** 导出前按与列表相同的条件计数，避免加载超限结果。 */
+    public long count(UserAccount user, Long fleetId) {
+        FleetScope scope = scopes.resolve(user);
+        if (fleetId != null && !scope.contains(fleetId)) {
+            throw new ForbiddenException();
+        }
+        List<Object> args = new ArrayList<>();
+        return jdbc.queryForObject(COUNT_SELECT + filter(scope, fleetId, args), Long.class, args.toArray());
+    }
+
+    private String filter(FleetScope scope, Long fleetId, List<Object> args) {
         String where = " WHERE " + FleetScopeSql.where("v.fleet_id", scope, args);
         if (fleetId != null) {
             where += " AND v.fleet_id = ?";
             args.add(fleetId);
         }
-        return jdbc.query(SELECT + where + " ORDER BY v.plate_no", VehicleService::view, args.toArray());
+        return where;
     }
 
     public VehicleView get(UserAccount user, long id) {
@@ -116,6 +139,10 @@ public class VehicleService {
             }
             if (status != null) {
                 jdbc.update("UPDATE vehicle SET status = ?, updated_at = ? WHERE id = ?", status, now(), id);
+                if ("DISABLED".equals(status)) {
+                    // 停用车辆不新造离线报警；既有 ACTIVE 保留并标注监控范围变化
+                    offlineAlarms.markScopeChangedByVehicle(id, now());
+                }
             }
         } catch (DuplicateKeyException e) {
             throw new ConflictException("PLATE_NO_EXISTS", "车牌已存在");

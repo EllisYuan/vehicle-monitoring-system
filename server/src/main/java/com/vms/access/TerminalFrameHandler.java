@@ -45,6 +45,7 @@ final class TerminalFrameHandler extends SimpleChannelInboundHandler<TerminalFra
             case 0x0002 -> heartbeat(context, frame);
             case 0x0003 -> logout(context, frame);
             case 0x0200 -> position(context, frame, received.receivedAt());
+            case 0x0704 -> batchPosition(context, frame, received.receivedAt());
             default -> context.close();
         }
     }
@@ -145,6 +146,18 @@ final class TerminalFrameHandler extends SimpleChannelInboundHandler<TerminalFra
                 new PlatformGeneralResponse(frame.header().serialNumber(), 0x0200, 0).encode());
     }
 
+    private void batchPosition(ChannelHandlerContext context, Frame frame, java.time.LocalDateTime receivedAt) {
+        TerminalConnectionRegistry.Session session = currentSession(context, frame.header().terminalPhone());
+        if (session == null) {
+            context.close();
+            return;
+        }
+        // 结构校验或任一项落库失败都会抛出并关闭连接，不发送成功应答。
+        positions.acceptBatch(session, frame.body(), receivedAt);
+        send(context, frame, 0x8001,
+                new PlatformGeneralResponse(frame.header().serialNumber(), 0x0704, 0).encode());
+    }
+
     private void logout(ChannelHandlerContext context, Frame frame) {
         TerminalConnectionRegistry.Session session = currentSession(context, frame.header().terminalPhone());
         if (session == null) {
@@ -153,7 +166,7 @@ final class TerminalFrameHandler extends SimpleChannelInboundHandler<TerminalFra
         }
         Frame response = response(frame, 0x8001,
                 new PlatformGeneralResponse(frame.header().serialNumber(), 0x0003, 0).encode());
-        access.logout(session);
+        access.lawfulLogout(session);
         if (commandListener != null) {
             try {
                 commandListener.onLawfulLogout(session.terminalId(), session.terminalNo(), session.epoch());

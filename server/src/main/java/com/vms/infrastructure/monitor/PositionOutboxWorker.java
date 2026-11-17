@@ -32,22 +32,26 @@ public class PositionOutboxWorker {
         this.clock = clock;
     }
 
-    @Scheduled(fixedRateString = "${vms.monitor.publish-interval-ms:2000}", initialDelay = 2000)
+    @Scheduled(fixedRateString = "${vms.monitor.publish-interval-ms:2000}", initialDelayString = "${vms.monitor.dispatch-initial-delay-ms:2000}")
     public void dispatch() {
         try {
             var pending = jdbc.query("""
-                    SELECT event_id, aggregate_id, version, attempts FROM notification_outbox
+                    SELECT event_id, event_type, aggregate_id, version, attempts FROM notification_outbox
                     WHERE status IN ('PENDING','RETRY') AND retry_at <= ? ORDER BY retry_at LIMIT 100
-                    """, (rs, row) -> new Pending(rs.getString(1), rs.getLong(2), rs.getLong(3), rs.getInt(4)), LocalDateTime.now(clock));
+                    """, (rs, row) -> new Pending(rs.getString(1), rs.getString(2), rs.getLong(3),
+                    rs.getLong(4), rs.getInt(5)), LocalDateTime.now(clock));
             for (Pending event : pending) {
                 try {
-                    if (!websocket.publish(event.vehicleId(), event.version())) throw new IllegalStateException("WS unavailable");
+                    boolean delivered = "ALARM_EVENT".equals(event.eventType())
+                            ? websocket.publishAlarm(event.id(), event.aggregateId())
+                            : websocket.publish(event.aggregateId(), event.version());
+                    if (!delivered) throw new IllegalStateException("WS unavailable");
                     int updated = jdbc.update("UPDATE notification_outbox SET status='DONE', updated_at=? WHERE event_id=? AND version=?",
                             LocalDateTime.now(clock), event.id(), event.version());
                     if (updated == 0) {
                         // 新版本已覆盖当前读到的标记；不要用旧 worker 清掉新版本待发送状态。
-                        log.debug("Position notification version was superseded: vehicle={}, version={}",
-                                event.vehicleId(), event.version());
+                        log.debug("Notification version was superseded: event={}, version={}",
+                                event.id(), event.version());
                     }
                 } catch (RuntimeException e) {
                     int updated = jdbc.update("""
@@ -56,11 +60,11 @@ public class PositionOutboxWorker {
                             WHERE event_id=? AND version=? AND status IN ('PENDING','RETRY')
                             """, LocalDateTime.now(clock).plusSeconds(2), LocalDateTime.now(clock), event.id(), event.version());
                     if (updated == 0) {
-                        log.debug("Position retry was superseded: vehicle={}, version={}", event.vehicleId(), event.version());
+                        log.debug("Notification retry was superseded: event={}, version={}", event.id(), event.version());
                     } else if (event.attempts() + 1 >= 10) {
-                        log.error("Position notification moved to DEAD: vehicle={}, version={}", event.vehicleId(), event.version());
+                        log.error("Notification moved to DEAD: event={}, version={}", event.id(), event.version());
                     } else {
-                        log.warn("Position notification will retry: vehicle={}, version={}", event.vehicleId(), event.version());
+                        log.warn("Notification will retry: event={}, version={}", event.id(), event.version());
                     }
                 }
             }
@@ -69,8 +73,26 @@ public class PositionOutboxWorker {
         }
     }
 
+    /**
+     * AC5：清理完成满 7 天的 DONE 通知；DEAD 与未完成事件永不自动删除。
+     * 完成时间取 worker 置 DONE 时写入的 updated_at，与业务事件的 gps_time 无关。
+     * 新增任务是低频清理，与 dispatch/refreshCache 等任务共用调度池（合并任务14后 pool.size=4）；清理偶有排队不影响其小时级语义。
+     */
+    @Scheduled(fixedDelayString = "${vms.monitor.cleanup-interval-ms:3600000}", initialDelayString = "${vms.monitor.cleanup-initial-delay-ms:60000}")
+    public void cleanupCompleted() {
+        try {
+            int deleted = jdbc.update("DELETE FROM notification_outbox WHERE status = 'DONE' AND updated_at <= ?",
+                    LocalDateTime.now(clock).minusDays(7));
+            if (deleted > 0) {
+                log.info("Purged {} completed notifications older than 7 days", deleted);
+            }
+        } catch (RuntimeException e) {
+            log.warn("Notification cleanup unavailable; completed rows remain in MySQL");
+        }
+    }
+
     /** 单实例目标 100 车；每次 MSET 重建完整派生快照，Redis 丢失 DONE 标记对应缓存也能恢复。 */
-    @Scheduled(fixedDelayString = "${vms.monitor.publish-interval-ms:2000}", initialDelay = 2000)
+    @Scheduled(fixedDelayString = "${vms.monitor.publish-interval-ms:2000}", initialDelayString = "${vms.monitor.cache-initial-delay-ms:2000}")
     public void refreshCache() {
         try {
             Map<String, String> values = new HashMap<>();
@@ -83,5 +105,6 @@ public class PositionOutboxWorker {
         }
     }
 
-    private record Pending(String id, long vehicleId, long version, int attempts) { }
+    /** 位置事件按车合并、报警事件按事件 id 独立投递，路由由 event_type 决定。 */
+    private record Pending(String id, String eventType, long aggregateId, long version, int attempts) { }
 }

@@ -1,0 +1,50 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-16T13:22:13.463+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : Starting VehicleMonitoringApplication v0.1.0-SNAPSHOT using Java 21.0.9 with PID 25632 (C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a73ce6a4bd8715e89\server\target\server-0.1.0-SNAPSHOT.jar started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a73ce6a4bd8715e89)
+2026-11-16T13:22:13.469+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T13:22:14.838+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-16T13:22:14.841+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-16T13:22:14.868+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 11 ms. Found 0 Redis repository interfaces.
+2026-11-16T13:22:16.172+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 18092 (http)
+2026-11-16T13:22:16.196+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-16T13:22:16.196+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-16T13:22:16.256+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2707 ms
+2026-11-16T13:22:17.111+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-16T13:22:17.423+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@184de357
+2026-11-16T13:22:17.426+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-16T13:22:17.473+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://127.0.0.1:13310/vms?useUnicode=true&characterEncoding=utf8&connectionTimeZone=Asia/Shanghai&forceConnectionTimeZoneToSession=true&allowPublicKeyRetrieval=true&useSSL=false (MySQL 8.4)
+2026-11-16T13:22:17.594+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-16T13:22:17.602+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.042s)
+2026-11-16T13:22:17.632+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-16T13:22:17.743+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-16T13:22:17.772+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-16T13:22:17.872+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-16T13:22:17.962+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-16T13:22:18.048+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-16T13:22:18.195+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-16T13:22:18.289+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "6 - durable position"
+2026-11-16T13:22:18.921+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "7 - telemetry anomaly"
+2026-11-16T13:22:18.979+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "11 - track retention and partitions"
+2026-11-16T13:22:19.109+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "14 - command log"
+2026-11-16T13:22:19.181+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 9 migrations to schema `vms`, now at version v14 (execution time 00:01.127s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-16T13:22:22.162+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@40cb698e
+2026-11-16T13:22:22.649+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 18092 (http) with context path '/'
+2026-11-16T13:22:22.852+08:00  INFO 25632 --- [vehicle-monitoring-system] [io-18092-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-16T13:22:22.853+08:00  INFO 25632 --- [vehicle-monitoring-system] [io-18092-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-16T13:22:22.857+08:00  INFO 25632 --- [vehicle-monitoring-system] [io-18092-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2026-11-16T13:22:22.877+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] com.vms.VehicleMonitoringApplication     : Started VehicleMonitoringApplication in 10.089 seconds (process running for 10.877)
+2026-11-16T13:22:23.216+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：t09-admin
+2026-11-16T13:22:23.251+08:00  INFO 25632 --- [vehicle-monitoring-system] [           main] c.vms.track.TrackPartitionMaintenance    : 轨迹分区维护完成 trigger=STARTUP retentionDays=30 created=[] dropped=[]
+2026-11-16T13:22:23.385+08:00  WARN 25632 --- [vehicle-monitoring-system] [io-18092-exec-1] com.vms.identity.auth.AuthService        : 登录失败：账号 t09-admin，原因 UNKNOWN_ACCOUNT
