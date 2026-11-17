@@ -1,0 +1,321 @@
+[lock] acquired: C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-aa44a6f4bd2ee4914\mvnw.cmd -B -pl server -am -Dtest=TrackCapacityHarnessTest -Dsurefire.failIfNoSpecifiedTests=false -Dvms.capacity=true -Dvms.capacity.days=30 -Dvms.capacity.expired-days=3 -Dvms.capacity.terminals=100 -Dvms.capacity.points-per-day=8640 -Dvms.capacity.batch=2000 -Dvms.capacity.generate=true test
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] vehicle-monitoring-system                                          [pom]
+[INFO] protocol                                                           [jar]
+[INFO] vehicle-monitoring-server                                          [jar]
+[INFO] 
+[INFO] -----------------< com.vms:vehicle-monitoring-system >------------------
+[INFO] Building vehicle-monitoring-system 0.1.0-SNAPSHOT                  [1/3]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --------------------------< com.vms:protocol >--------------------------
+[INFO] Building protocol 0.1.0-SNAPSHOT                                   [2/3]
+[INFO]   from protocol\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ protocol ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-aa44a6f4bd2ee4914\protocol\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ protocol ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ protocol ---
+[INFO] 
+[INFO] ---------------------------< com.vms:server >---------------------------
+[INFO] Building vehicle-monitoring-server 0.1.0-SNAPSHOT                  [3/3]
+[INFO]   from server\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-toolchain) @ server ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ server ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 12 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ server ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ server ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-aa44a6f4bd2ee4914\server\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ server ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ server ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.vms.capacity.TrackCapacityHarnessTest
+[capacity] harness=TrackCapacityHarnessTest
+[capacity] started_at=2026-11-17 09:37:23 CST
+[capacity] business_today=2026-11-17
+[capacity] parameters=retainedDays=30, expiredDays=3, terminals=100, pointsPerDay=8640, batchSize=2000, generate=true
+[capacity] required_retained_rows=25920000
+09:37:23.931 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+09:37:23.940 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+09:37:24.038 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 2.0.5
+09:37:24.646 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+09:37:26.026 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+09:37:26.031 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+09:37:26.193 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+09:37:26.884 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Creating container for image: testcontainers/ryuk:0.14.0
+09:37:27.883 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 is starting: 5210711a403b2f0efd9c7103d5338e4b195e61fa9a26eb2995c69aac675c54d6
+09:37:30.645 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT3.7606293S
+09:37:30.676 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+09:37:30.677 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+09:37:30.679 [main] INFO org.testcontainers.DockerClientFactory -- ✔︎ Docker server version should be at least 1.6.0
+09:37:30.688 [main] INFO tc.mysql:8.4 -- Creating container for image: mysql:8.4
+09:37:31.829 [main] INFO tc.mysql:8.4 -- Container mysql:8.4 is starting: 9cb5f60d92863987fd1616cf556633376e9e6f1a75855e033a2c7a4272559691
+09:37:32.837 [main] INFO tc.mysql:8.4 -- Waiting for database connection to become available at jdbc:mysql://localhost:46131/vms?allowPublicKeyRetrieval=true&forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai&useSSL=false using query 'SELECT 1'
+09:37:54.818 [main] INFO tc.mysql:8.4 -- Container mysql:8.4 started in PT24.1295912S
+09:37:54.818 [main] INFO tc.mysql:8.4 -- Container is started (JDBC URL: jdbc:mysql://localhost:46131/vms?allowPublicKeyRetrieval=true&forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai&useSSL=false)
+09:37:56.107 [main] INFO org.flywaydb.core.FlywayExecutor -- Database: jdbc:mysql://localhost:46131/vms?allowPublicKeyRetrieval=true&forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai&useSSL=false (MySQL 8.4)
+09:37:56.868 [main] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Schema history table `vms`.`flyway_schema_history` does not exist yet
+09:37:56.875 [main] INFO org.flywaydb.core.internal.command.DbValidate -- Successfully validated 13 migrations (execution time 00:00.060s)
+09:37:56.911 [main] INFO org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory -- Creating Schema History table `vms`.`flyway_schema_history` ...
+09:37:57.016 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Current version of schema `vms`: << Empty Schema >>
+09:37:57.039 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "1 - identity and audit"
+09:37:57.214 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "2 - fleet and user authorization"
+09:37:57.359 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "3 - login lockout fields"
+09:37:57.459 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "4 - vehicle terminal history"
+09:37:57.874 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "5 - driver and association history"
+09:37:58.039 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "6 - durable position"
+09:38:00.809 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "7 - telemetry anomaly"
+09:38:00.949 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "8 - overspeed alarm"
+09:38:01.227 [main] WARN org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor -- DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+09:38:01.519 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "9 - alarm handle"
+09:38:01.629 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "11 - track retention and partitions"
+09:38:02.002 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "12 - offline and terminal alarms"
+09:38:02.891 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "13 - geofence"
+09:38:02.963 [main] WARN org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor -- DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+09:38:02.964 [main] WARN org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor -- DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+09:38:03.413 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Migrating schema `vms` to version "14 - command log"
+09:38:03.640 [main] INFO org.flywaydb.core.internal.command.DbMigrate -- Successfully applied 13 migrations to schema `vms`, now at version v14 (execution time 00:05.978s)
+[capacity] flyway.migrationsExecuted=13
+09:38:04.077 [main] INFO com.zaxxer.hikari.HikariDataSource -- capacity-harness - Starting...
+09:38:04.153 [main] INFO com.zaxxer.hikari.pool.HikariPool -- capacity-harness - Added connection com.mysql.cj.jdbc.ConnectionImpl@4d69d288
+09:38:04.162 [main] INFO com.zaxxer.hikari.HikariDataSource -- capacity-harness - Start completed.
+[capacity] mysql.max_allowed_packet=1048576
+[capacity] mysql.version=8.4.13
+[capacity] mysql.innodb_buffer_pool_size=805306368
+[capacity] mysql.log_bin=0
+[capacity] mysql.innodb_flush_log_at_trx_commit=2
+[capacity] mysql.max_connections=40
+[capacity] mysql.performance_schema=0
+[capacity] mysql.charset=utf8mb4/utf8mb4_0900_ai_ci
+[capacity] mysql.session_time_zone=Asia/Shanghai
+[capacity] mysql.innodb_file_per_table=1
+[capacity] mysql.datadir=/var/lib/mysql/
+[capacity] host.os=Windows 11 10.0
+[capacity] host.java=21.0.9
+[capacity] host.cpus=18
+[capacity] host.memory_total_bytes=16799621120
+[capacity] host.memory_free_bytes=356286464
+[capacity] container.id=9cb5f60d92863987fd1616cf556633376e9e6f1a75855e033a2c7a4272559691
+[capacity] container.image=mysql:8.4
+[capacity] container.command=--skip-log-bin --innodb-buffer-pool-size=768M --innodb-flush-log-at-trx-commit=2 --innodb-log-buffer-size=64M --innodb-doublewrite=OFF --max-connections=40 --performance-schema=OFF
+[capacity] container.inspect=memory=1258291200 nanocpus=2000000000 image=sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
+[capacity] docker.info=memTotal=1997275136 ncpu=2 server=29.1.3
+[capacity] docker.version=29.1.3
+[capacity] archives=fleet=CAP-FLEET, vehicles=100, terminals=100, admin=cap-capacity-admin
+09:38:23.574 [main] INFO com.vms.track.TrackPartitionMaintenance -- 轨迹分区维护完成 trigger=STARTUP retentionDays=30 created=[] dropped=[]
+[capacity] startup_maintenance=created=[], dropped=[], retentionDays=30
+[capacity] expired_partitions=p20261016,p20261017,p20261018
+[capacity] expected_rows=retained=25920000, expired=2592000, total=28512000
+[capacity] disk_before_generation=usable=43963174912, total=510528581632
+[capacity] generation.day=2026-10-16 rows=864000 batches=500 elapsedMs=42848 rowsPerSecond=20164.3
+[capacity] generation.day=2026-10-17 rows=864000 batches=500 elapsedMs=46402 rowsPerSecond=18619.9
+[capacity] generation.day=2026-10-18 rows=864000 batches=500 elapsedMs=46952 rowsPerSecond=18401.8
+[capacity] generation.day=2026-10-19 rows=864000 batches=500 elapsedMs=42722 rowsPerSecond=20223.8
+[capacity] generation.day=2026-10-20 rows=864000 batches=500 elapsedMs=46809 rowsPerSecond=18458.0
+[capacity] generation.day=2026-10-21 rows=864000 batches=500 elapsedMs=52500 rowsPerSecond=16457.1
+[capacity] generation.day=2026-10-22 rows=864000 batches=500 elapsedMs=48855 rowsPerSecond=17685.0
+[capacity] generation.day=2026-10-23 rows=864000 batches=500 elapsedMs=38735 rowsPerSecond=22305.4
+[capacity] generation.day=2026-10-24 rows=864000 batches=500 elapsedMs=49515 rowsPerSecond=17449.3
+[capacity] generation.day=2026-10-25 rows=864000 batches=500 elapsedMs=43473 rowsPerSecond=19874.4
+[capacity] generation.day=2026-10-26 rows=864000 batches=500 elapsedMs=46258 rowsPerSecond=18677.9
+[capacity] generation.day=2026-10-27 rows=864000 batches=500 elapsedMs=34413 rowsPerSecond=25106.8
+[capacity] generation.day=2026-10-28 rows=864000 batches=500 elapsedMs=37465 rowsPerSecond=23061.5
+[capacity] generation.day=2026-10-29 rows=864000 batches=500 elapsedMs=32701 rowsPerSecond=26421.2
+[capacity] generation.day=2026-10-30 rows=864000 batches=500 elapsedMs=28615 rowsPerSecond=30194.0
+[capacity] generation.day=2026-10-31 rows=864000 batches=500 elapsedMs=39234 rowsPerSecond=22021.7
+[capacity] generation.day=2026-11-01 rows=864000 batches=500 elapsedMs=38683 rowsPerSecond=22335.4
+[capacity] generation.day=2026-11-02 rows=864000 batches=500 elapsedMs=30149 rowsPerSecond=28657.7
+[capacity] generation.day=2026-11-03 rows=864000 batches=500 elapsedMs=35224 rowsPerSecond=24528.7
+[capacity] generation.day=2026-11-04 rows=864000 batches=500 elapsedMs=30015 rowsPerSecond=28785.6
+[capacity] generation.day=2026-11-05 rows=864000 batches=500 elapsedMs=36872 rowsPerSecond=23432.4
+[capacity] generation.day=2026-11-06 rows=864000 batches=500 elapsedMs=32099 rowsPerSecond=26916.7
+[capacity] generation.day=2026-11-07 rows=864000 batches=500 elapsedMs=38332 rowsPerSecond=22539.9
+[capacity] generation.day=2026-11-08 rows=864000 batches=500 elapsedMs=31386 rowsPerSecond=27528.2
+[capacity] generation.day=2026-11-09 rows=864000 batches=500 elapsedMs=30895 rowsPerSecond=27965.7
+[capacity] generation.day=2026-11-10 rows=864000 batches=500 elapsedMs=31765 rowsPerSecond=27199.7
+[capacity] generation.day=2026-11-11 rows=864000 batches=500 elapsedMs=33913 rowsPerSecond=25477.0
+[capacity] generation.day=2026-11-12 rows=864000 batches=500 elapsedMs=30065 rowsPerSecond=28737.7
+[capacity] generation.day=2026-11-13 rows=864000 batches=500 elapsedMs=34475 rowsPerSecond=25061.6
+[capacity] generation.day=2026-11-14 rows=864000 batches=500 elapsedMs=29789 rowsPerSecond=29004.0
+[capacity] generation.day=2026-11-15 rows=864000 batches=500 elapsedMs=37059 rowsPerSecond=23314.2
+[capacity] generation.day=2026-11-16 rows=864000 batches=500 elapsedMs=34132 rowsPerSecond=25313.5
+[capacity] generation.day=2026-11-17 rows=864000 batches=500 elapsedMs=45170 rowsPerSecond=19127.7
+[capacity] generated.total_rows=28512000
+[capacity] generated.retained_rows=25920000
+[capacity] generated.expected_total_rows=28512000
+[capacity] generated.expected_retained_rows=25920000
+[capacity] generated.total_elapsed_ms=1257715
+[capacity] generated.rows_per_second=22669.68271826288
+[capacity] generated.batches=16500
+[capacity] generated.batch_size=2000
+[capacity] partitions.count=40
+[capacity] partitions.first=p20261016
+[capacity] partitions.last=p20261124
+[capacity] partitions.retained_first=p20261019
+[capacity] partitions.retained_last=p20261117
+[capacity] table.track_point.estimated_rows=9249915
+[capacity] table.track_point.data_length_bytes=2097659904
+[capacity] table.track_point.index_length_bytes=535658496
+[capacity] table.track_point.total_bytes=2633318400
+[capacity] table.track_point.data_free_bytes=207618048
+[capacity] table.track_point.avg_row_length_bytes=226
+[capacity] table.track_point.engine=InnoDB
+[capacity] table.track_point.collation=utf8mb4_0900_ai_ci
+[capacity] table.track_point.container_du_kb=8111220
+[capacity] table.track_point.container_du_mib=7921.11328125
+[capacity] rows.total=28512000
+[capacity] rows.valid=28502100
+[capacity] rows.invalid=9900
+[capacity] rows.event_flagged=29700
+[capacity] partition=1 p20261016 '2026-10-17' rows~323974 data=73007104 index=17924096
+[capacity] partition=2 p20261017 '2026-10-18' rows~159432 data=36257792 index=9469952
+[capacity] partition=3 p20261018 '2026-10-19' rows~322224 data=73007104 index=17924096
+[capacity] partition=4 p20261019 '2026-10-20' rows~150006 data=34160640 index=9469952
+[capacity] partition=5 p20261020 '2026-10-21' rows~210532 data=47808512 index=11567104
+[capacity] partition=6 p20261021 '2026-10-22' rows~213160 data=48857088 index=13664256
+[capacity] partition=7 p20261022 '2026-10-23' rows~132772 data=29966336 index=7372800
+[capacity] partition=8 p20261023 '2026-10-24' rows~225643 data=50954240 index=13664256
+[capacity] partition=9 p20261024 '2026-10-25' rows~161695 data=37306368 index=9469952
+[capacity] partition=10 p20261025 '2026-10-26' rows~415078 data=94011392 index=24215552
+[capacity] partition=11 p20261026 '2026-10-27' rows~188024 data=42565632 index=11567104
+[capacity] partition=12 p20261027 '2026-10-28' rows~265597 data=60407808 index=15761408
+[capacity] partition=13 p20261028 '2026-10-29' rows~246580 data=56213504 index=13664256
+[capacity] partition=14 p20261029 '2026-10-30' rows~215131 data=48857088 index=13664256
+[capacity] partition=15 p20261030 '2026-10-31' rows~289883 data=65667072 index=15761408
+[capacity] partition=16 p20261031 '2026-11-01' rows~298351 data=67764224 index=17858560
+[capacity] partition=17 p20261101 '2026-11-02' rows~210532 data=47808512 index=11567104
+[capacity] partition=18 p20261102 '2026-11-03' rows~291854 data=65667072 index=17858560
+[capacity] partition=19 p20261103 '2026-11-04' rows~599615 data=134971392 index=32636928
+[capacity] partition=20 p20261104 '2026-11-05' rows~289883 data=65667072 index=15761408
+[capacity] partition=21 p20261105 '2026-11-06' rows~240681 data=55164928 index=13664256
+[capacity] partition=22 p20261106 '2026-11-07' rows~547500 data=123420672 index=30539776
+[capacity] partition=23 p20261107 '2026-11-08' rows~263676 data=59359232 index=15761408
+[capacity] partition=24 p20261108 '2026-11-09' rows~255135 data=58310656 index=15761408
+[capacity] partition=25 p20261109 '2026-11-10' rows~306892 data=69861376 index=17858560
+[capacity] partition=26 p20261110 '2026-11-11' rows~227614 data=52019200 index=13664256
+[capacity] partition=27 p20261111 '2026-11-12' rows~323974 data=73007104 index=17924096
+[capacity] partition=28 p20261112 '2026-11-13' rows~327916 data=74072064 index=17924096
+[capacity] partition=29 p20261113 '2026-11-14' rows~510329 data=115015680 index=28442624
+[capacity] partition=30 p20261114 '2026-11-15' rows~298351 data=67764224 index=17858560
+[capacity] partition=31 p20261115 '2026-11-16' rows~255792 data=58310656 index=15761408
+[capacity] partition=32 p20261116 '2026-11-17' rows~222272 data=50954240 index=13664256
+[capacity] partition=33 p20261117 '2026-11-18' rows~259817 data=59359232 index=15761408
+[capacity] partition=34 p20261118 '2026-11-19' rows~0 data=16384 index=32768
+[capacity] partition=35 p20261119 '2026-11-20' rows~0 data=16384 index=32768
+[capacity] partition=36 p20261120 '2026-11-21' rows~0 data=16384 index=32768
+[capacity] partition=37 p20261121 '2026-11-22' rows~0 data=16384 index=32768
+[capacity] partition=38 p20261122 '2026-11-23' rows~0 data=16384 index=32768
+[capacity] partition=39 p20261123 '2026-11-24' rows~0 data=16384 index=32768
+[capacity] partition=40 p20261124 '2026-11-25' rows~0 data=16384 index=32768
+[capacity] disk_after_generation=usable=37873156096, total=510528581632
+[capacity] container.disk_after_generation=Filesystem      1K-blocks     Used Available Use% Mounted on /dev/sde       1055762868 31602812 970456584   4% /var/lib/mysql
+[capacity] query.cross-midnight.expected_points=2881
+[capacity] explain.single-day={id=1, select_type=SIMPLE, table=track_point, partitions=p20261107, type=range, possible_keys=idx_track_vehicle_time, key=idx_track_vehicle_time, key_len=13, ref=null, rows=16086, filtered=100.0, Extra=Using index condition}
+[capacity] query.single-day.sql=SELECT gps_time, lng, lat, speed, direction, alarm_flag, locate_state FROM track_point PARTITION (p20261107) WHERE vehicle_id = ? AND gps_time >= ? AND gps_time <= ? AND 1=1 ORDER BY gps_time, id
+[capacity] query.single-day.args=[1, 2026-11-07T00:00, 2026-11-07T23:59:59]
+[capacity] query.single-day.pruned_partitions=p20261107
+[capacity] query.single-day.expected_partitions=p20261107
+[capacity] query.single-day.cold_ms=943
+[capacity] query.single-day.warm_ms=195
+[capacity] query.single-day.raw_points=8640
+[capacity] query.single-day.display_points=75
+[capacity] query.single-day.segments=3
+[capacity] query.single-day.gaps=2
+[capacity] explain.cross-midnight-8h={id=1, select_type=SIMPLE, table=track_point, partitions=p20261107,p20261108, type=range, possible_keys=idx_track_vehicle_time, key=idx_track_vehicle_time, key_len=13, ref=null, rows=2881, filtered=100.0, Extra=Using index condition}
+[capacity] query.cross-midnight-8h.sql=SELECT gps_time, lng, lat, speed, direction, alarm_flag, locate_state FROM track_point PARTITION (p20261107,p20261108) WHERE vehicle_id = ? AND gps_time >= ? AND gps_time <= ? AND 1=1 ORDER BY gps_time, id
+[capacity] query.cross-midnight-8h.args=[1, 2026-11-07T20:00, 2026-11-08T04:00]
+[capacity] query.cross-midnight-8h.pruned_partitions=p20261107,p20261108
+[capacity] query.cross-midnight-8h.expected_partitions=p20261108,p20261107
+[capacity] query.cross-midnight-8h.cold_ms=173
+[capacity] query.cross-midnight-8h.warm_ms=118
+[capacity] query.cross-midnight-8h.raw_points=2881
+[capacity] query.cross-midnight-8h.display_points=25
+[capacity] query.cross-midnight-8h.segments=2
+[capacity] query.cross-midnight-8h.gaps=1
+[capacity] cleanup.before.partitions=40
+[capacity] cleanup.before.retained_rows=25920000
+[capacity] cleanup.before.expired_rows=2592000
+[capacity] cleanup.before.total_rows=28512000
+[capacity] cleanup.before.container_du_kb=8111220
+[capacity] cleanup.before.alerts=0
+[capacity] disk_before_cleanup=usable=37909331968, total=510528581632
+10:00:31.916 [main] INFO com.vms.track.TrackPartitionMaintenance -- 轨迹分区维护完成 trigger=MANUAL retentionDays=30 created=[] dropped=[p20261016, p20261017, p20261018]
+[capacity] cleanup.elapsed_ms=650
+[capacity] cleanup.result_success=true
+[capacity] cleanup.created_partitions=
+[capacity] cleanup.dropped_partitions=p20261016,p20261017,p20261018
+[capacity] cleanup.dropped_rows_estimate=805630
+[capacity] cleanup.after.partitions=37
+[capacity] cleanup.after.retained_rows=25920000
+[capacity] cleanup.after.total_rows=25920000
+[capacity] cleanup.after.container_du_kb=7373928
+[capacity] cleanup.after.alerts=0
+[capacity] cleanup.released_bytes=754987008
+[capacity] cleanup.recorded.dropped_partitions=p20261016,p20261017,p20261018
+[capacity] cleanup.recorded.dropped_rows_estimate=805630
+[capacity] query.after-cleanup-single-day.elapsed_ms=236
+[capacity] query.after-cleanup-single-day.raw_points=8640
+[capacity] query.after-cleanup-single-day.display_points=75
+[capacity] query.after-cleanup-cross-midnight.elapsed_ms=167
+[capacity] query.after-cleanup-cross-midnight.raw_points=2881
+[capacity] query.after-cleanup-cross-midnight.display_points=25
+[capacity] disk_after_cleanup=usable=37910216704, total=510528581632
+[capacity] container.disk_after_cleanup=Filesystem      1K-blocks     Used Available Use% Mounted on /dev/sde       1055762868 30865520 971193876   4% /var/lib/mysql
+10:00:47.050 [main] INFO com.zaxxer.hikari.HikariDataSource -- capacity-harness - Shutdown initiated...
+10:00:47.148 [main] INFO com.zaxxer.hikari.HikariDataSource -- capacity-harness - Shutdown completed.
+[capacity] finished_at=2026-11-17 10:00:50 CST
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1407 s -- in com.vms.capacity.TrackCapacityHarnessTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for vehicle-monitoring-system 0.1.0-SNAPSHOT:
+[INFO] 
+[INFO] vehicle-monitoring-system .......................... SUCCESS [  0.003 s]
+[INFO] protocol ........................................... SUCCESS [  2.515 s]
+[INFO] vehicle-monitoring-server .......................... SUCCESS [23:37 min]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  23:40 min
+[INFO] Finished at: 2026-11-17T10:00:52+08:00
+[INFO] ------------------------------------------------------------------------
+[lock] command exit code: 0
