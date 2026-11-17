@@ -1,9 +1,10 @@
 harness=TrackCapacityHarnessTest
-started_at=2026-11-16 14:19:56 CST
-business_today=2026-11-16
-parameters=retainedDays=30, expiredDays=3, terminals=2, pointsPerDay=100, batchSize=50, generate=true
+started_at=2026-11-17 09:37:23 CST
+business_today=2026-11-17
+parameters=retainedDays=30, expiredDays=3, terminals=100, pointsPerDay=8640, batchSize=2000, generate=true
 required_retained_rows=25920000
-flyway.migrationsExecuted=9
+flyway.migrationsExecuted=13
+mysql.max_allowed_packet=1048576
 mysql.version=8.4.13
 mysql.innodb_buffer_pool_size=805306368
 mysql.log_bin=0
@@ -18,154 +19,169 @@ host.os=Windows 11 10.0
 host.java=21.0.9
 host.cpus=18
 host.memory_total_bytes=16799621120
-host.memory_free_bytes=1186496512
-container.id=df6145488940d82dda74d0b772ed13c31f193847f0e34833e380c6ffa269869a
+host.memory_free_bytes=356286464
+container.id=9cb5f60d92863987fd1616cf556633376e9e6f1a75855e033a2c7a4272559691
 container.image=mysql:8.4
 container.command=--skip-log-bin --innodb-buffer-pool-size=768M --innodb-flush-log-at-trx-commit=2 --innodb-log-buffer-size=64M --innodb-doublewrite=OFF --max-connections=40 --performance-schema=OFF
 container.inspect=memory=1258291200 nanocpus=2000000000 image=sha256:a81d043930e51745522bd5c430961cf8286f0a23f0a9a2a6e0108f7ea71b0902
 docker.info=memTotal=1997275136 ncpu=2 server=29.1.3
 docker.version=29.1.3
-archives=fleet=CAP-FLEET, vehicles=2, terminals=2, admin=cap-capacity-admin
+archives=fleet=CAP-FLEET, vehicles=100, terminals=100, admin=cap-capacity-admin
 startup_maintenance=created=[], dropped=[], retentionDays=30
-expired_partitions=p20261015,p20261016,p20261017
-expected_rows=retained=6000, expired=600, total=6600
-disk_before_generation=usable=47274688512, total=510528581632
-generation.day=2026-10-15 rows=200 batches=4 elapsedMs=29 rowsPerSecond=6896.6
-generation.day=2026-10-16 rows=200 batches=4 elapsedMs=21 rowsPerSecond=9523.8
-generation.day=2026-10-17 rows=200 batches=4 elapsedMs=19 rowsPerSecond=10526.3
-generation.day=2026-10-18 rows=200 batches=4 elapsedMs=19 rowsPerSecond=10526.3
-generation.day=2026-10-19 rows=200 batches=4 elapsedMs=18 rowsPerSecond=11111.1
-generation.day=2026-10-20 rows=200 batches=4 elapsedMs=81 rowsPerSecond=2469.1
-generation.day=2026-10-21 rows=200 batches=4 elapsedMs=19 rowsPerSecond=10526.3
-generation.day=2026-10-22 rows=200 batches=4 elapsedMs=17 rowsPerSecond=11764.7
-generation.day=2026-10-23 rows=200 batches=4 elapsedMs=20 rowsPerSecond=10000.0
-generation.day=2026-10-24 rows=200 batches=4 elapsedMs=23 rowsPerSecond=8695.7
-generation.day=2026-10-25 rows=200 batches=4 elapsedMs=20 rowsPerSecond=10000.0
-generation.day=2026-10-26 rows=200 batches=4 elapsedMs=19 rowsPerSecond=10526.3
-generation.day=2026-10-27 rows=200 batches=4 elapsedMs=16 rowsPerSecond=12500.0
-generation.day=2026-10-28 rows=200 batches=4 elapsedMs=23 rowsPerSecond=8695.7
-generation.day=2026-10-29 rows=200 batches=4 elapsedMs=19 rowsPerSecond=10526.3
-generation.day=2026-10-30 rows=200 batches=4 elapsedMs=17 rowsPerSecond=11764.7
-generation.day=2026-10-31 rows=200 batches=4 elapsedMs=75 rowsPerSecond=2666.7
-generation.day=2026-11-01 rows=200 batches=4 elapsedMs=20 rowsPerSecond=10000.0
-generation.day=2026-11-02 rows=200 batches=4 elapsedMs=20 rowsPerSecond=10000.0
-generation.day=2026-11-03 rows=200 batches=4 elapsedMs=18 rowsPerSecond=11111.1
-generation.day=2026-11-04 rows=200 batches=4 elapsedMs=19 rowsPerSecond=10526.3
-generation.day=2026-11-05 rows=200 batches=4 elapsedMs=17 rowsPerSecond=11764.7
-generation.day=2026-11-06 rows=200 batches=4 elapsedMs=19 rowsPerSecond=10526.3
-generation.day=2026-11-07 rows=200 batches=4 elapsedMs=18 rowsPerSecond=11111.1
-generation.day=2026-11-08 rows=200 batches=4 elapsedMs=18 rowsPerSecond=11111.1
-generation.day=2026-11-09 rows=200 batches=4 elapsedMs=18 rowsPerSecond=11111.1
-generation.day=2026-11-10 rows=200 batches=4 elapsedMs=18 rowsPerSecond=11111.1
-generation.day=2026-11-11 rows=200 batches=4 elapsedMs=19 rowsPerSecond=10526.3
-generation.day=2026-11-12 rows=200 batches=4 elapsedMs=70 rowsPerSecond=2857.1
-generation.day=2026-11-13 rows=200 batches=4 elapsedMs=19 rowsPerSecond=10526.3
-generation.day=2026-11-14 rows=200 batches=4 elapsedMs=19 rowsPerSecond=10526.3
-generation.day=2026-11-15 rows=200 batches=4 elapsedMs=19 rowsPerSecond=10526.3
-generation.day=2026-11-16 rows=200 batches=4 elapsedMs=18 rowsPerSecond=11111.1
-generated.total_rows=6600
-generated.retained_rows=6000
-generated.expected_total_rows=6600
-generated.expected_retained_rows=6000
-generated.total_elapsed_ms=852
-generated.rows_per_second=7746.478873239436
-generated.batches=132
-generated.batch_size=50
-capacity.scale=非验收规模：expectedRetainedRows=6000 < 25920000，仅校验自洽性，不得据此宣称 AC33 通过
+expired_partitions=p20261016,p20261017,p20261018
+expected_rows=retained=25920000, expired=2592000, total=28512000
+disk_before_generation=usable=43963174912, total=510528581632
+generation.day=2026-10-16 rows=864000 batches=500 elapsedMs=42848 rowsPerSecond=20164.3
+generation.day=2026-10-17 rows=864000 batches=500 elapsedMs=46402 rowsPerSecond=18619.9
+generation.day=2026-10-18 rows=864000 batches=500 elapsedMs=46952 rowsPerSecond=18401.8
+generation.day=2026-10-19 rows=864000 batches=500 elapsedMs=42722 rowsPerSecond=20223.8
+generation.day=2026-10-20 rows=864000 batches=500 elapsedMs=46809 rowsPerSecond=18458.0
+generation.day=2026-10-21 rows=864000 batches=500 elapsedMs=52500 rowsPerSecond=16457.1
+generation.day=2026-10-22 rows=864000 batches=500 elapsedMs=48855 rowsPerSecond=17685.0
+generation.day=2026-10-23 rows=864000 batches=500 elapsedMs=38735 rowsPerSecond=22305.4
+generation.day=2026-10-24 rows=864000 batches=500 elapsedMs=49515 rowsPerSecond=17449.3
+generation.day=2026-10-25 rows=864000 batches=500 elapsedMs=43473 rowsPerSecond=19874.4
+generation.day=2026-10-26 rows=864000 batches=500 elapsedMs=46258 rowsPerSecond=18677.9
+generation.day=2026-10-27 rows=864000 batches=500 elapsedMs=34413 rowsPerSecond=25106.8
+generation.day=2026-10-28 rows=864000 batches=500 elapsedMs=37465 rowsPerSecond=23061.5
+generation.day=2026-10-29 rows=864000 batches=500 elapsedMs=32701 rowsPerSecond=26421.2
+generation.day=2026-10-30 rows=864000 batches=500 elapsedMs=28615 rowsPerSecond=30194.0
+generation.day=2026-10-31 rows=864000 batches=500 elapsedMs=39234 rowsPerSecond=22021.7
+generation.day=2026-11-01 rows=864000 batches=500 elapsedMs=38683 rowsPerSecond=22335.4
+generation.day=2026-11-02 rows=864000 batches=500 elapsedMs=30149 rowsPerSecond=28657.7
+generation.day=2026-11-03 rows=864000 batches=500 elapsedMs=35224 rowsPerSecond=24528.7
+generation.day=2026-11-04 rows=864000 batches=500 elapsedMs=30015 rowsPerSecond=28785.6
+generation.day=2026-11-05 rows=864000 batches=500 elapsedMs=36872 rowsPerSecond=23432.4
+generation.day=2026-11-06 rows=864000 batches=500 elapsedMs=32099 rowsPerSecond=26916.7
+generation.day=2026-11-07 rows=864000 batches=500 elapsedMs=38332 rowsPerSecond=22539.9
+generation.day=2026-11-08 rows=864000 batches=500 elapsedMs=31386 rowsPerSecond=27528.2
+generation.day=2026-11-09 rows=864000 batches=500 elapsedMs=30895 rowsPerSecond=27965.7
+generation.day=2026-11-10 rows=864000 batches=500 elapsedMs=31765 rowsPerSecond=27199.7
+generation.day=2026-11-11 rows=864000 batches=500 elapsedMs=33913 rowsPerSecond=25477.0
+generation.day=2026-11-12 rows=864000 batches=500 elapsedMs=30065 rowsPerSecond=28737.7
+generation.day=2026-11-13 rows=864000 batches=500 elapsedMs=34475 rowsPerSecond=25061.6
+generation.day=2026-11-14 rows=864000 batches=500 elapsedMs=29789 rowsPerSecond=29004.0
+generation.day=2026-11-15 rows=864000 batches=500 elapsedMs=37059 rowsPerSecond=23314.2
+generation.day=2026-11-16 rows=864000 batches=500 elapsedMs=34132 rowsPerSecond=25313.5
+generation.day=2026-11-17 rows=864000 batches=500 elapsedMs=45170 rowsPerSecond=19127.7
+generated.total_rows=28512000
+generated.retained_rows=25920000
+generated.expected_total_rows=28512000
+generated.expected_retained_rows=25920000
+generated.total_elapsed_ms=1257715
+generated.rows_per_second=22669.68271826288
+generated.batches=16500
+generated.batch_size=2000
 partitions.count=40
-partitions.first=p20261015
-partitions.last=p20261123
-partitions.retained_first=p20261018
-partitions.retained_last=p20261116
-table.track_point.estimated_rows=5015
-table.track_point.data_length_bytes=2293760
-table.track_point.index_length_bytes=1310720
-table.track_point.total_bytes=3604480
-table.track_point.data_free_bytes=0
-table.track_point.avg_row_length_bytes=457
+partitions.first=p20261016
+partitions.last=p20261124
+partitions.retained_first=p20261019
+partitions.retained_last=p20261117
+table.track_point.estimated_rows=9249915
+table.track_point.data_length_bytes=2097659904
+table.track_point.index_length_bytes=535658496
+table.track_point.total_bytes=2633318400
+table.track_point.data_free_bytes=207618048
+table.track_point.avg_row_length_bytes=226
 table.track_point.engine=InnoDB
 table.track_point.collation=utf8mb4_0900_ai_ci
-table.track_point.container_du_kb=7476
-table.track_point.container_du_mib=7.30078125
-rows.total=6600
-rows.valid=6534
-rows.invalid=66
-rows.event_flagged=66
-partition=1 p20261015 '2026-10-16' rows~15 data=16384 index=32768
-partition=2 p20261016 '2026-10-17' rows~200 data=81920 index=32768
-partition=3 p20261017 '2026-10-18' rows~200 data=81920 index=32768
-partition=4 p20261018 '2026-10-19' rows~200 data=81920 index=32768
-partition=5 p20261019 '2026-10-20' rows~200 data=81920 index=32768
-partition=6 p20261020 '2026-10-21' rows~200 data=81920 index=32768
-partition=7 p20261021 '2026-10-22' rows~200 data=81920 index=32768
-partition=8 p20261022 '2026-10-23' rows~200 data=81920 index=32768
-partition=9 p20261023 '2026-10-24' rows~200 data=81920 index=32768
-partition=10 p20261024 '2026-10-25' rows~200 data=81920 index=32768
-partition=11 p20261025 '2026-10-26' rows~200 data=81920 index=32768
-partition=12 p20261026 '2026-10-27' rows~200 data=81920 index=32768
-partition=13 p20261027 '2026-10-28' rows~200 data=81920 index=32768
-partition=14 p20261028 '2026-10-29' rows~200 data=81920 index=32768
-partition=15 p20261029 '2026-10-30' rows~200 data=81920 index=32768
-partition=16 p20261030 '2026-10-31' rows~200 data=81920 index=32768
-partition=17 p20261031 '2026-11-01' rows~200 data=81920 index=32768
-partition=18 p20261101 '2026-11-02' rows~200 data=81920 index=32768
-partition=19 p20261102 '2026-11-03' rows~200 data=81920 index=32768
-partition=20 p20261103 '2026-11-04' rows~200 data=81920 index=32768
-partition=21 p20261104 '2026-11-05' rows~200 data=81920 index=32768
-partition=22 p20261105 '2026-11-06' rows~200 data=81920 index=32768
-partition=23 p20261106 '2026-11-07' rows~200 data=81920 index=32768
-partition=24 p20261107 '2026-11-08' rows~200 data=81920 index=32768
-partition=25 p20261108 '2026-11-09' rows~200 data=81920 index=32768
-partition=26 p20261109 '2026-11-10' rows~200 data=81920 index=32768
-partition=27 p20261110 '2026-11-11' rows~0 data=16384 index=32768
-partition=28 p20261111 '2026-11-12' rows~0 data=16384 index=32768
-partition=29 p20261112 '2026-11-13' rows~0 data=16384 index=32768
-partition=30 p20261113 '2026-11-14' rows~0 data=16384 index=32768
-partition=31 p20261114 '2026-11-15' rows~0 data=16384 index=32768
-partition=32 p20261115 '2026-11-16' rows~0 data=16384 index=32768
-partition=33 p20261116 '2026-11-17' rows~0 data=16384 index=32768
-partition=34 p20261117 '2026-11-18' rows~0 data=16384 index=32768
-partition=35 p20261118 '2026-11-19' rows~0 data=16384 index=32768
-partition=36 p20261119 '2026-11-20' rows~0 data=16384 index=32768
-partition=37 p20261120 '2026-11-21' rows~0 data=16384 index=32768
-partition=38 p20261121 '2026-11-22' rows~0 data=16384 index=32768
-partition=39 p20261122 '2026-11-23' rows~0 data=16384 index=32768
-partition=40 p20261123 '2026-11-24' rows~0 data=16384 index=32768
-disk_after_generation=usable=47271632896, total=510528581632
-container.disk_after_generation=Filesystem      1K-blocks     Used Available Use% Mounted on /dev/sde       1055762868 28035532 974023864   3% /var/lib/mysql
-query.cross-midnight.expected_points=33
-explain.single-day={id=1, select_type=SIMPLE, table=track_point, partitions=p20261106, type=ALL, possible_keys=idx_track_vehicle_time, key=null, key_len=null, ref=null, rows=200, filtered=50.0, Extra=Using where; Using filesort}
-query.single-day.sql=SELECT gps_time, lng, lat, speed, direction, alarm_flag, locate_state FROM track_point PARTITION (p20261106) WHERE vehicle_id = ? AND gps_time >= ? AND gps_time <= ? AND 1=1 ORDER BY gps_time, id
-query.single-day.args=[1, 2026-11-06T00:00, 2026-11-06T23:59:59]
-query.single-day.pruned_partitions=p20261106
-query.single-day.expected_partitions=p20261106
-query.single-day.cold_ms=78
-query.single-day.warm_ms=48
-query.single-day.raw_points=100
-query.single-day.display_points=2
-query.single-day.segments=1
-query.single-day.gaps=0
+table.track_point.container_du_kb=8111220
+table.track_point.container_du_mib=7921.11328125
+rows.total=28512000
+rows.valid=28502100
+rows.invalid=9900
+rows.event_flagged=29700
+partition=1 p20261016 '2026-10-17' rows~323974 data=73007104 index=17924096
+partition=2 p20261017 '2026-10-18' rows~159432 data=36257792 index=9469952
+partition=3 p20261018 '2026-10-19' rows~322224 data=73007104 index=17924096
+partition=4 p20261019 '2026-10-20' rows~150006 data=34160640 index=9469952
+partition=5 p20261020 '2026-10-21' rows~210532 data=47808512 index=11567104
+partition=6 p20261021 '2026-10-22' rows~213160 data=48857088 index=13664256
+partition=7 p20261022 '2026-10-23' rows~132772 data=29966336 index=7372800
+partition=8 p20261023 '2026-10-24' rows~225643 data=50954240 index=13664256
+partition=9 p20261024 '2026-10-25' rows~161695 data=37306368 index=9469952
+partition=10 p20261025 '2026-10-26' rows~415078 data=94011392 index=24215552
+partition=11 p20261026 '2026-10-27' rows~188024 data=42565632 index=11567104
+partition=12 p20261027 '2026-10-28' rows~265597 data=60407808 index=15761408
+partition=13 p20261028 '2026-10-29' rows~246580 data=56213504 index=13664256
+partition=14 p20261029 '2026-10-30' rows~215131 data=48857088 index=13664256
+partition=15 p20261030 '2026-10-31' rows~289883 data=65667072 index=15761408
+partition=16 p20261031 '2026-11-01' rows~298351 data=67764224 index=17858560
+partition=17 p20261101 '2026-11-02' rows~210532 data=47808512 index=11567104
+partition=18 p20261102 '2026-11-03' rows~291854 data=65667072 index=17858560
+partition=19 p20261103 '2026-11-04' rows~599615 data=134971392 index=32636928
+partition=20 p20261104 '2026-11-05' rows~289883 data=65667072 index=15761408
+partition=21 p20261105 '2026-11-06' rows~240681 data=55164928 index=13664256
+partition=22 p20261106 '2026-11-07' rows~547500 data=123420672 index=30539776
+partition=23 p20261107 '2026-11-08' rows~263676 data=59359232 index=15761408
+partition=24 p20261108 '2026-11-09' rows~255135 data=58310656 index=15761408
+partition=25 p20261109 '2026-11-10' rows~306892 data=69861376 index=17858560
+partition=26 p20261110 '2026-11-11' rows~227614 data=52019200 index=13664256
+partition=27 p20261111 '2026-11-12' rows~323974 data=73007104 index=17924096
+partition=28 p20261112 '2026-11-13' rows~327916 data=74072064 index=17924096
+partition=29 p20261113 '2026-11-14' rows~510329 data=115015680 index=28442624
+partition=30 p20261114 '2026-11-15' rows~298351 data=67764224 index=17858560
+partition=31 p20261115 '2026-11-16' rows~255792 data=58310656 index=15761408
+partition=32 p20261116 '2026-11-17' rows~222272 data=50954240 index=13664256
+partition=33 p20261117 '2026-11-18' rows~259817 data=59359232 index=15761408
+partition=34 p20261118 '2026-11-19' rows~0 data=16384 index=32768
+partition=35 p20261119 '2026-11-20' rows~0 data=16384 index=32768
+partition=36 p20261120 '2026-11-21' rows~0 data=16384 index=32768
+partition=37 p20261121 '2026-11-22' rows~0 data=16384 index=32768
+partition=38 p20261122 '2026-11-23' rows~0 data=16384 index=32768
+partition=39 p20261123 '2026-11-24' rows~0 data=16384 index=32768
+partition=40 p20261124 '2026-11-25' rows~0 data=16384 index=32768
+disk_after_generation=usable=37873156096, total=510528581632
+container.disk_after_generation=Filesystem      1K-blocks     Used Available Use% Mounted on /dev/sde       1055762868 31602812 970456584   4% /var/lib/mysql
+query.cross-midnight.expected_points=2881
+explain.single-day={id=1, select_type=SIMPLE, table=track_point, partitions=p20261107, type=range, possible_keys=idx_track_vehicle_time, key=idx_track_vehicle_time, key_len=13, ref=null, rows=16086, filtered=100.0, Extra=Using index condition}
+query.single-day.sql=SELECT gps_time, lng, lat, speed, direction, alarm_flag, locate_state FROM track_point PARTITION (p20261107) WHERE vehicle_id = ? AND gps_time >= ? AND gps_time <= ? AND 1=1 ORDER BY gps_time, id
+query.single-day.args=[1, 2026-11-07T00:00, 2026-11-07T23:59:59]
+query.single-day.pruned_partitions=p20261107
+query.single-day.expected_partitions=p20261107
+query.single-day.cold_ms=943
+query.single-day.warm_ms=195
+query.single-day.raw_points=8640
+query.single-day.display_points=75
+query.single-day.segments=3
+query.single-day.gaps=2
+explain.cross-midnight-8h={id=1, select_type=SIMPLE, table=track_point, partitions=p20261107,p20261108, type=range, possible_keys=idx_track_vehicle_time, key=idx_track_vehicle_time, key_len=13, ref=null, rows=2881, filtered=100.0, Extra=Using index condition}
+query.cross-midnight-8h.sql=SELECT gps_time, lng, lat, speed, direction, alarm_flag, locate_state FROM track_point PARTITION (p20261107,p20261108) WHERE vehicle_id = ? AND gps_time >= ? AND gps_time <= ? AND 1=1 ORDER BY gps_time, id
+query.cross-midnight-8h.args=[1, 2026-11-07T20:00, 2026-11-08T04:00]
+query.cross-midnight-8h.pruned_partitions=p20261107,p20261108
+query.cross-midnight-8h.expected_partitions=p20261108,p20261107
+query.cross-midnight-8h.cold_ms=173
+query.cross-midnight-8h.warm_ms=118
+query.cross-midnight-8h.raw_points=2881
+query.cross-midnight-8h.display_points=25
+query.cross-midnight-8h.segments=2
+query.cross-midnight-8h.gaps=1
 cleanup.before.partitions=40
-cleanup.before.retained_rows=6000
-cleanup.before.expired_rows=600
-cleanup.before.total_rows=6600
-cleanup.before.container_du_kb=7476
+cleanup.before.retained_rows=25920000
+cleanup.before.expired_rows=2592000
+cleanup.before.total_rows=28512000
+cleanup.before.container_du_kb=8111220
 cleanup.before.alerts=0
-disk_before_cleanup=usable=47271587840, total=510528581632
-cleanup.elapsed_ms=169
+disk_before_cleanup=usable=37909331968, total=510528581632
+cleanup.elapsed_ms=650
 cleanup.result_success=true
 cleanup.created_partitions=
-cleanup.dropped_partitions=p20261015,p20261016,p20261017
-cleanup.dropped_rows_estimate=415
+cleanup.dropped_partitions=p20261016,p20261017,p20261018
+cleanup.dropped_rows_estimate=805630
 cleanup.after.partitions=37
-cleanup.after.retained_rows=6000
-cleanup.after.total_rows=6000
-cleanup.after.container_du_kb=6888
+cleanup.after.retained_rows=25920000
+cleanup.after.total_rows=25920000
+cleanup.after.container_du_kb=7373928
 cleanup.after.alerts=0
-cleanup.released_bytes=602112
-cleanup.recorded.dropped_partitions=p20261015,p20261016,p20261017
-cleanup.recorded.dropped_rows_estimate=415
-query.after-cleanup-single-day.elapsed_ms=40
-query.after-cleanup-single-day.raw_points=100
-query.after-cleanup-single-day.display_points=2
-finished_at=2026-11-16 14:20:19 CST
+cleanup.released_bytes=754987008
+cleanup.recorded.dropped_partitions=p20261016,p20261017,p20261018
+cleanup.recorded.dropped_rows_estimate=805630
+query.after-cleanup-single-day.elapsed_ms=236
+query.after-cleanup-single-day.raw_points=8640
+query.after-cleanup-single-day.display_points=75
+query.after-cleanup-cross-midnight.elapsed_ms=167
+query.after-cleanup-cross-midnight.raw_points=2881
+query.after-cleanup-cross-midnight.display_points=25
+disk_after_cleanup=usable=37910216704, total=510528581632
+container.disk_after_cleanup=Filesystem      1K-blocks     Used Available Use% Mounted on /dev/sde       1055762868 30865520 971193876   4% /var/lib/mysql
+finished_at=2026-11-17 10:00:50 CST

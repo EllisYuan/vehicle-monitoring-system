@@ -751,7 +751,9 @@ class TrackCapacityHarnessTest {
                 + " @@innodb_flush_log_at_trx_commit AS flush_log, @@max_connections AS max_connections,"
                 + " @@performance_schema AS performance_schema, @@character_set_server AS charset,"
                 + " @@collation_server AS collation, @@time_zone AS session_time_zone,"
-                + " @@innodb_file_per_table AS file_per_table, @@datadir AS datadir");
+                + " @@innodb_file_per_table AS file_per_table, @@datadir AS datadir,"
+                + " @@max_allowed_packet AS max_allowed_packet");
+        metric("mysql.max_allowed_packet", vars.get("max_allowed_packet"));
         metric("mysql.version", vars.get("version"));
         metric("mysql.innodb_buffer_pool_size", vars.get("buffer_pool"));
         metric("mysql.log_bin", vars.get("log_bin"));

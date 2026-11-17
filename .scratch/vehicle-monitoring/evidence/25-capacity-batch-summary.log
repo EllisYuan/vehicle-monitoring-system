@@ -1,0 +1,12 @@
+batches=16500
+build_ms_avg=0.47
+build_ms_p50=0
+build_ms_p95=1
+build_ms_max=174
+execute_ms_avg=73.51
+execute_ms_p50=62
+execute_ms_p95=158
+execute_ms_max=3275
+sql_bytes_min=150904
+sql_bytes_avg=410207
+sql_bytes_max=479091
