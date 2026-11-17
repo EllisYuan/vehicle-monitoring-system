@@ -14,6 +14,8 @@
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
         <netty.version>4.2.19.Final</netty.version>
+        <junit.version>5.14.2</junit.version>
+        <assertj.version>3.27.7</assertj.version>
     </properties>
     <dependencies>
         <dependency>
@@ -30,6 +32,18 @@
             <groupId>io.netty</groupId>
             <artifactId>netty-codec</artifactId>
             <version>${netty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>

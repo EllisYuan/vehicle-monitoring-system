@@ -1,6 +1,6 @@
 # 22: 可重复的多车综合演示场景
 
-Status: open
+Status: claimed
 Labels: ready-for-agent
 Type: task
 Blocked by: 09, 14, 15, 16

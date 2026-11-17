@@ -1,0 +1,12 @@
+== remove stale t22 containers if present
+== start dedicated MySQL 8.4 and Redis 8.4
+PASS MySQL container ready
+== start server with dedicated containers and TCP listener
+PASS server started with admin session
+== create fleet, three vehicles and three terminals
+== create polygon geofence covering the geofence scene crossing
+PASS geofence ENABLED and bound to three vehicles
+== config written: C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ac2bfb44954865d72\.scratch\vehicle-monitoring\evidence\22-config-full.conf
+== run1: all scenes, same seed, no external commands
+server stopped
+cleanup: server stopped, t22-mysql/t22-redis removed
