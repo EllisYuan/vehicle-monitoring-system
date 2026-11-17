@@ -22,6 +22,7 @@ public record ScenarioConfig(
         int commandBaseIntervalMs,
         long offlineGapMs,
         int backfillSeconds,
+        long durationMs,
         Route route,
         double geofenceStepLng,
         List<ScenarioType> enabledScenes) {
@@ -55,6 +56,7 @@ public record ScenarioConfig(
         Integer commandBaseIntervalMs = null;
         Long offlineGapMs = null;
         Integer backfillSeconds = null;
+        Long durationMs = null;
         String crs = null;
         Double startLng = null;
         Double startLat = null;
@@ -91,6 +93,7 @@ public record ScenarioConfig(
                 case "command-base-interval-ms" -> commandBaseIntervalMs = parseInt(key, value);
                 case "offline-gap-ms" -> offlineGapMs = parseLong(key, value);
                 case "backfill-seconds" -> backfillSeconds = parseInt(key, value);
+                case "duration-ms" -> durationMs = parseLong(key, value);
                 case "route.crs" -> crs = value;
                 case "route.start-lng" -> startLng = parseDouble(key, value);
                 case "route.start-lat" -> startLat = parseDouble(key, value);
@@ -141,6 +144,27 @@ public record ScenarioConfig(
         }
         int effectiveBackfill = requirePositive("backfill-seconds",
                 backfillSeconds == null ? 120 : backfillSeconds);
+        long effectiveDuration = durationMs == null ? 0L : durationMs;
+        if (scenes.contains(ScenarioType.STEADY)) {
+            if (durationMs == null) {
+                throw new IllegalArgumentException("启用 scene.steady 时必须提供 duration-ms");
+            }
+            if (effectiveDuration < effectiveInterval) {
+                throw new IllegalArgumentException("duration-ms 不能小于 interval-ms："
+                        + effectiveDuration + " < " + effectiveInterval);
+            }
+            if (effectiveDuration % effectiveInterval != 0) {
+                throw new IllegalArgumentException("duration-ms 必须为 interval-ms 的整数倍："
+                        + effectiveDuration + " / " + effectiveInterval);
+            }
+            long points = effectiveDuration / effectiveInterval;
+            if (points > 100_000L) {
+                throw new IllegalArgumentException("duration-ms 与 interval-ms 推导的单终端点数不能超过 100000："
+                        + points);
+            }
+        } else if (durationMs != null) {
+            throw new IllegalArgumentException("duration-ms 仅在启用 scene.steady 时可用");
+        }
         String effectiveCrs = crs == null ? "WGS84" : crs;
         if (!"WGS84".equals(effectiveCrs)) {
             throw new IllegalArgumentException("route.crs 仅支持 WGS84：" + effectiveCrs);
@@ -165,7 +189,7 @@ public record ScenarioConfig(
         }
         return new ScenarioConfig(seed, vehicles, host, effectivePort, effectiveInterval, effectiveStagger,
                 effectiveAckTimeout, effectiveRetries, effectiveDropCount, effectiveWindow,
-                effectiveCommandBase, effectiveOfflineGap, effectiveBackfill, route,
+                effectiveCommandBase, effectiveOfflineGap, effectiveBackfill, effectiveDuration, route,
                 geofenceStepLng == null ? 0.0015 : geofenceStepLng, ordered);
     }
 
@@ -234,9 +258,10 @@ public record ScenarioConfig(
 
     public String describe() {
         return String.format(Locale.ROOT,
-                "seed=%d vehicles=%d host=%s port=%d interval-ms=%d ack-timeout-ms=%d "
+                "seed=%d vehicles=%d host=%s port=%d interval-ms=%d duration-ms=%d ack-timeout-ms=%d "
                         + "ack-max-retries=%d scenes=%s",
-                seed, vehicles.size(), host, port, intervalMs, ackTimeoutMs, ackMaxRetries, enabledScenes);
+                seed, vehicles.size(), host, port, intervalMs, durationMs, ackTimeoutMs, ackMaxRetries,
+                enabledScenes);
     }
 }
 

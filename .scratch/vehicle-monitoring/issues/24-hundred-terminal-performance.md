@@ -1,6 +1,6 @@
 # 24: 100 终端性能验收
 
-Status: open
+Status: claimed
 Labels: ready-for-agent
 Type: task
 Blocked by: 22

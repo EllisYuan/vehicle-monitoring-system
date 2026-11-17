@@ -14,7 +14,8 @@ public enum ScenarioType {
     BACKFILL("backfill"),
     DUPLICATE("duplicate"),
     ACK_LOSS("ack-loss"),
-    COMMANDS("commands");
+    COMMANDS("commands"),
+    STEADY("steady");
 
     private final String key;
 
