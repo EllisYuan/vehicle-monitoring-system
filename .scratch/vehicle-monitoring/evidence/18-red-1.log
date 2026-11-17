@@ -1,0 +1,1304 @@
+[lock] acquired: C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a00745beffa1c5c09\mvnw.cmd -B -pl server -am -Dtest=OutboxRetentionTest,OutboxRetryAndCacheRecoveryTest -Dsurefire.failIfNoSpecifiedTests=false test
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] vehicle-monitoring-system                                          [pom]
+[INFO] protocol                                                           [jar]
+[INFO] vehicle-monitoring-server                                          [jar]
+[INFO] 
+[INFO] -----------------< com.vms:vehicle-monitoring-system >------------------
+[INFO] Building vehicle-monitoring-system 0.1.0-SNAPSHOT                  [1/3]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --------------------------< com.vms:protocol >--------------------------
+[INFO] Building protocol 0.1.0-SNAPSHOT                                   [2/3]
+[INFO]   from protocol\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ protocol ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a00745beffa1c5c09\protocol\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ protocol ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ protocol ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ protocol ---
+[INFO] 
+[INFO] ---------------------------< com.vms:server >---------------------------
+[INFO] Building vehicle-monitoring-server 0.1.0-SNAPSHOT                  [3/3]
+[INFO]   from server\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-toolchain) @ server ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ server ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 11 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ server ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 94 source files with javac [debug parameters release 21] to target\classes
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-a00745beffa1c5c09/server/src/main/java/com/vms/access/TerminalTcpServer.java: C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a00745beffa1c5c09\server\src\main\java\com\vms\access\TerminalTcpServer.java uses or overrides a deprecated API.
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-a00745beffa1c5c09/server/src/main/java/com/vms/access/TerminalTcpServer.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ server ---
+[INFO] skip non existing resourceDirectory C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a00745beffa1c5c09\server\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ server ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 30 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-a00745beffa1c5c09/server/src/test/java/com/vms/access/TerminalTcpIntegrationTest.java: Some input files use or override a deprecated API.
+[INFO] /C:/Users/YuanS/Documents/paper/ja/vehicle-monitoring-system/.claude/worktrees/agent-a00745beffa1c5c09/server/src/test/java/com/vms/access/TerminalTcpIntegrationTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ server ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.vms.infrastructure.monitor.OutboxRetentionTest
+18:08:23.372 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.infrastructure.monitor.OutboxRetentionTest]: OutboxRetentionTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:08:23.728 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.infrastructure.monitor.OutboxRetentionTest
+18:08:23.916 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.infrastructure.monitor.OutboxRetentionTest]: OutboxRetentionTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:08:23.932 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.infrastructure.monitor.OutboxRetentionTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-16T18:08:24.731+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] c.v.i.monitor.OutboxRetentionTest        : Starting OutboxRetentionTest using Java 21.0.9 with PID 30960 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a00745beffa1c5c09\server)
+2026-11-16T18:08:24.736+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] c.v.i.monitor.OutboxRetentionTest        : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T18:08:28.577+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-16T18:08:28.584+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-16T18:08:28.683+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 55 ms. Found 0 Redis repository interfaces.
+2026-11-16T18:08:29.907+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-16T18:08:29.914+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-16T18:08:30.074+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-16T18:08:31.028+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-16T18:08:32.001+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-16T18:08:32.005+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-16T18:08:32.057+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-16T18:08:32.569+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-16T18:08:33.098+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: bd3bab9b875824e1c32dd7ffdd073974bf337ba2e66260b01bf99fb9eede2df6
+2026-11-16T18:08:34.612+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT2.0425541S
+2026-11-16T18:08:34.629+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-16T18:08:34.630+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-16T18:08:34.631+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-16T18:08:34.633+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-16T18:08:34.893+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: fff9dfae8e48bacf8238f6b87482c13ae0b7389f78d52775e6a7bceba35c88e0
+2026-11-16T18:08:35.646+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:46055/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-16T18:08:55.088+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT20.4551297S
+2026-11-16T18:08:55.090+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:46055/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-16T18:08:55.091+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-16T18:08:55.209+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: b977e8a2f4a8c2997cd3a29b9621b380de46a51219a3c5b06966e7d5f7b6d282
+2026-11-16T18:08:56.394+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT1.3032663S
+2026-11-16T18:08:57.534+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:46055/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-16T18:08:58.324+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-16T18:08:58.334+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 12 migrations (execution time 00:00.063s)
+2026-11-16T18:08:58.367+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-16T18:08:58.587+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-16T18:08:58.618+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-16T18:08:58.795+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-16T18:08:58.908+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-16T18:08:59.019+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-16T18:08:59.225+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-16T18:08:59.340+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "6 - durable position"
+2026-11-16T18:09:00.230+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "7 - telemetry anomaly"
+2026-11-16T18:09:00.306+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "8 - overspeed alarm"
+2026-11-16T18:09:00.350+08:00  WARN 30960 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T18:09:00.521+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "9 - alarm handle"
+2026-11-16T18:09:00.610+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "11 - track retention and partitions"
+2026-11-16T18:09:00.809+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "13 - geofence"
+2026-11-16T18:09:00.865+08:00  WARN 30960 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T18:09:00.865+08:00  WARN 30960 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T18:09:01.117+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "14 - command log"
+2026-11-16T18:09:01.232+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 12 migrations to schema `vms`, now at version v14 (execution time 00:02.126s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-16T18:09:04.767+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@ebd06a9
+2026-11-16T18:09:05.509+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] c.v.i.monitor.OutboxRetentionTest        : Started OutboxRetentionTest in 41.435 seconds (process running for 43.73)
+2026-11-16T18:09:05.527+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-16T18:09:05.606+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6b6b4177
+2026-11-16T18:09:05.611+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-16T18:09:06.040+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：retention-admin
+2026-11-16T18:09:06.231+08:00  INFO 30960 --- [vehicle-monitoring-system] [           main] c.vms.track.TrackPartitionMaintenance    : 轨迹分区维护完成 trigger=STARTUP retentionDays=30 created=[] dropped=[]
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[ERROR] Tests run: 2, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 44.92 s <<< FAILURE! -- in com.vms.infrastructure.monitor.OutboxRetentionTest
+[ERROR] com.vms.infrastructure.monitor.OutboxRetentionTest.sevenDayBoundaryUsesActualCompletionTime -- Time elapsed: 1.579 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+
+Expecting actual:
+  ["done-at-boundary", "done-just-under"]
+to contain exactly (and in same order):
+  ["done-just-under"]
+but some elements were not expected:
+  ["done-at-boundary"]
+
+	at com.vms.infrastructure.monitor.OutboxRetentionTest.sevenDayBoundaryUsesActualCompletionTime(OutboxRetentionTest.java:69)
+
+[ERROR] com.vms.infrastructure.monitor.OutboxRetentionTest.doneOlderThanSevenDaysIsDeletedWhileRecentDoneDeadAndPendingAreKept -- Time elapsed: 0.048 s <<< FAILURE!
+java.lang.AssertionError: 
+
+Expecting actual:
+  ["dead-old", "done-old", "done-recent", "pending-old"]
+to contain exactly in any order:
+  ["done-recent", "dead-old", "pending-old"]
+but the following elements were unexpected:
+  ["done-old"]
+
+	at com.vms.infrastructure.monitor.OutboxRetentionTest.doneOlderThanSevenDaysIsDeletedWhileRecentDoneDeadAndPendingAreKept(OutboxRetentionTest.java:58)
+
+[INFO] Running com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest
+18:09:11.381 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest]: OutboxRetryAndCacheRecoveryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:09:11.721 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest
+18:09:11.848 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest]: OutboxRetryAndCacheRecoveryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:09:11.860 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.vms.VehicleMonitoringApplication for test class com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-16T18:09:12.488+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] c.v.i.m.OutboxRetryAndCacheRecoveryTest  : Starting OutboxRetryAndCacheRecoveryTest using Java 21.0.9 with PID 26504 (started by YuanS in C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a00745beffa1c5c09\server)
+2026-11-16T18:09:12.491+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] c.v.i.m.OutboxRetryAndCacheRecoveryTest  : No active profile set, falling back to 1 default profile: "default"
+2026-11-16T18:09:14.714+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-16T18:09:14.726+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-16T18:09:14.919+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 123 ms. Found 0 Redis repository interfaces.
+2026-11-16T18:09:19.026+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+2026-11-16T18:09:19.140+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-16T18:09:19.141+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-16T18:09:19.291+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 6756 ms
+2026-11-16T18:09:19.538+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2026-11-16T18:09:19.542+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2026-11-16T18:09:19.612+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Testcontainers version: 2.0.5
+2026-11-16T18:09:20.333+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2026-11-16T18:09:21.355+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2026-11-16T18:09:21.357+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2026-11-16T18:09:21.390+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  Server Version: 29.1.3
+  API Version: 1.52
+  Operating System: Docker Desktop
+  Total Memory: 1904 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+2026-11-16T18:09:22.052+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Creating container for image: testcontainers/ryuk:0.14.0
+2026-11-16T18:09:22.557+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 is starting: e46a4768a3f53e94cc798473c88e9d2aa14489c3430b38a3ed98590b836acac1
+2026-11-16T18:09:23.620+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] tc.testcontainers/ryuk:0.14.0            : Container testcontainers/ryuk:0.14.0 started in PT1.566655S
+2026-11-16T18:09:23.638+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2026-11-16T18:09:23.640+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : Checking the system...
+2026-11-16T18:09:23.641+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2026-11-16T18:09:23.643+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Creating container for image: mysql:8.4
+2026-11-16T18:09:23.938+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 is starting: 9de95dc5cc28db6076f7625b8199919674707d3d2ad261c57b64cfa2c7fde9fd
+2026-11-16T18:09:24.740+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Waiting for database connection to become available at jdbc:mysql://localhost:45161/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai using query 'SELECT 1'
+2026-11-16T18:09:44.395+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container mysql:8.4 started in PT20.7523527S
+2026-11-16T18:09:44.396+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] tc.mysql:8.4                             : Container is started (JDBC URL: jdbc:mysql://localhost:45161/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai)
+2026-11-16T18:09:44.397+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Creating container for image: redis:8.4
+2026-11-16T18:09:44.552+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 is starting: e17fb9fa90db8b840ca8f4124ff5041a361804d22a942281977d303a6ce9ae46
+2026-11-16T18:09:45.839+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] tc.redis:8.4                             : Container redis:8.4 started in PT1.441945S
+2026-11-16T18:09:46.619+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://localhost:45161/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai (MySQL 8.4)
+2026-11-16T18:09:47.279+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `vms`.`flyway_schema_history` does not exist yet
+2026-11-16T18:09:47.287+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 12 migrations (execution time 00:00.055s)
+2026-11-16T18:09:47.328+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `vms`.`flyway_schema_history` ...
+2026-11-16T18:09:47.456+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `vms`: << Empty Schema >>
+2026-11-16T18:09:47.477+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "1 - identity and audit"
+2026-11-16T18:09:47.634+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "2 - fleet and user authorization"
+2026-11-16T18:09:47.759+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "3 - login lockout fields"
+2026-11-16T18:09:47.860+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "4 - vehicle terminal history"
+2026-11-16T18:09:48.091+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "5 - driver and association history"
+2026-11-16T18:09:48.238+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "6 - durable position"
+2026-11-16T18:09:49.161+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "7 - telemetry anomaly"
+2026-11-16T18:09:49.255+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "8 - overspeed alarm"
+2026-11-16T18:09:49.308+08:00  WARN 26504 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T18:09:49.489+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "9 - alarm handle"
+2026-11-16T18:09:49.577+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "11 - track retention and partitions"
+2026-11-16T18:09:49.804+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "13 - geofence"
+2026-11-16T18:09:49.876+08:00  WARN 26504 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T18:09:49.876+08:00  WARN 26504 --- [vehicle-monitoring-system] [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: Integer display width is deprecated and will be removed in a future release. (SQL State: HY000 - Error Code: 1681)
+2026-11-16T18:09:50.158+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `vms` to version "14 - command log"
+2026-11-16T18:09:50.278+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 12 migrations to schema `vms`, now at version v14 (execution time 00:02.306s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.18 
+2026-11-16T18:09:52.744+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] b.m.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext@684b31de
+2026-11-16T18:09:52.929+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring TestDispatcherServlet ''
+2026-11-16T18:09:52.930+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-16T18:09:52.932+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2026-11-16T18:09:53.020+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 12352 (http) with context path '/'
+2026-11-16T18:09:53.215+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] c.v.i.m.OutboxRetryAndCacheRecoveryTest  : Started OutboxRetryAndCacheRecoveryTest in 41.268 seconds (process running for 43.179)
+2026-11-16T18:09:53.227+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-16T18:09:53.277+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3ad142f0
+2026-11-16T18:09:53.280+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-16T18:09:53.624+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] c.v.i.bootstrap.AdminBootstrapper        : 初始管理员已建立：outbox-admin
+2026-11-16T18:09:53.755+08:00  INFO 26504 --- [vehicle-monitoring-system] [           main] c.vms.track.TrackPartitionMaintenance    : 轨迹分区维护完成 trigger=STARTUP retentionDays=30 created=[] dropped=[]
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\YuanS\.m2\repository\net\bytebuddy\byte-buddy-agent\1.18.15\byte-buddy-agent-1.18.15.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/auth/login
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"57"]
+             Body = {"username":"outbox-admin","password":"Outbox-Pass-2026"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.identity.auth.AuthController
+           Method = com.vms.identity.auth.AuthController#login(LoginRequest, HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"token":"5bacb990-8c55-4a94-8030-2c4b31c3bd62","username":"outbox-admin","roleCode":"ADMIN","expiresIn":28800}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/auth/login
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"57"]
+             Body = {"username":"outbox-admin","password":"Outbox-Pass-2026"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.identity.auth.AuthController
+           Method = com.vms.identity.auth.AuthController#login(LoginRequest, HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"token":"f6ae0cb3-fc06-4ce9-9dfa-e8b50a3e1ce5","username":"outbox-admin","roleCode":"ADMIN","expiresIn":28800}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/fleets
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"f6ae0cb3-fc06-4ce9-9dfa-e8b50a3e1ce5", Content-Length:"60"]
+             Body = {"fleetName":"通知车队097f30f7","fleetCode":"O097f30f7"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.FleetController
+           Method = com.vms.fleet.FleetController#create(CreateFleetRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":2,"fleetCode":"O097f30f7","fleetName":"通知车队097f30f7","status":"ENABLED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/vehicles
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"f6ae0cb3-fc06-4ce9-9dfa-e8b50a3e1ce5", Content-Length:"40"]
+             Body = {"fleetId":2,"plateNo":"通知097f30f7"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.VehicleController
+           Method = com.vms.fleet.VehicleController#create(CreateRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":2,"plateNo":"通知097f30f7","fleetId":2,"fleetName":"通知车队097f30f7","status":"ENABLED","terminalId":null,"terminalNo":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/terminals
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"f6ae0cb3-fc06-4ce9-9dfa-e8b50a3e1ce5", Content-Length:"37"]
+             Body = {"terminalNo":"01380013900100000002"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalController
+           Method = com.vms.terminal.TerminalController#create(RegisterRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":2,"terminalNo":"01380013900100000002","status":"ENABLED","vehicleId":null,"plateNo":null,"fleetId":null,"lastSeenAt":null,"everAuthenticated":false,"communicationStatus":"NOT_CONNECTED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = PUT
+      Request URI = /api/v1/vehicles/2/terminal
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"f6ae0cb3-fc06-4ce9-9dfa-e8b50a3e1ce5", Content-Length:"16"]
+             Body = {"terminalId":2}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalBindingController
+           Method = com.vms.terminal.TerminalBindingController#bind(long, BindingRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":2,"plateNo":"通知097f30f7","fleetId":2,"fleetName":"通知车队097f30f7","status":"ENABLED","terminalId":2,"terminalNo":"01380013900100000002"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2026-11-16T18:10:00.094+08:00  INFO 26504 --- [vehicle-monitoring-system] [xecutorLoop-1-1] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was localhost/127.0.0.1:45859
+2026-11-16T18:10:00.107+08:00  WARN 26504 --- [vehicle-monitoring-system] [ioEventLoop-9-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [localhost/<unresolved>:45859]: Connection reset
+
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:401) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:434) ~[na:na]
+	at io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf.setBytes(AdaptivePoolingAllocator.java:2554) ~[netty-buffer-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1139) ~[netty-buffer-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:350) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:161) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:448) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:388) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:596) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:571) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:512) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:484) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:274) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:210) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1214) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-11-16T18:10:00.115+08:00  INFO 26504 --- [vehicle-monitoring-system] [xecutorLoop-4-1] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was localhost/127.0.0.1:45859
+2026-11-16T18:10:00.121+08:00  WARN 26504 --- [vehicle-monitoring-system] [ioEventLoop-8-2] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [localhost/<unresolved>:45859]: Connection reset
+
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:401) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:434) ~[na:na]
+	at io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf.setBytes(AdaptivePoolingAllocator.java:2554) ~[netty-buffer-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1139) ~[netty-buffer-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:350) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:161) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:448) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:388) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:596) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:571) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:512) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:484) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:274) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:210) ~[netty-transport-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1214) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.2.19.Final.jar:4.2.19.Final]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-11-16T18:10:05.990+08:00  INFO 26504 --- [vehicle-monitoring-system] [xecutorLoop-1-5] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was localhost/<unresolved>:45859
+2026-11-16T18:10:05.996+08:00  WARN 26504 --- [vehicle-monitoring-system] [oEventLoop-9-13] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [localhost/<unresolved>:45859]: Connection refused: getsockopt: localhost/127.0.0.1:45859
+2026-11-16T18:10:09.209+08:00  INFO 26504 --- [vehicle-monitoring-system] [xecutorLoop-4-6] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was localhost/<unresolved>:45859
+2026-11-16T18:10:09.214+08:00  WARN 26504 --- [vehicle-monitoring-system] [oEventLoop-8-14] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [localhost/<unresolved>:45859]: Connection refused: getsockopt: localhost/127.0.0.1:45859
+2026-11-16T18:10:17.410+08:00  INFO 26504 --- [vehicle-monitoring-system] [xecutorLoop-4-9] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was localhost/<unresolved>:45859
+2026-11-16T18:10:17.414+08:00  WARN 26504 --- [vehicle-monitoring-system] [oEventLoop-8-15] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [localhost/<unresolved>:45859]: Connection refused: getsockopt: localhost/127.0.0.1:45859
+2026-11-16T18:10:18.398+08:00  INFO 26504 --- [vehicle-monitoring-system] [xecutorLoop-1-9] i.l.core.protocol.ConnectionWatchdog     : Reconnecting, last destination was localhost/<unresolved>:45859
+2026-11-16T18:10:18.401+08:00  WARN 26504 --- [vehicle-monitoring-system] [oEventLoop-9-15] i.l.core.protocol.ConnectionWatchdog     : Cannot reconnect to [localhost/<unresolved>:45859]: Connection refused: getsockopt: localhost/127.0.0.1:45859
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/auth/login
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"57"]
+             Body = {"username":"outbox-admin","password":"Outbox-Pass-2026"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.identity.auth.AuthController
+           Method = com.vms.identity.auth.AuthController#login(LoginRequest, HttpServletRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"token":"c69a5264-d418-4dc4-925d-040262ccb029","username":"outbox-admin","roleCode":"ADMIN","expiresIn":28800}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/fleets
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"c69a5264-d418-4dc4-925d-040262ccb029", Content-Length:"60"]
+             Body = {"fleetName":"通知车队edbeceb0","fleetCode":"Oedbeceb0"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.FleetController
+           Method = com.vms.fleet.FleetController#create(CreateFleetRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":3,"fleetCode":"Oedbeceb0","fleetName":"通知车队edbeceb0","status":"ENABLED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/vehicles
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"c69a5264-d418-4dc4-925d-040262ccb029", Content-Length:"40"]
+             Body = {"fleetId":3,"plateNo":"通知edbeceb0"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.fleet.VehicleController
+           Method = com.vms.fleet.VehicleController#create(CreateRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":3,"plateNo":"通知edbeceb0","fleetId":3,"fleetName":"通知车队edbeceb0","status":"ENABLED","terminalId":null,"terminalNo":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/terminals
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"c69a5264-d418-4dc4-925d-040262ccb029", Content-Length:"37"]
+             Body = {"terminalNo":"01380013900100000003"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalController
+           Method = com.vms.terminal.TerminalController#create(RegisterRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":3,"terminalNo":"01380013900100000003","status":"ENABLED","vehicleId":null,"plateNo":null,"fleetId":null,"lastSeenAt":null,"everAuthenticated":false,"communicationStatus":"NOT_CONNECTED"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = PUT
+      Request URI = /api/v1/vehicles/3/terminal
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", satoken:"c69a5264-d418-4dc4-925d-040262ccb029", Content-Length:"16"]
+             Body = {"terminalId":3}
+    Session Attrs = {}
+
+Handler:
+             Type = com.vms.terminal.TerminalBindingController
+           Method = com.vms.terminal.TerminalBindingController#bind(long, BindingRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json"]
+     Content type = application/json
+             Body = {"id":3,"plateNo":"通知edbeceb0","fleetId":3,"fleetName":"通知车队edbeceb0","status":"ENABLED","terminalId":3,"terminalNo":"01380013900100000003"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2026-11-16T18:10:31.919+08:00 ERROR 26504 --- [vehicle-monitoring-system] [           main] c.v.i.monitor.PositionOutboxWorker       : Notification moved to DEAD: event=position:retry-dead, version=1
+[ERROR] Tests run: 10, Failures: 1, Errors: 5, Skipped: 0, Time elapsed: 81.67 s <<< FAILURE! -- in com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest
+[ERROR] com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.duplicatePositionDatagramDoesNotDuplicateOutboxEventAndNewerVersionMerges -- Time elapsed: 1.676 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+
+expected: 2L
+ but was: 1L
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.duplicatePositionDatagramDoesNotDuplicateOutboxEventAndNewerVersionMerges(OutboxRetryAndCacheRecoveryTest.java:116)
+
+[ERROR] com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.redisRestartRebuildsOnlyDerivedPositionCacheFromCommittedFacts -- Time elapsed: 31.75 s <<< ERROR!
+org.awaitility.core.ConditionTimeoutException: Assertion condition defined as a Lambda expression in com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest null within 30 seconds.
+	at org.awaitility.core.ConditionAwaiter.await(ConditionAwaiter.java:167)
+	at org.awaitility.core.AssertionCondition.await(AssertionCondition.java:119)
+	at org.awaitility.core.AssertionCondition.await(AssertionCondition.java:31)
+	at org.awaitility.core.ConditionFactory.until(ConditionFactory.java:1160)
+	at org.awaitility.core.ConditionFactory.untilAsserted(ConditionFactory.java:790)
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.redisRestartRebuildsOnlyDerivedPositionCacheFromCommittedFacts(OutboxRetryAndCacheRecoveryTest.java:313)
+Caused by: org.springframework.data.redis.RedisSystemException: Redis exception
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:88)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:44)
+	at org.springframework.data.redis.PassThroughExceptionTranslationStrategy.translate(PassThroughExceptionTranslationStrategy.java:39)
+	at org.springframework.data.redis.FallbackExceptionTranslationStrategy.translate(FallbackExceptionTranslationStrategy.java:38)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.convertLettuceAccessException(LettuceConnection.java:314)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1014)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.lambda$doInvoke$2(LettuceConnection.java:451)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$Synchronizer.invoke(LettuceInvoker.java:665)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$DefaultSingleInvocationSpec.get(LettuceInvoker.java:583)
+	at org.springframework.data.redis.connection.lettuce.LettuceKeyCommands.exists(LettuceKeyCommands.java:89)
+	at org.springframework.data.redis.core.RedisTemplate.lambda$hasKey$0(RedisTemplate.java:594)
+	at org.springframework.data.redis.core.RedisTemplate.lambda$doWithKeys$0(RedisTemplate.java:854)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:418)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:385)
+	at org.springframework.data.redis.core.RedisTemplate.doWithKeys(RedisTemplate.java:854)
+	at org.springframework.data.redis.core.RedisTemplate.hasKey(RedisTemplate.java:594)
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.lambda$redisRestartRebuildsOnlyDerivedPositionCacheFromCommittedFacts$10(OutboxRetryAndCacheRecoveryTest.java:314)
+Caused by: io.lettuce.core.RedisException: java.net.SocketException: Connection reset
+	at io.lettuce.core.internal.Exceptions.bubble(Exceptions.java:68)
+	at io.lettuce.core.internal.Futures.awaitOrCancel(Futures.java:237)
+	at io.lettuce.core.LettuceFutures.awaitOrCancel(LettuceFutures.java:59)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1012)
+	... 11 more
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:401)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:434)
+	at io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf.setBytes(AdaptivePoolingAllocator.java:2554)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1139)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:350)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:161)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:448)
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:388)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:596)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:571)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:512)
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:484)
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:274)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:210)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1214)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+[ERROR] com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.workerRecoveryDoesNotDuplicateAlreadyCommittedBusinessFacts -- Time elapsed: 0.387 s <<< ERROR!
+java.lang.IllegalStateException: jakarta.servlet.ServletException: Request processing failed: org.springframework.data.redis.RedisSystemException: Redis exception
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.boundTerminal(OutboxRetryAndCacheRecoveryTest.java:465)
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.workerRecoveryDoesNotDuplicateAlreadyCommittedBusinessFacts(OutboxRetryAndCacheRecoveryTest.java:256)
+Caused by: jakarta.servlet.ServletException: Request processing failed: org.springframework.data.redis.RedisSystemException: Redis exception
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1008)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at org.springframework.test.web.servlet.TestDispatcherServlet.service(TestDispatcherServlet.java:72)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.springframework.mock.web.MockFilterChain$ServletFilterProxy.doFilter(MockFilterChain.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at cn.dev33.satoken.filter.SaFirewallCheckFilterForJakartaServlet.doFilter(SaFirewallCheckFilterForJakartaServlet.java:70)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at cn.dev33.satoken.filter.SaTokenCorsFilterForJakartaServlet.doFilter(SaTokenCorsFilterForJakartaServlet.java:52)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at cn.dev33.satoken.filter.SaTokenContextFilterForJakartaServlet.doFilter(SaTokenContextFilterForJakartaServlet.java:40)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.test.web.servlet.MockMvc.perform(MockMvc.java:199)
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.login(OutboxRetryAndCacheRecoveryTest.java:482)
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.boundTerminal(OutboxRetryAndCacheRecoveryTest.java:445)
+	... 1 more
+Caused by: org.springframework.data.redis.RedisSystemException: Redis exception
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:88)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:44)
+	at org.springframework.data.redis.PassThroughExceptionTranslationStrategy.translate(PassThroughExceptionTranslationStrategy.java:39)
+	at org.springframework.data.redis.FallbackExceptionTranslationStrategy.translate(FallbackExceptionTranslationStrategy.java:38)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.convertLettuceAccessException(LettuceConnection.java:314)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1014)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.lambda$doInvoke$2(LettuceConnection.java:451)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$Synchronizer.invoke(LettuceInvoker.java:658)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker.just(LettuceInvoker.java:92)
+	at org.springframework.data.redis.connection.lettuce.LettuceStringCommands.get(LettuceStringCommands.java:63)
+	at org.springframework.data.redis.connection.DefaultedRedisConnection.get(DefaultedRedisConnection.java:332)
+	at org.springframework.data.redis.core.AbstractOperations$FunctionalValueDeserializingRedisCallback.inRedis(AbstractOperations.java:83)
+	at org.springframework.data.redis.core.AbstractOperations$ValueDeserializingRedisCallback.doInRedis(AbstractOperations.java:66)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:418)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:385)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:166)
+	at org.springframework.data.redis.core.DefaultValueOperations.get(DefaultValueOperations.java:55)
+	at cn.dev33.satoken.dao.SaTokenDaoForRedisTemplate.get(SaTokenDaoForRedisTemplate.java:80)
+	at cn.dev33.satoken.dao.auto.SaTokenDaoByObjectFollowString.getObject(SaTokenDaoByObjectFollowString.java:49)
+	at cn.dev33.satoken.dao.auto.SaTokenDaoBySessionFollowObject.getSession(SaTokenDaoBySessionFollowObject.java:38)
+	at cn.dev33.satoken.stp.StpLogic.getSessionBySessionId(StpLogic.java:1404)
+	at cn.dev33.satoken.stp.StpLogic.getSessionByLoginId(StpLogic.java:1457)
+	at cn.dev33.satoken.stp.StpLogic.getSessionByLoginId(StpLogic.java:1474)
+	at cn.dev33.satoken.stp.StpLogic._logout(StpLogic.java:970)
+	at cn.dev33.satoken.stp.StpLogic.replaced(StpLogic.java:959)
+	at cn.dev33.satoken.stp.StpLogic.replaced(StpLogic.java:948)
+	at cn.dev33.satoken.stp.StpLogic.distUsableToken(StpLogic.java:551)
+	at cn.dev33.satoken.stp.StpLogic.createLoginSession(StpLogic.java:494)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:465)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:424)
+	at cn.dev33.satoken.stp.StpUtil.login(StpUtil.java:176)
+	at com.vms.identity.auth.AuthService.openSession(AuthService.java:79)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:710)
+	at com.vms.identity.auth.AuthService$$SpringCGLIB$$0.openSession(<generated>)
+	at com.vms.identity.auth.AuthController.login(AuthController.java:46)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
+	... 32 more
+Caused by: io.lettuce.core.RedisException: java.net.SocketException: Connection reset
+	at io.lettuce.core.internal.Exceptions.bubble(Exceptions.java:68)
+	at io.lettuce.core.internal.Futures.awaitOrCancel(Futures.java:237)
+	at io.lettuce.core.LettuceFutures.awaitOrCancel(LettuceFutures.java:59)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1012)
+	... 75 more
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:401)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:434)
+	at io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf.setBytes(AdaptivePoolingAllocator.java:2554)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1139)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:350)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:161)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:448)
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:388)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:596)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:571)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:512)
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:484)
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:274)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:210)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1214)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+[ERROR] com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.deadEventIsVisibleAndRedeliveryIsAuditedWithoutChangingBusinessFacts -- Time elapsed: 0.382 s <<< ERROR!
+jakarta.servlet.ServletException: Request processing failed: org.springframework.data.redis.RedisSystemException: Redis exception
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1008)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at org.springframework.test.web.servlet.TestDispatcherServlet.service(TestDispatcherServlet.java:72)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.springframework.mock.web.MockFilterChain$ServletFilterProxy.doFilter(MockFilterChain.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at cn.dev33.satoken.filter.SaFirewallCheckFilterForJakartaServlet.doFilter(SaFirewallCheckFilterForJakartaServlet.java:70)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at cn.dev33.satoken.filter.SaTokenCorsFilterForJakartaServlet.doFilter(SaTokenCorsFilterForJakartaServlet.java:52)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at cn.dev33.satoken.filter.SaTokenContextFilterForJakartaServlet.doFilter(SaTokenContextFilterForJakartaServlet.java:40)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.test.web.servlet.MockMvc.perform(MockMvc.java:199)
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.login(OutboxRetryAndCacheRecoveryTest.java:482)
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.deadEventIsVisibleAndRedeliveryIsAuditedWithoutChangingBusinessFacts(OutboxRetryAndCacheRecoveryTest.java:187)
+Caused by: org.springframework.data.redis.RedisSystemException: Redis exception
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:88)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:44)
+	at org.springframework.data.redis.PassThroughExceptionTranslationStrategy.translate(PassThroughExceptionTranslationStrategy.java:39)
+	at org.springframework.data.redis.FallbackExceptionTranslationStrategy.translate(FallbackExceptionTranslationStrategy.java:38)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.convertLettuceAccessException(LettuceConnection.java:314)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1014)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.lambda$doInvoke$2(LettuceConnection.java:451)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$Synchronizer.invoke(LettuceInvoker.java:658)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker.just(LettuceInvoker.java:92)
+	at org.springframework.data.redis.connection.lettuce.LettuceStringCommands.get(LettuceStringCommands.java:63)
+	at org.springframework.data.redis.connection.DefaultedRedisConnection.get(DefaultedRedisConnection.java:332)
+	at org.springframework.data.redis.core.AbstractOperations$FunctionalValueDeserializingRedisCallback.inRedis(AbstractOperations.java:83)
+	at org.springframework.data.redis.core.AbstractOperations$ValueDeserializingRedisCallback.doInRedis(AbstractOperations.java:66)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:418)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:385)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:166)
+	at org.springframework.data.redis.core.DefaultValueOperations.get(DefaultValueOperations.java:55)
+	at cn.dev33.satoken.dao.SaTokenDaoForRedisTemplate.get(SaTokenDaoForRedisTemplate.java:80)
+	at cn.dev33.satoken.dao.auto.SaTokenDaoByObjectFollowString.getObject(SaTokenDaoByObjectFollowString.java:49)
+	at cn.dev33.satoken.dao.auto.SaTokenDaoBySessionFollowObject.getSession(SaTokenDaoBySessionFollowObject.java:38)
+	at cn.dev33.satoken.stp.StpLogic.getSessionBySessionId(StpLogic.java:1404)
+	at cn.dev33.satoken.stp.StpLogic.getSessionByLoginId(StpLogic.java:1457)
+	at cn.dev33.satoken.stp.StpLogic.getSessionByLoginId(StpLogic.java:1474)
+	at cn.dev33.satoken.stp.StpLogic._logout(StpLogic.java:970)
+	at cn.dev33.satoken.stp.StpLogic.replaced(StpLogic.java:959)
+	at cn.dev33.satoken.stp.StpLogic.replaced(StpLogic.java:948)
+	at cn.dev33.satoken.stp.StpLogic.distUsableToken(StpLogic.java:551)
+	at cn.dev33.satoken.stp.StpLogic.createLoginSession(StpLogic.java:494)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:465)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:424)
+	at cn.dev33.satoken.stp.StpUtil.login(StpUtil.java:176)
+	at com.vms.identity.auth.AuthService.openSession(AuthService.java:79)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:710)
+	at com.vms.identity.auth.AuthService$$SpringCGLIB$$0.openSession(<generated>)
+	at com.vms.identity.auth.AuthController.login(AuthController.java:46)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
+	... 31 more
+Caused by: io.lettuce.core.RedisException: java.net.SocketException: Connection reset
+	at io.lettuce.core.internal.Exceptions.bubble(Exceptions.java:68)
+	at io.lettuce.core.internal.Futures.awaitOrCancel(Futures.java:237)
+	at io.lettuce.core.LettuceFutures.awaitOrCancel(LettuceFutures.java:59)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1012)
+	... 74 more
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:401)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:434)
+	at io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf.setBytes(AdaptivePoolingAllocator.java:2554)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1139)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:350)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:161)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:448)
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:388)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:596)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:571)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:512)
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:484)
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:274)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:210)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1214)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+[ERROR] com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.positionAckDoesNotDependOnRedisCacheAndRecoveryRebuildsIt -- Time elapsed: 0.377 s <<< ERROR!
+java.lang.IllegalStateException: jakarta.servlet.ServletException: Request processing failed: org.springframework.data.redis.RedisSystemException: Redis exception
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.boundTerminal(OutboxRetryAndCacheRecoveryTest.java:465)
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.positionAckDoesNotDependOnRedisCacheAndRecoveryRebuildsIt(OutboxRetryAndCacheRecoveryTest.java:348)
+Caused by: jakarta.servlet.ServletException: Request processing failed: org.springframework.data.redis.RedisSystemException: Redis exception
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1008)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at org.springframework.test.web.servlet.TestDispatcherServlet.service(TestDispatcherServlet.java:72)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.springframework.mock.web.MockFilterChain$ServletFilterProxy.doFilter(MockFilterChain.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at cn.dev33.satoken.filter.SaFirewallCheckFilterForJakartaServlet.doFilter(SaFirewallCheckFilterForJakartaServlet.java:70)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at cn.dev33.satoken.filter.SaTokenCorsFilterForJakartaServlet.doFilter(SaTokenCorsFilterForJakartaServlet.java:52)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at cn.dev33.satoken.filter.SaTokenContextFilterForJakartaServlet.doFilter(SaTokenContextFilterForJakartaServlet.java:40)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.test.web.servlet.MockMvc.perform(MockMvc.java:199)
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.login(OutboxRetryAndCacheRecoveryTest.java:482)
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.boundTerminal(OutboxRetryAndCacheRecoveryTest.java:445)
+	... 1 more
+Caused by: org.springframework.data.redis.RedisSystemException: Redis exception
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:88)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:44)
+	at org.springframework.data.redis.PassThroughExceptionTranslationStrategy.translate(PassThroughExceptionTranslationStrategy.java:39)
+	at org.springframework.data.redis.FallbackExceptionTranslationStrategy.translate(FallbackExceptionTranslationStrategy.java:38)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.convertLettuceAccessException(LettuceConnection.java:314)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1014)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.lambda$doInvoke$2(LettuceConnection.java:451)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$Synchronizer.invoke(LettuceInvoker.java:658)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker.just(LettuceInvoker.java:92)
+	at org.springframework.data.redis.connection.lettuce.LettuceStringCommands.get(LettuceStringCommands.java:63)
+	at org.springframework.data.redis.connection.DefaultedRedisConnection.get(DefaultedRedisConnection.java:332)
+	at org.springframework.data.redis.core.AbstractOperations$FunctionalValueDeserializingRedisCallback.inRedis(AbstractOperations.java:83)
+	at org.springframework.data.redis.core.AbstractOperations$ValueDeserializingRedisCallback.doInRedis(AbstractOperations.java:66)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:418)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:385)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:166)
+	at org.springframework.data.redis.core.DefaultValueOperations.get(DefaultValueOperations.java:55)
+	at cn.dev33.satoken.dao.SaTokenDaoForRedisTemplate.get(SaTokenDaoForRedisTemplate.java:80)
+	at cn.dev33.satoken.dao.auto.SaTokenDaoByObjectFollowString.getObject(SaTokenDaoByObjectFollowString.java:49)
+	at cn.dev33.satoken.dao.auto.SaTokenDaoBySessionFollowObject.getSession(SaTokenDaoBySessionFollowObject.java:38)
+	at cn.dev33.satoken.stp.StpLogic.getSessionBySessionId(StpLogic.java:1404)
+	at cn.dev33.satoken.stp.StpLogic.getSessionByLoginId(StpLogic.java:1457)
+	at cn.dev33.satoken.stp.StpLogic.getSessionByLoginId(StpLogic.java:1474)
+	at cn.dev33.satoken.stp.StpLogic._logout(StpLogic.java:970)
+	at cn.dev33.satoken.stp.StpLogic.replaced(StpLogic.java:959)
+	at cn.dev33.satoken.stp.StpLogic.replaced(StpLogic.java:948)
+	at cn.dev33.satoken.stp.StpLogic.distUsableToken(StpLogic.java:551)
+	at cn.dev33.satoken.stp.StpLogic.createLoginSession(StpLogic.java:494)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:465)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:424)
+	at cn.dev33.satoken.stp.StpUtil.login(StpUtil.java:176)
+	at com.vms.identity.auth.AuthService.openSession(AuthService.java:79)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:710)
+	at com.vms.identity.auth.AuthService$$SpringCGLIB$$0.openSession(<generated>)
+	at com.vms.identity.auth.AuthController.login(AuthController.java:46)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
+	... 32 more
+Caused by: io.lettuce.core.RedisException: java.net.SocketException: Connection reset
+	at io.lettuce.core.internal.Exceptions.bubble(Exceptions.java:68)
+	at io.lettuce.core.internal.Futures.awaitOrCancel(Futures.java:237)
+	at io.lettuce.core.LettuceFutures.awaitOrCancel(LettuceFutures.java:59)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1012)
+	... 75 more
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:401)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:434)
+	at io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf.setBytes(AdaptivePoolingAllocator.java:2554)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1139)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:350)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:161)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:448)
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:388)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:596)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:571)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:512)
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:484)
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:274)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:210)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1214)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+[ERROR] com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.redeliveryRejectsNonDeadUnknownEventsAndNonAdminActors -- Time elapsed: 0.390 s <<< ERROR!
+jakarta.servlet.ServletException: Request processing failed: org.springframework.data.redis.RedisSystemException: Redis exception
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1008)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:903)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at org.springframework.test.web.servlet.TestDispatcherServlet.service(TestDispatcherServlet.java:72)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.springframework.mock.web.MockFilterChain$ServletFilterProxy.doFilter(MockFilterChain.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at cn.dev33.satoken.filter.SaFirewallCheckFilterForJakartaServlet.doFilter(SaFirewallCheckFilterForJakartaServlet.java:70)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at cn.dev33.satoken.filter.SaTokenCorsFilterForJakartaServlet.doFilter(SaTokenCorsFilterForJakartaServlet.java:52)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at cn.dev33.satoken.filter.SaTokenContextFilterForJakartaServlet.doFilter(SaTokenContextFilterForJakartaServlet.java:40)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:160)
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:127)
+	at org.springframework.test.web.servlet.MockMvc.perform(MockMvc.java:199)
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.login(OutboxRetryAndCacheRecoveryTest.java:482)
+	at com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest.redeliveryRejectsNonDeadUnknownEventsAndNonAdminActors(OutboxRetryAndCacheRecoveryTest.java:230)
+Caused by: org.springframework.data.redis.RedisSystemException: Redis exception
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:88)
+	at org.springframework.data.redis.connection.lettuce.LettuceExceptionConverter.convert(LettuceExceptionConverter.java:44)
+	at org.springframework.data.redis.PassThroughExceptionTranslationStrategy.translate(PassThroughExceptionTranslationStrategy.java:39)
+	at org.springframework.data.redis.FallbackExceptionTranslationStrategy.translate(FallbackExceptionTranslationStrategy.java:38)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.convertLettuceAccessException(LettuceConnection.java:314)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1014)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.lambda$doInvoke$2(LettuceConnection.java:451)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker$Synchronizer.invoke(LettuceInvoker.java:658)
+	at org.springframework.data.redis.connection.lettuce.LettuceInvoker.just(LettuceInvoker.java:92)
+	at org.springframework.data.redis.connection.lettuce.LettuceStringCommands.get(LettuceStringCommands.java:63)
+	at org.springframework.data.redis.connection.DefaultedRedisConnection.get(DefaultedRedisConnection.java:332)
+	at org.springframework.data.redis.core.AbstractOperations$FunctionalValueDeserializingRedisCallback.inRedis(AbstractOperations.java:83)
+	at org.springframework.data.redis.core.AbstractOperations$ValueDeserializingRedisCallback.doInRedis(AbstractOperations.java:66)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:418)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:385)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:166)
+	at org.springframework.data.redis.core.DefaultValueOperations.get(DefaultValueOperations.java:55)
+	at cn.dev33.satoken.dao.SaTokenDaoForRedisTemplate.get(SaTokenDaoForRedisTemplate.java:80)
+	at cn.dev33.satoken.dao.auto.SaTokenDaoByObjectFollowString.getObject(SaTokenDaoByObjectFollowString.java:49)
+	at cn.dev33.satoken.dao.auto.SaTokenDaoBySessionFollowObject.getSession(SaTokenDaoBySessionFollowObject.java:38)
+	at cn.dev33.satoken.stp.StpLogic.getSessionBySessionId(StpLogic.java:1404)
+	at cn.dev33.satoken.stp.StpLogic.getSessionByLoginId(StpLogic.java:1457)
+	at cn.dev33.satoken.stp.StpLogic.getSessionByLoginId(StpLogic.java:1474)
+	at cn.dev33.satoken.stp.StpLogic._logout(StpLogic.java:970)
+	at cn.dev33.satoken.stp.StpLogic.replaced(StpLogic.java:959)
+	at cn.dev33.satoken.stp.StpLogic.replaced(StpLogic.java:948)
+	at cn.dev33.satoken.stp.StpLogic.distUsableToken(StpLogic.java:551)
+	at cn.dev33.satoken.stp.StpLogic.createLoginSession(StpLogic.java:494)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:465)
+	at cn.dev33.satoken.stp.StpLogic.login(StpLogic.java:424)
+	at cn.dev33.satoken.stp.StpUtil.login(StpUtil.java:176)
+	at com.vms.identity.auth.AuthService.openSession(AuthService.java:79)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:710)
+	at com.vms.identity.auth.AuthService$$SpringCGLIB$$0.openSession(<generated>)
+	at com.vms.identity.auth.AuthController.login(AuthController.java:46)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:252)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:184)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1000)
+	... 31 more
+Caused by: io.lettuce.core.RedisException: java.net.SocketException: Connection reset
+	at io.lettuce.core.internal.Exceptions.bubble(Exceptions.java:68)
+	at io.lettuce.core.internal.Futures.awaitOrCancel(Futures.java:237)
+	at io.lettuce.core.LettuceFutures.awaitOrCancel(LettuceFutures.java:59)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnection.await(LettuceConnection.java:1012)
+	... 74 more
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.SocketChannelImpl.throwConnectionReset(SocketChannelImpl.java:401)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:434)
+	at io.netty.buffer.AdaptivePoolingAllocator$AdaptiveByteBuf.setBytes(AdaptivePoolingAllocator.java:2554)
+	at io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1139)
+	at io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:350)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:161)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.handle(AbstractNioChannel.java:448)
+	at io.netty.channel.nio.NioIoHandler$DefaultNioRegistration.handle(NioIoHandler.java:388)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKey(NioIoHandler.java:596)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeysOptimized(NioIoHandler.java:571)
+	at io.netty.channel.nio.NioIoHandler.processSelectedKeys(NioIoHandler.java:512)
+	at io.netty.channel.nio.NioIoHandler.run(NioIoHandler.java:484)
+	at io.netty.channel.SingleThreadIoEventLoop.runIo(SingleThreadIoEventLoop.java:274)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:210)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1214)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   OutboxRetentionTest.doneOlderThanSevenDaysIsDeletedWhileRecentDoneDeadAndPendingAreKept:58 
+Expecting actual:
+  ["dead-old", "done-old", "done-recent", "pending-old"]
+to contain exactly in any order:
+  ["done-recent", "dead-old", "pending-old"]
+but the following elements were unexpected:
+  ["done-old"]
+
+[ERROR]   OutboxRetentionTest.sevenDayBoundaryUsesActualCompletionTime:69 
+Expecting actual:
+  ["done-at-boundary", "done-just-under"]
+to contain exactly (and in same order):
+  ["done-just-under"]
+but some elements were not expected:
+  ["done-at-boundary"]
+
+[ERROR]   OutboxRetryAndCacheRecoveryTest.duplicatePositionDatagramDoesNotDuplicateOutboxEventAndNewerVersionMerges:116 
+expected: 2L
+ but was: 1L
+[ERROR] Errors: 
+[ERROR]   OutboxRetryAndCacheRecoveryTest.deadEventIsVisibleAndRedeliveryIsAuditedWithoutChangingBusinessFacts:187->login:482 » Servlet Request processing failed: org.springframework.data.redis.RedisSystemException: Redis exception
+[ERROR]   OutboxRetryAndCacheRecoveryTest.positionAckDoesNotDependOnRedisCacheAndRecoveryRebuildsIt:348->boundTerminal:465 IllegalState jakarta.servlet.ServletException: Request processing failed: org.springframework.data.redis.RedisSystemException: Redis exception
+[ERROR]   OutboxRetryAndCacheRecoveryTest.redeliveryRejectsNonDeadUnknownEventsAndNonAdminActors:230->login:482 » Servlet Request processing failed: org.springframework.data.redis.RedisSystemException: Redis exception
+[ERROR]   OutboxRetryAndCacheRecoveryTest.redisRestartRebuildsOnlyDerivedPositionCacheFromCommittedFacts:313 » ConditionTimeout Assertion condition defined as a Lambda expression in com.vms.infrastructure.monitor.OutboxRetryAndCacheRecoveryTest null within 30 seconds.
+[ERROR]   OutboxRetryAndCacheRecoveryTest.workerRecoveryDoesNotDuplicateAlreadyCommittedBusinessFacts:256->boundTerminal:465 IllegalState jakarta.servlet.ServletException: Request processing failed: org.springframework.data.redis.RedisSystemException: Redis exception
+[INFO] 
+[ERROR] Tests run: 12, Failures: 3, Errors: 5, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for vehicle-monitoring-system 0.1.0-SNAPSHOT:
+[INFO] 
+[INFO] vehicle-monitoring-system .......................... SUCCESS [  0.005 s]
+[INFO] protocol ........................................... SUCCESS [  1.595 s]
+[INFO] vehicle-monitoring-server .......................... FAILURE [02:44 min]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:46 min
+[INFO] Finished at: 2026-11-16T18:10:35+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project server: There are test failures.
+[ERROR] 
+[ERROR] See C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a00745beffa1c5c09\server\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :server
+[lock] command exit code: 1
+EXIT=1

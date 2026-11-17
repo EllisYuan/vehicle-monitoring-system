@@ -1,0 +1,10 @@
+
+> vehicle-monitoring-web@0.1.0 dev C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\web
+> vite "--host" "127.0.0.1" "--strictPort" "--port" "18124"
+
+
+  VITE v8.3.6  ready in 679 ms
+
+  ➜  Local:   http://127.0.0.1:18124/
+  ➜  press h + enter to show help
+ ELIFECYCLE  Command failed with exit code 1.

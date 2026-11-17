@@ -1,0 +1,192 @@
+[lock] acquired: C:\Users\YuanS\AppData\Local\Microsoft\WindowsApps\Microsoft.PowerShell_8wekyb3d8bbwe\pwsh.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File C:\Users\YuanS\AppData\Local\Temp\vms-ticket23\verify23.ps1
+RECORD C free bytes=29871374336
+PASS 磁盘边界 C: 剩余空间不低于 18 GB
+PASS server jar 存在：C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\server\target\server-0.1.0-SNAPSHOT.jar
+PASS protocol classes 存在
+PASS simulator classes 存在
+PASS web node_modules 存在
+== 重置本票专用容器（仅 t23-mysql 与 t23-redis）
+PASS MySQL ready
+PASS Redis ready
+RECORD container t23-redis|redis:8.4|Up 14 seconds|0.0.0.0:16385->6379/tcp, [::]:16385->6379/tcp
+RECORD container t23-mysql|mysql:8.4|Up 15 seconds|0.0.0.0:13313->3306/tcp, [::]:13313->3306/tcp
+== ################ ROUND 1 START ################
+PASS server listening and admin login -> 200
+PASS round 1 server #1 admin session
+== create fleet, five vehicles and five terminals
+PASS create fleet -> 201
+PASS create V1 -> 201
+PASS create V2 -> 201
+PASS create V3 -> 201
+PASS create V4 -> 201
+PASS create V5 -> 201
+PASS create T1 -> 201
+PASS create T2 -> 201
+PASS create T3 -> 201
+PASS create T4 -> 201
+PASS create T5 -> 201
+PASS bind V1 -> 200
+PASS bind V2 -> 200
+PASS bind V3 -> 200
+PASS bind V4 -> 200
+PASS bind V5 -> 200
+PASS create geofence -> 201
+== baseline + overspeed ACTIVE for V1 (inside geofence)
+CLI v1-baseline: java -cp C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\protocol\target\classes;C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\simulator\target\classes com.vms.simulator.TerminalSimulator --host 127.0.0.1 --port 19115 --terminal 01380015230000000001 --positions 1 --linger-ms 1000 --longitude 121.4737 --latitude 31.2304 --speed 42.5 --direction 90
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  position: accepted simulation=true trackingIntervalSeconds=0
+  logout: accepted
+  CLI v1-baseline exit=0
+CLI v1-overspeed: java -cp C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\protocol\target\classes;C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\simulator\target\classes com.vms.simulator.TerminalSimulator --host 127.0.0.1 --port 19115 --terminal 01380015230000000001 --positions 3 --interval-ms 1100 --linger-ms 1000 --longitude 121.4737 --latitude 31.2304 --speed 100 --direction 90
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  position: accepted simulation=true trackingIntervalSeconds=0
+  position: accepted simulation=true trackingIntervalSeconds=0
+  position: accepted simulation=true trackingIntervalSeconds=0
+  logout: accepted
+  CLI v1-overspeed exit=0
+PASS 超速 ACTIVE 报警创建 id=1
+PASS V1 alarm count = 1
+PASS V1 alarm state = PLATFORM|ACTIVE|PENDING|1
+PASS V1 candidate = OVER|3
+PASS V1 geofence baseline = 1|INSIDE|0
+PASS V1 last position version=4 speed=100.0（实际 2026-11-16 21:00:16|4|100.0）
+== handle alarm PENDING -> PROCESSING with handle log
+PASS handle alarm -> 200
+PASS handle status = PROCESSING
+PASS handle log = HANDLE|PENDING|PROCESSING|1
+PASS handle outbox = 1
+== ---- interruption 1: MySQL stop/start ----
+PASS T3 track count before MySQL stop = 0
+RECORD MySQL stop method=docker stop container=t23-mysql start=2026-11-16 21:00:21.253
+PASS MySQL 容器已停止（stop，不是 pause）
+RECORD MySQL 中断期间 HTTP 快照状态=TRANSPORT（旧会话，仅记录）
+CLI position-during-mysql-down: java -cp C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\protocol\target\classes;C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\simulator\target\classes com.vms.simulator.TerminalSimulator --host 127.0.0.1 --port 19115 --terminal 01380015230000000003 --positions 1 --linger-ms 500 --longitude 121.48 --latitude 31.235 --speed 10 --direction 90
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  Exception in thread "main" java.net.SocketTimeoutException: register: TCP response timeout after 5000 ms
+  	at com.vms.simulator.TerminalSimulator.responseTimeout(TerminalSimulator.java:271)
+  	at com.vms.simulator.TerminalSimulator.await(TerminalSimulator.java:209)
+  	at com.vms.simulator.TerminalSimulator.await(TerminalSimulator.java:225)
+  	at com.vms.simulator.TerminalSimulator.connect(TerminalSimulator.java:149)
+  	at com.vms.simulator.TerminalSimulator.main(TerminalSimulator.java:52)
+  CLI position-during-mysql-down exit=1
+PASS MySQL ready
+RECORD MySQL start method=docker start container=t23-mysql end=2026-11-16 21:00:46.138 durationSeconds=25
+CLI mysql-recovered-attempt-1: java -cp C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\protocol\target\classes;C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\simulator\target\classes com.vms.simulator.TerminalSimulator --host 127.0.0.1 --port 19115 --terminal 01380015230000000003 --positions 1 --linger-ms 500 --longitude 121.48 --latitude 31.235 --speed 10 --direction 90
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  position: accepted simulation=true trackingIntervalSeconds=0
+  logout: accepted
+  CLI mysql-recovered-attempt-1 exit=0
+PASS MySQL 恢复后位置上报重新获得成功 ACK
+PASS MySQL restart preserves alarm rows = 1
+PASS MySQL restart preserves handle logs = 1
+PASS V1 alarm unchanged after MySQL restart = ACTIVE|PROCESSING
+PASS V1 position unchanged after MySQL restart = 2026-11-16 21:00:16|4|100.0
+PASS T3 committed realtime rows = 1
+PASS T3 non-realtime rows = 0
+PASS server alive after MySQL restart = 200
+== ---- interruption 2: Redis stop/start ----
+PASS snapshot before Redis stop = 200
+RECORD Redis stop method=docker stop container=t23-redis start=2026-11-16 21:00:58.649
+PASS Redis 容器已停止（stop，不是 pause）
+RECORD Redis 中断期间旧会话快照状态=500（仅记录）
+CLI position-during-redis-down: java -cp C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\protocol\target\classes;C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\simulator\target\classes com.vms.simulator.TerminalSimulator --host 127.0.0.1 --port 19115 --terminal 01380015230000000004 --positions 1 --linger-ms 1000 --longitude 121.50 --latitude 31.245 --speed 10 --direction 90
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  position: accepted simulation=true trackingIntervalSeconds=0
+  logout: accepted
+  CLI position-during-redis-down exit=0
+PASS Redis down: committed track point = 1
+PASS Redis down: committed last position speed = 10.0
+RECORD Redis 中断期间 position:4 outbox=DONE|0
+PASS Redis 中断在服务日志中留下 cache unavailable（真实不可用）
+PASS Redis ready
+RECORD Redis start method=docker start container=t23-redis end=2026-11-16 21:01:05.339 durationSeconds=7
+RECORD Redis 恢复后旧会话快照状态=200（可能要求重新登录，按实际记录）
+PASS login t23-admin -> 200
+PASS snapshot after Redis restart -> 200
+PASS Redis 重启后快照由 MySQL 重建并包含 V4 最新位置
+PASS Redis 恢复后派生缓存键 vms:position 重建
+RECORD Redis 恢复后 position:4 outbox=DONE|0
+== ---- interruption 3: TCP listener / application restart ----
+CLI v2-baseline: java -cp C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\protocol\target\classes;C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\simulator\target\classes com.vms.simulator.TerminalSimulator --host 127.0.0.1 --port 19115 --terminal 01380015230000000002 --positions 1 --linger-ms 1000 --longitude 121.48 --latitude 31.235 --speed 20 --direction 90
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  position: accepted simulation=true trackingIntervalSeconds=0
+  logout: accepted
+  CLI v2-baseline exit=0
+CLI t5-authenticate-then-drop: java -cp C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\protocol\target\classes;C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\simulator\target\classes com.vms.simulator.TerminalSimulator --host 127.0.0.1 --port 19115 --terminal 01380015230000000005 --positions 0 --linger-ms 500 --logout false
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  logout: skipped by option
+  CLI t5-authenticate-then-drop exit=0
+RECORD TCP/app stop method=Stop-Process app process (HTTP 18195 and TCP 19115 both stop) start=2026-11-16 21:01:16.715
+server stopped
+RECORD 停机期间将 T5 last_seen 回拨到 2026-11-16 20:54:35.176（用于启动宽限核验）
+CLI v2-movement-during-downtime: java -cp C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\protocol\target\classes;C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\simulator\target\classes com.vms.simulator.TerminalSimulator --host 127.0.0.1 --port 19115 --terminal 01380015230000000002 --positions 1 --linger-ms 500 --longitude 121.70 --latitude 31.50 --speed 50 --direction 90
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  Exception in thread "main" java.net.ConnectException: Connection refused: getsockopt
+  	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+  	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:690)
+  	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542)
+  	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:592)
+  	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327)
+  	at java.base/java.net.Socket.connect(Socket.java:751)
+  	at com.vms.simulator.TerminalSimulator.connect(TerminalSimulator.java:137)
+  	at com.vms.simulator.TerminalSimulator.main(TerminalSimulator.java:52)
+  CLI v2-movement-during-downtime exit=1
+PASS server listening and admin login -> 200
+PASS round 1 server #2 admin session
+RECORD TCP/app start method=Start-Process same jar end=2026-11-16 21:01:27.674 durationSeconds=11
+== restart preserves ACTIVE alarm, handle log, candidate and geofence baseline
+PASS alarm after restart = ACTIVE|PROCESSING
+PASS handle log after restart = HANDLE|PENDING|PROCESSING|1
+PASS candidate after restart = OVER|3|2026-11-16 21:00:16.000
+PASS geofence state after restart = 1|INSIDE|0|2026-11-16 21:00:16.000
+PASS V1 position after restart = 2026-11-16 21:00:16|4|100.0
+PASS snapshot after restart -> 200
+PASS 重启后快照 V1 仍为 100.0 km/h（不回退）
+PASS 重启后快照 V2 仍为 20.0 km/h（不回退）
+== startup grace: no offline alarm inside 180s after restart
+== wait restart grace check point (+30s) until 21:01:47
+PASS T5 offline count during grace = 0
+== backfill only adds HISTORY track points; no rollback, no fence state change, no alarm
+CLI v2-backfill: java -cp C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\protocol\target\classes;C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-a663a5a9abf90bef0\simulator\target\classes com.vms.simulator.TerminalSimulator --host 127.0.0.1 --port 19115 --terminal 01380015230000000002 --positions 0 --reconnect true --backfill 3 --backfill-seconds 600 --backfill-interval-ms 5000 --batch-size 3 --longitude 121.60 --latitude 31.40 --speed 200 --direction 90
+  simulation: JT/T 808 terminal, simulated WGS84 positions
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  reconnect: disconnected
+  register: accepted
+  authentication: accepted
+  heartbeat: accepted
+  reconnect: accepted
+  batch: accepted items=3
+  backfill: accepted items=3 gpsSecondsAgo=600
+  logout: accepted
+  CLI v2-backfill exit=0
+server stopped
+cleanup: server/vite stopped, t23-mysql/t23-redis removed
+Exception: C:\Users\YuanS\AppData\Local\Temp\vms-ticket23\verify23.ps1:33
+Line |
+  33 |  …  $actual) { throw "ASSERT FAILED: $label expected [$expected] actual  …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | ASSERT FAILED: V2 HISTORY points expected [3] actual [0]
+
+[lock] command exit code: 1
+
+[exited with code 1]

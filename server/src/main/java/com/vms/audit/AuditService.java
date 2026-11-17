@@ -23,6 +23,8 @@ public class AuditService {
     public static final String CATEGORY_COMMAND = "COMMAND";
     public static final String CATEGORY_ALARM = "ALARM";
     public static final String CATEGORY_GEOFENCE = "GEOFENCE";
+    public static final String CATEGORY_OUTBOX = "OUTBOX";
+    public static final String CATEGORY_EXPORT = "EXPORT";
     public static final String RESULT_SUCCESS = "SUCCESS";
     public static final String RESULT_FAILURE = "FAILURE";
 

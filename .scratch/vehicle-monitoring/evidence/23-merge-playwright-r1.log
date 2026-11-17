@@ -1,0 +1,10 @@
+
+Running 5 tests using 1 worker
+
+  ✓  1 [chromium] › e2e\monitoring-stream.spec.ts:163:3 › 实时订阅前端状态与版本顺序 › 旧版本帧不覆盖新版本，异常断开后显示断线与重连中并重建订阅补齐窗口 (7.3s)
+  ✓  2 [chromium] › e2e\monitoring-stream.spec.ts:206:3 › 实时订阅前端状态与版本顺序 › 1008 撤权关闭后停止自动重连并清空旧数据 (3.6s)
+  ✓  3 [chromium] › e2e\monitoring-stream.spec.ts:222:3 › 实时订阅前端状态与版本顺序 › 撤权时仍在途的快照返回后不能恢复旧数据 (3.2s)
+  ✓  4 [chromium] › e2e\outage-recovery.spec.ts:80:3 › 中断与恢复：浏览器 WebSocket › 关闭页面中断实时连接，重开后快照与报警列表补齐且业务事件不重复 (14.5s)
+  ✓  5 [chromium] › e2e\outage-recovery.spec.ts:137:3 › 中断与恢复：浏览器 WebSocket › 浏览器层关闭 WebSocket 后显示断线与数据陈旧，恢复后重新取快照 (1.7m)
+
+  5 passed (2.2m)
