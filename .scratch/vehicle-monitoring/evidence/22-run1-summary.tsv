@@ -1,0 +1,5 @@
+terminal	status	failure_reason	sent_count	ack_count	remaining_entries
+01380022000000000021	OK		44	43	0
+01380022000000000022	OK		44	43	0
+01380022000000000023	OK		44	43	0
+RUN	SUCCESS	run_id=22-20261116-213924-514-seed20261116			

@@ -1,0 +1,8 @@
+simulation: scenario runner, simulated WGS84 positions, config=C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ac2bfb44954865d72\.scratch\vehicle-monitoring\evidence\22-config-full.conf
+run: id=22-20261116-213924-514-seed20261116 success=true
+send-log: C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ac2bfb44954865d72\.scratch\vehicle-monitoring\evidence\logs\22-runs\run1\22-20261116-213924-514-seed20261116-send.tsv
+ack-log: C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ac2bfb44954865d72\.scratch\vehicle-monitoring\evidence\logs\22-runs\run1\22-20261116-213924-514-seed20261116-ack.tsv
+summary: C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ac2bfb44954865d72\.scratch\vehicle-monitoring\evidence\logs\22-runs\run1\22-20261116-213924-514-seed20261116-summary.tsv
+terminal: no=01380022000000000021 status=OK reason= sent=44 acks=43 remaining=0
+terminal: no=01380022000000000022 status=OK reason= sent=44 acks=43 remaining=0
+terminal: no=01380022000000000023 status=OK reason= sent=44 acks=43 remaining=0

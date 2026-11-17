@@ -61,14 +61,20 @@ public class PositionInvalidAlarmParticipant implements PositionStateParticipant
             count = candidate.count() + 1;
         }
         LocalDateTime now = LocalDateTime.now(clock);
-        jdbc.update("""
-                INSERT INTO alarm_candidate_state (vehicle_id, alarm_type, source, business_dimension,
-                    rule_id, rule_version, candidate_direction, consecutive_count, last_point_time, updated_at)
-                VALUES (?, 'POSITION_INVALID', 'PLATFORM', '', NULL, NULL, ?, ?, ?, ?)
-                ON DUPLICATE KEY UPDATE rule_id=NULL, rule_version=NULL,
-                    candidate_direction=VALUES(candidate_direction), consecutive_count=VALUES(consecutive_count),
-                    last_point_time=VALUES(last_point_time), updated_at=VALUES(updated_at)
-                """, vehicleId, direction, count, report.time(), now);
+        if (candidate == null) {
+            try {
+                jdbc.update("""
+                        INSERT INTO alarm_candidate_state (vehicle_id, alarm_type, source, business_dimension,
+                            rule_id, rule_version, candidate_direction, consecutive_count, last_point_time, updated_at)
+                        VALUES (?, 'POSITION_INVALID', 'PLATFORM', '', NULL, NULL, ?, ?, ?, ?)
+                        """, vehicleId, direction, count, report.time(), now);
+            } catch (DuplicateKeyException e) {
+                // 同一车辆首次写入并发：另一事务已插入唯一键，回退为更新，保持旧 upsert 语义。
+                updateCandidate(vehicleId, direction, count, report.time(), now);
+            }
+        } else {
+            updateCandidate(vehicleId, direction, count, report.time(), now);
+        }
         if ("INVALID".equals(direction)) {
             if (count >= CONFIRM_POINTS) {
                 activate(vehicleId, terminalId, fleetId, report, now);
@@ -81,6 +87,18 @@ public class PositionInvalidAlarmParticipant implements PositionStateParticipant
         }
     }
 
+    /** 已有候选行只做 UPDATE：INSERT ... ON DUPLICATE KEY UPDATE 会分配自增 id 并留下插入意向锁，
+     *  多车并发更新同一张表时会互相等待而死锁。 */
+    private void updateCandidate(long vehicleId, String direction, int count,
+                                 LocalDateTime pointTime, LocalDateTime now) {
+        jdbc.update("""
+                UPDATE alarm_candidate_state
+                SET rule_id = NULL, rule_version = NULL, candidate_direction = ?,
+                    consecutive_count = ?, last_point_time = ?, updated_at = ?
+                WHERE vehicle_id = ? AND alarm_type = 'POSITION_INVALID' AND source = 'PLATFORM'
+                  AND business_dimension = ''
+                """, direction, count, pointTime, now, vehicleId);
+    }
     private Candidate candidate(long vehicleId) {
         List<Candidate> rows = jdbc.query("""
                 SELECT candidate_direction, consecutive_count, last_point_time

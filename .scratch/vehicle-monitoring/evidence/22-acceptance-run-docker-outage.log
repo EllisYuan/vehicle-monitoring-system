@@ -1,0 +1,6 @@
+== remove stale t22 containers if present
+== start dedicated MySQL 8.4 and Redis 8.4
+PASS MySQL container ready
+== start server with dedicated containers and TCP listener
+server stopped
+cleanup: server stopped, t22-mysql/t22-redis removed
