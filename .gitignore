@@ -21,6 +21,9 @@ web/test-results/
 /JT-T 808-2019.pdf
 /.scratch/vehicle-monitoring/evidence/jt808-preview/
 
+# 容量与性能运行的原始日志、逐批/逐日指标体量大，本地保留不入 Git
+/.scratch/vehicle-monitoring/evidence/logs/
+
 # IDE 与系统文件
 .idea/
 .vscode/
