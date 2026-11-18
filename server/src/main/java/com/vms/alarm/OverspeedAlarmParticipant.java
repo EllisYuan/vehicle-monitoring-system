@@ -101,6 +101,17 @@ public class OverspeedAlarmParticipant implements PositionStateParticipant {
                 """, rule.id(), rule.version(), direction, count, pointTime, now, vehicleId);
     }
     private Candidate candidate(long vehicleId) {
+        // 先无锁探测，仅对已存在的候选行加锁。对不存在的唯一键执行 SELECT ... FOR UPDATE 会在
+        // REPEATABLE READ 下取 gap lock；多车首次并发插入同一空表区间时，各自的 gap lock 与
+        // 对方的插入意向锁互相等待，实测 100 终端首波上报可触发 MySQL 死锁。
+        List<Integer> exists = jdbc.query("""
+                SELECT 1 FROM alarm_candidate_state
+                WHERE vehicle_id = ? AND alarm_type = 'OVERSPEED' AND source = 'PLATFORM'
+                  AND business_dimension = ''
+                """, (rs, row) -> 1, vehicleId);
+        if (exists.isEmpty()) {
+            return null;
+        }
         List<Candidate> rows = jdbc.query("""
                 SELECT rule_id, rule_version, candidate_direction, consecutive_count, last_point_time
                 FROM alarm_candidate_state
