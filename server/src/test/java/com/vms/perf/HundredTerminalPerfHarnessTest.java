@@ -102,7 +102,8 @@ class HundredTerminalPerfHarnessTest {
      */
     static final long PHASE_WARMUP_MS = 60_000L;
     static final long LOW_MEMORY_WARN_BYTES = 1_200_000_000L;
-    static final long LOW_MEMORY_ABORT_BYTES = 800_000_000L;
+    /** 2026-11-19 降配单轮：按用户授权把主动中止线由 0.8 GB 放宽到 0.6 GB。 */
+    static final long LOW_MEMORY_ABORT_BYTES = 600_000_000L;
     static final String FLEET_CODE = "PERF-FLEET";
     static final ZoneId BUSINESS_ZONE = ZoneId.of("Asia/Shanghai");
     static final DateTimeFormatter STAMP = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
@@ -367,7 +368,7 @@ class HundredTerminalPerfHarnessTest {
             throw new IllegalStateException("C: 可用空间低于 18 GB（" + free + " B），停止运行并保留现场");
         }
         // 上次满规模第 1 轮因宿主内存被看门狗 kill；这里每分钟记录一次可用内存，
-        // 低于 1.2 GB 记警告，低于 0.8 GB 主动停止本轮并保留已写出的 metrics。
+        // 低于 1.2 GB 记警告，低于 0.6 GB（本轮用户授权降配后的中止线）主动停止本轮并保留已写出的 metrics。
         long hostFree = hostFreeMemoryBytes();
         if (hostFree >= 0) {
             String stamp = LocalDateTime.now(BUSINESS_ZONE)
@@ -378,7 +379,7 @@ class HundredTerminalPerfHarnessTest {
                 System.out.println("PERF_MEMORY_WARNING free_bytes=" + hostFree + " at=" + stamp);
             }
             if (hostFree < LOW_MEMORY_ABORT_BYTES) {
-                throw new IllegalStateException("宿主可用内存低于 0.8 GB（" + hostFree
+                throw new IllegalStateException("宿主可用内存低于 0.6 GB（" + hostFree
                         + " B），主动停止本轮并保留证据");
             }
         }
@@ -430,14 +431,20 @@ class HundredTerminalPerfHarnessTest {
                 "{{.Names}}:{{.Image}}"));
         metrics.put("env.mysql.container_image", mysqlContainer.getDockerImageName());
         metrics.put("env.mysql.container_id", shortId(mysqlContainer.getContainerId()));
-        metrics.put("env.mysql.container_limits", "memory=1536MiB nanoCpus=2.0，专用于本 harness");
+        metrics.put("env.mysql.container_limits",
+                "memory=768MiB nanoCpus=2.0，专用于本 harness；用户授权降配（默认 1536MiB）");
         metrics.put("env.mysql.container_command",
-                "--skip-log-bin --innodb-buffer-pool-size=768M --innodb-flush-log-at-trx-commit=2 "
+                "--skip-log-bin --innodb-buffer-pool-size=384M --innodb-flush-log-at-trx-commit=2 "
                         + "--innodb-log-buffer-size=64M --innodb-doublewrite=OFF --max-connections=100 "
-                        + "--performance-schema=OFF");
+                        + "--performance-schema=OFF；用户授权降配（默认 buffer pool 768M）");
         metrics.put("env.redis.container_image", redisContainer.getDockerImageName());
         metrics.put("env.redis.container_id", shortId(redisContainer.getContainerId()));
-        metrics.put("env.redis.container_limits", "memory=256MiB nanoCpus=0.5，专用于本 harness");
+        metrics.put("env.redis.container_limits",
+                "memory=128MiB nanoCpus=0.5，专用于本 harness；用户授权降配（默认 256MiB）");
+        metrics.put("env.perf.memory_downscale",
+                "2026-11-19 单轮满规模测量经用户明确授权降配：MySQL 1536→768MiB、"
+                        + "innodb-buffer-pool-size 768M→384M、Redis 256→128MiB、Surefire JVM -Xmx512m→384m；"
+                        + "本轮 p95、吞吐与稳定性数据不代表默认部署配置，不得作为产品性能达标证据");
         metrics.put("env.mysql.version", jdbc.queryForObject("SELECT VERSION()", String.class));
         for (String variable : List.of("innodb_buffer_pool_size", "max_connections",
                 "innodb_flush_log_at_trx_commit", "innodb_doublewrite", "transaction_isolation",

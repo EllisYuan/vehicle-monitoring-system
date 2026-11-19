@@ -17,6 +17,10 @@ import org.testcontainers.utility.DockerImageName;
  * MySQL 容器时，提交 fsync 会出现数秒级抖动（实测 ACK p95 3739 ms、max 4991 ms），
  * 与产品行为无关。这里采用与 ticket 25 容量 harness 相同的独立容器思路，参数全部
  * 记录到证据中；仍是真实 MySQL 8.4 与正式 migration。
+ *
+ * <p>2026-11-19 单轮满规模测量经用户明确授权降配（本机内存不足）：MySQL 容器
+ * 768 MiB、buffer pool 384M，Redis 128 MiB，Surefire JVM -Xmx384m。该轮数字只用于
+ * 单轮流程与数据完整性核验，<strong>不代表默认部署配置的产品性能</strong>。
  */
 @TestConfiguration(proxyBeanMethods = false)
 public class PerfContainers {
@@ -28,12 +32,12 @@ public class PerfContainers {
                 .withDatabaseName("vms")
                 .withUsername("vms")
                 .withPassword("vmsdevpass")
-                .withCommand("--skip-log-bin", "--innodb-buffer-pool-size=768M",
+                .withCommand("--skip-log-bin", "--innodb-buffer-pool-size=384M",
                         "--innodb-flush-log-at-trx-commit=2", "--innodb-log-buffer-size=64M",
                         "--innodb-doublewrite=OFF", "--max-connections=100",
                         "--performance-schema=OFF")
                 .withCreateContainerCmdModifier(command -> command.getHostConfig()
-                        .withMemory(1536L * 1024 * 1024).withNanoCPUs(2_000_000_000L))
+                        .withMemory(768L * 1024 * 1024).withNanoCPUs(2_000_000_000L))
                 .withStartupTimeout(Duration.ofMinutes(5))
                 .withUrlParam("connectionTimeZone", "Asia/Shanghai")
                 .withUrlParam("forceConnectionTimeZoneToSession", "true");
@@ -46,7 +50,7 @@ public class PerfContainers {
         return new GenericContainer<>(DockerImageName.parse("redis:8.4"))
                 .withExposedPorts(6379)
                 .withCreateContainerCmdModifier(command -> command.getHostConfig()
-                        .withMemory(256L * 1024 * 1024).withNanoCPUs(500_000_000L))
+                        .withMemory(128L * 1024 * 1024).withNanoCPUs(500_000_000L))
                 .withStartupTimeout(Duration.ofMinutes(2));
     }
 

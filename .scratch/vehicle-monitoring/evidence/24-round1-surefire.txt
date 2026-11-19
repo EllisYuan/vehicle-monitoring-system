@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: com.vms.perf.HundredTerminalPerfHarnessTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 138.8 s <<< FAILURE! -- in com.vms.perf.HundredTerminalPerfHarnessTest
+com.vms.perf.HundredTerminalPerfHarnessTest.hundredTerminalSteadyLoadIsMeasuredEndToEnd -- Time elapsed: 101.4 s <<< ERROR!
+java.lang.IllegalStateException: 宿主可用内存低于 0.6 GB（514621440 B），主动停止本轮并保留证据
+	at com.vms.perf.HundredTerminalPerfHarnessTest.checkRuntimeGuards(HundredTerminalPerfHarnessTest.java:382)
+	at com.vms.perf.HundredTerminalPerfHarnessTest.hundredTerminalSteadyLoadIsMeasuredEndToEnd(HundredTerminalPerfHarnessTest.java:249)
+
