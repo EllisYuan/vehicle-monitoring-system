@@ -1,6 +1,6 @@
 # 任务 24 验证记录：100 终端性能验收
 
-状态：**受阻（blocked），两轮满规模测量未执行**。2026-11-19 启动前按内存纪律读取宿主可用内存，10 分钟采样全部低于 3.5 GB 门槛（最低 0.85 GB），且其他项目（ljf/park-leasing-platform）的 Maven/Testcontainers 在本机并发运行，专用窗口不成立。按用户指令停止，**未启动任何 30 分钟测量，未产生任何 p95、对账或两轮验收数字**。
+状态：**受阻（blocked），两轮满规模测量未执行**。2026-11-19 启动前按内存纪律读取宿主可用内存，观察窗内采样全部低于 3.5 GB 门槛（最低 0.55 GB，已低于 harness 0.8 GB 中止线），且其他项目（ljf/park-leasing-platform）的 Maven/Testcontainers 在本机并发运行，专用窗口不成立。按用户指令停止，**未启动任何 30 分钟测量，未产生任何 p95、对账或两轮验收数字**。
 
 ## 结论摘要
 
@@ -9,8 +9,8 @@
 | 第 1 轮（100 终端 × 10 s × 30 min） | **未执行** |
 | 第 2 轮（重复测量） | **未执行** |
 | 启动前宿主可用内存门槛 | 3.5 GB |
-| 本次实测可用内存范围（FreePhysical / Available） | **0.85–2.78 GB**，全部低于门槛；最低 0.85 GB（10:38:56） |
-| 并发负载 | 10:39:03、10:43:10 其他项目 Maven + Testcontainers（PID 27392/32032/27224，容器 `thirsty_panini`、Ryuk），非独占窗口 |
+| 本次实测可用内存范围（FreePhysical / Available） | **0.55–2.78 GB**，全部低于门槛；最低 0.55 GB（10:52:55，低于 harness 0.8 GB 中止线） |
+| 并发负载 | 10:39:03、10:43:10、10:49:05 其他项目 Maven + Testcontainers（两个 worktree，PID 27392/32032/27224/34520/31196；容器 `thirsty_panini`、`eager_goldberg`、`romantic_lalande`、`plp-dev-mysql-1948`、Ryuk），非独占窗口 |
 | 本票代码就绪度 | 分段统计与内存守卫已加入 harness；四模块 `-DskipTests package` BUILD SUCCESS；默认 Playwright 清单 46 tests / 15 files 不变；无 migration、无产品代码改动 |
 | 开发库/迁移 | 未新增或修改 migration（`git diff 3ed52f2..HEAD -- server/src/main/resources/db` 为空） |
 
@@ -49,8 +49,8 @@ mvnw.cmd -B -f <worktree>\pom.xml -pl server -am \
 
 原因（全部有现场记录，见 `evidence/24-preflight-environment.log` 与 `evidence/24-preflight-memory-watch.log`）：
 
-- 启动前采样 0.85–2.78 GB，**全部低于 3.5 GB 门槛**；上次满规模第 1 轮正是因宿主内存不足被看门狗在稳态 22/30 分钟 kill，用户明确要求低于 3.5 GB 不启动；
-- 其他项目 `ljf/park-leasing-platform` 的 Maven/Testcontainers 于 10:39:03、10:43:10 连续运行（`Ticket23SchemaTest` 等，容器 `thirsty_panini` + Ryuk），本机不是 24 号要求的独占性能窗口；并发 CPU/磁盘/容器会污染 p95 与对账口径；
+- 启动前采样 0.55–2.78 GB，**全部低于 3.5 GB 门槛**（最低点 0.55 GB 低于 harness 0.8 GB 中止线）；上次满规模第 1 轮正是因宿主内存不足被看门狗在稳态 22/30 分钟 kill，用户明确要求低于 3.5 GB 不启动；
+- 其他项目 `ljf/park-leasing-platform` 的 Maven/Testcontainers 于 10:39:03、10:43:10、10:49:05 连续运行（`Ticket23SchemaTest`、`EnterpriseMembersProfileChangesHttpTest` 与全量 `test`，两个 worktree；容器 `thirsty_panini`、`eager_goldberg`、`romantic_lalande`、`plp-dev-mysql-1948`、Ryuk），本机不是 24 号要求的独占性能窗口；并发 CPU/磁盘/容器会污染 p95 与对账口径；
 - 用户要求不关闭、不影响其浏览器与其他应用，不清理他人容器，因此无法在本轮内人为恢复门槛。
 
 ## 逐条 AC
@@ -109,15 +109,18 @@ mvnw.cmd -B -f <worktree>\pom.xml -pl server -am \
 | 10:47:28 | 1.72 | 1.68 | |
 | 10:48:30 | 0.94 | 1.25 | 其他项目再次启动 Maven（两个 java） |
 | 10:49:51 | 0.98 | **0.88** | 两个 worktree 并发测试（`EnterpriseMembersProfileChangesHttpTest` 与全量 `test`），容器 `eager_goldberg` + Ryuk |
+| 10:50:52 | 1.36 | 1.37 | 3 个竞争 Maven；容器 `romantic_lalande` + Ryuk + `plp-dev-mysql-1948` |
+| 10:51:53 | 0.91 | 0.78 | 竞争负载持续 |
+| 10:52:55 | **0.55** | **0.54** | **低于 harness 的 0.8 GB 主动中止线** |
 
-判定：10 分钟窗口内 **0.85–2.78 GB FreePhysical（Available 0.86–2.78 GB），全部低于 3.5 GB 门槛**；最低点距离 harness 的 0.8 GB 主动中止线仅 0.05 GB（Available 最低 0.88 GB）。按用户指令停止。完整逐样本记录见 `evidence/24-preflight-memory-watch.log`。
+判定：启动前观察窗内 **0.55–2.78 GB FreePhysical（Available 0.54–2.78 GB），全部低于 3.5 GB 门槛**；最低点 0.55 GB 已低于 harness 的 0.8 GB 主动中止线，说明此时启动会直接触发中止或重现看门狗 kill。按用户指令停止。完整逐样本记录见 `evidence/24-preflight-memory-watch.log`。
 
 ## 恢复条件与待执行命令
 
 恢复本票需同时满足：
 
-1. 启动前 `FreePhysicalMemory ≥ 3.5 GB`（含完整的 10 分钟观察，不只看单点）；
-2. 本机无其他项目 Maven/Testcontainers 并发（独占窗口）；
+1. 启动前 `FreePhysicalMemory ≥ 3.5 GB`（含完整的 10 分钟观察，不只看单点；需由用户释放宿主内存，本 agent 不关闭用户浏览器与其他应用）；
+2. 本机无其他项目 Maven/Testcontainers 并发（独占窗口，其他项目测试结束且不会在测量期间返回）；
 3. 保留 `publish-interval-ms=2000` 默认值；如改动任何 `vms.*` 参数，逐项记录理由。
 
 随后每轮一条命令（经 `with-test-lock.ps1`，必须带 `-f`）：
