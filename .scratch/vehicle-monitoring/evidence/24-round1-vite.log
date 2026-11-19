@@ -1,0 +1,8 @@
+
+> vehicle-monitoring-web@0.1.0 dev C:\Users\YuanS\Documents\paper\ja\vehicle-monitoring-system\.claude\worktrees\agent-ab1377cbd6ba02a0f\web
+> vite "--host" "127.0.0.1" "--strictPort" "--port" "51646" "--configLoader" "runner"
+
+
+  VITE v8.3.6  ready in 957 ms
+
+  ➜  Local:   http://127.0.0.1:51646/

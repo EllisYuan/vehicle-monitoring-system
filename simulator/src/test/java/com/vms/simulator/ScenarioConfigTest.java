@@ -30,6 +30,7 @@ class ScenarioConfigTest {
         assertThat(config.commandWindowMs()).isEqualTo(15000);
         assertThat(config.offlineGapMs()).isEqualTo(3000);
         assertThat(config.backfillSeconds()).isEqualTo(120);
+        assertThat(config.durationMs()).isZero();
         assertThat(config.enabledScenes()).containsExactly(ScenarioType.NORMAL);
     }
 
@@ -92,6 +93,46 @@ class ScenarioConfigTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("vehicle-start-stagger-ms")
                 .hasMessageContaining("不能为负");
+    }
+
+    @Test
+    void steadySceneRequiresDurationAndDerivesFixedPointCount() {
+        ScenarioConfig config = ScenarioConfig.parse("""
+                seed=7
+                vehicles=01380022000000000001
+                interval-ms=10000
+                duration-ms=1800000
+                scene.steady=true
+                """);
+
+        assertThat(config.durationMs()).isEqualTo(1_800_000L);
+        assertThat(config.enabledScenes()).containsExactly(ScenarioType.STEADY);
+        assertThat(config.durationMs() / config.intervalMs()).isEqualTo(180L);
+    }
+
+    @Test
+    void rejectsSteadyDurationThatIsMissingOrNotAlignedToInterval() {
+        assertThatThrownBy(() -> ScenarioConfig.parse("""
+                seed=7
+                vehicles=01380022000000000001
+                scene.steady=true
+                """)).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("duration-ms");
+        assertThatThrownBy(() -> ScenarioConfig.parse("""
+                seed=7
+                vehicles=01380022000000000001
+                interval-ms=10000
+                duration-ms=29000
+                scene.steady=true
+                """)).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("整数倍");
+        assertThatThrownBy(() -> ScenarioConfig.parse("""
+                seed=7
+                vehicles=01380022000000000001
+                duration-ms=1000
+                scene.normal=true
+                """)).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("scene.steady");
     }
 
     @Test

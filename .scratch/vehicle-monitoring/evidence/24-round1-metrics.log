@@ -1,0 +1,58 @@
+run.round=1
+run.scale=full-30min
+run.terminals=100
+run.interval_ms=10000
+run.duration_ms=1800000
+run.expected_points_theoretical=18000
+run.start_stagger_ms=200
+run.started_at=2026-11-19 14:37:02.402
+run.host.disk_free_before_bytes=48284069888
+env.os=Windows 11 10.0 (amd64)
+env.cpu.logical=18
+env.memory.total_bytes=16799621120
+env.memory.free_bytes=527519744
+env.jvm=21.0.9 / Oracle Corporation / C:\Java\jdk-21.0.9
+env.jvm.args=[-Xmx384m]
+env.spring_boot=4.1.2
+env.timezone=Asia/Singapore
+env.docker.server=29.1.3
+env.docker.vm=NCPU=4 MemTotal=8329089024
+env.docker.running_containers=funny_moore:redis:8.4 quizzical_ramanujan:mysql:8.4 testcontainers-ryuk-4a14bb13-21bf-497b-9343-5efd7ec24f46:testcontainers/ryuk:0.14.0 plp-dev-mysql-1948:mysql:8.4 pms-milvus-standalone:milvusdb/milvus:v2.6.7 pms_redis:redis:latest pms_mongo:mongo:6 pms-etcd:quay.io/coreos/etcd:v3.5.18 pms_minio:minio/minio:RELEASE.2023-03-20T20-16-18Z
+env.mysql.container_image=mysql:8.4
+env.mysql.container_id=5bbdf226750c
+env.mysql.container_limits=memory=768MiB nanoCpus=2.0，专用于本 harness；用户授权降配（默认 1536MiB）
+env.mysql.container_command=--skip-log-bin --innodb-buffer-pool-size=384M --innodb-flush-log-at-trx-commit=2 --innodb-log-buffer-size=64M --innodb-doublewrite=OFF --max-connections=100 --performance-schema=OFF；用户授权降配（默认 buffer pool 768M）
+env.redis.container_image=redis:8.4
+env.redis.container_id=87eb5002fa2a
+env.redis.container_limits=memory=128MiB nanoCpus=0.5，专用于本 harness；用户授权降配（默认 256MiB）
+env.perf.memory_downscale=2026-11-19 单轮满规模测量经用户明确授权降配：MySQL 1536→768MiB、innodb-buffer-pool-size 768M→384M、Redis 256→128MiB、Surefire JVM -Xmx512m→384m；本轮 p95、吞吐与稳定性数据不代表默认部署配置，不得作为产品性能达标证据
+env.mysql.version=8.4.13
+env.mysql.innodb_buffer_pool_size=402653184
+env.mysql.max_connections=100
+env.mysql.innodb_flush_log_at_trx_commit=2
+env.mysql.innodb_doublewrite=OFF
+env.mysql.transaction_isolation=REPEATABLE-READ
+env.mysql.character_set_server=utf8mb4
+env.mysql.collation_server=utf8mb4_0900_ai_ci
+env.mysql.innodb_log_file_size=50331648
+env.mysql.sync_binlog=1
+env.mysql.max_allowed_packet=1048576
+env.mysql.time_zone=SYSTEM
+env.mysql.sql_mode=ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+env.redis.version=8.4.0
+env.jdbc.pool=HikariDataSource max=10 minIdle=10 jdbcUrl=jdbc:mysql://localhost:46557/vms?forceConnectionTimeZoneToSession=true&connectionTimeZone=Asia/Shanghai
+env.server.port=65375
+env.server.tcp_port=52691
+env.network=simulator、浏览器与 server 均在本机；TCP 与 HTTP/WS 走 127.0.0.1 回环，位置链路不含外部网络；底图 fixture 请求被 Playwright 中止，不参与延迟口径
+env.server.outbox_publish_interval_ms=2000（vms.monitor.publish-interval-ms 默认值，未覆盖）
+env.server.ws_revalidate_interval_ms=1000（默认值，未覆盖）
+env.web.package=element-plus=2.13.1 ol=10.11.0 vue=3.5.45 @playwright/test=1.58.1 vite=8.3.6
+env.clock.method=服务端与浏览器同宿主共享操作系统时钟；每帧另用 offset=clientArrival−server_time 校正，测量窗口内的 offset 分布见 latency.offset.*
+env.measurement.method=真实登录 + 真实 /ws/monitor 订阅；page.addInitScript 包装 WebSocket 记录 event_id、payload.receivedAt、server_time、客户端到达时刻与 requestAnimationFrame 回调时刻
+simulator.config=24-1-simulator-config.txt
+browser.ready=true
+browser.env=PERF_ENV node=v24.11.1 playwright=1.58.1 chromium=145.0.7632.6
+runtime.memory.free_bytes_at_143742=829775872
+runtime.memory.warning_at_143742=829775872
+runtime.memory.free_bytes_at_143842=514621440
+runtime.memory.warning_at_143842=514621440

@@ -220,6 +220,46 @@ class PlanGeneratorTest {
     }
 
     @Test
+    void steadySceneEmitsFixedPointsAcrossTheWholeDurationDeterministically() {
+        StringBuilder vehicles = new StringBuilder();
+        for (int index = 1; index <= 100; index++) {
+            if (index > 1) {
+                vehicles.append(',');
+            }
+            vehicles.append(String.format(java.util.Locale.ROOT, "98%018d", index));
+        }
+        String config = """
+                seed=20261124
+                vehicles=%s
+                interval-ms=10000
+                duration-ms=1800000
+                scene.steady=true
+                """.formatted(vehicles);
+        ScenarioPlan plan = PlanGenerator.generate(ScenarioConfig.parse(config));
+
+        List<PlanEntry> positions = plan.entries().stream()
+                .filter(entry -> "POSITION".equals(entry.kind())).toList();
+        assertThat(positions).hasSize(18_000);
+        assertThat(positions).allSatisfy(entry -> {
+            assertThat(entry.scene()).isEqualTo(ScenarioType.STEADY);
+            assertThat(entry.messageId()).isEqualTo(0x0200);
+            assertThat(entry.fixValid()).isTrue();
+            assertThat(entry.speed()).isBetween(400, 450);
+        });
+        for (String terminal : plan.terminals()) {
+            List<Long> offsets = positions.stream()
+                    .filter(entry -> entry.terminalNo().equals(terminal))
+                    .map(PlanEntry::offsetMs).toList();
+            assertThat(offsets).hasSize(180);
+            assertThat(offsets.getFirst()).isZero();
+            assertThat(offsets.getLast()).isEqualTo(1_790_000L);
+        }
+        // 相同 seed 与配置必须生成逐条一致的稳态计划，供两次性能测量对照。
+        assertThat(plan.fingerprint())
+                .isEqualTo(PlanGenerator.generate(ScenarioConfig.parse(config)).fingerprint());
+    }
+
+    @Test
     void multipleVehiclesStartTogetherAndStaySerialPerTerminal() {
         ScenarioPlan plan = PlanGenerator.generate(ScenarioConfig.parse(BASE));
 
@@ -236,7 +276,10 @@ class PlanGeneratorTest {
                 .count();
         assertThat(terminalsStartingAtZero).isEqualTo(5);
         assertThat(plan.entries().stream().map(PlanEntry::scene).collect(java.util.stream.Collectors.toSet()))
-                .isEqualTo(Set.of(ScenarioType.values()));
+                .isEqualTo(Set.of(ScenarioType.NORMAL, ScenarioType.PARKING, ScenarioType.OVERSPEED,
+                        ScenarioType.GNSS, ScenarioType.GEOFENCE, ScenarioType.OFFLINE,
+                        ScenarioType.BACKFILL, ScenarioType.DUPLICATE, ScenarioType.ACK_LOSS,
+                        ScenarioType.COMMANDS));
     }
 }
 

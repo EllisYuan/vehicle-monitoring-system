@@ -65,7 +65,7 @@ public final class ScenarioRunner {
         Path ackLog = outputDir.resolve(runId + "-ack.tsv");
         Path summaryFile = outputDir.resolve(runId + "-summary.tsv");
         Path manifest = outputDir.resolve(runId + "-manifest.txt");
-        writeManifest(manifest, runId, config);
+        writeManifest(manifest, runId, config, scenarioStart);
 
         ScenarioPlan plan = PlanGenerator.generate(config);
         List<TerminalRun> runs = new ArrayList<>();
@@ -91,7 +91,8 @@ public final class ScenarioRunner {
         return new RunSummary(runId, sendLog, ackLog, summaryFile, manifest, success, results);
     }
 
-    private static void writeManifest(Path path, String runId, ScenarioConfig config) throws IOException {
+    private static void writeManifest(Path path, String runId, ScenarioConfig config,
+                                      LocalDateTime scenarioStart) throws IOException {
         try (BufferedWriter writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8,
                 StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)) {
             writer.write("run_id=" + runId + "\n");
@@ -109,6 +110,8 @@ public final class ScenarioRunner {
             writer.write("command_base_interval_ms=" + config.commandBaseIntervalMs() + "\n");
             writer.write("offline_gap_ms=" + config.offlineGapMs() + "\n");
             writer.write("backfill_seconds=" + config.backfillSeconds() + "\n");
+            writer.write("duration_ms=" + config.durationMs() + "\n");
+            writer.write("scenario_start=" + scenarioStart + "\n");
             writer.write("route_crs=" + config.route().crs() + "\n");
             writer.write("route_start_lng=" + config.route().startLng() + "\n");
             writer.write("route_start_lat=" + config.route().startLat() + "\n");

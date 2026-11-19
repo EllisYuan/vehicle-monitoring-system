@@ -191,6 +191,10 @@ class ScenarioRunnerTest {
                     .toList();
             assertThat(times).containsExactly(scenarioStart, scenarioStart.plusSeconds(1),
                     scenarioStart.plusSeconds(2), scenarioStart.plusSeconds(3), scenarioStart.plusSeconds(4));
+            // 性能验收按 manifest 的 scenario_start 与 duration_ms 还原计划时间线并核对持久行。
+            assertThat(Files.readString(summary.manifest()))
+                    .contains("scenario_start=2026-01-02T03:04:05")
+                    .contains("duration_ms=0");
         }
     }
 

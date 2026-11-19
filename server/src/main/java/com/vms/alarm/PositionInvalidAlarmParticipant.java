@@ -100,6 +100,16 @@ public class PositionInvalidAlarmParticipant implements PositionStateParticipant
                 """, direction, count, pointTime, now, vehicleId);
     }
     private Candidate candidate(long vehicleId) {
+        // 先无锁探测，仅对已存在的候选行加锁；避免对不存在的唯一键取 gap lock，
+        // 与并发首次 INSERT 的插入意向锁互相等待而死锁（同 OverspeedAlarmParticipant）。
+        List<Integer> exists = jdbc.query("""
+                SELECT 1 FROM alarm_candidate_state
+                WHERE vehicle_id = ? AND alarm_type = 'POSITION_INVALID' AND source = 'PLATFORM'
+                  AND business_dimension = ''
+                """, (rs, row) -> 1, vehicleId);
+        if (exists.isEmpty()) {
+            return null;
+        }
         List<Candidate> rows = jdbc.query("""
                 SELECT candidate_direction, consecutive_count, last_point_time
                 FROM alarm_candidate_state

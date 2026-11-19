@@ -1,0 +1,34 @@
+# 任务 24 降配单轮启动前置记录（2026-11-19）
+# 结论：14:31:30 读到 FreePhysical 2.03 GB 的瞬时峰值，26 秒后回落至 1.72 GB；按 ≥2.0 GB 门槛未在该时刻启动。14:32:41 起由门槛启动器每 15 s 采样，达到 2.0 GB 后才经锁启动。
+
+[snapshot 2026-11-19 14:36:36] free_gb=0.83 available_gb=0.76 total_gb=15.65
+# 降配项：MySQL 1536→768 MiB；innodb-buffer-pool-size 768M→384M；Redis 256→128 MiB；Surefire -Xmx512m→384m（用户明确授权）
+# 未改动：--skip-log-bin --innodb-flush-log-at-trx-commit=2 --innodb-log-buffer-size=64M --innodb-doublewrite=OFF --max-connections=100 --performance-schema=OFF；publish-interval-ms=2000 默认
+
+## docker ps
+quizzical_ramanujan:mysql:8.4:Up 3 seconds
+testcontainers-ryuk-4a14bb13-21bf-497b-9343-5efd7ec24f46:testcontainers/ryuk:0.14.0:Up 4 seconds
+plp-dev-mysql-1948:mysql:8.4:Up 4 hours
+pms-milvus-standalone:milvusdb/milvus:v2.6.7:Up 11 minutes (healthy)
+pms_redis:redis:latest:Up 12 minutes
+pms_mongo:mongo:6:Up 12 minutes
+pms-etcd:quay.io/coreos/etcd:v3.5.18:Up 12 minutes (healthy)
+pms_minio:minio/minio:RELEASE.2023-03-20T20-16-18Z:Up 12 minutes (healthy)
+
+## java.exe
+pid=12376 memMB=3 cmd=C:\Java\jdk-21.0.9\bin\java.exe --add-opens java.base/java.lang=ALL-UNNAMED --enable-native-access=ALL-UNNAMED -classpath C:/ProgramData/chocolatey/lib/maven/apache-maven-3.9.12/boot/plexus-classworld
+pid=19604 memMB=19 cmd=C:\Java\jdk-21.0.9\bin\java.exe -XX:TieredStopAtLevel=1 -cp @C:\Users\YuanS\AppData\Local\Temp\spring-boot-14482594365857852995.argfile com.parkleasing.ParkLeasingApplication
+pid=32536 memMB=217 cmd="C:\Java\jdk-21.0.9\bin\java.exe"       --enable-native-access=ALL-UNNAMED          -classpath "C:\Users\YuanS\.m2\wrapper\dists\apache-maven-3.9.12\59fe215c0ad6947fea90184bf7add084544567b927287592651
+pid=13728 memMB=259 cmd=C:\Java\jdk-21.0.9\bin\java  -Xmx384m -jar C:\Users\YuanS\AppData\Local\Temp\surefire15001592020747677956\surefirebooter-20261119143622577_3.jar C:\Users\YuanS\AppData\Local\Temp\surefire1500159202074
+
+## top working set
+vmmemWSL pid=8660 memMB=965
+ChatGPT pid=31076 memMB=488
+ChatGPT pid=19880 memMB=371
+claude pid=36932 memMB=332
+claude pid=3332 memMB=301
+claude pid=18888 memMB=293
+claude pid=29580 memMB=260
+java pid=13728 memMB=259
+Memory Compression pid=4536 memMB=251
+claude pid=34432 memMB=242

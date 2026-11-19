@@ -51,6 +51,7 @@ public final class PlanGenerator {
                 case DUPLICATE -> duplicate(config, terminal, terminalIndex, scene, cursor);
                 case ACK_LOSS -> ackLoss(config, terminal, terminalIndex, scene, cursor);
                 case COMMANDS -> commands(config, terminal, terminalIndex, scene, cursor);
+                case STEADY -> steady(config, terminal, terminalIndex, scene, cursor);
             };
             entries.addAll(block.entries());
             cursor = block.nextCursor();
@@ -186,6 +187,24 @@ public final class PlanGenerator {
                 routeLng(config, 1, random), routeLat(config, 1, random),
                 40 * RAW_SPEED_UNITS_PER_KPH, random.nextInt(360), true, 0));
         return new Block(entries, start + retryDelay + 2L * config.intervalMs());
+    }
+
+    /**
+     * 稳态负载：按 duration-ms / interval-ms 推导单终端固定点数，等间隔上报，供 100 终端
+     * 性能验收复用；只编排位置输入，不在模拟器内复刻平台判定。
+     */
+    private static Block steady(ScenarioConfig config, String terminal, int terminalIndex,
+                                ScenarioType scene, long start) {
+        Random random = randomFor(config, terminal, scene);
+        long points = config.durationMs() / config.intervalMs();
+        List<PlanEntry> entries = new ArrayList<>();
+        for (long i = 0; i < points; i++) {
+            int step = (int) i;
+            entries.add(PlanEntry.position(terminal, scene, start + i * (long) config.intervalMs(),
+                    routeLng(config, step, random), routeLat(config, step, random),
+                    speed(40, random), random.nextInt(360), true, 0));
+        }
+        return new Block(entries, start + points * (long) config.intervalMs());
     }
 
     private static Block commands(ScenarioConfig config, String terminal, int terminalIndex,

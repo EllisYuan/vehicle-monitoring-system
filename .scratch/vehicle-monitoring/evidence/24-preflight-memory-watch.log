@@ -1,0 +1,46 @@
+# 任务 24 满规模测量启动前内存观察（preflight，2026-11-19 10:36:19–11:04:12）
+# 门槛：3.5 GB；harness 警告线 1.2 GB；harness 主动中止线 0.8 GB
+# FreePhysical 来自 Get-CimInstance Win32_OperatingSystem.FreePhysicalMemory；Available 来自 Get-Counter '\Memory\Available MBytes'
+# 结论：所有采样低于 3.5 GB 门槛（最低 0.43 GB free / 0.46 GB available @10:57:01，远低于 0.8 GB 中止线），未启动 30 分钟测量
+# --- 机器可读采样 ---
+# source: C:\Users\YuanS\AppData\Local\Temp\claude\6381238095083b50\063f3823-7079-478a-9ed6-4723eb1144d9\tasks\byx3o8ot2.output
+10:36:19 FreePhysicalGB=2.62 AvailableGB=2.6
+10:36:51 FreePhysicalGB=2.4 AvailableGB=2.39
+10:37:22 FreePhysicalGB=1.82 AvailableGB=1.81
+10:37:54 FreePhysicalGB=2.77 AvailableGB=2.75
+10:38:25 FreePhysicalGB=1.87 AvailableGB=1.81
+10:38:56 FreePhysicalGB=0.85 AvailableGB=0.86
+10:39:28 FreePhysicalGB=1.98 AvailableGB=1.88
+10:39:59 FreePhysicalGB=1.78 AvailableGB=1.76
+10:40:31 FreePhysicalGB=1.48 AvailableGB=1.43
+10:41:02 FreePhysicalGB=2.47 AvailableGB=2.61
+10:41:34 FreePhysicalGB=2.78 AvailableGB=2.78
+10:42:05 FreePhysicalGB=2.69 AvailableGB=2.66
+# source: C:\Users\YuanS\AppData\Local\Temp\claude\6381238095083b50\063f3823-7079-478a-9ed6-4723eb1144d9\tasks\bg13yucmx.output
+10:42:21 FreePhysicalGB=2.09 AvailableGB=2.08 top=vmmemWSL:0.98,Spotify:0.39,ChatGPT:0.36
+10:43:23 FreePhysicalGB=1.83 AvailableGB=1.82 top=vmmemWSL:0.99,Spotify:0.39,ChatGPT:0.36
+10:44:24 FreePhysicalGB=2.03 AvailableGB=2.04 top=vmmemWSL:1.08,Spotify:0.38,claude:0.37
+10:45:26 FreePhysicalGB=2.05 AvailableGB=2.14 top=vmmemWSL:1.05,claude:0.35,claude:0.32
+10:46:27 FreePhysicalGB=1.16 AvailableGB=1.13 top=vmmemWSL:1.36,java:0.41,claude:0.34
+10:47:28 FreePhysicalGB=1.72 AvailableGB=1.68 top=vmmemWSL:1.12,claude:0.35,claude:0.34
+10:48:30 FreePhysicalGB=0.94 AvailableGB=1.25 top=vmmemWSL:1.42,java:0.36,java:0.35
+10:49:31 FreePhysicalGB=1.25 AvailableGB=1.29 top=vmmemWSL:1.47,claude:0.35,claude:0.34
+10:50:33 FreePhysicalGB=1.38 AvailableGB=1.58 top=vmmemWSL:1.7,claude:0.34,claude:0.34
+10:51:34 FreePhysicalGB=1.12 AvailableGB=1.13 top=vmmemWSL:1.81,java:0.52,claude:0.35
+# source: C:\Users\YuanS\AppData\Local\Temp\claude\6381238095083b50\063f3823-7079-478a-9ed6-4723eb1144d9\tasks\bhgvxjo02.output
+10:48:48 FreePhysicalGB=2.19 AvailableGB=2.19 competing_mvn=0 containers=testcontainers-ryuk-8ddf3fd8-7d51-4b31-926e-bbfab68acf10
+10:49:50 FreePhysicalGB=1.18 AvailableGB=1.13 competing_mvn=3 containers=eager_goldberg,testcontainers-ryuk-7c971dbd-9b33-4ca8-bbd4-261709675701
+10:50:52 FreePhysicalGB=1.36 AvailableGB=1.37 competing_mvn=3 containers=romantic_lalande,testcontainers-ryuk-2667f158-caac-4855-ba5f-1c22177c21c9,plp-dev-mysql-1948
+10:51:53 FreePhysicalGB=0.91 AvailableGB=0.78 competing_mvn=3 containers=romantic_lalande,testcontainers-ryuk-2667f158-caac-4855-ba5f-1c22177c21c9,plp-dev-mysql-1948
+10:52:55 FreePhysicalGB=0.55 AvailableGB=0.54 competing_mvn=3 containers=romantic_lalande,testcontainers-ryuk-2667f158-caac-4855-ba5f-1c22177c21c9,plp-dev-mysql-1948
+10:53:56 FreePhysicalGB=2.1 AvailableGB=2.08 competing_mvn=1 containers=plp-dev-mysql-1948
+10:54:58 FreePhysicalGB=2.09 AvailableGB=2.09 competing_mvn=1 containers=plp-dev-mysql-1948
+10:55:59 FreePhysicalGB=2.2 AvailableGB=2.16 competing_mvn=1 containers=plp-dev-mysql-1948
+10:57:01 FreePhysicalGB=0.43 AvailableGB=0.46 competing_mvn=1 containers=plp-dev-mysql-1948
+10:58:02 FreePhysicalGB=0.65 AvailableGB=0.69 competing_mvn=5 containers=blissful_diffie,testcontainers-ryuk-c96dbc10-18a8-4416-a87b-40809a3f0642,plp-dev-mysql-1948
+10:59:04 FreePhysicalGB=1.15 AvailableGB=1.25 competing_mvn=1 containers=plp-dev-mysql-1948
+11:00:06 FreePhysicalGB=0.98 AvailableGB=0.97 competing_mvn=1 containers=plp-dev-mysql-1948
+11:01:07 FreePhysicalGB=1.11 AvailableGB=1.12 competing_mvn=3 containers=optimistic_solomon,testcontainers-ryuk-56fbf5e7-0662-4b27-b0e1-dc78c930be88,plp-dev-mysql-1948
+11:02:09 FreePhysicalGB=1.59 AvailableGB=1.5 competing_mvn=3 containers=plp-dev-mysql-1948
+11:03:11 FreePhysicalGB=1.71 AvailableGB=1.68 competing_mvn=1 containers=plp-dev-mysql-1948
+11:04:12 FreePhysicalGB=1.51 AvailableGB=1.68 competing_mvn=3 containers=suspicious_jemison,testcontainers-ryuk-72a67855-102e-4b9a-ae53-1761f40ace06,plp-dev-mysql-1948
