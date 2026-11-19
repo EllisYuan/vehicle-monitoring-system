@@ -46,7 +46,7 @@ Blocked by: 22
 - 本次补强：接入阶段（`scenario_start` 所在秒 + 60 s）与稳态段分开统计 p50/p90/p95/p99/max，AC4 只按稳态 p95 判定并同时报告接入段；缺失帧按接入/稳态分别计数；harness 每分钟记录宿主可用内存（<1.2 GB 警告、<0.8 GB 主动中止本轮），外部另有 `24-<round>-memory-watch.log`（每 120 s，含容器名）。
 - `mvnw.cmd -B -f <worktree>\pom.xml -DskipTests package` 四模块 BUILD SUCCESS（25.7 s）；默认 Playwright 清单仍为 `46 tests in 15 files`；无 migration、本次无产品代码改动。
 
-未执行原因：启动前内存采样 **0.55–2.78 GB FreePhysical（Available 0.54–2.78 GB），全部低于用户规定的 3.5 GB 门槛；最低点 0.55 GB（10:52:55）已低于 harness 的 0.8 GB 主动中止线**；同时其他项目 ljf/park-leasing-platform 的 Maven/Testcontainers 在 10:39、10:43、10:49 连续并发运行（两个 worktree，容器 `thirsty_panini`、`eager_goldberg`、`romantic_lalande`、`plp-dev-mysql-1948`、Ryuk），本机不是独占性能窗口。按用户指令停止，未启动任何 30 分钟测量。
+未执行原因：启动前内存采样 **0.43–2.78 GB FreePhysical（Available 0.46–2.78 GB），全部低于用户规定的 3.5 GB 门槛；最低点 0.43 GB（10:57:01）远低于 harness 的 0.8 GB 主动中止线**；同时其他项目 ljf/park-leasing-platform 的 Maven/Testcontainers 在 10:39–11:04 持续并发运行（两个 worktree，竞争 Maven 最多 5 个；容器 `thirsty_panini`、`eager_goldberg`、`romantic_lalande`、`blissful_diffie`、`optimistic_solomon`、`suspicious_jemison`、`plp-dev-mysql-1948`、Ryuk），本机不是独占性能窗口。按用户指令停止，未启动任何 30 分钟测量。
 
 两轮实测、p95 与接入/稳态分段：**未执行**。失败/重传：**未产生**。前序旁证（非验收，不作为 AC 结果）：2026-11-19 09:55–10:17 中止轮 send 13,506（POSITION 13,206 + REGISTER/AUTH/HEARTBEAT 各 100），ACK 13,506 全部 `ACK_SUCCESS`，位置重传 0，`Deadlock found` 0；稳态进行 22 分 06 秒 / 30 分钟时被内存看门狗 kill。smoke 稳态缺失 0 帧。
 

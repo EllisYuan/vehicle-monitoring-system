@@ -1,7 +1,7 @@
 # 任务 24 满规模测量启动前置检查记录（2026-11-19）
 # 结论：所有采样均低于 3.5 GB 启动门槛；其他项目并发运行 Maven/Testcontainers。
 # 按用户指令未启动 30 分钟测量；本文件仅记录现场，不含任何验收数字。
-# 最低点 10:52:55 free=0.55 GB available=0.54 GB，已低于 harness 的 0.8 GB 主动中止线。
+# 最低点 10:57:01 free=0.43 GB available=0.46 GB，远低于 harness 的 0.8 GB 主动中止线。
 
 [2026-11-19 10:39:01] 宿主可用内存 free=0.73 GB available=0.62 GB
 [2026-11-19 10:39:03] 其他项目 Maven 启动（ljf/park-leasing-platform，worktree wf_f0ea83eb-212-4）
@@ -25,6 +25,12 @@
 [2026-11-19 10:50:52] free=1.36 GB available=1.37 GB；竞争 Maven 3 个；容器 romantic_lalande + Ryuk + plp-dev-mysql-1948
 [2026-11-19 10:51:53] free=0.91 GB available=0.78 GB；竞争负载持续
 [2026-11-19 10:52:55] free=0.55 GB available=0.54 GB；低于 harness 0.8 GB 主动中止线；竞争 Maven 3 个
+[2026-11-19 10:53:56] free=2.10 GB available=2.08 GB；竞争 Maven 降至 1 个；容器 plp-dev-mysql-1948 持续
+[2026-11-19 10:54:58] free=2.09 GB available=2.09 GB
+[2026-11-19 10:55:59] free=2.20 GB available=2.16 GB
+[2026-11-19 10:57:01] free=0.43 GB available=0.46 GB；观察窗最低点，仍低于 0.8 GB 中止线
+[2026-11-19 10:58:02] free=0.65 GB available=0.69 GB；竞争 Maven 增至 5 个；容器 blissful_diffie + Ryuk + plp-dev-mysql-1948
+[2026-11-19 11:04:12] free=1.51 GB available=1.68 GB；观察窗结束；竞争 Maven 3 个；容器 suspicious_jemison + Ryuk + plp-dev-mysql-1948
 
 
 # 内存采样（FreePhysicalMemory；Available 来自 Get-Counter '\Memory\Available MBytes'）
