@@ -89,8 +89,5 @@ export function commandSummary(command: CommandRecord): string {
   if (command.commandType === 'TEXT') {
     return command.textContent ?? ''
   }
-  if (command.intervalSeconds === 0) {
-    return '停止临时跟踪'
-  }
   return `间隔 ${command.intervalSeconds} 秒 · 有效期 ${command.validSeconds} 秒`
 }

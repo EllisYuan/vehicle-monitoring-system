@@ -224,6 +224,12 @@ class AuditViewerTest {
                     (event_id, event_type, aggregate_id, version, status, retry_at, attempts, updated_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 """, "evt-pending-1", "ALARM", 43L, 1L, "PENDING", now.plusSeconds(5), 0, now);
+        jdbc.update("DELETE FROM track_partition_alert WHERE message = ?", "audit-partition-alert");
+        jdbc.update("""
+                INSERT INTO track_partition_alert (alert_type, message, detail, run_id, created_at)
+                VALUES (?, ?, ?, ?, ?)
+                """, "PARTITION_MAINTENANCE_FAILED", "audit-partition-alert",
+                "java.lang.IllegalStateException", (Object) null, now);
 
         mvc.perform(get("/api/v1/audit/operation-records").header("satoken", adminToken))
                 .andExpect(status().isOk())
@@ -237,11 +243,19 @@ class AuditViewerTest {
                 .andExpect(jsonPath("$.deadOutbox[0].aggregateId").value(42))
                 .andExpect(jsonPath("$.deadOutbox[0].attempts").value(10))
                 .andExpect(jsonPath("$.deadOutbox[0].updatedAt").isNotEmpty())
+                .andExpect(jsonPath("$.partitionAlerts[?(@.message == 'audit-partition-alert')].alertType",
+                        org.hamcrest.Matchers.hasItem("PARTITION_MAINTENANCE_FAILED")))
+                .andExpect(jsonPath("$.partitionAlerts[?(@.message == 'audit-partition-alert')].createdAt",
+                        org.hamcrest.Matchers.hasItem(org.hamcrest.Matchers.notNullValue())))
                 .andExpect(jsonPath("$.generatedAt").isNotEmpty());
 
         Long directDead = jdbc.queryForObject(
                 "SELECT count(*) FROM notification_outbox WHERE status = 'DEAD'", Long.class);
         assertThat(directDead).isEqualTo(1L);
+        Long directAlerts = jdbc.queryForObject(
+                "SELECT count(*) FROM track_partition_alert WHERE message = ?", Long.class,
+                "audit-partition-alert");
+        assertThat(directAlerts).as("运行记录与 track_partition_alert 源事实一致").isEqualTo(1L);
     }
 
     @Test

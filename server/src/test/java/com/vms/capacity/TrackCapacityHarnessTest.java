@@ -462,9 +462,7 @@ class TrackCapacityHarnessTest {
         metric("container.disk_after_cleanup", containerDiskUsage());
     }
 
-    // ------------------------------------------------------------------
     // 生成
-    // ------------------------------------------------------------------
 
     static GenerationResult generateAllDays() {
         long runStart = System.nanoTime();
@@ -585,9 +583,7 @@ class TrackCapacityHarnessTest {
         return value;
     }
 
-    // ------------------------------------------------------------------
     // 查询观测
-    // ------------------------------------------------------------------
 
     static QueryObservation observeQuery(String label, long vehicleId, LocalDateTime from, LocalDateTime to,
                                          Set<String> expectedPartitions, long expectedRawPoints) {
@@ -700,9 +696,7 @@ class TrackCapacityHarnessTest {
         return result;
     }
 
-    // ------------------------------------------------------------------
     // 档案与环境
-    // ------------------------------------------------------------------
 
     static void createCapacityArchives() {
         LocalDateTime now = LocalDateTime.now(BUSINESS_ZONE);
@@ -833,9 +827,7 @@ class TrackCapacityHarnessTest {
         }
     }
 
-    // ------------------------------------------------------------------
     // 分区与计数辅助
-    // ------------------------------------------------------------------
 
     static List<String> partitionNames() {
         return jdbc.queryForList("SELECT PARTITION_NAME FROM information_schema.PARTITIONS"
@@ -883,9 +875,7 @@ class TrackCapacityHarnessTest {
         return count != null && count > 0;
     }
 
-    // ------------------------------------------------------------------
     // 记录输出
-    // ------------------------------------------------------------------
 
     static synchronized void metric(String key, Object value) {
         String line = key + "=" + value;
@@ -933,9 +923,7 @@ class TrackCapacityHarnessTest {
         }
     }
 
-    // ------------------------------------------------------------------
     // 记录类型
-    // ------------------------------------------------------------------
 
     record GenerationResult(long rows, long batches, long elapsedMs) {
         double rowsPerSecond() {

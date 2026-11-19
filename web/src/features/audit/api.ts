@@ -41,9 +41,16 @@ export interface OutboxDeadEntry {
   updatedAt: string | null
 }
 
+export interface PartitionAlertEntry {
+  alertType: string
+  message: string
+  createdAt: string
+}
+
 export interface OperationRecords {
   deadOutbox: OutboxDeadEntry[]
   outboxCounts: Record<string, number>
+  partitionAlerts: PartitionAlertEntry[]
   generatedAt: string
 }
 

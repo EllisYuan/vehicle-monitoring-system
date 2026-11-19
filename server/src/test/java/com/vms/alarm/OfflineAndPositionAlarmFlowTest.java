@@ -1,6 +1,7 @@
 package com.vms.alarm;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,6 +43,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
+import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
 /**
@@ -161,6 +163,17 @@ class OfflineAndPositionAlarmFlowTest {
         assertThat(jdbc.queryForObject("SELECT count(*) FROM notification_outbox"
                 + " WHERE event_type = 'ALARM_EVENT' AND event_id = ?", Long.class,
                 "alarm:recovered:" + alarmId)).isEqualTo(1);
+        JsonNode detail = alarmDetail(token, alarmId);
+        JsonNode conditionHistory = detail.path("conditionHistory");
+        assertThat(conditionHistory.size()).as("恢复写 CONDITION 条件历史").isEqualTo(1);
+        JsonNode change = conditionHistory.get(0);
+        assertThat(change.path("changeType").asText()).isEqualTo("CONDITION");
+        assertThat(change.path("fromStatus").asText()).isEqualTo("ACTIVE");
+        assertThat(change.path("toStatus").asText()).isEqualTo("RECOVERED");
+        assertThat(change.path("operatorId").isNull()).as("条件变化不记操作者").isTrue();
+        assertThat(change.path("operatorName").isNull()).isTrue();
+        assertThat(change.path("remark").isNull()).isTrue();
+        assertThat(detail.path("handleHistory").size()).as("恢复不写人工处置历史").isZero();
         Map<String, Object> validCandidate = candidate(bound, "POSITION_INVALID");
         assertThat(validCandidate.get("candidate_direction")).isEqualTo("VALID");
         assertThat(((Number) validCandidate.get("consecutive_count")).intValue()).isEqualTo(3);
@@ -288,6 +301,18 @@ class OfflineAndPositionAlarmFlowTest {
         assertThat(recovered.get("last_time")).as("恢复不改最后发生时间")
                 .isEqualTo(recovered.get("start_time"));
         assertThat(offlineAlarmOutboxCount(alarmId, "recovered")).isEqualTo(1);
+
+        JsonNode detail = alarmDetail(token, alarmId);
+        JsonNode conditionHistory = detail.path("conditionHistory");
+        assertThat(conditionHistory.size()).as("离线恢复写 CONDITION 条件历史").isEqualTo(1);
+        JsonNode change = conditionHistory.get(0);
+        assertThat(change.path("changeType").asText()).isEqualTo("CONDITION");
+        assertThat(change.path("fromStatus").asText()).isEqualTo("ACTIVE");
+        assertThat(change.path("toStatus").asText()).isEqualTo("RECOVERED");
+        assertThat(change.path("operatorId").isNull()).as("条件变化不记操作者").isTrue();
+        assertThat(change.path("operatorName").isNull()).isTrue();
+        assertThat(change.path("remark").isNull()).isTrue();
+        assertThat(detail.path("handleHistory").size()).as("恢复不写人工处置历史").isZero();
 
         offlineAlarms.scan();
         assertThat(offlineAlarmCount(bound)).as("恢复后不重复新事件").isEqualTo(1);
@@ -490,6 +515,11 @@ class OfflineAndPositionAlarmFlowTest {
     private Map<String, Object> offlineAlarm(BoundTerminal bound) {
         return jdbc.queryForMap("SELECT * FROM alarm WHERE vehicle_id = ? AND alarm_type = 'OFFLINE'"
                 + " ORDER BY id DESC LIMIT 1", bound.vehicleId());
+    }
+
+    private JsonNode alarmDetail(String token, long alarmId) throws Exception {
+        return json.readTree(mvc.perform(get("/api/v1/alarms/" + alarmId).header("satoken", token))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsByteArray());
     }
 
     private long offlineAlarmCount(BoundTerminal bound) {

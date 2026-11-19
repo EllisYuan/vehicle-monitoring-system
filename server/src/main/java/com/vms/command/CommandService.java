@@ -155,7 +155,29 @@ public class CommandService {
         if (sent != TerminalAccessPort.SendResult.SENT) {
             store.markFailedIfSent(appended.id(), sent.name());
         }
+        audit.record(AuditService.CATEGORY_COMMAND, "SUBMITTED", "command:" + appended.id(),
+                AuditService.RESULT_SUCCESS, actor.getId(), actor.getUsername(), null,
+                submissionDetail(content, target.terminalId(), retryOfId, sent));
         return view(store.find(appended.id()).orElseThrow());
+    }
+
+    /** 审计只记终端、指令类型与参数摘要；文本不记正文，只记 GBK 字节数。 */
+    private static String submissionDetail(CommandContent content, long terminalId, Long retryOfId,
+                                           TerminalAccessPort.SendResult sent) {
+        StringBuilder detail = new StringBuilder("terminalId=").append(terminalId)
+                .append("; type=").append(content.commandType())
+                .append("; send=").append(sent);
+        if ("TEXT".equals(content.commandType())) {
+            detail.append("; textType=").append(content.textType())
+                    .append("; textBytes=").append(Gbk.encode(content.textContent()).length);
+        } else {
+            detail.append("; intervalSeconds=").append(content.intervalSeconds())
+                    .append("; validSeconds=").append(content.validSeconds());
+        }
+        if (retryOfId != null) {
+            detail.append("; retryOfId=").append(retryOfId);
+        }
+        return detail.toString();
     }
 
     private void rejectOffline(UserAccount actor, long terminalId) {

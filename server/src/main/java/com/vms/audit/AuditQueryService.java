@@ -27,6 +27,7 @@ public class AuditQueryService {
     public static final int MAX_WINDOW_DAYS = 31;
     public static final int MAX_OFFSET = 10_000;
     public static final int MAX_DEAD_OUTBOX_ROWS = 100;
+    public static final int MAX_PARTITION_ALERTS = 100;
 
     private static final List<String> OUTBOX_STATUSES =
             List.of("PENDING", "RETRY", "DONE", "DEAD");
@@ -78,8 +79,8 @@ public class AuditQueryService {
     }
 
     /**
-     * 运行记录只读取已实现的源事实：notification_outbox 各状态计数与 DEAD 明细。
-     * 分区维护告警由后续维护票实现后再在此补充，不用占位数据冒充。
+     * 运行记录只读取已实现的源事实：notification_outbox 各状态计数与 DEAD 明细，
+     * 以及 track_partition_alert 中的轨迹分区维护失败告警。不写占位数据。
      */
     public OperationRecords operationRecords() {
         Map<String, Long> counts = new LinkedHashMap<>();
@@ -99,7 +100,15 @@ public class AuditQueryService {
                         rs.getLong("aggregate_id"), rs.getInt("attempts"),
                         rs.getObject("retry_at", LocalDateTime.class),
                         rs.getObject("updated_at", LocalDateTime.class)), MAX_DEAD_OUTBOX_ROWS);
-        return new OperationRecords(dead, counts, LocalDateTime.now(clock));
+        List<PartitionAlertEntry> partitionAlerts = jdbc.query("""
+                SELECT alert_type, message, created_at
+                FROM track_partition_alert
+                ORDER BY created_at DESC, id DESC
+                LIMIT ?
+                """, (rs, row) -> new PartitionAlertEntry(
+                        rs.getString("alert_type"), rs.getString("message"),
+                        rs.getObject("created_at", LocalDateTime.class)), MAX_PARTITION_ALERTS);
+        return new OperationRecords(dead, counts, partitionAlerts, LocalDateTime.now(clock));
     }
 
     private static void appendEquals(StringBuilder where, List<Object> args, String column, String value) {
@@ -168,8 +177,10 @@ public class AuditQueryService {
                              LocalDateTime createdAt) { }
 
     public record OperationRecords(List<OutboxDeadEntry> deadOutbox, Map<String, Long> outboxCounts,
-                                   LocalDateTime generatedAt) { }
+                                   List<PartitionAlertEntry> partitionAlerts, LocalDateTime generatedAt) { }
 
     public record OutboxDeadEntry(String eventId, String eventType, long aggregateId, int attempts,
                                   LocalDateTime retryAt, LocalDateTime updatedAt) { }
+
+    public record PartitionAlertEntry(String alertType, String message, LocalDateTime createdAt) { }
 }

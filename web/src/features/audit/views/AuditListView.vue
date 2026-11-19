@@ -306,7 +306,7 @@ onMounted(() => {
 
       <h2>运行记录</h2>
       <p class="hint">
-        运行记录直接来自当前已实现的源事实：notification_outbox 各状态计数与 DEAD 告警；其他维护告警在对应功能交付后接入。
+        运行记录直接来自当前已实现的源事实：notification_outbox 各状态计数与 DEAD 告警，以及 track_partition_alert 中的轨迹分区维护失败告警。
       </p>
       <p
         v-if="records"
@@ -354,6 +354,41 @@ onMounted(() => {
           </tr>
         </tbody>
       </table>
+
+      <h3>分区维护告警</h3>
+      <table
+        class="table"
+        data-testid="audit-partition-alert-table"
+      >
+        <thead>
+          <tr>
+            <th>时间</th>
+            <th>类型</th>
+            <th>消息</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(alert, index) in records?.partitionAlerts ?? []"
+            :key="`${alert.alertType}-${alert.createdAt}-${index}`"
+            :data-testid="`audit-partition-alert-${index}`"
+          >
+            <td>{{ formatTime(alert.createdAt) }}</td>
+            <td>{{ alert.alertType }}</td>
+            <td class="detail">
+              {{ alert.message }}
+            </td>
+          </tr>
+          <tr v-if="(records?.partitionAlerts.length ?? 0) === 0">
+            <td
+              colspan="3"
+              class="empty"
+            >
+              当前没有轨迹分区维护告警
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   </AppShell>
 </template>
@@ -371,6 +406,11 @@ h1 {
 h2 {
   margin: 1.75rem 0 0.5rem;
   font-size: 1.05rem;
+}
+
+h3 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 0.95rem;
 }
 
 .hint {

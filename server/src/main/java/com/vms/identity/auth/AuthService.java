@@ -125,6 +125,11 @@ public class AuthService {
         }
     }
 
+    /** 组合权限判断用：仅回答当前角色是否具备该功能权限，不抛异常。 */
+    public boolean hasPermission(UserAccount user, Permission permission) {
+        return RoleCode.parse(user.getRoleCode()).map(permission::isGrantedTo).orElse(false);
+    }
+
     /**
      * 本人修改密码：撤销该账号全部会话（含当前会话），需重新登录。
      * 只更新密码与授权版本，避免覆盖并发的停用或授权变更。

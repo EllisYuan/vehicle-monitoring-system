@@ -319,7 +319,7 @@ class HundredTerminalPerfHarnessTest {
         }
     }
 
-    // ------------------------------------------------------------------ 档案与断言
+    // 档案与断言
 
     private long fleetId;
     private long steadyFromGpsMs = -1;
@@ -408,7 +408,7 @@ class HundredTerminalPerfHarnessTest {
         return -1;
     }
 
-    // ------------------------------------------------------------------ 环境记录
+    // 环境记录
 
     private void recordEnvironment(Metrics metrics, Path worktree, Path web) throws IOException {
         metrics.put("env.os", System.getProperty("os.name") + " " + System.getProperty("os.version")
@@ -520,7 +520,7 @@ class HundredTerminalPerfHarnessTest {
         }
     }
 
-    // ------------------------------------------------------------------ 子进程
+    // 子进程
 
     private Process startFrontend(Path web, int webPort, Path log) throws IOException {
         // --configLoader runner：本次环境（Windows 受控文件夹访问）下 Vite 写 node_modules/.vite-temp
@@ -619,7 +619,7 @@ class HundredTerminalPerfHarnessTest {
         }
     }
 
-    // ------------------------------------------------------------------ 对账
+    // 对账
 
     private void analyseSimulator(Metrics metrics, Path runDir, long expectedPoints,
                                   int pointsPerTerminal) throws IOException {

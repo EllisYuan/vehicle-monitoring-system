@@ -4,7 +4,6 @@ import com.vms.identity.account.UserAccount;
 import com.vms.identity.auth.AuthService;
 import com.vms.identity.security.ForbiddenException;
 import com.vms.identity.security.Permission;
-import com.vms.identity.security.RequiresPermission;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -56,20 +55,24 @@ public class CommandController {
         return commands.retry(actor, id);
     }
 
+    /** 指令记录读取：具备下发权限或车队查看权限（车队长只读）即可，数据范围由 FleetScope 限定。 */
     @GetMapping
-    @RequiresPermission(Permission.COMMAND_DISPATCH)
     public List<CommandService.CommandView> list(@RequestParam(required = false) Long terminalId) {
-        return commands.list(auth.currentUser(), terminalId);
+        UserAccount actor = auth.currentUser();
+        requireRead(actor);
+        return commands.list(actor, terminalId);
     }
 
     @GetMapping("/{id}")
-    @RequiresPermission(Permission.COMMAND_DISPATCH)
     public CommandService.CommandView get(@PathVariable long id) {
-        return commands.get(auth.currentUser(), id);
+        UserAccount actor = auth.currentUser();
+        requireRead(actor);
+        return commands.get(actor, id);
     }
 
     /**
      * 下发类接口由控制器显式检查权限：需要在拒绝时记录被指向的终端，形成可追溯的 DENIED 审计。
+     * 因此不使用只能表达单一权限的 {@link com.vms.identity.security.RequiresPermission} 注解。
      */
     private void requireDispatch(UserAccount actor, Long terminalId) {
         try {
@@ -79,6 +82,14 @@ public class CommandController {
                 commands.auditDenied(actor, terminalId);
             }
             throw e;
+        }
+    }
+
+    /** 读取指令记录不要求下发权限：COMMAND_DISPATCH 或 FLEET_VIEW 任一即可。 */
+    private void requireRead(UserAccount actor) {
+        if (!auth.hasPermission(actor, Permission.COMMAND_DISPATCH)
+                && !auth.hasPermission(actor, Permission.FLEET_VIEW)) {
+            throw new ForbiddenException();
         }
     }
 

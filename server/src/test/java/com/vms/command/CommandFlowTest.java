@@ -78,6 +78,12 @@ class CommandFlowTest {
             assertThat(created.path("connectionEpoch").asLong()).isEqualTo(epoch);
             long commandId = created.path("id").asLong();
             int serial = created.path("serialNo").asInt();
+            Map<String, Object> submitted = submittedAudit(commandId);
+            assertThat(submitted.get("result")).isEqualTo("SUCCESS");
+            assertThat((String) submitted.get("detail"))
+                    .as("SUBMITTED 审计记录终端与类型，不记文本正文")
+                    .contains("terminalId=" + bound.terminalId(), "type=TEXT", "textBytes=8")
+                    .doesNotContain("测试文本");
 
             Frame downlink = receive(socket);
             assertThat(downlink.header().messageId()).isEqualTo(0x8300);
@@ -104,6 +110,10 @@ class CommandFlowTest {
         try (Socket socket = connect()) {
             authenticate(socket, bound, register(socket, bound, 1), 2);
             JsonNode created = submitTracking(token, bound.terminalId(), 30, 300);
+            Map<String, Object> submitted = submittedAudit(created.path("id").asLong());
+            assertThat((String) submitted.get("detail"))
+                    .contains("terminalId=" + bound.terminalId(), "type=TRACKING",
+                            "intervalSeconds=30", "validSeconds=300");
             Frame downlink = receive(socket);
             assertThat(downlink.header().messageId()).isEqualTo(0x8202);
             assertThat(hex(downlink.body())).isEqualTo(TRACKING_BODY_FIXTURE);
@@ -336,6 +346,64 @@ class CommandFlowTest {
             assertThat(row.path("communication").path("status").asText()).isEqualTo("ACK_SUCCESS");
             assertThat(row.path("commandType").asText()).isEqualTo("TEXT");
         }
+    }
+
+    @Test
+    void fleetLeaderReadsOwnFleetCommandsButNotOtherFleetsAndCannotSend() throws Exception {
+        String token = login(ADMIN, ADMIN_PASSWORD);
+        String suffix = UUID.randomUUID().toString().substring(0, 8);
+        long ownFleet = create(token, "/fleets", Map.of("fleetCode", "R" + suffix, "fleetName", "只读指令车队"));
+        BoundTerminal own = createBoundTerminal(token, ownFleet, suffix);
+        JsonNode ownCommand;
+        try (Socket socket = connect()) {
+            authenticate(socket, own, register(socket, own, 1), 2);
+            ownCommand = submitText(token, own.terminalId(), "车队长可见指令", null);
+            receive(socket);
+        }
+
+        String otherSuffix = UUID.randomUUID().toString().substring(0, 8);
+        BoundTerminal other = createBoundTerminal(token);
+        JsonNode otherCommand;
+        try (Socket socket = connect()) {
+            authenticate(socket, other, register(socket, other, 1), 2);
+            otherCommand = submitText(token, other.terminalId(), "其他车队指令", null);
+            receive(socket);
+        }
+
+        create(token, "/users", Map.of("username", "reader-" + suffix, "password", "Reader-Pass-2026",
+                "roleCode", "FLEET_LEADER", "fleetIds", java.util.List.of(ownFleet)));
+        String leader = login("reader-" + suffix, "Reader-Pass-2026");
+
+        var listResponse = mvc.perform(get("/api/v1/commands").header("satoken", leader))
+                .andExpect(status().isOk()).andReturn();
+        JsonNode rows = json.readTree(listResponse.getResponse().getContentAsByteArray());
+        assertThat(rows.size()).as("车队长列表按车队范围过滤").isEqualTo(1);
+        assertThat(rows.get(0).path("id").asLong()).isEqualTo(ownCommand.path("id").asLong());
+
+        mvc.perform(get("/api/v1/commands").param("terminalId", String.valueOf(own.terminalId()))
+                        .header("satoken", leader))
+                .andExpect(status().isOk());
+        mvc.perform(get("/api/v1/commands/" + ownCommand.path("id").asLong()).header("satoken", leader))
+                .andExpect(status().isOk());
+
+        mvc.perform(get("/api/v1/commands").param("terminalId", String.valueOf(other.terminalId()))
+                        .header("satoken", leader))
+                .andExpect(status().isForbidden());
+        mvc.perform(get("/api/v1/commands/" + otherCommand.path("id").asLong()).header("satoken", leader))
+                .andExpect(status().isForbidden());
+
+        expectError(post("/api/v1/commands/text"), leader,
+                Map.of("terminalId", own.terminalId(), "text", "车队长不可发送"),
+                403, "FORBIDDEN");
+        assertThat(jdbc.queryForObject("SELECT COUNT(*) FROM command_log WHERE text_content = ?",
+                Integer.class, "车队长不可发送")).isZero();
+    }
+
+    private Map<String, Object> submittedAudit(long commandId) {
+        return jdbc.queryForMap("""
+                SELECT result, detail FROM audit_log
+                WHERE category = 'COMMAND' AND action = 'SUBMITTED' AND target = ?
+                """, "command:" + commandId);
     }
 
     private JsonNode submitText(String token, long terminalId, String text, Integer textType) throws Exception {

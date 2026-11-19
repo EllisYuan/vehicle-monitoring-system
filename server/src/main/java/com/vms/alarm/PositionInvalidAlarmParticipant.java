@@ -20,7 +20,8 @@ import org.springframework.stereotype.Component;
  *
  * <p>连续 3 个实时无效点成立 ACTIVE，连续 3 个有效实时点恢复；无报警规则，rule_id、
  * rule_version 与 rule_snapshot 保持 NULL。无效点不进入超速与围栏判定，也不更新有效位置
- * 快照；有效点只用于恢复计数，不推进报警最后发生时间。
+ * 快照；有效点只用于恢复计数，不推进报警最后发生时间。恢复时写 CONDITION 日志
+ * （operator 与 remark 为空），与人工处置的 HANDLE 日志分开记录。
  */
 @Component
 public class PositionInvalidAlarmParticipant implements PositionStateParticipant, PositionQualityParticipant {
@@ -149,6 +150,11 @@ public class PositionInvalidAlarmParticipant implements PositionStateParticipant
                     WHERE id = ? AND condition_state = 'ACTIVE'
                     """, pointTime, now, alarmId);
             if (updated > 0) {
+                jdbc.update("""
+                        INSERT INTO alarm_handle_log (alarm_id, change_type, from_status, to_status,
+                            operator_id, remark, created_at)
+                        VALUES (?, 'CONDITION', 'ACTIVE', 'RECOVERED', NULL, NULL, ?)
+                        """, alarmId, now);
                 enqueue("alarm:recovered:" + alarmId, alarmId, now);
             }
         }

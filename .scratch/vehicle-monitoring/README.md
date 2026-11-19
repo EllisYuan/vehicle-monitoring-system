@@ -4,13 +4,13 @@
 
 所有任务初始为 `Status: open`、`Labels: ready-for-agent`。标签表示任务定义可领取，不表示依赖已完成；领取前检查全部 `Blocked by` 指向任务均为 `resolved`。执行时按仓库规则改为 `claimed`，记录实际结果后再 `resolved`；外部条件未满足时标 `blocked` 并说明原因。
 
-当前进度：01、02、03、04、05 已实现并验收，状态 `resolved`；01—04 已合入 `main`，05 的边界修复已完成并待本次合入。02全量Maven 45项、Chromium 12项及审阅后复验通过，详见 [02验证记录](evidence/02-verification.md)；03 的真实MySQL集成、前端检查与浏览器场景见 [03验证记录](evidence/03-verification.md)；04 的司机档案与关联历史见 [04验证记录](evidence/04-verification.md)；05 的 protocol 独立测试见 [05验证记录](evidence/05-verification.md)。
+当前进度（2026-11-19，集成分支 `integration/tickets-08-27`）：01—13、15—21、23、25 状态 `resolved` 并已合入；14、22、24 状态 `blocked` 但代码已合入（14 缺 GNSS/终端来源报警位的可核对映射，22 的可重复性仅有单轮证据，24 的 100 终端性能验收未完成、分支仅含候选表死锁修复）；26 因无真实天地图 key、27 因缺真实 Linux 单机环境与 key 尚未完成。各票的验收证据与已知缺口见对应 issue 的 Answer 与 [evidence](evidence/) 目录；blocked 项不按完成计。
 
 `main` 基线回归已执行：`mvnw.cmd -B "-Dvms.browser-tests=true" test` 得 `Tests run: 58, Failures: 0, Errors: 0, Skipped: 0`、BUILD SUCCESS，BrowserFlowTest 内 14 个 Chromium 场景全部通过，结束后无 Testcontainers/Ryuk 残留（[日志](evidence/baseline-main-test.log)）。环境前置：Docker Desktop 需运行、Playwright Chromium 需为 1.58.1 对应的 1208 构建。
 
 04 合入前最终回归：`Tests run: 71, Failures: 0, Errors: 0, Skipped: 0`、BUILD SUCCESS，Playwright 16 项通过。
 
-下一步：任务 06（模拟终端接入与通信状态）依赖 03、05 均已满足；05 仅声明 JT/T 808-2019 正文子集，不声明未取得的 2021 修改单覆盖。
+下一步：26、27 依赖外部条件（真实天地图 key、真实 Linux 单机）；14 的 GNSS/终端来源报警位需先确认位语义映射；22 需补同 seed 跨运行比对；24 需在宿主资源满足条件后重跑 100 终端性能验收。
 
 ## 任务索引
 
@@ -52,7 +52,7 @@
 4. 同一 AC 可跨能力分段验收：02 不因 WS/导出尚未实现而无法关闭；08 验证无效位置持久化，14 验证异常成立/恢复，10 验证回放断点，27 综合复验。
 5. 09 先验证车辆/车队归属；12/13 加入司机报警关联快照后复验 AC06。10 在报警能力出现后需复验重要事件关联点，27 汇总执行。
 6. 26 的账户、条款或网络条件可以独立阻塞；核心位置开发不等待 key，但 27 必须包含真实地图验证，不能以替身底图判 AC30 通过。
-7. 审计写入和基础恢复随各功能交付，21 提供查询，23 验证跨模块故障。除 01 外，其余运行、性能与容量结果均未执行，保持验收 checkbox 未勾选。
+7. 审计写入和基础恢复随各功能交付，21 提供查询，23 验证跨模块故障。运行、性能与容量结果以对应 issue 的 Answer 与 evidence 为准，未执行项不得勾选。
 8. 本次仅发布任务定义，不领取任务、不编写业务代码、不安装依赖、不修改原始 Word、不执行 Git commit/push。
 
 ## 完成条件

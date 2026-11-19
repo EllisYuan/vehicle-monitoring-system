@@ -21,7 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
  * <p>判定依据是有效通信时间 last_seen_at，而不是当前 TCP 连接：已启用、已鉴权且仍绑定的
  * 终端超过 180 秒无有效通信成立 OFFLINE；未接入、合法注销（last_logout_at 不早于
  * last_seen_at）、停用与解绑不参与判定。应用启动后的 180 秒宽限内不扫描，避免重启误报。
- * 有效通信到达（鉴权、心跳、终端应答、位置接收）在同一事务内恢复既有 ACTIVE；
+ * 有效通信到达（鉴权、心跳、终端应答、位置接收）在同一事务内恢复既有 ACTIVE，并写
+ * CONDITION 日志（operator 与 remark 为空），与人工处置的 HANDLE 日志分开记录；
  * 停用、解绑只标注 scope_changed_at，保留 ACTIVE 与最后发生时间。
  */
 @Service
@@ -82,6 +83,11 @@ public class OfflineAlarmService {
                     WHERE id = ? AND condition_state = 'ACTIVE'
                     """, at, at, alarmId);
             if (updated > 0) {
+                jdbc.update("""
+                        INSERT INTO alarm_handle_log (alarm_id, change_type, from_status, to_status,
+                            operator_id, remark, created_at)
+                        VALUES (?, 'CONDITION', 'ACTIVE', 'RECOVERED', NULL, NULL, ?)
+                        """, alarmId, at);
                 enqueue("alarm:recovered:" + alarmId, alarmId, at);
             }
         }
