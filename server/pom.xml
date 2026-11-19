@@ -143,7 +143,7 @@
                 <configuration>
                     <forkCount>1</forkCount>
                     <reuseForks>false</reuseForks>
-                    <argLine>-Xmx384m</argLine>
+                    <argLine>-Xmx512m</argLine>
                 </configuration>
             </plugin>
             <plugin>
