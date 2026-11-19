@@ -1,6 +1,6 @@
 # 24: 100 终端性能验收
 
-Status: claimed
+Status: blocked
 Labels: ready-for-agent
 Type: task
 Blocked by: 22
@@ -38,4 +38,20 @@ Blocked by: 22
 
 ## Answer
 
-尚未实施；AC32 未执行。
+**受阻（blocked）：两轮 30 分钟满规模测量未执行，未产生任何验收数字。**
+
+已就绪（前序检查点 + 本次补强）：
+- simulator 稳态负载（`ScenarioType.STEADY`、`ScenarioConfig.durationMs`、`PlanGenerator.steady`，100 终端 × 10 s × 30 min）。
+- perf harness（`HundredTerminalPerfHarnessTest`、`PerfContainers`、`web/perf/hundred-terminal-latency.mjs`）：真实 TCP 注册/鉴权/上报、真实 MySQL/Redis Testcontainers、真实浏览器登录与 `/ws/monitor` 订阅，延迟以浏览器渲染更新为准。
+- 本次补强：接入阶段（`scenario_start` 所在秒 + 60 s）与稳态段分开统计 p50/p90/p95/p99/max，AC4 只按稳态 p95 判定并同时报告接入段；缺失帧按接入/稳态分别计数；harness 每分钟记录宿主可用内存（<1.2 GB 警告、<0.8 GB 主动中止本轮），外部另有 `24-<round>-memory-watch.log`（每 120 s，含容器名）。
+- `mvnw.cmd -B -f <worktree>\pom.xml -DskipTests package` 四模块 BUILD SUCCESS（25.7 s）；默认 Playwright 清单仍为 `46 tests in 15 files`；无 migration、本次无产品代码改动。
+
+未执行原因：启动前内存采样 **0.85–2.78 GB FreePhysical（Available 0.86–2.78 GB），全部低于用户规定的 3.5 GB 门槛**；同时其他项目 ljf/park-leasing-platform 的 Maven/Testcontainers 在 10:39、10:43、10:49 连续并发运行（两个 worktree，容器 `thirsty_panini`、`eager_goldberg`、Ryuk），本机不是独占性能窗口。按用户指令停止，未启动任何 30 分钟测量。
+
+两轮实测、p95 与接入/稳态分段：**未执行**。失败/重传：**未产生**。前序旁证（非验收，不作为 AC 结果）：2026-11-19 09:55–10:17 中止轮 send 13,506（POSITION 13,206 + REGISTER/AUTH/HEARTBEAT 各 100），ACK 13,506 全部 `ACK_SUCCESS`，位置重传 0，`Deadlock found` 0；稳态进行 22 分 06 秒 / 30 分钟时被内存看门狗 kill。smoke 稳态缺失 0 帧。
+
+gap lock 修复：两个 `*AlarmParticipant.candidate()` 先无锁探测、仅当候选行存在时 `SELECT ... FOR UPDATE`，`catch (DuplicateKeyException)` 兜底保留。上述 22 分钟真实负载无死锁是修复有效性的旁证，但“修复后 30 分钟重跑”未完成。
+
+限制：不对 p95、吞吐、容量或稳定性作任何结论，不由本次或前序 smoke 外推容量；恢复后需重新记录环境并完成两轮测量。
+
+证据：`24-verification.md`、`evidence/24-package-rerun.log`、`evidence/24-playwright-list.log`、`evidence/24-preflight-environment.log`、`evidence/24-preflight-memory-watch.log`；前序原始数据在 `evidence/logs/24-1-simulator/`。

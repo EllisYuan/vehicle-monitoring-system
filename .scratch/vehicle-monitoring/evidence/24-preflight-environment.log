@@ -1,0 +1,45 @@
+# 任务 24 满规模测量启动前置检查记录（2026-11-19）
+# 结论：所有采样均低于 3.5 GB 启动门槛；其他项目并发运行 Maven/Testcontainers。
+# 按用户指令未启动 30 分钟测量；本文件仅记录现场，不含任何验收数字。
+
+[2026-11-19 10:39:01] 宿主可用内存 free=0.73 GB available=0.62 GB
+[2026-11-19 10:39:03] 其他项目 Maven 启动（ljf/park-leasing-platform，worktree wf_f0ea83eb-212-4）
+  PID 27392 java.exe -classpath ...apache-maven-3.9.12... -q -Dtest=Ticket23SchemaTest,EnterpriseMembersProfileChangesHttpTest,Ticket23MigrationUpgradeTest test
+  PID 15740 java.exe -Xmx512m -jar ...surefirebooter-20261119103903524_3.jar
+[2026-11-19 10:41:17] 竞争 Maven 结束；docker ps 无容器；free=2.73 GB
+[2026-11-19 10:43:10] 其他项目再次启动 Ticket23SchemaTest
+  PID 27224 java.exe -classpath ...apache-maven-3.9.12... -Dtest=Ticket23SchemaTest test
+  PID 32032 java.exe -Xmx512m -jar ...surefirebooter-20261119104310853_3.jar
+  容器 thirsty_panini:mysql:8.4 Up 35 seconds；testcontainers-ryuk-c104c504... Up 36 seconds
+[2026-11-19 10:43:38] free=1.27 GB
+[2026-11-19 10:46:56] free=2.06 GB；竞争 Maven 与 MySQL 已结束；仅剩 testcontainers-ryuk-118fdb18... 容器（其他项目）
+[2026-11-19 10:47:00] 检查时未发现来自本 worktree（agent-ab1377cbd6ba02a0f）的 Maven/java/容器进程。
+[2026-11-19 10:48:30] free=0.94 GB available=1.25 GB；vmmemWSL 1.42 GB；其他项目再次启动 Maven（两个 java 进程）
+[2026-11-19 10:49:05] 其他项目两个 worktree 并发运行：
+  PID 34520 java.exe ...ljf/park-leasing-platform/.claude/worktrees/wf_f0ea83eb-212-4/server ... -q -Dtest=EnterpriseMembersProfileChangesHttpTest test
+  PID 31196 java.exe ...ljf/park-leasing-platform/.claude/worktrees/wf_f0ea83eb-212-1/server ... -q test
+  PID 5644  java.exe -Xmx512m -jar ...surefirebooter-20261119104905479_3.jar
+  容器 eager_goldberg:mysql:8.4 Up 40 seconds；testcontainers-ryuk-7c971dbd... Up 41 seconds
+[2026-11-19 10:49:51] free=0.98 GB available=0.88 GB
+
+
+# 内存采样（FreePhysicalMemory；Available 来自 Get-Counter '\Memory\Available MBytes'）
+10:36:19 FreePhysicalGB=2.62 AvailableGB=2.60
+10:36:51 FreePhysicalGB=2.40 AvailableGB=2.39
+10:37:22 FreePhysicalGB=1.82 AvailableGB=1.81
+10:37:54 FreePhysicalGB=2.77 AvailableGB=2.75
+10:38:25 FreePhysicalGB=1.87 AvailableGB=1.81
+10:38:56 FreePhysicalGB=0.85 AvailableGB=0.86
+10:39:28 FreePhysicalGB=1.98 AvailableGB=1.88
+10:39:59 FreePhysicalGB=1.78 AvailableGB=1.76
+10:40:31 FreePhysicalGB=1.48 AvailableGB=1.43
+10:41:02 FreePhysicalGB=2.47 AvailableGB=2.61
+10:41:34 FreePhysicalGB=2.78 AvailableGB=2.78
+10:42:21 FreePhysicalGB=2.09 AvailableGB=2.08
+10:43:23 FreePhysicalGB=1.83 AvailableGB=1.82
+10:44:24 FreePhysicalGB=2.03 AvailableGB=2.04
+10:45:26 FreePhysicalGB=2.05 AvailableGB=2.14
+# 后续采样见 24-preflight-memory-watch.log
+
+# 判定：门槛 3.5 GB，全部采样低于门槛（最低 0.85 GB），且专用窗口被其他项目占用。
+# 未启动：mvnw.cmd ... -Dvms.perf=true -Dvms.perf.round=1 test（及 round=2）。
