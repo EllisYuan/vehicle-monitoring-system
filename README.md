@@ -1,10 +1,10 @@
 # 车辆监控系统
 
-面向单家道路货运企业、多车队的本科毕业设计。业务工程自任务 01 起建立，已完成登录与权限、车队/车辆/终端/司机档案与历史关联、终端接入与可靠位置、轨迹与分区保留、超速/离线/定位无效/围栏报警与处置、指令、订阅撤权、通知重试、监控统计、Excel 导出与审计查询等实现；01—13、15—21、23、25 已验收，14（GNSS/终端来源报警位）、22（可重复性仅单轮）、24（性能验收未完成）代码已合入但状态 `blocked`，26（真实天地图 key）与 27（真实 Linux 单机部署）未完成。
+面向单家道路货运企业、多车队的本科毕业设计。业务工程自任务 01 起建立，已完成登录与权限、车队/车辆/终端/司机档案与历史关联、终端接入与可靠位置、轨迹与分区保留、超速/离线/定位无效/围栏报警与处置、指令、订阅撤权、通知重试、监控统计、Excel 导出与审计查询等实现；01—21、23、25 已验收，14 的终端报告报警与无效点围栏补验见[本轮记录](.scratch/vehicle-monitoring/evidence/14-verification.md#2026-11-20-集成复验基线-7ff0db2)；22（可重复性仅单轮）、24（性能验收未完成）代码已合入但状态 `blocked`，26（真实天地图 key）与 27（真实 Linux 单机部署）未完成。
 
 ## 阅读入口
 
-- [开发任务索引](.scratch/vehicle-monitoring/README.md)：用户已批准的 27 个独立 tickets、直接依赖和验收分工；01—13、15—21、23、25 `resolved`，14、22、24、26 `blocked`，27 未完成。
+- [开发任务索引](.scratch/vehicle-monitoring/README.md)：用户已批准的 27 个独立 tickets、直接依赖和验收分工；01—21、23、25 `resolved`，22、24、26 `blocked`，27 未完成。
 - [车辆监控系统 Spec](.scratch/vehicle-monitoring/spec.md)：用户故事、实现决策与验收场景。
 - [任务 01 验证记录](.scratch/vehicle-monitoring/evidence/01-verification.md)、[任务 02 验证记录](.scratch/vehicle-monitoring/evidence/02-verification.md)、[任务 03 验证记录](.scratch/vehicle-monitoring/evidence/03-verification.md)：已执行、未执行与已知偏差。
 

@@ -11,6 +11,7 @@ import com.vms.protocol.BodyProperties;
 import com.vms.protocol.Frame;
 import com.vms.protocol.FrameCodec;
 import com.vms.protocol.MessageHeader;
+import com.vms.protocol.PositionBatch;
 import com.vms.protocol.PositionReport;
 import com.vms.protocol.TerminalAuthentication;
 import com.vms.protocol.TerminalGeneralResponse;
@@ -501,6 +502,154 @@ class OfflineAndPositionAlarmFlowTest {
             assertThat(jdbc.queryForObject("SELECT condition_state FROM alarm WHERE id = ?", String.class, alarmId))
                     .isEqualTo("ACTIVE");
         }
+    }
+
+    @Test
+    @Order(9)
+    void terminalFlagsUseVerifiedReasonsAndNeverMergeWithPlatformAlarms() throws Exception {
+        String token = login();
+        BoundTerminal bound = boundTerminal(token);
+        LocalDateTime start = LocalDateTime.now(clock).withNano(0);
+        try (TerminalClient terminal = authenticated(bound)) {
+            // 表 25，DWORD 80 00 00 77：0/1/2/4/5/6 同时上报，bit 31 不在本子集。
+            PositionReport first = flagged(start, 0x8000_0077L, false);
+            sendAndExpectSuccess(terminal, 1, first);
+            sendAndExpectSuccess(terminal, 2, first); // 相同报文重传
+            assertThat(jdbc.queryForList("SELECT alarm_type FROM alarm WHERE vehicle_id=? AND source='TERMINAL'",
+                    String.class, bound.vehicleId())).containsExactlyInAnyOrder("EMERGENCY", "OVERSPEED", "FATIGUE_DRIVING",
+                    "GNSS_MODULE_FAULT", "GNSS_ANTENNA_DISCONNECTED", "GNSS_ANTENNA_SHORT");
+            assertThat(jdbc.queryForObject("SELECT alarm_flag FROM track_point WHERE terminal_id=? AND gps_time=?",
+                    Long.class, bound.terminalId(), start)).isEqualTo(0x8000_0077L);
+            // 三个有效超速点另成立平台超速；终端持续置位不逐点新建报警。
+            for (int i = 1; i <= 3; i++) {
+                clock.advance(Duration.ofSeconds(3));
+                sendAndExpectSuccess(terminal, 2 + i, flagged(start.plusSeconds(3L * i), 0x77, true));
+            }
+            // 仅保留 bit 5，其余持续位各自恢复；平台速度依然超限。
+            clock.advance(Duration.ofSeconds(3));
+            sendAndExpectSuccess(terminal, 6, flagged(start.plusSeconds(12), 0x20, true));
+            assertThat(jdbc.queryForList("SELECT alarm_type FROM alarm WHERE vehicle_id=? AND source='TERMINAL'"
+                    + " AND condition_state='RECOVERED' AND last_time=? AND recovered_at=? AND handle_status='PENDING'",
+                    String.class, bound.vehicleId(), start.plusSeconds(9), start.plusSeconds(12)))
+                    .containsExactlyInAnyOrder("OVERSPEED", "FATIGUE_DRIVING", "GNSS_MODULE_FAULT", "GNSS_ANTENNA_SHORT");
+            assertThat(jdbc.queryForList("SELECT source FROM alarm WHERE vehicle_id=? AND alarm_type='OVERSPEED'"
+                    + " AND condition_state='ACTIVE'", String.class, bound.vehicleId())).containsExactly("PLATFORM");
+            assertThat(jdbc.queryForList("SELECT alarm_type FROM alarm WHERE vehicle_id=? AND source='TERMINAL'"
+                    + " AND condition_state='ACTIVE'", String.class, bound.vehicleId())).containsExactly("GNSS_ANTENNA_DISCONNECTED");
+            long emergency = jdbc.queryForObject("SELECT id FROM alarm WHERE vehicle_id=? AND alarm_type='EMERGENCY'"
+                    + " AND condition_state='EVENT' AND recovered_at IS NULL", Long.class, bound.vehicleId());
+            assertThat(alarmDetail(token, emergency).path("source").asText()).isEqualTo("TERMINAL");
+            assertThat(alarmCount(bound)).isEqualTo(7);
+            assertThat(jdbc.queryForObject("SELECT count(*) FROM notification_outbox o JOIN alarm a ON a.id=o.aggregate_id"
+                    + " WHERE a.vehicle_id=? AND a.source='TERMINAL' AND o.event_type='ALARM_EVENT'",
+                    Long.class, bound.vehicleId())).isEqualTo(10); // 6 created + 4 recovered
+            assertThat(jdbc.queryForObject("SELECT count(*) FROM alarm_handle_log l JOIN alarm a ON a.id=l.alarm_id"
+                    + " WHERE a.vehicle_id=? AND a.source='TERMINAL' AND l.change_type='CONDITION'",
+                    Long.class, bound.vehicleId())).isEqualTo(4);
+        }
+    }
+
+    @Test
+    @Order(10)
+    void historicalFlagsCannotClearLiveFaultAndFailedNotificationDoesNotConsumeAnEdge() throws Exception {
+        BoundTerminal bound = boundTerminal(login());
+        LocalDateTime start = LocalDateTime.now(clock).withNano(0);
+        try (TerminalClient terminal = authenticated(bound)) {
+            clock.advance(Duration.ofSeconds(5));
+            sendAndExpectSuccess(terminal, 1, flagged(start.plusSeconds(5), 0x11, false));
+            // 第一条是无效坐标，没有 vehicle_last_position；仍不能被迟到的零值恢复。
+            sendAndExpectSuccess(terminal, 2, flagged(start.plusSeconds(1), 0, true));
+            assertThat(jdbc.queryForObject("SELECT report_type FROM track_point WHERE terminal_id=? AND gps_time=?",
+                    String.class, bound.terminalId(), start.plusSeconds(1))).isEqualTo("HISTORY");
+            assertThat(jdbc.queryForObject("SELECT count(*) FROM vehicle_last_position WHERE vehicle_id=?",
+                    Long.class, bound.vehicleId())).isZero();
+            clock.advance(Duration.ofSeconds(1));
+            terminal.send(0x0704, 3, new PositionBatch(PositionBatch.TYPE_BLIND_AREA,
+                    List.of(flagged(start.plusSeconds(6), 0, true))).encode());
+            assertThat(TerminalGeneralResponse.parse(terminal.receive().body()).result()).isZero();
+            assertThat(jdbc.queryForObject("SELECT report_type FROM track_point WHERE terminal_id=? AND gps_time=?",
+                    String.class, bound.terminalId(), start.plusSeconds(6))).isEqualTo("HISTORY");
+            assertThat(jdbc.queryForObject("SELECT condition_state FROM alarm WHERE vehicle_id=?"
+                    + " AND alarm_type='GNSS_MODULE_FAULT'", String.class, bound.vehicleId())).isEqualTo("ACTIVE");
+        }
+        long id = jdbc.queryForObject("SELECT id FROM alarm WHERE vehicle_id=? AND alarm_type='GNSS_MODULE_FAULT'",
+                Long.class, bound.vehicleId());
+        jdbc.execute("ALTER TABLE notification_outbox ADD CONSTRAINT fail_terminal_recovery CHECK "
+                + "(event_id <> 'alarm:recovered:" + id + "')");
+        clock.advance(Duration.ofSeconds(2));
+        PositionReport cleared = flagged(start.plusSeconds(8), 0x8000_0000L, true);
+        try (TerminalClient terminal = authenticated(bound)) {
+            terminal.send(0x0200, 1, cleared.encode());
+            assertThat(terminal.socket.getInputStream().read()).as("回滚时不回成功 ACK").isEqualTo(-1);
+        } finally {
+            jdbc.execute("ALTER TABLE notification_outbox DROP CHECK fail_terminal_recovery");
+        }
+        assertThat(jdbc.queryForObject("SELECT count(*) FROM track_point WHERE terminal_id=? AND gps_time=?",
+                Long.class, bound.terminalId(), cleared.time())).isZero();
+        assertThat(jdbc.queryForObject("SELECT condition_state FROM alarm WHERE id=?", String.class, id)).isEqualTo("ACTIVE");
+        try (TerminalClient retry = authenticated(bound)) {
+            sendAndExpectSuccess(retry, 1, cleared);
+            assertThat(jdbc.queryForObject("SELECT recovered_at FROM alarm WHERE id=?", LocalDateTime.class, id))
+                    .isEqualTo(cleared.time());
+            clock.advance(Duration.ofSeconds(1));
+            sendAndExpectSuccess(retry, 2, flagged(start.plusSeconds(9), 0x11, true));
+        }
+        assertThat(jdbc.queryForList("SELECT alarm_type FROM alarm WHERE vehicle_id=? AND source='TERMINAL'"
+                + " ORDER BY id", String.class, bound.vehicleId()))
+                .containsExactlyInAnyOrder("EMERGENCY", "EMERGENCY", "GNSS_MODULE_FAULT", "GNSS_MODULE_FAULT");
+    }
+
+    @Test
+    @Order(11)
+    void individualAlarmDwordsProduceOnlyTheirTable25Reason() throws Exception {
+        BoundTerminal bound = boundTerminal(login());
+        // 直接给 0x0200 正文的前四字节，不由生产映射或 PositionReport.encode 推算测试的报警位。
+        Map<Integer, String> oneHot = Map.of(0x01, "EMERGENCY", 0x02, "OVERSPEED", 0x04, "FATIGUE_DRIVING",
+                0x10, "GNSS_MODULE_FAULT", 0x20, "GNSS_ANTENNA_DISCONNECTED", 0x40, "GNSS_ANTENNA_SHORT");
+        try (TerminalClient terminal = authenticated(bound)) {
+            int serial = 10;
+            for (var entry : oneHot.entrySet()) {
+                LocalDateTime time = LocalDateTime.now(clock).withNano(0);
+                byte[] body = position(time, 0, 116.10).encode();
+                body[3] = entry.getKey().byteValue();
+                terminal.send(0x0200, serial++, body);
+                assertThat(TerminalGeneralResponse.parse(terminal.receive().body()).result()).isZero();
+                assertThat(jdbc.queryForList("SELECT alarm_type FROM alarm WHERE vehicle_id=? AND source='TERMINAL'"
+                        + " AND start_time=?", String.class, bound.vehicleId(), time)).containsExactly(entry.getValue());
+                clock.advance(Duration.ofSeconds(1));
+            }
+        }
+    }
+
+    @Test
+    @Order(12)
+    void rebindingSameDeviceDoesNotCreateAnotherFaultOrEmergency() throws Exception {
+        String token = login();
+        BoundTerminal bound = boundTerminal(token);
+        try (TerminalClient terminal = authenticated(bound)) {
+            sendAndExpectSuccess(terminal, 1, flagged(LocalDateTime.now(clock), 0x11, false));
+        }
+        clock.advance(Duration.ofSeconds(2));
+        String bindingPath = "/api/v1/vehicles/" + bound.vehicleId() + "/terminal";
+        mvc.perform(put(bindingPath).header("satoken", token).contentType(MediaType.APPLICATION_JSON).content("{}"))
+                .andExpect(status().isOk());
+        clock.advance(Duration.ofSeconds(2));
+        mvc.perform(put(bindingPath).header("satoken", token).contentType(MediaType.APPLICATION_JSON)
+                .content(json.writeValueAsString(Map.of("terminalId", bound.terminalId())))).andExpect(status().isOk());
+        try (TerminalClient terminal = authenticated(bound)) {
+            sendAndExpectSuccess(terminal, 1, flagged(LocalDateTime.now(clock), 0x11, true));
+            assertThat(alarmCount(bound)).isEqualTo(2);
+            clock.advance(Duration.ofSeconds(1));
+            sendAndExpectSuccess(terminal, 2, flagged(LocalDateTime.now(clock), 0, true));
+        }
+        assertThat(jdbc.queryForList("SELECT condition_state FROM alarm WHERE vehicle_id=? AND alarm_type='GNSS_MODULE_FAULT'",
+                String.class, bound.vehicleId())).containsExactly("RECOVERED");
+        assertThat(jdbc.queryForList("SELECT condition_state FROM alarm WHERE vehicle_id=? AND alarm_type='EMERGENCY'",
+                String.class, bound.vehicleId())).containsExactly("EVENT");
+    }
+
+    private PositionReport flagged(LocalDateTime time, long flags, boolean valid) {
+        return new PositionReport(flags, valid ? 3 : 1, 39.908, 116.10, 10, 900, 90, time, List.of());
     }
 
     private long activateOfflineAlarm(BoundTerminal bound) throws Exception {

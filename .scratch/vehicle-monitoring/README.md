@@ -4,13 +4,13 @@
 
 所有任务初始为 `Status: open`、`Labels: ready-for-agent`。标签表示任务定义可领取，不表示依赖已完成；领取前检查全部 `Blocked by` 指向任务均为 `resolved`。执行时按仓库规则改为 `claimed`，记录实际结果后再 `resolved`；外部条件未满足时标 `blocked` 并说明原因。
 
-当前进度（2026-11-19，集成分支 `integration/tickets-08-27`）：01—13、15—21、23、25 状态 `resolved` 并已合入；14、22、24 状态 `blocked` 但代码已合入（14 缺 GNSS/终端来源报警位的可核对映射，22 的可重复性仅有单轮证据，24 的 100 终端性能验收未完成、分支仅含候选表死锁修复）；26 因无真实天地图 key、27 因缺真实 Linux 单机环境与 key 尚未完成。各票的验收证据与已知缺口见对应 issue 的 Answer 与 [evidence](evidence/) 目录；blocked 项不按完成计。
+当前进度（2026-11-20，集成分支 `integration/tickets-08-27`）：01—13、15—21、23、25 已合入并 `resolved`；14 已完成补验并 `resolved`（[六个位的出处](evidence/14-jt808-alarm-bits.md)、[最终回归](evidence/14-followup-final.log)）。22、24 状态 `blocked` 但代码已合入（22 的可重复性仅有单轮证据，24 的 100 终端性能验收未完成、分支仅含候选表死锁修复）；26 因无真实天地图 key、27 因缺真实 Linux 单机环境与 key 尚未完成。各票的验收证据与已知缺口见对应 issue 的 Answer 与 [evidence](evidence/) 目录；blocked 项不按完成计。
 
 `main` 基线回归已执行：`mvnw.cmd -B "-Dvms.browser-tests=true" test` 得 `Tests run: 58, Failures: 0, Errors: 0, Skipped: 0`、BUILD SUCCESS，BrowserFlowTest 内 14 个 Chromium 场景全部通过，结束后无 Testcontainers/Ryuk 残留（[日志](evidence/baseline-main-test.log)）。环境前置：Docker Desktop 需运行、Playwright Chromium 需为 1.58.1 对应的 1208 构建。
 
 04 合入前最终回归：`Tests run: 71, Failures: 0, Errors: 0, Skipped: 0`、BUILD SUCCESS，Playwright 16 项通过。
 
-下一步：26、27 依赖外部条件（真实天地图 key、真实 Linux 单机）；14 的 GNSS/终端来源报警位需先确认位语义映射；22 需补同 seed 跨运行比对；24 需在宿主资源满足条件后重跑 100 终端性能验收。
+下一步：26、27 依赖外部条件（真实天地图 key、真实 Linux 单机）；22 需补同 seed 跨运行比对；24 需在宿主资源满足条件后重跑 100 终端性能验收。
 
 ## 任务索引
 

@@ -3,7 +3,7 @@
 - 日期：2026-11-16
 - 分支：feat/ticket-14-offline-alarms
 - 基线：`integration/tickets-08-27` @ `4e3cd32`；先合入 `feat/ticket-12-overspeed-alarm` @ `c4d40c8`（合并提交 `f6b7f56`，未修改任务12内容）。完成前再合并 `integration/tickets-08-27` @ `7412c1f`（合并提交 `11b80c5`）；该次合并只含任务09证据/issue 文档更正，无代码差异。
-- 结论：9 条 AC 中 8 条通过；GNSS 与终端来源报警位因缺少已核对映射标为 blocked，未编造。新增迁移 V12；未占用、未修改其他迁移。
+- 11-16 首轮结果：7 条通过、1 条部分通过（围栏未复验）、1 条 blocked（报警位）；以下首轮记录按当时基线保留。当前状态见文末集成复验及 ticket 14。
 
 ## 环境
 
@@ -96,7 +96,7 @@ mvnw.cmd -B -DskipTests package
 - 合并后复跑：同一锁内执行同一 8 类命令，**61/61** 通过、BUILD SUCCESS（`14-postmerge2.log`）：AlarmHandling 6、Offline 8、Overspeed 10、SchemaUpgrade 2、BatchBackfill 7、PositionQuality 8、Telemetry 10、TrackRetention 10。日志确认 `Successfully applied 13 migrations ... now at version v14`，且 Offline 用例在含 V13 的实际 schema 上通过，证明约束并集生效。
 - 日志中的 `ck_fail_outbox_13_9`（任务13 注入）与 `CommunicationsException`（任务07 断链用例）为测试故意制造的失败路径，对应测试类均通过。
 
-## AC 状态
+## 2026-11-16 首轮 AC 状态（非当前集成状态）
 
 | # | Acceptance criterion | 状态 | 证据 |
 | --- | --- | --- | --- |
@@ -110,7 +110,7 @@ mvnw.cmd -B -DskipTests package
 | 8 | 报警与 state、outbox 同事务，ACK 时序正确 | 通过 | 测试类第 2 项：报警写入失败时位置/候选/outbox 全回滚、连接关闭且无成功 ACK；重试成功 |
 | 9 | 最小 CLI 场景记录失联、恢复、注销与重启宽限 | 通过 | `14-cli-offline.log` 的 `ALL CHECKS PASSED`、SQL 断言与报警汇总 |
 
-## 边界与未执行
+## 2026-11-16 首轮边界与未执行
 
 - GNSS 异常与终端来源报警位：只保留原始 `alarm_flag`，未实现任何位映射；ticket 05 的独立 fixture 没有报警位语义样例，`protocol` 模块也没有映射表。该 AC 标 blocked，不以自造位语义冒充。
 - 围栏：任务15 未实现；本票只保证无效点不进入实时状态路径，未执行围栏计算断言，也未修改围栏相关代码。
@@ -120,3 +120,33 @@ mvnw.cmd -B -DskipTests package
 - 本票未改动 `web/`（相对集成分支净差异无前端文件），合并后未执行前端 typecheck/lint。
 - CLI 脚本调用锁时以脚本路径作为命令参数（Maven 命令仍以 worktree `mvnw.cmd` 为首参）；锁实现为通用命令包装，脚本结束后自动释放。
 - 本轮 Testcontainers/Ryuk 在回归结束后已核对无残留；CLI 脚本在 finally 中只删除 `t14-mysql`/`t14-redis`，未清理其他 agent 的容器。
+
+## 2026-11-20 集成复验（基线 `7ff0db2`）
+
+### 无效点不会确认围栏越界
+
+- 既有证据：[任务 15 Surefire 记录](15-geofence-surefire.log) 中 `GeofenceJudgementFlowTest` 6/6 通过。`firstValidRealtimePoint...` 在无效点后检查了圆和多边形的 `last_point_time`；其原有的零事件断言在无效点**之前**，不是当时直接检查的结果。无效点的输入是 `status_flag=1`（bit 1 为 0），数据库字段是 `locate_state='INVALID'`，不是 `locate_state=1`。
+- 本轮补强 `threeConsecutivePointsConfirmCrossingAndProduceOneEventPushedOverWebSocket`：真实 `0x0200` 先建立圆内基线，再于 +10、+20 秒报有效圆外点。+25 秒的无效圆外点收到成功 ACK 后，同车围栏事件数仍是 0，`inside_state`、`candidate_state`、`consecutive_count=2`、`last_point_time` 和 `fence_version` 不变。+30 秒有效圆外点才生成唯一 `GEOFENCE_LEAVE`，同时校验 outbox、WebSocket，再以三个有效圆内点确认 `GEOFENCE_ENTER`。
+- 复现命令（全局验证锁内）：`mvnw.cmd -B -pl server -am "-Dtest=GeofenceJudgementFlowTest#threeConsecutivePointsConfirmCrossingAndProduceOneEventPushedOverWebSocket" -Dsurefire.failIfNoSpecifiedTests=false test`。JDK 21.0.9、真实 Testcontainers MySQL/Redis，10:15:29 +08:00 结束：`Tests run: 1, Failures: 0, Errors: 0, Skipped: 0`，`BUILD SUCCESS`。运行前后对照无本轮容器残留。
+- 地图/快照断言见 `OfflineAndPositionAlarmFlowTest#threeInvalidRealtimePointsCreatePositionInvalidAlarmAndThreeValidPointsRecover`；超速成立及恢复断言见 `OverspeedAlarmFlowTest#invalidFixPointsDoNotAdvanceConfirmationOrRecovery`。两者已有集成日志 [14-postmerge2.log](14-postmerge2.log)。未改围栏业务实现。
+
+### 终端报告报警位
+
+[正文与第 1 号修改单查源记录](14-jt808-alarm-bits.md)给出印刷页 / PDF 页、每个位的原文、官方入口及复核文件 SHA-256。协议写的是终端上报和清位条件；下面的 `alarm_type`、去重和状态机是项目实现，不是标准字段。
+
+| `track_point.alarm_flag`（DWORD，按数值） | `alarm.alarm_type`（均为 `source='TERMINAL'`） | 上报后记录 |
+|---|---|---|
+| bit 0 / `0x01` | `EMERGENCY` | 首次置位或观察到 0→1 创建 `EVENT`。持续置位不重复；清零不写 `recovered_at`、不代替人工处置。若没有观察到两次触发之间的清位，只能识别一次置位沿。 |
+| bit 1 / `0x02` | `OVERSPEED` | 置位创建 `ACTIVE`，置位延续更新 `last_time`，该设备随后清位恢复。与 `PLATFORM/OVERSPEED` 各自成立/恢复。 |
+| bit 2 / `0x04` | `FATIGUE_DRIVING` | 同上；不是平台计算的疲劳驾驶。 |
+| bit 4 / `0x10` | `GNSS_MODULE_FAULT` | 同上；不由 `status_flag` 的定位有效位推断。 |
+| bit 5 / `0x20` | `GNSS_ANTENNA_DISCONNECTED` | 同上；“未接或被剪断”是一个位，不区分两种原因。 |
+| bit 6 / `0x40` | `GNSS_ANTENNA_SHORT` | 同上；清除本位不影响仍置位的其他原因。 |
+
+- `track_point.alarm_flag` 保留原 DWORD；其余 26 位不派生事件。未核实的位义继续 blocked，不把未支持的位当成 `false` 写入其他事件。标准其他已定义报警/预警、`0x8203`、`0x0205`、真实终端互通均不在本次验收范围。
+- V15 新增 `terminal.terminal_alarm_flags` 与 `terminal.terminal_alarm_gps_time`；终端行锁、车辆行锁与事件的 ACTIVE 唯一键沿用当前事务。同一设备绑定回同车后，实际仍置位的故障沿用旧 `alarm.id`；另一台设备的清位不能替旧设备证明恢复。`condition_state` 的变化与 `handle_status` 独立。没有改已执行的 V1–V14。
+- `0x0200` 和正常批量 `0x0704` 的实时点才观察报警；有效、未定位点都可报告终端标志。`0x0704` 显式盲区补报、已结束的绑定、未来点、过旧点、迟于已处理水位的定位均不改变当前报警。去重/冲突检查在更新之前；失败时位置、报警位水位、`alarm`、`alarm_handle_log`、`notification_outbox` 一并回滚。
+- Red（10:28:27 +08:00）：真实 TCP 用例 `OfflineAndPositionAlarmFlowTest#terminalFlagsUseVerifiedReasonsAndNeverMergeWithPlatformAlarms`，首次上报 `80 00 00 77` 并重传；原实现实得 `TERMINAL` 事件列表 `[]`，`Tests run: 1, Failures: 1, Errors: 0`。随后同一用例及 `SchemaUpgradeTest` 2 项通过（10:36:50，3/3）。[首轮回归](14-followup-regression.log) 43/43；这是 review 修订前的中间结果。
+- 最终回归中的新增 TCP 场景：`individualAlarmDwordsProduceOnlyTheirTable25Reason` 直接写入单位置 1 的 DWORD 字节，逐个对照六个 `alarm_type`；混合位用例验证多个同时置位、重传、公开详情的来源和各自清位。`historicalFlagsCannotClearLiveFaultAndFailedNotificationDoesNotConsumeAnEdge` 在无效点之后注入迟到的有效清位报文和定位时间等于接收时间的盲区补报，再令恢复 outbox 写失败，检查 ACK、回滚、重试和下一异常周期。`rebindingSameDeviceDoesNotCreateAnotherFaultOrEmergency` 在同一车辆与同一设备解绑再绑定后复核不会重复计数。
+- 复现最终回归（JDK 21.0.9、Ryuk 启用、`forkCount=1`；从仓库根在全局验证锁内执行）：`mvnw.cmd -B -pl server -am "-Dtest=OfflineAndPositionAlarmFlowTest,GeofenceJudgementFlowTest,OverspeedAlarmFlowTest,BatchBackfillFlowTest,PositionQualityFlowTest,SchemaUpgradeTest" -Dsurefire.failIfNoSpecifiedTests=false test`。该白名单不含 ticket 22、24 或 simulator，未启动综合演示或性能验收。
+- [最终日志](14-followup-final.log)：10:54:33 +08:00 结束，六类分别 12、10、6、2、7、8 项，合计 **45/45，0 failures、0 errors、0 skipped，BUILD SUCCESS**。其中 `fail_terminal_recovery` 的异常是预期的事务回滚注入。空库 14 个 migration、自 V6 增量 8 个均到 V15。结束后按容器 label 对照，只有测试前已有的两个已退出容器，无本轮 MySQL、Redis 或 Ryuk 残留。未运行全仓/浏览器套件。结论：本次两项通过，ticket 14 合计 9/9；不据此声称支持表 25 全部位或真实终端互通。

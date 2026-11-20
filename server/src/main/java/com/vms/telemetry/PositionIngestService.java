@@ -2,6 +2,7 @@ package com.vms.telemetry;
 
 import com.vms.access.TerminalConnectionRegistry;
 import com.vms.alarm.OfflineAlarmService;
+import com.vms.alarm.TerminalReportedAlarms;
 import com.vms.protocol.PositionBatch;
 import com.vms.protocol.PositionReport;
 import com.vms.track.TrackRetentionPolicy;
@@ -28,11 +29,14 @@ public class PositionIngestService {
     private final List<PositionQualityParticipant> qualityParticipants;
     private final TrackRetentionPolicy retention;
     private final OfflineAlarmService offlineAlarms;
+    private final TerminalReportedAlarms terminalAlarms;
 
     public PositionIngestService(JdbcTemplate jdbc, TerminalConnectionRegistry connections,
                                  List<PositionStateParticipant> participants,
                                  List<PositionQualityParticipant> qualityParticipants,
-                                 TrackRetentionPolicy retention, OfflineAlarmService offlineAlarms) {
+                                 TrackRetentionPolicy retention, OfflineAlarmService offlineAlarms,
+                                 TerminalReportedAlarms terminalAlarms) {
+        this.terminalAlarms = terminalAlarms;
         this.jdbc = jdbc;
         this.connections = connections;
         this.participants = participants;
@@ -62,7 +66,7 @@ public class PositionIngestService {
                     "INVALID_POSITION_FIELDS", body);
             return;
         }
-        ingest(session.terminalId(), "ENABLED".equals(terminalStatus), report, receivedAt, body);
+        ingest(session.terminalId(), "ENABLED".equals(terminalStatus), report, receivedAt, body, false);
     }
 
     /**
@@ -75,7 +79,8 @@ public class PositionIngestService {
         String terminalStatus = lockTerminal(session);
         boolean usable = "ENABLED".equals(terminalStatus);
         for (PositionReport report : batch.items()) {
-            ingest(session.terminalId(), usable, report, receivedAt, report.encode());
+            ingest(session.terminalId(), usable, report, receivedAt, report.encode(),
+                    batch.dataType() == PositionBatch.TYPE_BLIND_AREA);
         }
     }
 
@@ -89,7 +94,7 @@ public class PositionIngestService {
     }
 
     private void ingest(long terminalId, boolean terminalUsable, PositionReport report, LocalDateTime receivedAt,
-                        byte[] rawBody) {
+                        byte[] rawBody, boolean explicitBackfill) {
         // 保留期外按 11 的保留策略留拒绝摘要，同时按 08 的质量语义记受限异常；不落轨迹、不推进快照。
         if (!retention.isWithinTrackWindow(report.time())) {
             // 保留拒绝摘要属运营诊断，沿用 11 的当前绑定语义；不写入轨迹历史，也不参与历史归属。
@@ -114,11 +119,17 @@ public class PositionIngestService {
                     "FUTURE_BEYOND_TOLERANCE", rawBody);
             return;
         }
-        List<LocalDateTime> previous = jdbc.queryForList(
-                "SELECT gps_time FROM vehicle_last_position WHERE vehicle_id = ?", LocalDateTime.class, vehicleId);
-        // 实时候选：时差在 [0,60] 秒且新于已处理水位；容差内未来与过旧点只补历史。
-        boolean realtime = ageMillis >= 0 && ageMillis <= REALTIME_MAX_AGE_MILLIS
-                && (previous.isEmpty() || report.time().isAfter(previous.getFirst()));
+        // 快照只保存有效坐标；另比较本终端最新实时观察时间，包括未定位报文。
+        // 已结束绑定区间及显式盲区补报即使刚刚到达，也不能驱动当前状态。
+        boolean realtime = !explicitBackfill && ageMillis >= 0 && ageMillis <= REALTIME_MAX_AGE_MILLIS
+                && Boolean.TRUE.equals(jdbc.queryForObject("""
+                        SELECT EXISTS (SELECT 1 FROM terminal t
+                            JOIN terminal_vehicle_binding b ON b.current_terminal_id=t.id
+                            WHERE t.id=? AND b.vehicle_id=? AND b.effective_from<=?
+                              AND (t.terminal_alarm_gps_time IS NULL OR t.terminal_alarm_gps_time<?)
+                              AND NOT EXISTS (SELECT 1 FROM vehicle_last_position p
+                                  WHERE p.vehicle_id=b.vehicle_id AND p.gps_time>=?))
+                        """, Boolean.class, terminalId, vehicleId, report.time(), report.time(), report.time()));
         byte[] canonical = report.encode();
         String payloadHash = hash(canonical);
         try {
@@ -138,6 +149,7 @@ public class PositionIngestService {
             return;
         }
         if (realtime) {
+            terminalAlarms.observe(terminalId, vehicleId, fleetId, report, receivedAt);
             if (report.fixValid()) {
                 applyRealtimeState(terminalId, vehicleId, fleetId, report, receivedAt);
             } else {

@@ -30,6 +30,8 @@ public class OfflineAlarmService {
 
     static final String ALARM_TYPE = "OFFLINE";
     static final String SOURCE = "PLATFORM";
+    private static final String MONITORED_SCOPE = " AND condition_state = 'ACTIVE'"
+            + " AND (source = 'TERMINAL' OR alarm_type IN ('OFFLINE', 'POSITION_INVALID'))";
     static final long OFFLINE_SECONDS = 180;
 
     private final JdbcTemplate jdbc;
@@ -105,14 +107,12 @@ public class OfflineAlarmService {
     public void markScopeChangedByVehicleTerminal(long vehicleId, long terminalId, LocalDateTime at) {
         jdbc.update("""
                 UPDATE alarm SET scope_changed_at = ?, updated_at = ?
-                WHERE vehicle_id = ? AND terminal_id = ? AND condition_state = 'ACTIVE'
-                  AND alarm_type IN ('OFFLINE', 'POSITION_INVALID')
-                """, at, at, vehicleId, terminalId);
+                WHERE vehicle_id = ? AND terminal_id = ?
+                """ + MONITORED_SCOPE, at, at, vehicleId, terminalId);
     }
 
     private void markScopeChanged(String filter, long id, LocalDateTime at) {
-        jdbc.update("UPDATE alarm SET scope_changed_at = ?, updated_at = ? WHERE " + filter
-                        + " AND condition_state = 'ACTIVE' AND alarm_type IN ('OFFLINE', 'POSITION_INVALID')",
+        jdbc.update("UPDATE alarm SET scope_changed_at = ?, updated_at = ? WHERE " + filter + MONITORED_SCOPE,
                 at, at, id);
     }
 

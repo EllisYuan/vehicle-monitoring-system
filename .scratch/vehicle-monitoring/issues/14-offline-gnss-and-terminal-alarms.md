@@ -1,6 +1,6 @@
 # 14: 离线、定位与终端来源报警
 
-Status: blocked
+Status: resolved
 Labels: ready-for-agent
 Type: task
 Blocked by: 12
@@ -21,8 +21,8 @@ Blocked by: 12
 - [x] 应用启动 180 秒宽限
 - [x] 有效重连恢复离线报警
 - [x] 连续 3 个无效点成立、3 个有效点恢复，坐标 NULL 有证据
-- [ ] 无效点不进地图、超速成立/恢复与围栏（地图与超速部分通过；围栏属 15，尚未实现，未执行围栏断言）
-- [ ] GNSS 与终端来源仅映射已核对位，来源保留，未支持不编（blocked：无可核对的报警位语义）
+- [x] 无效点不进地图、超速成立/恢复与围栏（集成复验：已有两个有效越界点时再报无效点，围栏候选不变且无事件；下一个有效点才触发离开）
+- [x] GNSS 与终端来源只映射表 25 已核对的 bit 0/1/2/4/5/6；未支持位仅原值留存，未知语义仍 blocked，不宣称全量兼容
 - [x] 报警与 state、outbox 同事务，ACK 时序正确
 - [x] 最小 CLI 场景记录失联、恢复、注销与重启宽限
 
@@ -40,7 +40,16 @@ Blocked by: 12
 
 ## Answer
 
-Status: **blocked**。9 条 AC 中 7 条通过并验证、1 条部分通过（无效点地图与超速部分已验，围栏属任务15）、1 条阻塞；GNSS/终端来源报警位因仓库内无可核对的位语义映射（`PositionReport` 仅有原始 `alarmFlag`，`protocol` 与 ticket 05 fixture 均无映射表），该条保持阻塞，未实现、未编造。核心实现已完成并通过真实 TCP、Testcontainers 与独立 CLI 验证，已合入最新集成分支（合并提交 `bf25ecd`）；离线与定位无效功能可用，下游 22/23 可依赖。GNSS 条待映射来源确认后另票补齐。
+### 2026-11-20 补验：resolved（9/9）
+
+最终定向回归 **45/45，0 skipped**，见[运行日志](../evidence/14-followup-final.log)。
+
+- [标准原页、位号与清位条件](../evidence/14-jt808-alarm-bits.md)：表 25 区分报警后待应答清位（bit 0）与条件解除清位（bit 1、2、4、5、6）；第 1 号修改单不改表 25。V15 与 `TerminalReportedAlarms` 只实现这六个位。
+- [集成复验、命令与测试边界](../evidence/14-verification.md#2026-11-20-集成复验基线-7ff0db2)：包含逐位独立字节、同名来源隔离、显式补传/乱序、回滚重试、重绑、无效点不确认围栏的直接断言。未开启 22、24，未修改论文或真实环境。
+
+### 首轮验收（2026-11-16，历史状态）
+
+当时为 **blocked**。9 条 AC 中 7 条通过并验证、1 条部分通过（无效点地图与超速部分已验，围栏属任务15）、1 条阻塞；GNSS/终端来源报警位因仓库内无可核对的位语义映射（`PositionReport` 仅有原始 `alarmFlag`，`protocol` 与 ticket 05 fixture 均无映射表），该条保持阻塞，未实现、未编造。核心实现已完成并通过真实 TCP、Testcontainers 与独立 CLI 验证，已合入最新集成分支（合并提交 `bf25ecd`）；离线与定位无效功能可用，下游 22/23 可依赖。GNSS 条待映射来源确认后另票补齐。
 
 实现：
 - `OfflineAlarmService`（`server/src/main/java/com/vms/alarm/OfflineAlarmService.java`）：定时扫描以 `terminal.last_seen_at` 为唯一依据，阈值 180 秒；条件为 `terminal.status='ENABLED'`、`vehicle.status='ENABLED'`、`ever_authenticated=TRUE`、当前绑定存在、`last_seen_at <= now-180s`、`last_logout_at IS NULL OR last_logout_at < last_seen_at`，并以 `NOT EXISTS (... ACTIVE)` 防止重复建事件。`start_time=last_time=last_seen_at+180s`，`source='PLATFORM'`、`rule_id/rule_version/rule_name` 为 NULL。启动宽限在 `now < startedAt+180s` 内直接跳过扫描。

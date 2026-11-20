@@ -1,0 +1,9 @@
+-- 设备保存报警标志与最后观察时间，重连或重新绑定不等于报警位已清除。
+ALTER TABLE terminal
+    ADD COLUMN terminal_alarm_flags BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    ADD COLUMN terminal_alarm_gps_time DATETIME NULL;
+
+ALTER TABLE alarm DROP CHECK ck_alarm_type,
+    ADD CONSTRAINT ck_alarm_type_v15 CHECK (alarm_type IN
+        ('OVERSPEED','OFFLINE','POSITION_INVALID','GEOFENCE_ENTER','GEOFENCE_LEAVE',
+         'EMERGENCY','FATIGUE_DRIVING','GNSS_MODULE_FAULT','GNSS_ANTENNA_DISCONNECTED','GNSS_ANTENNA_SHORT'));

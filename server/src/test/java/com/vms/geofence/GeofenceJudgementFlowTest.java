@@ -133,7 +133,15 @@ class GeofenceJudgementFlowTest {
                 sendAndExpectSuccess(terminal, 2 + i, position(start.plusSeconds(10L * i), 116.5, 39.9));
                 assertThat(geofenceAlarmCount(bound)).as("未满 3 点不产生事件").isZero();
             }
-            clock.advance(Duration.ofSeconds(10));
+            // 第三个越界点坐标在圆外，但未定位。不能确认、清空或推进这两个候选点。
+            Map<String, Object> beforeInvalid = state(fence, bound);
+            assertThat(((Number) beforeInvalid.get("consecutive_count")).intValue()).isEqualTo(2);
+            clock.advance(Duration.ofSeconds(5));
+            sendAndExpectSuccess(terminal, 20, invalidPosition(start.plusSeconds(25), 116.5, 39.9));
+            assertThat(geofenceAlarmCount(bound)).as("无效点不触发围栏事件").isZero();
+            assertThat(state(fence, bound)).isEqualTo(beforeInvalid);
+
+            clock.advance(Duration.ofSeconds(5));
             sendAndExpectSuccess(terminal, 5, position(start.plusSeconds(30), 116.5, 39.9));
 
             Map<String, Object> event = singleGeofenceAlarm(bound, "GEOFENCE_LEAVE");
